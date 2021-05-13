@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	<!-- DB 접속 정보 -->
+	<bean id="dataSourceSpied" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"></property>
+		<property name="username" value="scott"></property>
+		<property name="password" value="tiger"></property>
+	</bean>
+	
+	<!-- 마이바티스 로그(Logging) -->
+	<!-- 마이바티스 DataSource 프록시(Proxy)  -->
+	<bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+		<!-- 프록시 대상 DB DataSource 설정하기 (원본 DB) -->
+		<constructor-arg ref="dataSourceSpied"></constructor-arg>
+	
+		<!-- 로그 포맷(양식) 설정  -->
+		<property name="logFormatter">
+			<bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
+				<property name="loggingType" value="MULTI_LINE"></property>
+				<property name="sqlPrefix" value="SQL:::"></property>
+			</bean>
+		
+		</property>
+	
+	</bean>
+	
+	
+	<!-- 마이바티스 수행 객체 설정(SqlSession) -->
+	<bean id="SqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		
+		<!-- dataSource로 등록된 빈에 설정된 DB 연결정보 이용하기 -->
+		<property name="dataSource" ref="dataSource"></property>
+	
+		<!--Mapper XML 파일의 위치 설정하기  -->
+		<property name="mapperLocations">
+			<array>
+				<value>classpath:/com.one.whospet/dao/**/*Mapper.xml</value>
+			</array>
+		</property>
+	</bean>
+	
+	<!-- 마이바티스 인터페이스 설정(DAO설정) -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.one.whospet.dao"></property> <!-- dao가 여러개면 value에 , 넣고 추가  -->
+	</bean>
+		
+</beans>
