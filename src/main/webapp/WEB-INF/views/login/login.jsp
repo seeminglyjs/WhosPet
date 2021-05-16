@@ -5,20 +5,20 @@
 <%-- 쿠키를 가져오는 코드 --%>
 <%Cookie[] cookies = request.getCookies();  %>
 <% String idCookie = null; %>
-<% String idCheckCookie = null; %>
+<% String idCheck = null; %>
 
 <%-- 쿠키가 있을시 변수로 담는다. --%>
 <% for(Cookie c : cookies){
 	if("idCookie".equals(c.getName())){
 		idCookie = c.getValue();
-	}else if("idCheckCookie".equals(c.getName())){
-		idCheckCookie = c.getValue();
+	}else if("idCheck".equals(c.getName())){
+		idCheck = c.getValue();
 	}	
 }%>
 
 <%--페이지 스코프에 저장 --%>
 <c:set value="<%=idCookie %>" var="idCookie"/>
-<c:set value="<%=idCheckCookie %>" var="idCheckCookie"/>
+<c:set value="<%=idCheck %>" var="idCheck"/>
 
 
 
@@ -56,7 +56,7 @@
 	    <div class="col-sm-offset-2 col-sm-10">
 	      <div class="checkbox">
      	  <c:choose>
-	      <c:when test="${empty idCookie }">
+	      <c:when test="${empty idCheck }">
 	        <label>
 	          <input type="checkbox" id="memoryId" name="memoryId"> 아이디 기억하기
 	        </label>
