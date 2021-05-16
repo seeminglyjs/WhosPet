@@ -23,4 +23,4 @@ Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia
 
 </div>
 
-<%@ include file="/WEB-INF/views/layout/footer.jsp" %>
+<%@ include file="/WEB-INF/views/layout/footerUser.jsp" %>

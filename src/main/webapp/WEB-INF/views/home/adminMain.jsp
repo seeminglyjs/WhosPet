@@ -9,4 +9,4 @@
 Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Praesent suscipit sit amet erat eu finibus. In nisi libero, fermentum eu pretium et, ullamcorper a sapien. Donec nisl felis, fermentum vel posuere id, eleifend at libero. Donec pharetra, justo et consectetur consequat, justo ligula malesuada turpis, eu posuere dui ipsum id enim. Phasellus vitae convallis tellus. Pellentesque fermentum urna at ultrices eleifend. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin rhoncus odio non scelerisque maximus. Ut ultricies arcu vel felis consectetur, in pellentesque nisi blandit. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque laoreet sollicitudin sem, non semper justo lacinia ut. Pellentesque mi mi, condimentum sit amet vehicula a, tempor sit amet erat.</p>
 
 
-<%@ include file="/WEB-INF/views/layout/footer.jsp" %>
+<%@ include file="/WEB-INF/views/layout/footerAdmin.jsp" %>

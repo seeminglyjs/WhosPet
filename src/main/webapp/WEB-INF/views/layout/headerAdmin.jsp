@@ -131,7 +131,7 @@ $(document).ready(function(){
 
 	<!-- 이미지 로고 -->
 	<div class="inlineHeader" style="padding-top:">
-		<a href="/"><img alt="로고" src="/resources/img/logo2.png" id="headerLogo"></a>
+		<a href="/admin"><img alt="로고" src="/resources/img/logo2.png" id="headerLogo"></a>
 	</div>
 	
 
