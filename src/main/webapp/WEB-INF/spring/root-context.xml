@@ -40,7 +40,7 @@
 		<!--Mapper XML 파일의 위치 설정하기  -->
 		<property name="mapperLocations">
 			<array>
-				<value>classpath:/com.one.whospet/dao/**/*Mapper.xml</value>
+				<value>classpath:/com/one/whospet/dao/**/*Mapper.xml</value>
 			</array>
 		</property>
 	</bean>

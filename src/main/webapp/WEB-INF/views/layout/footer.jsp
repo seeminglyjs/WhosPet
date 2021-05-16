@@ -12,7 +12,7 @@
                     <div class="col-sm-6 col-md-3 item" style="padding-left: 50px">
                         <h3>Services</h3>
                         <ul class="footerlist">
-                            <li><a href="#">메인 화면</a></li>
+                            <li><a href="/">메인 화면</a></li>
                             <li><a href="#">증상 / 질병 확인</a></li>
                             <li><a href="#">WhosPet 게시판</a></li>
                         </ul>

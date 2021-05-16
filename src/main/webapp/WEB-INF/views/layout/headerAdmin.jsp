@@ -36,7 +36,7 @@ $(document).ready(function(){
 #all{
 	/* footer의 하단 고정을 위한 조건식  */
 	position: relative;
-	padding-bottom: 220px;
+	padding-bottom: 300px;
 }
 
 /*--------------header 영역 css ------------------  */
@@ -130,7 +130,7 @@ $(document).ready(function(){
 
 	<!-- 이미지 로고 -->
 	<div class="inlineHeader" style="padding-top:">
-		<a href=""><img alt="로고" src="/resources/img/logo2.png" id="headerLogo"></a>
+		<a href="/"><img alt="로고" src="/resources/img/logo2.png" id="headerLogo"></a>
 	</div>
 	
 
@@ -153,9 +153,17 @@ $(document).ready(function(){
 	    <ul class="nav navbar-nav">
 	    <li class="dropdown">
 	      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="color:#666666"><i class="glyphicon glyphicon-user"></i></a>      
+ 		  <c:if test="${login }">
 	      <ul class="dropdown-menu" role="menu">
-	        <li><a href="#">로그아웃</a></li>
+	        <li><a href="/login/logout">로그아웃</a></li>
 	      </ul>
+	      </c:if>
+	      
+    	  <c:if test="${empty login }">
+	      <ul class="dropdown-menu" role="menu">
+	        <li><a href="/login/login">로그인</a></li>
+	      </ul>
+	      </c:if>
 	    </li>
 	    </ul>
 	</div>
