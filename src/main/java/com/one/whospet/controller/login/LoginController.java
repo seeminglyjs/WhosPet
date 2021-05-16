@@ -2,7 +2,9 @@ package com.one.whospet.controller.login;
 
 import java.util.HashMap;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -22,7 +24,7 @@ public class LoginController {
 	//로거 객체
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 	
-	//로그인 서브스 객체
+	//로그인 서비스 객체
 	@Autowired
 	private LoginService loginService;
 	
@@ -33,7 +35,7 @@ public class LoginController {
 	
 	//로그인 정보를 받아오는 메소드 [map 으로 id와 pw를 받아온다] 
 	@RequestMapping(value = "/login/login", method = RequestMethod.POST)
-	public String loginRes(@RequestParam HashMap<String, String> map, HttpSession session) {
+	public String loginRes(@RequestParam HashMap<String, String> map, HttpSession session, HttpServletResponse response, HttpServletRequest request) {
 		
 		//로그인 전달 객체 확인
 		logger.info(map.toString());
@@ -50,7 +52,26 @@ public class LoginController {
 			//로그인 유저 객체 전달(유저번호/아이디/유저등급/닉네임만 전달)
 			session.setAttribute("login", true);
 			session.setAttribute("user", user);
-			
+					
+			//아이디 기억하기가 체크 되었을때
+			if(map.get("memoryId").equals("on")) {
+				Cookie idCookie = new Cookie("idCookie", user.getuId());
+				idCookie.setMaxAge(90*24*60*60); //90일동안 보관
+
+				Cookie idCheckCookie = new Cookie("idCheck", "checked");
+				idCheckCookie.setMaxAge(90*24*60*60); //90일동안 보관
+
+				response.addCookie(idCookie); // 아이디 정보 저장
+				response.addCookie(idCheckCookie); // 체크 정보 저장
+					
+			}else { //기억하기 체크되지 않을시 쿠기를 만료 시킨다.
+				Cookie[] cookies = request.getCookies();
+				for(int i=0; i<cookies.length; i++) {
+					cookies[i].setMaxAge(0);
+					response.addCookie(cookies[i]);
+				}
+			}	
+		
 			// 유저인지 관리자 인지 체크
 			if(user.getuGrade().equals("M")) {
 				return "/home/adminMain"; // 관리자 메인으로 보내기
@@ -58,35 +79,7 @@ public class LoginController {
 				return "/home/main"; // 유저 메인으로 보내기
 			}
 		}
-		
-		
-		//아이디 기억하기가 체크 되었을때
-//		if(check!=null) {
-//			Cookie idCookie = new Cookie("ID", mem.getUid());
-//			idCookie.setMaxAge(90*24*60*60); //90일동안 보관
-//
-//			Cookie checkCookie = new Cookie("CHECK", "check");
-//			checkCookie.setMaxAge(90*24*60*60); //90일동안 보관
-//
-//			Cookie gradeCookie = new Cookie("GRADE", mem.getUgrade());
-//			gradeCookie.setMaxAge(90*24*60*60); //90일동안 보관
-//
-//			resp.addCookie(idCookie);
-//			resp.addCookie(checkCookie);
-//			resp.addCookie(gradeCookie);
-//				
-//		}else {
-//			Cookie[] cookies = req.getCookies();
-//			for(int i=0; i<cookies.length; i++) {
-//				cookies[i].setMaxAge(0);
-//				resp.addCookie(cookies[i]);
-//			}
-//		}
-//		
-//		if("M".equals(mem.getUgrade())) { //관리자일경우
-//			resp.sendRedirect("/admin");
-//			return;
-//		}
+
 	}
 	
 	

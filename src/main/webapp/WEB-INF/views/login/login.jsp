@@ -2,6 +2,25 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/layout/headerUser.jsp" %>
 
+<%-- 쿠키를 가져오는 코드 --%>
+<%Cookie[] cookies = request.getCookies();  %>
+<% String idCookie = null; %>
+<% String idCheckCookie = null; %>
+
+<%-- 쿠키가 있을시 변수로 담는다. --%>
+<% for(Cookie c : cookies){
+	if("idCookie".equals(c.getName())){
+		idCookie = c.getValue();
+	}else if("idCheckCookie".equals(c.getName())){
+		idCheckCookie = c.getValue();
+	}	
+}%>
+
+<%--페이지 스코프에 저장 --%>
+<c:set value="<%=idCookie %>" var="idCookie"/>
+<c:set value="<%=idCheckCookie %>" var="idCheckCookie"/>
+
+
 
 <div>
 <h3>로그인 페이지</h3>
@@ -14,7 +33,15 @@
 	  <div class="form-group">
 	    <label for="id" class="col-sm-2 control-label">아이디</label>
 	    <div class="col-sm-10">
+	    <c:choose>
+	    <c:when test="${empty idCookie }">
 	      <input type="text" class="form-control" id="id" name="id" placeholder="아이디..">
+	    </c:when>
+	    
+	    <c:otherwise>
+	    	<input type="text" class="form-control" id="id" name="id" value="${idCookie }">
+	    </c:otherwise>	
+	    </c:choose>
 	    </div>
 	  </div>
 	  
@@ -28,9 +55,19 @@
 	  <div class="form-group">
 	    <div class="col-sm-offset-2 col-sm-10">
 	      <div class="checkbox">
+     	  <c:choose>
+	      <c:when test="${empty idCookie }">
 	        <label>
-	          <input type="checkbox"> 아이디 기억하기
+	          <input type="checkbox" id="memoryId" name="memoryId"> 아이디 기억하기
 	        </label>
+     	  </c:when>
+	    	
+	      <c:otherwise>
+	      	<label>
+	          <input type="checkbox" id="memoryId" name="memoryId" checked="checked"> 아이디 기억하기
+	        </label>
+	      </c:otherwise>	
+	      </c:choose>
 	      </div>
 	    </div>
 	  </div>
