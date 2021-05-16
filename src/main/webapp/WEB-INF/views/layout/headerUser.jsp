@@ -35,8 +35,9 @@ $(document).ready(function(){
 /*전체를 감싸는 div  */
 #all{
 	/* footer의 하단 고정을 위한 조건식  */
+	min-height: 800px;
 	position: relative;
-	padding-bottom: 300px;
+	padding-bottom: 330px;
 }
 
 /*--------------header 영역 css ------------------  */
