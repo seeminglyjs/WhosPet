@@ -42,7 +42,21 @@
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
+		
+		<beans:property name="order" value="1"></beans:property>
 	</beans:bean>
+	
+	<!-- 스프링기반의 viewResolver  -->
+	<beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+	<!-- 우선순위 정하기 value 가 낮은것이 우선  -->
+		<beans:property name="order" value="0"></beans:property>
+	</beans:bean>
+	
+	
+	<!-- 스프링 viewResolver 에서의 빈등록 할 태그  -->
+<!-- 	<beans:bean id="down" class="file.view.DownloadView">
+	</beans:bean> -->
+	
 	
 	<!-- MultipartResolver 설정 -->
 	<!-- 파일업로드 요청(multipart/form-data)을 처리하는 클래스(빈) -->

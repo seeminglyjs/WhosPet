@@ -23,4 +23,9 @@ Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia
 
 </div>
 
+<!-- <div style="width: 300px; height: 300px; background-color: red"></div>
+<div style="width: 300px; height: 300px; background-color: blue"></div>
+<div style="width: 300px; height: 300px; background-color: green"></div>
+<div style="width: 300px; height: 300px; background-color: black"></div> -->
+
 <%@ include file="/WEB-INF/views/layout/footerUser.jsp" %>
