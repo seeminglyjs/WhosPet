@@ -19,10 +19,10 @@ public class HomeController {
 		return "home/adminMain";
 	}
 	
-	// 관리자 메인화면으로 보내는 컨트롤러
+	// 테스트 컨트롤러
 	@RequestMapping(value = "/test", method = RequestMethod.GET)
 	public String view() {
-		return "treatment/treatmain";
+		return "mypage/mypagemain";
 	}
 	
 }
