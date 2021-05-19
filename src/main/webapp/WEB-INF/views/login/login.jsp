@@ -20,6 +20,32 @@
 <c:set value="<%=idCookie %>" var="idCookie"/>
 <c:set value="<%=idCheck %>" var="idCheck"/>
 
+<!-- 카카오톡 로그인 API 영역  -->
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script>
+     // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+     Kakao.init('65923a6755abd0443f692b424c69707c');
+
+     // SDK 초기화 여부를 판단합니다. 성공시 true
+     console.log(Kakao.isInitialized());
+     
+     function loginWithKakao(){
+    	 Kakao.Auth.login({
+ 		    scope: 'profile, account_email', // 가져올 정보
+ 		    success: function(authObj) { // 로그인 성공시
+	 		    console.log(authObj);
+	 		   	Kakao.Auth.authorize({ 
+	 			  redirectUri: 'http://localhost:8088/login/kakaoLogin',
+	 			  scope: 'profile, account_email'
+	 			});
+ 		    },
+ 		    fail: function(error) {
+ 		        console.log(error);
+ 		    }
+ 		});
+	} 
+</script>
+
 
 
 <div>
@@ -48,7 +74,7 @@
 	  <div class="form-group">
 	    <label for="pw" class="col-sm-2 control-label">비밀번호</label>
 	    <div class="col-sm-10">
-	      <input type="password" class="form-control" id="pw" name ="pw" placeholder="비밀번호..">
+	      <input type="password" class="form-control" id="pw" name ="pw" placeholder="비밀번호.." autocomplete="off">
 	    </div>
 	  </div>
 	  
@@ -75,9 +101,16 @@
 	  <div class="form-group">
 	    <div class="col-sm-offset-2 col-sm-10">
 	      <button type="submit" class="btn btn-default">로그인</button>
+	      <!-- 카카오톡 로그인  -->
+	      <a id="custom-login-btn" href="javascript:loginWithKakao()"><button type="button" class="btn btn-default">카카오톡 로그인</button></a>
+	      
 	    </div>
 	  </div>
 	
 	</form>
 	</div>
+	
+	
+<p id="token-result"></p>
+	
 <%@ include file="/WEB-INF/views/layout/footerUser.jsp" %>

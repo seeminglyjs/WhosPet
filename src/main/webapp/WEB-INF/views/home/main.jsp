@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/layout/headerUser.jsp" %>
+
 <div>
 <h1>메인페이지</h1>
 <hr>
@@ -27,5 +28,6 @@ Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia
 <div style="width: 300px; height: 300px; background-color: blue"></div>
 <div style="width: 300px; height: 300px; background-color: green"></div>
 <div style="width: 300px; height: 300px; background-color: black"></div> -->
+
 
 <%@ include file="/WEB-INF/views/layout/footerUser.jsp" %>

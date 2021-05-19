@@ -30,5 +30,10 @@
 	<select id="selectByLoginUser" parameterType="hashmap" resultMap="User">
 	SELECT U_NO, U_GRADE, U_ID, U_NICK FROM W_USER WHERE U_ID = #{id} AND U_PW = #{pw}
 	</select>
+	
+	
+	<select id="selectByEmail" parameterType="String" resultMap="User">
+	SELECT U_NO, U_GRADE, U_ID, U_NICK FROM W_USER WHERE U_EMAIL = #{kakaoEmail}
+	</select>
 
 </mapper>
