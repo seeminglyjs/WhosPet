@@ -93,9 +93,9 @@
 	  
 	  <div class="form-group">
 	    <div class="col-sm-offset-2 col-sm-10">
-	      <button type="submit" class="btn btn-default">로그인</button>
+	      <button type="submit" class="btn btn-primary">로그인</button>
 	      <!-- 카카오톡 로그인  -->
-	      <a id="custom-login-btn" href="javascript:loginWithKakao()"><button type="button" class="btn btn-default">카카오톡 로그인</button></a>
+	      <a id="custom-login-btn" href="javascript:loginWithKakao()"><button type="button" class="btn btn-warning">Kakao 로그인</button></a>
 	      
 	    </div>
 	  </div>
