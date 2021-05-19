@@ -21,14 +21,7 @@
 <c:set value="<%=idCheck %>" var="idCheck"/>
 
 <!-- 카카오톡 로그인 API 영역  -->
-<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-<script>
-     // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
-     Kakao.init('65923a6755abd0443f692b424c69707c');
-
-     // SDK 초기화 여부를 판단합니다. 성공시 true
-     console.log(Kakao.isInitialized());
-     
+<script>  
      function loginWithKakao(){
     	 Kakao.Auth.login({
  		    scope: 'profile, account_email', // 가져올 정보

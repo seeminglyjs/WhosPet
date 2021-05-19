@@ -35,12 +35,13 @@ $(document).ready(function(){
 			  url: '/v1/user/unlink',
 			  success: function(response) {
 			    console.log(response);
-			    $(location).attr("href", "/login/logout") // 로그아웃 링크 연결
+			    $(location).attr("href","/login/logout") // 로그아웃 링크 연결
 			  },
-			  fail: function(error) {
+			  fail: function(error) {  
 			    console.log(error);
+			    $(location).attr("href","/login/logout") // 로그아웃 링크 연결
 			  },
-			});
+			});		
 	})	
 })
 </script>
