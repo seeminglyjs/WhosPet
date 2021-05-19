@@ -14,4 +14,15 @@ public interface LoginService {
 	 */
 	public User findUser(HashMap<String, String> map);
 
+	
+	/**
+	 * 카카오 메일로 접속한 유저가 기존에 가입한 유저인지 체크하는 메소드
+	 * 
+	 * 
+	 * 
+	 * @param kakaoEmail
+	 * @return
+	 */
+	public User findUserByEmail(String kakaoEmail);
+
 }
