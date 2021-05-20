@@ -102,7 +102,7 @@ public class LoginController {
 
 		//이메일 정보를 받아온다.
 		String kakaoEmail = request.getParameter("kakaoEmail");
-
+		
 		//받아온 이메일 정보를 출력한다
 		logger.info(kakaoEmail);
 

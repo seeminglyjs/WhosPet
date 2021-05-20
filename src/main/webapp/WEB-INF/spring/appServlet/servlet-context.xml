@@ -3,9 +3,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -14,24 +16,26 @@
 	<!-- @Service 어노테이션도 허용  -->
 	<annotation-driven />
 
+	<!-- @Transactional 어노테이션을 이용한 트랜잭션관리 활성화  -->
+	<tx:annotation-driven/>
 
-<!-- 		<interceptors>
+
+<!-- 인터셉터 추가(설정) 코드 -->
+	<interceptors>
 			<interceptor>
 		
-			인터셉터가 적용될 url
-			<mapping path="/interceptor/board/**"/> 파일 경로가 아닌 url을 입력
+			<!-- 인터셉터가 적용될 url -->
+			<mapping path="/login/login"/><!-- 로그인 유저가 접근시  -->
+			<mapping path="/login/kakaoLogin"/><!-- 로그인 유저가 접근시  -->
 	
-			인터셉터가 적용되지 않도록 설정하는 제외 url 설정 
-			<exclude-mapping path="/interceptor/board/noLogin"/>
-			<exclude-mapping path="/interceptor/board/list"/>
+			<!-- 인터셉터가 적용되지 않도록 설정하는 제외 url 설정 --> 
+			<!-- <exclude-mapping path="/"> -->
 			
-			인터셉터 클래스 지정 파일 경로를 입력 	
-			<beans:bean class=""/>
-		
-		</interceptor>
-		
-		
-	</interceptors> -->
+			<!-- 인터셉터 클래스 지정 파일 경로를 입력 --> 	
+			<!-- 비로그인 체크 인터셉터  -->
+			<beans:bean class="com.one.whospet.interceptor.UnLoginCheckInterceptor"/>
+		</interceptor>	
+	</interceptors> 
 
 
 
