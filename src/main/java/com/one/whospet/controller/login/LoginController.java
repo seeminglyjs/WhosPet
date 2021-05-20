@@ -110,7 +110,8 @@ public class LoginController {
 		User user = loginService.findUserByEmail(kakaoEmail);
 
 		// 유저인지 관리자 인지 체크
-		if(user.getuGrade().equals("M")) {
+		
+		if(user == null) {
 			session.invalidate(); // 세션 만료시켜버림
 			model.addAttribute("kakaoEmail", kakaoEmail); // 카카오 이메일 정보를 모델로 넘겨준다.
 			return "/join/join"; // 비회원이기 때문에 회원가입 페이지 보내기
