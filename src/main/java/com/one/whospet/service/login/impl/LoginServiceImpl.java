@@ -35,7 +35,6 @@ public class LoginServiceImpl implements LoginService {
 		
 		//이메일 정보를 기준으로 해당 유저가 기존 가입 유저 인지 체크
 		user = loginDao.selectByEmail(kakaoEmail);
-		
 		return user;
 	}
 }
