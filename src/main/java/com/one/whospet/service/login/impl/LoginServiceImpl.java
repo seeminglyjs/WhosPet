@@ -26,4 +26,15 @@ public class LoginServiceImpl implements LoginService {
 				
 		return user;
 	}
+	
+	
+	@Override // 카카오 로그인 유저가 기존 가입 유저인지 체크하는 메소드
+	public User findUserByEmail(String kakaoEmail) {
+		
+		User user = new User();
+		
+		//이메일 정보를 기준으로 해당 유저가 기존 가입 유저 인지 체크
+		user = loginDao.selectByEmail(kakaoEmail);
+		return user;
+	}
 }

@@ -18,12 +18,43 @@
 <meta charset="UTF-8">
 <title>WhosPet</title>
 
-<!-- 메인 검색기능 자바스크립트  -->
+<!-- 카카오 api 초기화 -->
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script type="text/javascript">
+// SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+Kakao.init('65923a6755abd0443f692b424c69707c');
+// SDK 초기화 여부를 판단합니다. 성공시 true
+console.log(Kakao.isInitialized());
+</script>
+
+<!-- 카카오 api 연결 끊기 로그아웃  -->
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#logout").click(function(){	
+		Kakao.API.request({
+			  url: '/v1/user/unlink',
+			  success: function(response) {
+			    console.log(response);
+			    $(location).attr("href","/login/logout") // 로그아웃 링크 연결
+			  },
+			  fail: function(error) {  
+			    console.log(error);
+			    $(location).attr("href","/login/logout") // 로그아웃 링크 연결
+			  },
+			});		
+	})	
+})
+</script>
+
+
+<script type="text/javascript">
+<!-- 메인 검색기능 자바스크립트  -->
 $(document).ready(function(){
 	$("#searchBtn").click(function(){
 		$(location).attr("href", "/searchList?" + $("#searchContent").val())
 	})
+	
+
 })
 </script>
 
@@ -157,9 +188,9 @@ $(document).ready(function(){
 	      
 	      <c:if test="${login }">
 	      <ul class="dropdown-menu" role="menu">
-	        <li><a href="#">마이페이지</a></li>
+	        <li><a href="#" id="mypage">마이페이지</a></li>
 	        <li class="divider"></li>
-	        <li><a href="/login/logout">로그아웃</a></li>
+	        <li><a href="#" id="logout">로그아웃</a></li>
 	      </ul>
 	      </c:if>
 	      

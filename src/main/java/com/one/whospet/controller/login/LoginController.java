@@ -10,7 +10,9 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -88,9 +90,45 @@ public class LoginController {
 	}
 
 
+
+	// 카카오톡으로 로그인 하는 메소드
+	@RequestMapping(value = "/login/kakaoLogin")
+	public void kakaoLogin() {
+	}
+
+	// 카카오톡으로 로그인 정보를 받아오는 메소드
+	@RequestMapping(value = "/login/kakaoLogin", method = RequestMethod.POST)
+	public String kakaoLoginRes(HttpServletRequest request, Model model, HttpSession session  ) {
+
+		//이메일 정보를 받아온다.
+		String kakaoEmail = request.getParameter("kakaoEmail");
+		
+		//받아온 이메일 정보를 출력한다
+		logger.info(kakaoEmail);
+
+		//해당 이메일가지고 있는 유저가 있는지 체크
+		User user = loginService.findUserByEmail(kakaoEmail);
+
+		// 유저인지 관리자 인지 체크
+		
+		if(user == null) {
+			session.invalidate(); // 세션 만료시켜버림
+			model.addAttribute("kakaoEmail", kakaoEmail); // 카카오 이메일 정보를 모델로 넘겨준다.
+			return "/join/join"; // 비회원이기 때문에 회원가입 페이지 보내기
+		}else {
+			//로그인 한 정보가 있음 로그인(true)
+			//로그인 유저 객체 전달(유저번호/아이디/유저등급/닉네임만 전달)
+			session.setAttribute("login", true);
+			session.setAttribute("user", user);
+			return "/home/main"; // 기존 가입 유저 메인으로 보내기
+		}
+
+		
+	}
+
 	// 로그아웃 하는 메소드
 	@RequestMapping(value = "/login/logout")
-	public String login(HttpSession session) {
+	public String login(HttpSession session, Model model) {
 		session.invalidate(); // 현재 세션을 만료시킴
 		return "redirect:/"; //메인으로 보내버림
 	}

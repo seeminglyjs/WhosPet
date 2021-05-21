@@ -14,4 +14,13 @@ public interface LoginDao {
 	 */
 	public User selectByLoginUser(HashMap<String, String> map);
 
+	/**
+	 * 카카오 로그인 유저의 이메일 정보를 입력받아 기존에 가입한 유저인지 찾는 쿼리문
+	 *
+	 * 
+	 * @param kakaoEmail -> 카카오 로그인 이메일
+	 * @return
+	 */
+	public User selectByEmail(String kakaoEmail);
+
 }
