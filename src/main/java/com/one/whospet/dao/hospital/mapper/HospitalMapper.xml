@@ -4,6 +4,60 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.one.whospet.dao.hospital.face.HospitalDao">
-  
+  	
+  	<resultMap type="com.one.whospet.dto.Hospital" id="Hospital">
+  		<id column="h_no" property="hNo" />
+  		<result column="u_no" property="uNo" />
+  		<result column="h_adcheck" property="hAdcheck" />
+  		<result column="h_name" property="hName" />
+  		<result column="h_road_address" property="hRoadAddress" />
+  		<result column="h_detail_address" property="hDetailAddress" />
+  		<result column="h_hour" property="hHour" />
+  		<result column="h_tel" property="hTel" />
+  		<result column="h_info" property="hInfo" />
+  		<result column="h_request_date" property="hRequestDate" />
+  		<result column="h_enroll_date" property="hEnrollDate" />
+  		<result column="h_hit" property="hHit" />
+  	</resultMap>
+  	
+  	<select id="selectAll" resultType="hashmap" parameterType="com.one.whospet.util.HospitalPaging">
+  	select P.* from (
+	    select rownum rnum, H.* from (
+	        select * from w_hospital
+	        where h_adcheck='Y'
+	        order by h_no desc
+	    )H 
+	)P
+	where rnum between #{startNo} and #{endNo}
+	</select>
+  	
+  	<select id="selectCntAll" resultType="int">
+  	select count(*) from w_hospital
+  	where h_adcheck='Y'
+  	</select>
+  	
+  	<select id="selecKeyword" resultMap="Hospital" parameterType="hashmap">
+  	select * from w_hospital
+	where h_adcheck ='Y'
+	<if test="category.equals('hName')">
+	and h_name like '%'|| #{keyword} || '%'
+	</if>
+	<if test="category.equals('hRoadAddress')">
+	and h_road_address like '%' || #{keyword}  ||'%'
+	</if>
+  	</select>
+  	
+  	<select id="selectCntKeyword" resultType="hashmap" parameterType="hashmap">
+  	select count(*) cnt from w_hospital
+	where h_adcheck ='Y'
+  	<if test="category.equals('hName')">
+	and h_name like '%'|| #{keyword} || '%'
+	</if>
+	<if test="category.equals('hRoadAddress')">
+	and h_road_address like '%' || #{keyword}  ||'%'
+	</if>
+  	</select>
+  	
+  		
   
   </mapper>
