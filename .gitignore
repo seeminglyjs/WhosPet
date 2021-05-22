@@ -125,3 +125,6 @@ $RECYCLE.BIN/
 /.project
 /.settings/
 /.springBeans
+
+pom.properties
+MANIFEST.MF
