@@ -59,6 +59,159 @@
 </script>
 
 
+<!-- 폼태그 정규식 및 중복성 체크 자바스크립트 -->
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" ></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	// pw 인풋창 정규식 체크
+	$("#pw").on("propertychange change keyup paste input blur", function(){		
+		var pw = /^[A-Za-z\d]{4,12}$/ 
+		if(!pw.test($("#pw").val())){
+				$("#sp2").removeClass("green")
+				$("#sp2").text("잘못된 비밀번호 형식입니다.").addClass("red")
+		}else{
+			$("#sp2").removeClass("red")
+			$("#sp2").text("알맞은 비밀번호 형식입니다.").addClass("green")
+		} 
+	})
+	
+	
+	// name 인풋창 정규식 체크
+	$("#name").on("propertychange change keyup paste input blur", function(){
+		var name = /^[가-힣]{1,5}$/
+			if(!name.test($("#name").val())){
+				$("#sp3").removeClass("green")
+				$("#sp3").text("잘못된 이름 형식입니다.").addClass("red")
+		}else{
+			$("#sp3").removeClass("red")
+			$("#sp3").text("멋진 이름입니다.").addClass("green")
+		}
+	})
+
+	// phone 인풋창 정규식 체크
+	$("#phone").on("propertychange change keyup paste input blur", function(){
+		var phone = /^\d{3}-\d{3,4}-\d{4}$/ 
+			if(!phone.test($("#phone").val())){
+				$("#sp4").removeClass("green")
+				$("#sp4").text("잘못된 번호 형식입니다.").addClass("red")
+		}else{
+			$("#sp4").removeClass("red")
+			$("#sp4").text("알맞은 전화 번호 입니다.").addClass("green")
+		}
+	})
+
+	// 우편번호 인풋창 체크
+	$("#sample6_postcode").on("propertychange change keyup paste input blur", function(){
+	    if(typeof $("#sample6_postcode").val() == "undefined" || $("#sample6_postcode").val() == null || $("#sample6_postcode").val() == ""){
+	    	$("#sp7").removeClass("green")
+			$("#sp7").text("필수 항목입니다.").addClass("red")
+	    }else{
+	    	$("#sp7").removeClass("red")
+			$("#sp7").text("우편번호 입력 확인되었습니다.").addClass("green")
+        }
+	})
+	
+	/* 우편번호 찾기 버튼  클릭시 */
+	$("#postBtn").click(function(){
+	    	$("#sp7").html("<span/>");
+	    	$("#sp8").html("<span/>");
+	})
+	
+	// 주소 인풋창 체크
+	$("#sample6_address").on("propertychange change keyup paste input blur", function(){
+    if(typeof $("#sample6_address").val() == "undefined" || $("#sample6_address").val() == null || $("#sample6_address").val() == ""){
+    	$("#sp8").removeClass("green")
+		$("#sp8").text("필수 항목입니다.").addClass("red")
+    }else{
+    	$("#sp8").removeClass("red")
+		$("#sp8").text("주소 입력 확인되었습니다.").addClass("green")
+       }
+	})
+	
+	
+	// 상세주소 인풋창 체크
+	$("#sample6_detailAddress").on("propertychange change keyup paste input blur", function(){
+  	var detailAddress = /^[a-zA-Z가-힣\s]{2,}$/  
+	if(!detailAddress.test($("#sample6_detailAddress").val())){
+    	$("#sp9").removeClass("green")
+		$("#sp9").text("필수 항목입니다.").addClass("red")
+    }else{
+    	$("#sp9").removeClass("red")
+		$("#sp9").text("상세주소 입력 확인되었습니다.").addClass("green")
+       }
+	})
+	
+}) // document 끝
+
+
+/* form 전송전 체크 함수 */
+function check(){
+	// pw 인풋창 정규식 체크	
+		var pw = /^[A-Za-z\d]{4,12}$/ 
+		if(!pw.test($("#pw").val())){
+				$("#sp2").removeClass("green")
+				$("#sp2").text("잘못된 비밀번호 형식입니다.").addClass("red")
+				$("#pw").focus()
+				return false;
+		}
+
+	
+	// name 인풋창 정규식 체크
+		var name = /^[가-힣]{1,5}$/
+			if(!name.test($("#name").val())){
+				$("#sp3").removeClass("green")
+				$("#sp3").text("잘못된 이름 형식입니다.").addClass("red")
+				$("#name").focus()
+				return false;
+		}
+
+	// phone 인풋창 정규식 체크
+		var phone = /^\d{3}-\d{3,4}-\d{4}$/ 
+			if(!phone.test($("#phone").val())){
+				$("#sp4").removeClass("green")
+				$("#sp4").text("잘못된 번호 형식입니다.").addClass("red")
+				$("#phone").focus()
+				return false;
+		}
+
+
+	// 우편번호 인풋창 체크
+	    if(typeof $("#sample6_postcode").val() == "undefined" || $("#sample6_postcode").val() == null || $("#sample6_postcode").val() == ""){
+	    	$("#sp7").removeClass("green")
+			$("#sp7").text("필수 항목입니다.").addClass("red")
+			return false;
+	    }else{
+	    	$("#sp7").removeClass("red")
+			$("#sp7").text("우편번호 입력 확인되었습니다.").addClass("green")
+	    }	
+	
+	// 주소 인풋창 체크
+		if(typeof $("#sample6_address").val() == "undefined" || $("#sample6_address").val() == null || $("#sample6_address").val() == ""){
+	    	$("#sp8").removeClass("green")
+			$("#sp8").text("필수 항목입니다.").addClass("red")
+			return false;
+	    }else{
+	    	$("#sp8").removeClass("red")
+			$("#sp8").text("주소 입력 확인되었습니다.").addClass("green")
+	    }
+	
+	// 상세주소 인풋창 체크
+		var detailAddress = /^[a-zA-Z가-힣0-9\s]{2,}$/  
+		if(!detailAddress.test($("#sample6_detailAddress").val())){
+	    	$("#sp9").removeClass("green")
+			$("#sp9").text("필수 항목입니다.").addClass("red")
+			return false;
+	    }else{
+	    	$("#sp9").removeClass("red")
+			$("#sp9").text("상세주소 입력 확인되었습니다.").addClass("green")
+	       }
+	
+	
+}
+
+</script>
+
 
 <style type="text/css">
 
@@ -68,17 +221,30 @@
 	width: 250px !important;
 }
 
+
+/* 폰트 크기 색 부여 클래스  */
+.red{
+	font-size: 0.8em;
+	color: red;
+}
+
+.green{
+	font-size: 0.8em;
+	color: green;
+}
+
 </style>
 
 	<div style="width: 500px; height:300px; margin: 0 auto;">
 	<h2>회원가입</h2>
 	<hr>
-	<form class="form-horizontal" action="/join/join" method="post">
+	<form class="form-horizontal" action="/join/join" method="post" onsubmit="return check()">
 	  
 	  <div class="form-group">
 	    <label for="id" class="col-sm-2 control-label">아이디</label>
 	    <div class="col-sm-10">
 	      <input type="text" class="form-control" id="id" name="id" placeholder="아이디...">
+		  <span id="sp1"></span>
 	    </div>
 	  </div>
 	  
@@ -86,6 +252,7 @@
 	    <label for="pw" class="col-sm-2 control-label">비밀번호</label>
 	    <div class="col-sm-10">
 	      <input type="password" class="form-control" id="pw" name ="pw" placeholder="비밀번호..." autocomplete="off">
+  		  <span id="sp2"></span>
 	    </div>
 	  </div>
 	  
@@ -93,6 +260,7 @@
 	    <label for="name" class="col-sm-2 control-label">이름</label>
 	    <div class="col-sm-10">
 	      <input type="text" class="form-control" id="name" name ="name" placeholder="홍길동...">
+	      <span id="sp3"></span>
 	    </div>
 	  </div>
 	  
@@ -101,6 +269,7 @@
 	    <label for="phone" class="col-sm-2 control-label">전화번호</label>
 	    <div class="col-sm-10">
 	      <input type="text" class="form-control" id="phone" name ="phone" placeholder="010-1234-1234...">
+	      <span id="sp4"></span>
 	    </div>
 	  </div>
 	  
@@ -112,6 +281,7 @@
 			<label for="email" class="col-sm-2 control-label">이메일</label>
 			<div class="col-sm-10">
 				<input type="text" class="form-control" name="email" id="email" placeholder="abcd@gmail.com...">
+				<span id="sp5"></span>
 			</div>
 		</div>
 		</c:when>
@@ -121,6 +291,7 @@
 			<label for="email" class="col-sm-2 control-label">이메일</label>
 			<div class="col-sm-10">
 				<input type="text" class="form-control" name="email" id="email" value="${kakaoEmail }">
+				<span id="sp5"></span>
 			</div>
 		</div>
 		</c:otherwise>
@@ -131,16 +302,20 @@
 	    <label for="nick" class="col-sm-2 control-label">닉네임</label>
 	    <div class="col-sm-10">
 	      <input type="password" class="form-control" id="nick" name ="nick" placeholder="닉네임123...">
+	      <span id="sp6"></span>
 	    </div>
 	  </div>
 	  
 	  <div class="form-group">
 	    <label for="postcode" class="col-sm-2 control-label">주소</label>
 	    <div class="col-sm-10">
-	    <input type="text" class="form-control" id="sample6_postcode" name="postcode" placeholder="우편번호">
-	    <input type="button" class="btn btn-default" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
-	    <input type="text" class="form-control" id="sample6_address" name="address" placeholder="주소" style="margin-top: 10px;">
+	    <input type="text" class="form-control" id="sample6_postcode" name="postcode" placeholder="우편번호" readonly="readonly">
+	    <input type="button" class="btn btn-default" onclick="sample6_execDaumPostcode()" id="postBtn" value="우편번호 찾기"><br>
+	    <span id="sp7"></span>
+	    <input type="text" class="form-control" id="sample6_address" name="address" placeholder="주소" readonly="readonly" style="margin-top: 10px;" >
+		<span id="sp8"></span>
 		<input type="text" class="form-control" id="sample6_detailAddress" name="detailAddress" placeholder="상세주소" style="margin-top: 10px;">
+		<span id="sp9"></span>
 		<input type="hidden" class="form-control" id="sample6_extraAddress" name ="extraAddress" placeholder="참고항목" style="margin-top: 10px;">
 	    </div>
 	  </div>
@@ -168,7 +343,7 @@
 
 	  <div class="form-group">
 	    <div class="col-sm-offset-2 col-sm-10">
-	      <button type="submit" class="btn btn-primary">회원가입</button>     
+	      <button type="submit" class="btn btn-primary" id="joinBtn">회원가입</button>     
 	    </div>
 	  </div>
 	
