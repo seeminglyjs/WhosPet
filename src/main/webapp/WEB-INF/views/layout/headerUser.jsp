@@ -198,7 +198,7 @@ $(document).ready(function(){
 	      <ul class="dropdown-menu" role="menu">
 	        <li><a href="/login/login">로그인</a></li>
 	        <li class="divider"></li>
-	        <li><a href="#">회원가입</a></li>
+	        <li><a href="/join/join">회원가입</a></li>
 	      </ul>
 	      </c:if>
 	      
