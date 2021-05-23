@@ -79,7 +79,7 @@ $(document).ready(function(){
 	
 	// name 인풋창 정규식 체크
 	$("#name").on("propertychange change keyup paste input blur", function(){
-		var name = /^[가-힣]{1,5}$/
+		var name = /^[가-힣]{2,6}$/
 			if(!name.test($("#name").val())){
 				$("#sp3").removeClass("green")
 				$("#sp3").text("잘못된 이름 형식입니다.").addClass("red")
@@ -158,7 +158,7 @@ function check(){
 
 	
 	// name 인풋창 정규식 체크
-		var name = /^[가-힣]{1,5}$/
+		var name = /^[가-힣]{2,6}$/
 			if(!name.test($("#name").val())){
 				$("#sp3").removeClass("green")
 				$("#sp3").text("잘못된 이름 형식입니다.").addClass("red")
@@ -206,8 +206,6 @@ function check(){
 	    	$("#sp9").removeClass("red")
 			$("#sp9").text("상세주소 입력 확인되었습니다.").addClass("green")
 	       }
-	
-	
 }
 
 </script>
