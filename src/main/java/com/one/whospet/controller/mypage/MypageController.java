@@ -26,11 +26,7 @@ public class MypageController {
 	public void main() {}
 	
 	@RequestMapping(value = "/mypage/user")
-	public void userinfo(HttpSession session) {
-		int uNo = (Integer) session.getAttribute("uNo");
-		User user = mypageService.getUserInfo(uNo);
-		
-	}
+	public void userinfo() {}
 	
 	@RequestMapping(value = "/mypage/board")
 	public void boardinfo() {}
