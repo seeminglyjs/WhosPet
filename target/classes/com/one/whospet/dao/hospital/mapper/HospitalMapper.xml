@@ -20,6 +20,16 @@
   		<result column="h_hit" property="hHit" />
   	</resultMap>
   	
+<!--   	<resultMap type="com.one.whospet.dto.Review" id="Review"> -->
+<!--   		<id column="r_no" property="rNo" /> -->
+<!--   		<result column="u_no" property="uNo" /> -->
+<!--   		<result column="h_no" property="hNo" /> -->
+<!--   		<result column="r_date" property="rDate" /> -->
+<!--   		<result column="r_content" property="rContent" /> -->
+<!--   		<result column="r_star" property="rStar" /> -->
+<!--   	</resultMap> -->
+  	
+  	
   	<select id="selectAll" resultType="hashmap" parameterType="com.one.whospet.util.HospitalPaging">
   	select P.* from (
 	    select rownum rnum, H.* from (
@@ -36,7 +46,7 @@
   	where h_adcheck='Y'
   	</select>
   	
-  	<select id="selecKeyword" resultMap="Hospital" parameterType="hashmap">
+  	<select id="selecKeyword" resultType="hashmap" parameterType="hashmap">
   	select * from w_hospital
 	where h_adcheck ='Y'
 	<if test="category.equals('hName')">
@@ -58,6 +68,21 @@
 	</if>
   	</select>
   	
-  		
+  	<update id="updateHit" parameterType="int">
+  	update w_hospital
+  	set h_hit = h_hit+1
+  	where h_no = #{hNo}
+  	</update>
+  	
+  	<select id="selectByhNo" parameterType="int" resultMap="Hospital">
+  	select * from w_hospital
+  	where h_no = #{hNo}
+  	</select>
+  
+  	<select id="selectReview" parameterType="int" resultType="hashmap">
+  	select R.*, u_id, u_nick from w_review R, w_user U
+	where R.u_no = U.u_no and h_no=#{hNo}
+  	</select>
+  
   
   </mapper>

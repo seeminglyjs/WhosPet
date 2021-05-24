@@ -1,41 +1,112 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/layout/headerUser.jsp" %>
-<style>
-.box{
-	border:1px solid #e5e5e5;
-	border-radius:10px;
-	padding:10px;
-}
-
-.box+.box{
-	margin-top:10px;
-}
-
-.mb15{
-	margin-bottom:15px;
-}
-
-</style>
-
-	<h1>' ${info.keyword } '에 대한 검색 결과입니다.</h1>
+<link href="/resources/css/hospital.css" rel="stylesheet"> 
 	
-	<p>총 ${info.CNT }건이 검색되었습니다.</p>
+	<h2 class="text-center"><b style="color:#ff9800;">' ${info.keyword } '</b>에 대한 검색 결과입니다. </h2>
+	
+	<p class="text-right"><button type="button" class="btn btn-default" onclick="history.back(); ">목록</button></p>
+	
+	<p>총 ${info.CNT }건이 검색되었습니다. </p>
 	
 	<div class="row">
-		<div class="col-md-6 pull-left">
+		<div class="col-md-6 pull-left" style="height:1005px; overflow-y:scroll;">
 			<c:forEach items="${list }" var="list">
 			<div class="box">
-				<p>${list.hName }</p>
-				<p>${list.hRoadAddress} ${list.hDetailAddress }</p>
-				<p>${list.hHour }</p>
-				<p><i class="glyphicon glyphicon-earphone"></i> ${list.hTel }</p>
+				<p><a href="/hospital/view?hNo=${list.H_NO }">${list.H_NAME }</a></p>
+				<p>${list.H_ROAD_ADDRESS} ${list.H_DETAIL_ADDRESS }</p>
+				<p>${list.H_HOUR }</p>
+				<p><i class="glyphicon glyphicon-earphone"></i> ${list.H_TEL }</p>
+				<p><button type="button" class="btn btn-block">위치보기</button></p>
 			</div>
 			</c:forEach>
 		</div>
-		<div class="col-md-6 pull-left">지도영역</div>
+		<div class="col-md-6 pull-left">
+			<div id="map" style="width:100%; height:1005px;"></div>
+		</div>
 	
 	</div>
 	
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=afdd7506d022e1ee11fca787e3b4d967&libraries=services"></script>
+	<script>
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+	    mapOption = { 
+	        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+	        level: 3, // 지도의 확대 레벨
+	    };
+	
+	var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+	
+	
+	
+	//주소-좌표 변환 객체를 생성합니다
+	var geocoder = new kakao.maps.services.Geocoder();
+	
+	var rdnmadrList = new Array();
+	var cmpnmList = new Array();
+	
+	var rdnList =JSON.parse('${arraylist}');
+	for(var k in rdnList){	
+		var $obj = rdnList[k];
+		var aa =  $obj.address;
+		var bb  =  $obj.name;
+		rdnmadrList.push(aa);
+		cmpnmList.push(bb);
+		
+	}
+	
+	
+	//주소 리스트 
+	rdnmadrList.forEach(function(addr, index){
+		
+		// 주소로 좌표를 검색합니다
+		geocoder.addressSearch(addr, function(result, status) {
+		
+		    // 정상적으로 검색이 완료됐으면 
+		     if (status === kakao.maps.services.Status.OK) {
+		
+		        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+		        
+		        // 결과값으로 받은 위치를 마커로 표시합니다
+		        var marker = new kakao.maps.Marker({
+		            map: map,
+		            position: coords
+		        });
+		        
+		        var content = '<div class="overlay_info" style="width:300px; height:80px;">';
+		        content += '    <a><strong>' + cmpnmList[index] +'</strong></a>';
+		        content += '    <div class="desc">';
+		        content += '        <img src="/resources/img/icon_hospital.jpg" alt="">';
+		        content += '        <span class="address">'+ rdnmadrList[index]  +'</span>';
+		        content += '    </div>';
+		        content += '</div>';
+		
+		        // 인포윈도우로 장소에 대한 설명을 표시합니다
+		        var infowindow = new kakao.maps.InfoWindow({
+		            //  content: cmpnmList[index], 
+		            content: content,
+		           	disableAutoPan: true
+		           	
+		        });
+		        infowindow.open(map, marker);
+
+				// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+		        if(index == 0){
+		        	map.setCenter(coords);	
+		        }
+		        						
+				var box = document.getElementsByClassName("box")[index].querySelector('button');
+				box.onclick = function(){
+					map.setCenter(coords);
+				}
+				
+		    } 
+		
+		}); 
+		
+	}); 
+	
+	
+	</script>
 	
 <%@ include file="/WEB-INF/views/layout/footerUser.jsp" %>

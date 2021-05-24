@@ -1,23 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/layout/headerUser.jsp" %>
-<style>
-.box{
-	border:1px solid #e5e5e5;
-	border-radius:10px;
-	padding:10px;
-}
-
-.box+.box{
-	margin-top:10px;
-}
-
-.mb15{
-	margin-bottom:15px;
-}
-
-</style>
-	<h1>병원 리스트</h1>
+<link href="/resources/css/hospital.css" rel="stylesheet"> 
+	<h2>병원 목록</h2>
 	
 	<form class="form-inline text-center mb15" action="/hospital/search" method="get">
 	  <div class="form-group">
@@ -34,15 +19,16 @@
 		<div class="col-md-6 pull-left">
 			<c:forEach items="${list }" var="list">
 			<div class="box">
-				<p>${list.H_NAME }</p>
+				<p><a href="/hospital/view?hNo=${list.H_NO }">${list.H_NAME }</a></p>
 				<p>${list.H_ROAD_ADDRESS} ${list.H_DETAIL_ADDRESS }</p>
 				<p>${list.H_HOUR }</p>
 				<p><i class="glyphicon glyphicon-earphone"></i> ${list.H_TEL }</p>
+				<p><button type="button" class="btn btn-block">위치보기</button></p>
 			</div>
 			</c:forEach>
 		</div>
 		<div class="col-md-6 pull-left">
-			<div id="map" style="width:100%; height:850px;"></div>
+			<div id="map" style="width:100%; height:1005px;"></div>
 		</div>
 	
 	</div>
@@ -92,13 +78,13 @@
 	var cmpnmList = new Array();
 	
 	var rdnList =JSON.parse('${arraylist}');
-	console.log(rdnList);
 	for(var k in rdnList){	
 		var $obj = rdnList[k];
 		var aa =  $obj.address;
 		var bb  =  $obj.name;
 		rdnmadrList.push(aa);
 		cmpnmList.push(bb);
+
 	}
 	
 	
@@ -107,7 +93,7 @@
 		
 		// 주소로 좌표를 검색합니다
 		geocoder.addressSearch(addr, function(result, status) {
-			
+		
 		    // 정상적으로 검색이 완료됐으면 
 		     if (status === kakao.maps.services.Status.OK) {
 		
@@ -119,10 +105,10 @@
 		            position: coords
 		        });
 		        
-		        var content = '<div class="overlay_info">';
+		        var content = '<div class="overlay_info" style="width:300px; height:80px;">';
 		        content += '    <a><strong>' + cmpnmList[index] +'</strong></a>';
 		        content += '    <div class="desc">';
-		        content += '        <img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/place_thumb.png" alt="">';
+		        content += '        <img src="/resources/img/icon_hospital.jpg" alt="">';
 		        content += '        <span class="address">'+ rdnmadrList[index]  +'</span>';
 		        content += '    </div>';
 		        content += '</div>';
@@ -136,17 +122,18 @@
 		        });
 		        infowindow.open(map, marker);
 
-				
-				console.log(index);   
 				// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-		        if(index == 1){
-		        	console.log(coords)
+		        if(index == 0){
 		        	map.setCenter(coords);	
 		        }
-		        
+		        						
+				var box = document.getElementsByClassName("box")[index].querySelector('button');
+				box.onclick = function(){
+					map.setCenter(coords);
+				}
+				
 		    } 
-		    
-		    
+		
 		}); 
 		
 	}); 

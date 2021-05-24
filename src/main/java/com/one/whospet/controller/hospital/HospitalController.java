@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.one.whospet.dto.Hospital;
+import com.one.whospet.dto.Review;
 import com.one.whospet.service.hospital.face.HospitalService;
 import com.one.whospet.util.HospitalPaging;
 
@@ -27,7 +28,6 @@ public class HospitalController {
 		
 		HospitalPaging paging = hospitalService.getPaging(curPage);
 				
-		//병원 전체 리스트를 가져온다
 		List<Map<String, Object>> list = hospitalService.getHospital(paging);
 		JSONArray jArray = new JSONArray();
 		
@@ -43,25 +43,45 @@ public class HospitalController {
 		model.addAttribute("list", list);
 		model.addAttribute("paging", paging);
 		model.addAttribute("arraylist", jArray);
-		
-		System.out.println(jArray);
-		
-		
-		
+			
 	}
 	
 	@RequestMapping(value = "/hospital/search", method = RequestMethod.GET)
 	public void search(@RequestParam HashMap<String, String> map, Model model) {
 		
-		List<Hospital> list = hospitalService.search(map);
+		List<HashMap<String, Object>> list = hospitalService.search(map);
 		
 		HashMap<String, Object> info = hospitalService.getSearchinfo(map);
 		
+		JSONArray jArray = new JSONArray();
+		for(int i=0; i<list.size(); i++) {
+			JSONObject data = new JSONObject();
+			data.put("name", list.get(i).get("H_NAME") );
+			data.put("address", list.get(i).get("H_ROAD_ADDRESS"));
+			jArray.add(data);
+		}
 		
 		model.addAttribute("list", list);
 		model.addAttribute("info", info);
-		
-		
+		model.addAttribute("arraylist", jArray);
+	
 	}	
+	
+	@RequestMapping(value = "/hospital/view")
+	public void view(int hNo, Model model) {
+		System.out.println(hNo);
+		
+		//hNo 으로 hospital조회 , hit수 증가 
+		Hospital info = hospitalService.getView(hNo); 
+		
+		//리뷰조회
+		List<HashMap<String, Object>> review = hospitalService.getReview(hNo);
+		
+		model.addAttribute("info", info);
+		model.addAttribute("review", review);
+	
+	}
+	
+	
 	
 }

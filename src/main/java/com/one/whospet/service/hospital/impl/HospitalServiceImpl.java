@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.one.whospet.dao.hospital.face.HospitalDao;
 import com.one.whospet.dto.Hospital;
+import com.one.whospet.dto.Review;
 import com.one.whospet.service.hospital.face.HospitalService;
 import com.one.whospet.util.HospitalPaging;
 
@@ -33,7 +34,7 @@ public class HospitalServiceImpl implements HospitalService {
 	}
 	
 	@Override
-	public List<Hospital> search(HashMap<String, String> map) {
+	public List<HashMap<String, Object>> search(HashMap<String, String> map) {
 		return hospitalDao.selecKeyword(map);
 	}
 	
@@ -42,6 +43,17 @@ public class HospitalServiceImpl implements HospitalService {
 		HashMap<String, Object> info = hospitalDao.selectCntKeyword(map);
 		info.put("keyword", map.get("keyword"));
 		return info;
+	}
+	
+	@Override
+	public Hospital getView(int hNo) {
+		hospitalDao.updateHit(hNo);
+		return hospitalDao.selectByhNo(hNo);
+	}
+	
+	@Override
+	public List<HashMap<String, Object>> getReview(int hNo) {
+		return hospitalDao.selectReview(hNo);
 	}
 	
 }
