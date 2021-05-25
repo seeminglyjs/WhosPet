@@ -188,7 +188,7 @@ $(document).ready(function(){
 	      
 	      <c:if test="${login }">
 	      <ul class="dropdown-menu" role="menu">
-	        <li><a href="#" id="mypage">마이페이지</a></li>
+	        <li><a href="/mypage/main" id="mypage">마이페이지</a></li>
 	        <li class="divider"></li>
 	        <li><a href="#" id="logout">로그아웃</a></li>
 	      </ul>
