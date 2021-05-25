@@ -1,8 +1,10 @@
-package com.one.whospet.dao.join.face;
+package com.one.whospet.service.join.face;
+
+import javax.servlet.http.HttpServletRequest;
 
 import com.one.whospet.dto.User;
 
-public interface JoinDao {
+public interface JoinService {
 
 	/**
 	 * 휴대전화 기존 유저와의 중복여부 체크
@@ -10,7 +12,7 @@ public interface JoinDao {
 	 * @param phone
 	 * @return
 	 */
-	public int selectCountPhone(String phone);
+	public int overlapPhone(String phone);
 
 	
 	/**
@@ -19,7 +21,7 @@ public interface JoinDao {
 	 * @param id
 	 * @return
 	 */
-	public int selectCountId(String id);
+	public int overlapId(String id);
 
 
 	/**
@@ -28,7 +30,7 @@ public interface JoinDao {
 	 * @param email
 	 * @return
 	 */
-	public int selectCountEmail(String email);
+	public int overlapEmail(String email);
 
 
 	/**
@@ -37,23 +39,14 @@ public interface JoinDao {
 	 * @param nick
 	 * @return
 	 */
-	public int selectCountNick(String nick);
-
-
-	/**
-	 * 유저 회원 가입 진행
-	 * 
-	 * @param user
-	 */
-	public void insertUser(User user);
-
+	public int overlapNick(String nick);
 
 	/**
-	 * 회원 가입 유저 아이디 체크
+	 * 유저를 회원가입시키는 메소드
 	 * 
-	 * @param getuId
+	 * @param request
 	 * @return
 	 */
-	public int selectJoinId(String getuId);
+	public int joinUser(HttpServletRequest request);
 
 }

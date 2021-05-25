@@ -7,4 +7,51 @@
   
   
 <mapper namespace="com.one.whospet.dao.join.face.JoinDao">
+
+	<!-- 유저 DTO 제정의  -->
+	<resultMap type="com.one.whospet.dto.User" id="User">
+		<id column="U_NO" property="uNo"/>
+		
+		<result column="U_GRADE" property="uGrade"/>
+		<result column="U_ID" property="uId"/>
+		<result column="U_PW" property="uPw"/>
+		<result column="U_NAME" property="uName"/>
+		<result column="U_PHONE" property="uPhone"/>
+		<result column="U_NICK" property="uNick"/>
+		<result column="U_EMAIL" property="uEmail"/>
+		<result column="U_ADDRESS" property="uAddress"/>
+		<result column="U_POST" property="uPost"/>
+		<result column="U_DETAIL_ADDRESS" property="uDetailAddress"/>
+		<result column="U_PET" property="uPet"/>
+		<result column="U_JOIN_DATE" property="uJoinDate"/>
+	</resultMap>
+	
+	
+	<select id="selectCountPhone" parameterType="String" resultType="int">
+		select count(u_phone) from w_user where u_phone = #{u_phone} 
+	</select>
+	
+	<select id="selectCountId" parameterType="String" resultType="int">
+		select count(u_id) from w_user where u_id = #{u_id} 
+	</select>
+
+	<select id="selectCountEmail" parameterType="String" resultType="int">
+		select count(u_email) from w_user where u_email = #{u_email} 
+	</select>
+
+	<select id="selectCountNick" parameterType="String" resultType="int">
+		select count(u_nick) from w_user where u_nick = #{u_nick} 
+	</select>
+
+	<!--유저 정보삽입 쿼리  -->
+	<insert id="insertUser" parameterType="com.one.whospet.dto.User">
+		insert into w_user(u_no, u_grade, u_id, u_pw, u_name, u_phone, u_nick, u_email, u_address, u_post, u_detail_address, u_pet, u_join_date ) 
+		values( w_user_seq.nextval, #{uGrade}, #{uId}, #{uPw}, #{uName}, #{uPhone}, #{uNick}, #{uEmail}, #{uAddress}, #{uPost}, #{uDetailAddress}, #{uPet}, sysdate)
+	</insert>
+	
+	<!-- 가입유저 체크 쿼리 -->
+	<select id="selectJoinId" parameterType="String" resultType="int">
+		select count(u_id) from w_user where u_id = #{uId}
+	</select>
+
 </mapper>
