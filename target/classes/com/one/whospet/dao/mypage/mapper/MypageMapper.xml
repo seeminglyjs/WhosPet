@@ -7,7 +7,7 @@
   
 	<!-- 유저 DTO 제정의  -->
 	<resultMap type="com.one.whospet.dto.User" id="User">
-		<id column="U_NO" property="uNo"/>
+		<id column="U_No" property="uNo"/>
 		
 		<result column="U_GRADE" property="uGrade"/>
 		<result column="U_ID" property="uId"/>
@@ -22,8 +22,36 @@
 		<result column="U_PET" property="uPet"/>
 		<result column="U_JOIN_DATE" property="uJoinDate"/>
 	</resultMap>
+	
+	<!-- 유저픽 DTO 제정의  -->
+	<resultMap type="com.one.whospet.dto.Userpic" id="Userpic">
+		<id column="UPIC_NO" property="upicNo"/>
+		<result column="U_NO" property="uNo"/>
+		<result column="UPIC_ORINAME" property="upicOriname"/>
+		<result column="UPIC_STONAME" property="upicStoname"/>
+	</resultMap>
   
   	<select id="selectUserinfo" parameterType="com.one.whospet.dto.User" resultMap="User">
-	SELECT * FROM W_USER WHERE U_NO = #{uNo }
+	SELECT * FROM W_USER WHERE U_No = #{uNo }
 	</select>
+	
+	<insert id="insertFile" parameterType="com.one.whospet.dto.User">
+		
+	<selectKey order="BEFORE" resultType="int" keyProperty="upicNo">
+			SELECT w_user_pic_seq.nextval FROM dual
+	</selectKey>
+		
+		INSERT INTO w_user_pic ( upic_no, u_no, upic_oriname, upic_stoname )
+		VALUES ( #{upicNo }, #{uNo }, #{upicOriname }, #{upicStoname } )
+	</insert>
+	
+	<select id="selectPicByUNo" parameterType="com.one.whospet.dto.User" resultMap="Userpic">
+	SELECT * FROM W_USER_PIC WHERE U_No = #{uNo }
+	</select>
+	
+	<delete id="deleteUserPic" parameterType="com.one.whospet.dto.User">
+		DELETE from w_user_pic
+		WHERE U_No = #{uNo }
+	</delete>
+	
   </mapper>

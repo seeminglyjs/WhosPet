@@ -9,15 +9,16 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	
-	//작성버튼 동작
-	$("#btnWrite").click(function() {
+	//등록버튼 동작
+	$("#btnUp").click(function() {
 		//<form> submit
 		$("#form").submit();
+		opener.location.reload();
 	});
 	
 	//취소버튼 동작
 	$("#btnCancel").click(function() {
-		history.go(-1);
+		window.close();
 	});
 });
 </script>
@@ -56,16 +57,30 @@ $(document).ready(function() {
   clip: rect(0, 0, 0, 0);
   border: 0;
 }
+button {
+position:relative;
+top: 80px;
+left: 57px;
+border: none;
+background-color: #f7a440;
+border-radius: .25em;
+color: #fff;
+font-size: inherit;
+padding: .5em .75em;
+}
 </style>
 </head>
 <body>
-<form>
+<form action="/mypage/userpic" method="post" id="form" enctype="multipart/form-data">
 <div class="filebox" style="width: 200px; height:100px;">
 <br>
   <label for="ex_file" style="width: 130px; margin-left: 35px;">프로필 사진 변경</label>
-  <input type="file" id="ex_file">
+  <input type="file" name="file" id="ex_file">
 </div>
+<button type="button" id="btnUp">등록</button>
+<button type="button" id="btnCancel">취소</button>
 </form>
-<button type="button" id="btnWrite">등록</button>
+
+
 </body>
 </html>

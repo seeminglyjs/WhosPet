@@ -84,11 +84,21 @@ left: 430px;
 
 <hr>
 <div id="picture" style="width: 100px; height:80px;">
-
+<c:if test="${empty upic}"> 
 <img style="width: 200px; height: 200px; border-radius: 50%" src="../resources/img/defaultImage.png"/>
-<button type="button" id="btnPic" style="margin-left: 45px; width: 100px;">사진 변경</button>
+</c:if>
+<c:if test="${!empty upic}"> 
+<img src="/upload/${upic.upicStoname  }" style="width: 200px; height: 200px; border-radius: 50%"">
+</c:if>
+<br>
+<br>
+<button type="button" id="btnPic" 
+style="margin-left: 45px; width: 100px;"
+onclick="window.open
+('/mypage/userpic','write','width=300,height=300,location=no,status=no,scrollbars=yes')">
+사진 변경</button>
 
-
+ 
 </div>
 <table>
 <tr>
