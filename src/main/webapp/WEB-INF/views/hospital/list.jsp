@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/layout/headerUser.jsp" %>
 <link href="/resources/css/hospital.css" rel="stylesheet"> 
-	<h2>병원 목록</h2>
+	<h3>동물병원 찾기</h3>
 	
 	<form class="form-inline text-center mb15" action="/hospital/search" method="get">
 	  <div class="form-group">

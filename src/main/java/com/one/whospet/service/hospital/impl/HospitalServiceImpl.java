@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.one.whospet.dao.hospital.face.HospitalDao;
+import com.one.whospet.dto.Booking;
 import com.one.whospet.dto.Hospital;
 import com.one.whospet.dto.Review;
 import com.one.whospet.service.hospital.face.HospitalService;
@@ -34,16 +35,11 @@ public class HospitalServiceImpl implements HospitalService {
 	}
 	
 	@Override
-	public List<HashMap<String, Object>> search(HashMap<String, String> map) {
-		return hospitalDao.selecKeyword(map);
+	public List<HashMap<String, Object>> search(HashMap<String, Object> map) {
+		return hospitalDao.selectKeyword(map);
 	}
 	
-	@Override
-	public HashMap<String, Object> getSearchinfo(HashMap<String, String> map) {
-		HashMap<String, Object> info = hospitalDao.selectCntKeyword(map);
-		info.put("keyword", map.get("keyword"));
-		return info;
-	}
+	
 	
 	@Override
 	public Hospital getView(int hNo) {
@@ -55,5 +51,18 @@ public class HospitalServiceImpl implements HospitalService {
 	public List<HashMap<String, Object>> getReview(int hNo) {
 		return hospitalDao.selectReview(hNo);
 	}
+
+	@Override
+	public int getTotalCount(HashMap<String, Object> map) {
+		return hospitalDao.selectCntAllKeyword(map);
+	}
 	
+	@Override
+	public int book(HashMap<String, Object> map) {
+		return hospitalDao.insertBook(map);
+	}
+	@Override
+	public int addReview(HashMap<String, Object> map) {
+		return hospitalDao.insertReview(map);
+	}
 }

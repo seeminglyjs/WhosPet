@@ -18,9 +18,46 @@
 	</div>
 	<div class="col-md-6">
 		<p class="text-right"><button type="button" class="btn btn-default" onclick="history.back() ">목록으로</button></p>
+		
+		
+		<c:if test="${empty login }">
+		<div class="reservation_area nologin">
+			<h4>예약하기</h4>
+			<form action="/" method="">
+				<div class="form-group">
+					<div class="row">
+					   <div class="col-md-12">
+					      <div id="datepicker"></div>
+					   </div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="date">날짜</label>
+					<input type="text" name="bookDate" class="form-control" id="date">
+				</div>
+				<div class="form-group">
+					<label for="time">시간</label>
+					<input type="text" name="bookHour" class="form-control" id="time">
+				</div>
+				<div class="form-group">
+					<label for="petinfo">종류/나이</label>
+					<input type="text" name="bookPetInfo" class="form-control" id="petinfo">
+				</div>
+				<div class="form-group">
+					<label for="text">진료내용</label>
+					<textarea name="bookText" class="form-control" id="text"></textarea>
+				</div>
+				<button type="button" class="btn btn-block btn-warning">예약하기</button>
+			</form>
+		</div>
+		</c:if>
+		
+		<c:if test="${login }">
 		<div class="reservation_area">
 			<h4>예약하기</h4>
-			<form action="" method="post">
+			<form action="/hospital/book" method="post" onsubmit="return check()">
+				<input type="hidden" name="hNo" value="${info.hNo }">
+				<input type="hidden" name="uNo" value="${user.uNo }">
 				<div class="form-group">
 					<div class="row">
 					   <div class="col-md-12">
@@ -47,6 +84,9 @@
 				<button class="btn btn-block btn-warning">예약하기</button>
 			</form>
 		</div>
+		</c:if>
+		
+		
 	</div>
 </div>
 
@@ -73,60 +113,55 @@
 	</c:forEach>
 	<!--  -->
 	
-	
-	
 	<hr>
 	<div class="reviewProc">
-		<form action="/hospital/reviewProc" method="post">
-			<input type="text" name="rstar" value="0.5" id="rstar">
-			<div class="starRev clearfix">
-			  <span class="star r1 on"></span>
-			  <span class="star r2"></span>
-			  <span class="star r1"></span>
-			  <span class="star r2"></span>
-			  <span class="star r1"></span>
-			  <span class="star r2"></span>
-			  <span class="star r1"></span>
-			  <span class="star r2"></span>
-			  <span class="star r1"></span>
-			  <span class="star r2"></span>
+		<input type="text" name="hNo" value="${info.hNo }" id="hNo">	
+		<input type="text" name="uNo" value="${user.uNo }" id="uNo">
+		<input type="text" name="rStar" value="0.5" id="rStar">
+		<div class="starRev clearfix">
+		  <span class="star r1 on"></span>
+		  <span class="star r2"></span>
+		  <span class="star r1"></span>
+		  <span class="star r2"></span>
+		  <span class="star r1"></span>
+		  <span class="star r2"></span>
+		  <span class="star r1"></span>
+		  <span class="star r2"></span>
+		  <span class="star r1"></span>
+		  <span class="star r2"></span>
+		</div>
+		<c:if test="${empty login }">
+			<textarea class="form-control" name="rContent" disabled>로그인하세요!</textarea>
+			<div class="pull-right">
+				<button class="btn btn-warning" disabled>보내기</button>
 			</div>
-			<c:if test="${empty login }">
-				<textarea class="form-control" name="rcontent" disabled>로그인하세요!</textarea>
-				<div class="pull-right">
-					<button class="btn btn-warning" disabled>보내기</button>
-				</div>
-			</c:if>
-			<c:if test="${login }">
-				<textarea class="form-control" name="rcontent"></textarea>
-				<div class="pull-right">
-					<button class="btn btn-warning">보내기</button>
-				</div>
-			</c:if>
-				
-			
-			
-		</form>
+		</c:if>
+		<c:if test="${login }">
+			<textarea class="form-control" name="rContent" id="rContent"></textarea>
+			<div class="pull-right">
+				<button class="btn btn-warning" id="btn_reviewProc">보내기</button>
+			</div>
+		</c:if>
 	</div>
-
 </div>
 
 <script>
 
+//별점
 $(".star").on('click',function(){
    var idx = $(this).index();
    $(".star").removeClass("on");
      for(var i=0; i<=idx; i++){
         $(".star").eq(i).addClass("on");
    }
-   $("#rstar").val($(".star.on").length/2);
+   $("#rStar").val($(".star.on").length/2);
    
  });
 
-
+//달력
 $('#datepicker').datepicker({
 	  inline: true,
-	  format: "yyyy-mm-dd",
+	  format: "yyyy/mm/dd",
 	  language : "ko",
 	  todayHighlight:true,
 	  
@@ -134,7 +169,60 @@ $('#datepicker').datepicker({
 	$('#date').val(e.format());  
 });  
 
+//예약폼 유효성검사
+function check(){
+	
+	if( $("#date").val()=="" ){
+		alert("예약할 날짜를 입력해주세요!")
+		$("#date").focus();
+		return false;
+	}
+	
+	if( $("#time").val()=="" ){
+		alert("예약시간을 입력해주세요!")
+		$("#time").focus();
+		return false;
+	}
+	
+	if( $("#petinfo").val()=="" ){
+		alert("종류/나이를 입력해주세요!")
+		$("#petinfo").focus();
+		return false;
+	}
+	
+	if( $("#text").val()=="" ){
+		alert("진단내용를 입력해주세요!")
+		$("#text").focus();
+		return false;
+	}
+	
+}
 
+$("#btn_reviewProc").click(function(){
+	
+	const hNo = $("#hNo").val()
+	const uNo = $("#uNo").val()
+	const rStar = $("#rStar").val()
+	const rContent = $("#rContent").val()
+		
+	$.ajax({
+		type:'get'
+		,url:'/hospital/reviewProc'
+		,data:{hNo:hNo,uNo:uNo,rStar:rStar,rContent:rContent}
+		,dataType:'json'
+		,success:function(res){
+			console.log("성공")
+			
+			if(res==1){
+				alert("댓글달기 성공!");
+				location.reload();
+			}
+			
+		},error:function(){
+			console.log("에러")
+		}
+	})
+})
 
 </script>
 

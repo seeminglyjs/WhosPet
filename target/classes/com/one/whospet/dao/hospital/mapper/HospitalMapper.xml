@@ -45,28 +45,25 @@
   	select count(*) from w_hospital
   	where h_adcheck='Y'
   	</select>
-  	
-  	<select id="selecKeyword" resultType="hashmap" parameterType="hashmap">
-  	select * from w_hospital
-	where h_adcheck ='Y'
-	<if test="category.equals('hName')">
-	and h_name like '%'|| #{keyword} || '%'
-	</if>
-	<if test="category.equals('hRoadAddress')">
-	and h_road_address like '%' || #{keyword}  ||'%'
-	</if>
+
+	
+	<select id="selectKeyword" resultType="hashmap" parameterType="hashmap">
+  	select * from (
+	    select rownum rnum, H.* from(
+	        select * from w_hospital
+	        where h_adcheck ='Y'
+	        <if test="category.equals('hName')">
+			and h_name like '%'|| #{keyword} || '%'
+			</if>
+			<if test="category.equals('hRoadAddress')">
+			and h_road_address like '%' || #{keyword}  ||'%'
+			</if>
+	        order by h_no desc
+	    )H
+	)
+	where rnum between #{paging.startNo} and #{paging.endNo}
   	</select>
-  	
-  	<select id="selectCntKeyword" resultType="hashmap" parameterType="hashmap">
-  	select count(*) cnt from w_hospital
-	where h_adcheck ='Y'
-  	<if test="category.equals('hName')">
-	and h_name like '%'|| #{keyword} || '%'
-	</if>
-	<if test="category.equals('hRoadAddress')">
-	and h_road_address like '%' || #{keyword}  ||'%'
-	</if>
-  	</select>
+
   	
   	<update id="updateHit" parameterType="int">
   	update w_hospital
@@ -84,5 +81,26 @@
 	where R.u_no = U.u_no and h_no=#{hNo}
   	</select>
   
+  	<select id="selectCntAllKeyword" parameterType="hashmap" resultType="int">
+  	select count(*) cnt from w_hospital
+	where h_adcheck ='Y'
+  	<if test="category.equals('hName')">
+	and h_name like '%'|| #{keyword} || '%'
+	</if>
+	<if test="category.equals('hRoadAddress')">
+	and h_road_address like '%' || #{keyword}  ||'%'
+	</if>
+  	</select>
+  	
+  	
+  	<insert id="insertBook" parameterType="hashmap">
+  	insert into w_booking(book_no, u_no, h_no, book_date, book_hour, book_pet_info, book_text )
+  	values(w_booking_seq.nextval, #{uNo}, #{hNo},#{bookDate},#{bookHour},#{bookPetInfo},#{bookText} )
+  	</insert>
+  	
+  	<insert id="insertReview" parameterType="hashmap">
+  	insert into w_review(r_no, u_no, h_no, r_content, r_star )
+  	values(w_review_seq.nextval, #{uNo}, #{hNo}, #{rContent}, #{rStar} )
+  	</insert>
   
   </mapper>

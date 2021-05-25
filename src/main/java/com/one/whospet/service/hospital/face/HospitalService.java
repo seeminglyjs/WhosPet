@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.one.whospet.dto.Booking;
 import com.one.whospet.dto.Hospital;
 import com.one.whospet.dto.Review;
 import com.one.whospet.util.HospitalPaging;
@@ -27,13 +28,8 @@ public interface HospitalService {
 	 * @param map
 	 * @return
 	 */
-	public List<HashMap<String, Object>> search(HashMap<String, String> map);
-	/**
-	 * 검색정보(총 게시물수, 검색내용) 조회
-	 * @param map
-	 * @return
-	 */
-	public HashMap<String, Object> getSearchinfo(HashMap<String, String> map);
+	public List<HashMap<String, Object>> search(HashMap<String,Object> map);
+	
 	/**
 	 * 상세보기 가져오기
 	 * @param hNo
@@ -46,5 +42,23 @@ public interface HospitalService {
 	 * @return
 	 */
 	public List<HashMap<String, Object>> getReview(int hNo);
+	/**
+	 * 전체 검색결과 갯수 가져오기  
+	 * @param map 
+	 * @return
+	 */
+	public int getTotalCount(HashMap<String,Object> map);
+	/**
+	 * 예약데이터 삽입
+	 * @param map
+	 * @return
+	 */
+	public int book(HashMap<String, Object> map);
+	/**
+	 * 리뷰 등록
+	 * @param map
+	 * @return
+	 */
+	public int addReview(HashMap<String, Object> map);
 
 }

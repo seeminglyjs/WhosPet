@@ -3,29 +3,71 @@
 <%@ include file="/WEB-INF/views/layout/headerUser.jsp" %>
 <link href="/resources/css/hospital.css" rel="stylesheet"> 
 	
-	<h2 class="text-center"><b style="color:#ff9800;">' ${info.keyword } '</b>에 대한 검색 결과입니다. </h2>
+	<h2 class="text-center mb15"><b style="color:#ff9800;">' ${info.keyword } '</b>에 대한 검색 결과입니다. </h2>
 	
-	<p class="text-right"><button type="button" class="btn btn-default" onclick="history.back(); ">목록</button></p>
+	<form class="form-inline text-center m40" action="/hospital/search" method="get">
+	  <div class="form-group">
+	  	<select class="form-control" name="category">
+			<option value="hName">병원이름</option>
+			<option value="hRoadAddress">주소</option>	  	
+	  	</select>
+	    <input type="text" class="form-control" name="keyword" placeholder="검색어를 입력해주세요">
+	  </div>
+	  <button id="search" class="btn btn-default">검색</button>
+	</form>
 	
-	<p>총 ${info.CNT }건이 검색되었습니다. </p>
+	<p>총 <b style="color:#ff9800;">${info.paging.totalCount }</b>건이 검색되었습니다. </p>
 	
-	<div class="row">
-		<div class="col-md-6 pull-left" style="height:1005px; overflow-y:scroll;">
-			<c:forEach items="${list }" var="list">
-			<div class="box">
-				<p><a href="/hospital/view?hNo=${list.H_NO }">${list.H_NAME }</a></p>
-				<p>${list.H_ROAD_ADDRESS} ${list.H_DETAIL_ADDRESS }</p>
-				<p>${list.H_HOUR }</p>
-				<p><i class="glyphicon glyphicon-earphone"></i> ${list.H_TEL }</p>
-				<p><button type="button" class="btn btn-block">위치보기</button></p>
+	<c:if test="${empty list }">
+		<div class="nodata"></div>
+	</c:if>
+	<c:if test="${not empty list }">
+		<div class="row">
+			<div class="col-md-6 pull-left"> <!-- style="height:1005px; overflow-y:scroll;" -->
+				<c:forEach items="${list }" var="list">
+				<div class="box">
+					<p><a href="/hospital/view?hNo=${list.H_NO }">${list.H_NAME }</a></p>
+					<p>${list.H_ROAD_ADDRESS} ${list.H_DETAIL_ADDRESS }</p>
+					<p>${list.H_HOUR }</p>
+					<p><i class="glyphicon glyphicon-earphone"></i> ${list.H_TEL }</p>
+					<p><button type="button" class="btn btn-block">위치보기</button></p>
+				</div>
+				</c:forEach>
 			</div>
-			</c:forEach>
+			<div class="col-md-6 pull-left">
+				<div id="map" style="width:100%; height:1005px;"></div>
+			</div>
+		
 		</div>
-		<div class="col-md-6 pull-left">
-			<div id="map" style="width:100%; height:1005px;"></div>
+		
+		<div class="text-center">
+			<ul class="pagination pagination-sm">
+				
+				<c:if test="${info.paging.curPage != info.paging.startPage}">
+				<li><a href="/hospital/search?category=${info.category }&keyword=${info.keyword }&curPage=${info.paging.curPage-1 }"">&lt;</a></li>
+				</c:if>
+				
+				<c:forEach begin="${info.paging.startPage }" end="${info.paging.endPage }" var="i">
+					<c:choose>
+						<c:when test="${info.paging.curPage eq i}">
+							<li class="active"><a href="/hospital/list?curPage=${i }">${i }</a></li>
+						</c:when>
+						<c:otherwise>
+							<li><a href="/hospital/search?category=${info.category }&keyword=${info.keyword }&curPage=${i}">${i }</a></li>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+				
+				<c:if test="${info.paging.curPage != info.paging.endPage }">
+				<li><a href="/hospital/search?category=${info.category }&keyword=${info.keyword }&curPage=${info.paging.curPage+1 }"">&gt;</a></li>
+				</c:if>
+				
+			</ul>
 		</div>
+	</c:if>
 	
-	</div>
+	
+	
 	
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=afdd7506d022e1ee11fca787e3b4d967&libraries=services"></script>
 	<script>
