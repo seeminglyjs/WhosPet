@@ -64,6 +64,37 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	
+	// id 인풋창 정규식 체크
+	$("#id").on("propertychange change keyup paste input blur", function(){
+		var id = /^[A-Za-z\d]{4,12}$/ 
+			if(!id.test($("#id").val())){
+				$("#sp1").removeClass("green")
+				$("#sp1").text("잘못된 아이디 형식입니다.").addClass("red")
+		}else{
+			//중복검사ajax
+			$.ajax({
+				url : '/join/overlap/id'
+				,type : 'post'
+				,data : {id : $("#id").val() }
+				,dataType : 'html'
+				,success : function(data) {
+					console.log("1 = 중복o / 0 = 중복x : "+ data);										
+					if (data == 1) {
+						$("#sp1").removeClass("green")
+						$("#sp1").text("이미 존재하는 아이디입니다.").addClass("red")
+					}else {
+						$("#sp1").removeClass("red")
+						$("#sp1").text("사용 가능한 아이디입니다.").addClass("green")
+					}
+				}
+				, error : function() {
+					console.log("실패");
+				}
+			}); //ajax 끝	
+		}
+	})
+	
+		
 	// pw 인풋창 정규식 체크
 	$("#pw").on("propertychange change keyup paste input blur", function(){		
 		var pw = /^[A-Za-z\d]{4,12}$/ 
@@ -96,10 +127,89 @@ $(document).ready(function(){
 				$("#sp4").removeClass("green")
 				$("#sp4").text("잘못된 번호 형식입니다.").addClass("red")
 		}else{
-			$("#sp4").removeClass("red")
-			$("#sp4").text("알맞은 전화 번호 입니다.").addClass("green")
+			//중복검사ajax
+			$.ajax({
+				url : '/join/overlap/phone'
+				,type : 'post'
+				,data : {phone : $("#phone").val() }
+				,dataType : 'html'
+				,success : function(data) {
+					console.log("1 = 중복o / 0 = 중복x : "+ data);										
+					if (data == 1) {
+						$("#sp4").removeClass("green")
+						$("#sp4").text("이미 존재하는 번호입니다.").addClass("red")
+					}else {
+						$("#sp4").removeClass("red")
+						$("#sp4").text("사용 가능한 번호입니다.").addClass("green")
+					}
+				}
+				, error : function() {
+					console.log("실패");
+				}
+			}); //ajax 끝	
 		}
 	})
+	
+	// email 인풋창 정규식 체크
+	$("#email").on("propertychange change keyup paste input blur", function(){
+		var email = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
+			if(!email.test($("#email").val())){
+				$("#sp5").removeClass("green")
+				$("#sp5").text("잘못된 이메일 형식입니다.").addClass("red")
+		}else{
+			//중복검사ajax
+			$.ajax({
+				url : '/join/overlap/email'
+				,type : 'post'
+				,data : {email : $("#email").val() }
+				,dataType : 'html'
+				,success : function(data) {
+					console.log("1 = 중복o / 0 = 중복x : "+ data);										
+					if (data == 1) {
+						$("#sp5").removeClass("green")
+						$("#sp5").text("이미 존재하는 이메일입니다..").addClass("red")
+					}else {
+						$("#sp5").removeClass("red")
+						$("#sp5").text("사용 가능한 이메일입니다.").addClass("green")
+					}
+				}
+				, error : function() {
+					console.log("실패");
+				}
+			}); //ajax 끝	
+		}
+	})
+	
+		// nick 인풋창 정규식 체크
+	$("#nick").on("propertychange change keyup paste input blur", function(){
+		var nick = /^[0-9a-zA-Z가-힣]{2,10}$/i
+			if(!nick.test($("#nick").val())){
+				$("#sp6").removeClass("green")
+				$("#sp6").text("잘못된 닉네임 형식입니다.").addClass("red")
+		}else{
+			//중복검사ajax
+			$.ajax({
+				url : '/join/overlap/nick'
+				,type : 'post'
+				,data : {nick : $("#nick").val() }
+				,dataType : 'html'
+				,success : function(data) {
+					console.log("1 = 중복o / 0 = 중복x : "+ data);										
+					if (data == 1) {
+						$("#sp6").removeClass("green")
+						$("#sp6").text("이미 존재하는 닉네임입니다..").addClass("red")
+					}else {
+						$("#sp6").removeClass("red")
+						$("#sp6").text("사용 가능한 닉네임입니다.").addClass("green")
+					}
+				}
+				, error : function() {
+					console.log("실패");
+				}
+			}); //ajax 끝	
+		}
+	})
+	
 
 	// 우편번호 인풋창 체크
 	$("#sample6_postcode").on("propertychange change keyup paste input blur", function(){
@@ -132,10 +242,10 @@ $(document).ready(function(){
 	
 	// 상세주소 인풋창 체크
 	$("#sample6_detailAddress").on("propertychange change keyup paste input blur", function(){
-  	var detailAddress = /^[a-zA-Z가-힣\s]{2,}$/  
+	var detailAddress = /^[a-zA-Z가-힣0-9\s]{2,}$/    
 	if(!detailAddress.test($("#sample6_detailAddress").val())){
     	$("#sp9").removeClass("green")
-		$("#sp9").text("필수 항목입니다.").addClass("red")
+		$("#sp9").text("2글자 이상 필수 항목입니다.").addClass("red")
     }else{
     	$("#sp9").removeClass("red")
 		$("#sp9").text("상세주소 입력 확인되었습니다.").addClass("green")
@@ -147,6 +257,38 @@ $(document).ready(function(){
 
 /* form 전송전 체크 함수 */
 function check(){
+	
+	// id 인풋창 정규식 체크
+		var id = /^[A-Za-z\d]{4,12}$/ 
+			if(!id.test($("#id").val())){
+				$("#sp1").removeClass("green")
+				$("#sp1").text("잘못된 아이디 형식입니다.").addClass("red")
+				return false;
+		}else{
+			//중복검사ajax
+			$.ajax({
+				url : '/join/overlap/id'
+				,type : 'post'
+				,data : {id : $("#id").val() }
+				,dataType : 'html'
+				,success : function(data) {
+					console.log("1 = 중복o / 0 = 중복x : "+ data);										
+					if (data == 1) {
+						$("#sp1").removeClass("green")
+						$("#sp1").text("이미 존재하는 아이디입니다.").addClass("red")
+						return false;
+					}else {
+						$("#sp1").removeClass("red")
+						$("#sp1").text("사용 가능한 아이디입니다.").addClass("green")
+					}
+				}
+				, error : function() {
+					console.log("실패");
+					return false;
+				}
+			}); //ajax 끝	
+		}
+	
 	// pw 인풋창 정규식 체크	
 		var pw = /^[A-Za-z\d]{4,12}$/ 
 		if(!pw.test($("#pw").val())){
@@ -173,8 +315,94 @@ function check(){
 				$("#sp4").text("잘못된 번호 형식입니다.").addClass("red")
 				$("#phone").focus()
 				return false;
-		}
+			}else{
+				//중복검사ajax
+				$.ajax({
+					url : '/join/overlap/phone'
+					,type : 'post'
+					,data : {phone : $("#phone").val() }
+					,dataType : 'html'
+					,success : function(data) {
+						console.log("1 = 중복o / 0 = 중복x : "+ data);										
+						if (data == 1) {
+							$("#sp4").removeClass("green")
+							$("#sp4").text("이미 존재하는 번호입니다.").addClass("red")
+							return false;
+						}else {
+							$("#sp4").removeClass("red")
+							$("#sp4").text("알맞은 전화 번호 입니다.").addClass("green")
+						}
+					}
+					, error : function() {
+						console.log("실패");
+						return false;
+					}
+				}); //ajax 끝	
+			}
 
+		
+		// email 인풋창 정규식 체크
+			var email = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
+				if(!email.test($("#email").val())){
+					$("#sp5").removeClass("green")
+					$("#sp5").text("잘못된 이메일 형식입니다.").addClass("red")
+					return false;
+			}else{
+				//중복검사ajax
+				$.ajax({
+					url : '/join/overlap/email'
+					,type : 'post'
+					,data : {email : $("#email").val() }
+					,dataType : 'html'
+					,success : function(data) {
+						console.log("1 = 중복o / 0 = 중복x : "+ data);										
+						if (data == 1) {
+							$("#sp5").removeClass("green")
+							$("#sp5").text("이미 존재하는 이메일입니다..").addClass("red")
+							return false;
+						}else {
+							$("#sp5").removeClass("red")
+							$("#sp5").text("사용 가능한 이메일입니다.").addClass("green")
+						}
+					}
+					, error : function() {
+						console.log("실패");
+						return false;
+					}
+				}); //ajax 끝	
+			}
+		
+			// nick 인풋창 정규식 체크
+			var nick = /^[0-9a-zA-Z가-힣]{2,10}$/i
+				if(!nick.test($("#nick").val())){
+					$("#sp6").removeClass("green")
+					$("#sp6").text("잘못된 닉네임 형식입니다.").addClass("red")
+					return false;
+			}else{
+				//중복검사ajax
+				$.ajax({
+					url : '/join/overlap/nick'
+					,type : 'post'
+					,data : {nick : $("#nick").val() }
+					,dataType : 'html'
+					,success : function(data) {
+						console.log("1 = 중복o / 0 = 중복x : "+ data);										
+						if (data == 1) {
+							$("#sp6").removeClass("green")
+							$("#sp6").text("이미 존재하는 닉네임입니다..").addClass("red")
+							return false;
+						}else {
+							$("#sp6").removeClass("red")
+							$("#sp6").text("사용 가능한 닉네임입니다.").addClass("green")
+						}
+					}
+					, error : function() {
+						console.log("실패");
+						return false;
+					}
+				}); //ajax 끝	
+			}
+		
 
 	// 우편번호 인풋창 체크
 	    if(typeof $("#sample6_postcode").val() == "undefined" || $("#sample6_postcode").val() == null || $("#sample6_postcode").val() == ""){
@@ -200,7 +428,7 @@ function check(){
 		var detailAddress = /^[a-zA-Z가-힣0-9\s]{2,}$/  
 		if(!detailAddress.test($("#sample6_detailAddress").val())){
 	    	$("#sp9").removeClass("green")
-			$("#sp9").text("필수 항목입니다.").addClass("red")
+			$("#sp9").text("2글자 이상 필수 항목입니다.").addClass("red")
 			return false;
 	    }else{
 	    	$("#sp9").removeClass("red")
@@ -299,7 +527,7 @@ function check(){
 	  <div class="form-group">
 	    <label for="nick" class="col-sm-2 control-label">닉네임</label>
 	    <div class="col-sm-10">
-	      <input type="password" class="form-control" id="nick" name ="nick" placeholder="닉네임123...">
+	      <input type="text" class="form-control" id="nick" name ="nick" placeholder="닉네임123...">
 	      <span id="sp6"></span>
 	    </div>
 	  </div>
