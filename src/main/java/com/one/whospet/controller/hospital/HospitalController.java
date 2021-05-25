@@ -114,10 +114,16 @@ public class HospitalController {
 	
 	@RequestMapping(value = "/hospital/reviewProc")
 	public @ResponseBody int reviewProc(@RequestParam HashMap<String, Object> map) {
-		System.out.println("--------------들어온값===="+map);
 		int res = hospitalService.addReview(map);		
 		return res;
 	}
 	
+	@RequestMapping(value = "/hospital/register")
+	public void register() {}
+	
+	@RequestMapping(value = "/hospital/register", method = RequestMethod.POST)
+	public void registerProc(Hospital hospital) {
+		System.out.println("----hospital"+hospital);
+	}
 	
 }
