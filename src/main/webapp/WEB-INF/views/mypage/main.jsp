@@ -153,7 +153,7 @@ list-style: none;
 }
 
 #div1{
-width: 600px;
+width: 700px;
 height: 500px;
 position: relative;
 right:-250px; top:-100px;
@@ -179,10 +179,13 @@ cursor:pointer;
 <li id="payinfo">구매내역</li>
 <hr>
 <li id="basketinfo">장바구니</li>
+<!-- 병원 관계자 시에만 보이는 메뉴 -->
+<c:if test="${user.uGrade eq 'H'}"> 
 <hr>
-<li>병원 등록/조회/삭제</li>
+<li style="color:#e1701a;">병원 등록/조회/삭제</li>
 <hr>
-<li>예약현황</li>
+<li style="color:#e1701a;">예약현황</li>
+</c:if>
 </ul>
 </div>
 </div>

@@ -5,5 +5,25 @@
   
   <mapper namespace="com.one.whospet.dao.mypage.face.MypageDao">
   
+	<!-- 유저 DTO 제정의  -->
+	<resultMap type="com.one.whospet.dto.User" id="User">
+		<id column="U_NO" property="uNo"/>
+		
+		<result column="U_GRADE" property="uGrade"/>
+		<result column="U_ID" property="uId"/>
+		<result column="U_PW" property="uPw"/>
+		<result column="U_NAME" property="uName"/>
+		<result column="U_PHONE" property="uPhone"/>
+		<result column="U_NICK" property="uNick"/>
+		<result column="U_EMAIL" property="uEmail"/>
+		<result column="U_ADDRESS" property="uAddress"/>
+		<result column="U_POST" property="uPost"/>
+		<result column="U_DETAIL_ADDRESS" property="uDetailAddress"/>
+		<result column="U_PET" property="uPet"/>
+		<result column="U_JOIN_DATE" property="uJoinDate"/>
+	</resultMap>
   
+  	<select id="selectUserinfo" parameterType="com.one.whospet.dto.User" resultMap="User">
+	SELECT * FROM W_USER WHERE U_NO = #{uNo }
+	</select>
   </mapper>
