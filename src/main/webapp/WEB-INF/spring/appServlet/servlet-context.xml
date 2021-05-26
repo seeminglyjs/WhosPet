@@ -44,6 +44,10 @@
 			<beans:bean class="com.one.whospet.interceptor.UserLoginCheckInterceptor"/>
 			
 		</interceptor>
+		<interceptor>
+			<mapping path="/hospital/register" />
+			<beans:bean class="com.one.whospet.interceptor.HospitalRegisterInterceptor" />
+		</interceptor>
 	</interceptors> 
 
 
