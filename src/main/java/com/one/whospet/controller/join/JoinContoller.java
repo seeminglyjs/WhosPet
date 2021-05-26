@@ -32,6 +32,8 @@ public class JoinContoller {
 	//가입 아이디의 존재(중복) 여부를 체크하는 컨트롤러
 	@RequestMapping(value = "/join/overlap/id", method=RequestMethod.POST)
 	public void overlapId(HttpServletRequest request, Model model) {
+		
+		
 		String id =(String) request.getParameter("id");	
 		logger.info(id);
 
