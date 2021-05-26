@@ -1,6 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    
+    
+//     $("#btnUpdate").click(function(){
+//     	$.ajax({
+//             type : "GET",
+//             url : "/mypage/update",
+//             data: "",
+//             dataType : "html",
+//             error : function() {
+//                 alert('통신실패!!');
+//             },
+//             success : function(data) {
+            
+//             	location.href = "/mypage/update";
+//             }
+    	
+//    			 });
+//     	})
+</script>
 <style>
 table {
 margin-left: 300px; 
@@ -123,6 +145,8 @@ onclick="window.open
 </tr>
 </table>
 <div id="buttons">
-<button type="button" id="btnWrite" style="margin-right: 20px;">정보 수정</button>
-<button type="button" id="btnCancel">회원 탈퇴</button>
+<button type="button" id="btnUpdate" style="margin-right: 20px;"
+onclick="window.open('/mypage/update','write','width=550,height=500,location=no,status=no,scrollbars=yes')">정보 수정</button>
+<button type="button" id="btnDelete"
+onclick="window.open('/mypage/userout','write','width=550,height=500,location=no,status=no,scrollbars=yes')">회원 탈퇴</button>
 </div>
