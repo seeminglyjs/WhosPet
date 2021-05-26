@@ -63,6 +63,11 @@ public class MypageController {
 	@RequestMapping(value = "/mypage/info")
 	public void done() {}
 	
+	//회원 정보 수정전 확인 창
+	@RequestMapping(value = "/mypage/updateCk", method=RequestMethod.GET)
+	public void updateCk(HttpSession session, Model model) {
+		
+	}
 	//회원 정보 수정 창
 	@RequestMapping(value = "/mypage/update", method=RequestMethod.GET)
 	public void update(HttpSession session, Model model) {
