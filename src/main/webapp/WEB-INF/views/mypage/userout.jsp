@@ -18,7 +18,7 @@ $(function(){
 </script>
 </head>
 <body>
-<h3>정말로 탈퇴하시겠습니까?</h3>
+<h3>정말로 탈퇴하시겠습니까??</h3>
 <form action="/mypage/userout" method="post" id="form">
 <input type="hidden" id="uNo" name="uNo" value="${uinfo.uNo }"/><br>
 <div>
