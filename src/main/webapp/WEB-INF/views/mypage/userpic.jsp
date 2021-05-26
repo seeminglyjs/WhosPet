@@ -72,7 +72,7 @@ padding: .5em .75em;
 </head>
 <body>
 <form action="/mypage/userpic" method="post" id="form" enctype="multipart/form-data">
-<div class="filebox" style="width: 200px; height:100px;">
+<div class="filebox" style="width: 200px; height:30px;">
 <br>
   <label for="ex_file" style="width: 130px; margin-left: 35px;">프로필 사진 변경</label>
   <input type="file" name="file" id="ex_file">
