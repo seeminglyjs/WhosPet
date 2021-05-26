@@ -42,7 +42,7 @@ $(document).ready(function(){
    			 });
     	})
     
-    $("#boardinfo").click(function(){
+    $("#boardinfo").click(function (){
     	$.ajax({
             type : "GET",
             url : "/mypage/board",
@@ -134,6 +134,7 @@ $(document).ready(function(){
 	
 })
 </script>
+
 <style type="text/css">
 #menubar {
 width: 200px;
