@@ -2,6 +2,7 @@ package com.one.whospet.service.mypage.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,9 +14,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.one.whospet.dao.mypage.face.MypageDao;
+import com.one.whospet.dto.Board;
 import com.one.whospet.dto.User;
 import com.one.whospet.dto.Userpic;
 import com.one.whospet.service.mypage.face.MypageService;
+import com.one.whospet.util.MypageBoardPaging;
+
 
 
 @Service
@@ -98,6 +102,20 @@ public class MypageServiceImpl implements MypageService {
 		return null;
 		
 	}
+	@Override
+	public MypageBoardPaging getPaging(HashMap<String, Object> data) {
+		// 총 게시글 수 조회
+		int totalCount = mypageDao.selectCntAll();
+		
+		MypageBoardPaging paging = new MypageBoardPaging(totalCount, (Integer) data.get("curPage"));
+		return paging;
+	}
+	
+	@Override
+	public List<Board> getBoardByUser(HashMap<String, Object> data) {
+		return mypageDao.selectAllBoard(data);
+	}
+
 
 
 }

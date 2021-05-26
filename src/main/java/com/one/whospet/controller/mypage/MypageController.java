@@ -1,5 +1,8 @@
 package com.one.whospet.controller.mypage;
 
+import java.util.HashMap;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -12,9 +15,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.one.whospet.dto.Board;
 import com.one.whospet.dto.User;
 import com.one.whospet.dto.Userpic;
 import com.one.whospet.service.mypage.face.MypageService;
+import com.one.whospet.util.MypageBoardPaging;
+
 
 
 
@@ -100,10 +106,35 @@ public class MypageController {
 		return "/mypage/info";
 	}
 	
-	
-	
+	//게시판 목록 가져오기
 	@RequestMapping(value = "/mypage/board")
-	public void boardinfo() {}
+	public void boardinfo(@RequestParam(defaultValue = "0") int curPage, HttpSession session, Model model) {
+		
+		//해쉬맵 생성
+		HashMap<String, Object> data = new HashMap();
+		
+		logger.debug("페이징 객체 가져오는지 확인해보기~~~!!! : {}", curPage);
+		//유저 번호와 현재 페이지 가져오기
+		User user = (User) session.getAttribute("user");
+		int uNo = user.getuNo();
+//		int curPage = curpage.getCurPage();
+		
+		//해쉬맵에 집어넣기
+		data.put("uNo", uNo);
+		data.put("curPage", curPage);
+		
+		//페이징 계산
+		MypageBoardPaging paging = mypageService.getPaging(data);
+		
+		//페이징 객체 집어넣기
+		data.put("paging", paging);
+		
+		//유저번호에 따른 게시글 가져오기 서비스호출
+		List<Board> ublist = mypageService.getBoardByUser(data);
+		
+		//모델값 전달
+		model.addAttribute("ublist", ublist);
+	}
 	
 	@RequestMapping(value = "/mypage/booking")
 	public void bookinginfo() {}
