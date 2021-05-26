@@ -39,7 +39,14 @@
 	} 
 </script>
 
+<style type="text/css">
 
+.breadcrumb{
+	background-color: white;
+	
+}
+
+</style>
 
 <div>
 <h3>로그인 페이지</h3>
@@ -87,22 +94,24 @@
 	        </label>
 	      </c:otherwise>	
 	      </c:choose>
+	       <button type="submit" class="btn btn-primary" style="margin-left: 20px">로그인</button>
+	      <!-- 카카오톡 로그인  -->
+	      <a id="custom-login-btn" href="javascript:loginWithKakao()"><button type="button" class="btn btn-warning">Kakao 로그인</button></a>      
 	      </div>
-	    </div>
+	    </div> 
 	  </div>
 	  
-	  <div class="form-group">
-	    <div class="col-sm-offset-2 col-sm-10">
-	      <button type="submit" class="btn btn-primary">로그인</button>
-	      <!-- 카카오톡 로그인  -->
-	      <a id="custom-login-btn" href="javascript:loginWithKakao()"><button type="button" class="btn btn-warning">Kakao 로그인</button></a>
-	      
-	    </div>
-	  </div>
-	
 	</form>
+	
+	<!-- 아이디 찾기 비멀번호 찾기 -->
+	<div class="col-sm-offset-4 col-sm-10">
+		<ol class="breadcrumb">
+		  <li><a href="/login/searchId">아이디 찾기</a></li>
+		  <li><a href="/login/searchPw">비밀번호 찾기</a></li>
+		</ol>
 	</div>
 	
+	</div>
 	
 <p id="token-result"></p>
 	

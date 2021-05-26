@@ -2,6 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/layout/headerUser.jsp" %>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<!-- Bootstrap 3.3.2 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 
@@ -38,7 +42,7 @@ $(document).ready(function(){
    			 });
     	})
     
-    $("#boardinfo").click(function(){
+    $("#boardinfo").click(function (){
     	$.ajax({
             type : "GET",
             url : "/mypage/board",
@@ -130,6 +134,7 @@ $(document).ready(function(){
 	
 })
 </script>
+
 <style type="text/css">
 #menubar {
 width: 200px;

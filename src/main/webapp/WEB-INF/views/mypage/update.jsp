@@ -4,26 +4,58 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원 정보 수정</title>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
 <script type="text/javascript">
 //비밀번호 일치 확인
 $(function(){
 	$("#alert-success").hide();
 	$("#alert-danger").hide();
+	$("#alert-length").hide();
+	$("#alert-mix").hide();
 	$("input").keyup(function(){
 		var pwd1=$("#uPw").val();
 		var pwd2=$("#uPwCk").val();
-		if(pwd1 != "" || pwd2 != ""){
-			if(pwd1 == pwd2){
-				$("#alert-success").show();
-				$("#alert-danger").hide();
-				
-			} else {
-				$("#alert-danger").show();
+		var num = pwd1.search(/[0-9]/g);
+		var eng = pwd1.search(/[a-z]/ig);
+		
+		if(pwd1.length < 4 || pwd1.length > 12){
+			  $("#alert-length").show();
+			  return false;
+		 }else if(pwd1.search(/\s/) != -1){	
 				$("#alert-success").hide();
-				$("#btnConfirm").attr("disabled", "disabled");
-			}
+				$("#alert-danger").hide();
+				$("#alert-length").hide();
+				$("#alert-mix").hide();
+			  alert("비밀번호는 공백 없이 입력해주세요.");
+			  return false;
+			 }else if(num < 0 || eng < 0){
+					$("#alert-success").hide();
+					$("#alert-danger").hide();
+					$("#alert-length").hide();
+				 $("#alert-mix").show();
+			  return false;
+			 }else {
+					$("#alert-success").hide();
+					$("#alert-danger").hide();
+					$("#alert-length").hide();
+					$("#alert-mix").hide();
+				console.log("통과"); 
+				if(pwd1 != "" || pwd2 != ""){
+					if(pwd1 == pwd2){
+						$("#alert-success").show();
+						$("#alert-danger").hide();
+						$("#btnConfirm").removeAttr("disabled")
+						return true;
+						
+					} else {
+						$("#alert-danger").show();
+						$("#alert-success").hide();
+						$("#btnConfirm").attr("disabled", "disabled");
+					}
+			 }
+		
+
 		}
 	})
 	
@@ -62,6 +94,16 @@ border-radius: .25em;
 color: #fff;
 font-size: inherit;
 padding: .5em .75em;
+cursor:pointer;
+}
+button:disabled {
+border: none;
+background-color: gray;
+border-radius: .25em;
+color: #fff;
+font-size: inherit;
+padding: .5em .75em;
+cursor:Default;
 }
 #colname {
 padding-left: 10px;
@@ -77,7 +119,6 @@ position: relative;
 top: 100px;
 left: 30px;
 }
-
 #buttons{
 position: relative;
 top: 50px;
@@ -89,6 +130,16 @@ font-size: small;
 padding-left: 10px;
 }
 #alert-danger{
+color: red;
+font-size: small;
+padding-left: 10px;
+}
+#alert-length{
+color: red;
+font-size: small;
+padding-left: 10px;
+}
+#alert-mix{
 color: red;
 font-size: small;
 padding-left: 10px;
@@ -143,13 +194,19 @@ padding-left: 10px;
 </tr>
 <tr>
 <td id="colname">비밀번호 변경 확인</td>
-<td id="colval"><input type="password" id="uPwCk" value="${uinfo.uPw }"/></td>
+<td id="colval"><input type="password" id="uPwCk"/></td>
 </tr>
 <tr> 
 <td id="alert-success">비밀번호가 일치합니다</td>
 </tr>
 <tr> 
 <td id="alert-danger">비밀번호가 일치하지 않습니다</td>
+</tr>
+<tr> 
+<td id="alert-length">비밀번호는 4자리 ~ 12자리 이내로 입력해주세요</td>
+</tr>
+<tr> 
+<td id="alert-mix">비밀번호는 영문, 숫자를 혼합하여 입력해주세요</td>
 </tr>
 <tr>
 <td id="colname">닉네임</td>

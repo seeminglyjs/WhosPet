@@ -60,7 +60,6 @@
 
 
 <!-- 폼태그 정규식 및 중복성 체크 자바스크립트 -->
-<script src="https://code.jquery.com/jquery-2.2.4.min.js" ></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	
@@ -444,7 +443,7 @@ function check(){
 /*  우편 번호만 수평 유지위한 css */
 #sample6_postcode{
 	display: inline !important;
-	width: 250px !important;
+	width: 270px !important;
 }
 
 
