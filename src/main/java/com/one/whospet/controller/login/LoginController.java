@@ -133,6 +133,12 @@ public class LoginController {
 		return "redirect:/"; //메인으로 보내버림
 	}
 
+	//아이디 찾는 뷰 메소드
+	@RequestMapping(value = "/login/searchId")
+	public void searchId() {}
 
+	//아이디 찾는 구현 메소드
+	@RequestMapping(value = "/login/searchId", method = RequestMethod.POST)
+	public void searchIdRes() {}
 
 }
