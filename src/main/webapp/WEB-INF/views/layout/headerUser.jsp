@@ -234,7 +234,7 @@ $(document).ready(function(){
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">병원예약 <span class="caret"></span></a>
       <ul class="dropdown-menu" role="menu">
-        <li><a href="#">병원찾기</a></li>
+        <li><a href="/hospital/list">병원찾기</a></li>
                 
         <c:if test="${user.uGrade eq 'H'}">
 	        <li class="divider"></li>
