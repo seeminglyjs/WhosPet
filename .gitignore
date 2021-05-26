@@ -128,3 +128,9 @@ $RECYCLE.BIN/
 
 pom.properties
 MANIFEST.MF
+
+### macOS ###
+# General
+.DS_Store
+.AppleDouble
+.LSOverride

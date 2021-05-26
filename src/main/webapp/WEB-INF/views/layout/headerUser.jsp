@@ -66,7 +66,7 @@ $(document).ready(function(){
 /*전체를 감싸는 div  */
 #all{
 	/* footer의 하단 고정을 위한 조건식  */
-	min-height: 800px;
+	min-height: 1200px;
 	position: relative;
 	padding-bottom: 330px;
 }
@@ -188,7 +188,7 @@ $(document).ready(function(){
 	      
 	      <c:if test="${login }">
 	      <ul class="dropdown-menu" role="menu">
-	        <li><a href="#" id="mypage">마이페이지</a></li>
+	        <li><a href="/mypage/main" id="mypage">마이페이지</a></li>
 	        <li class="divider"></li>
 	        <li><a href="#" id="logout">로그아웃</a></li>
 	      </ul>

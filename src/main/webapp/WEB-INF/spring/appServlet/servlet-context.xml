@@ -34,13 +34,23 @@
 			<!-- 인터셉터 클래스 지정 파일 경로를 입력 --> 	
 			<!-- 비로그인 체크 인터셉터  -->
 			<beans:bean class="com.one.whospet.interceptor.UnLoginCheckInterceptor"/>
+		
+		<!-- 마이페이지 인터셉터 -->
 		</interceptor>	
+			<interceptor>
+			<!-- 인터셉터가 적용될 URL -->
+			<mapping path ="/mypage/**"/>
+			<!-- 인터셉터 클래스 지정 -->
+			<beans:bean class="com.one.whospet.interceptor.UserLoginCheckInterceptor"/>
+			
+		</interceptor>
 	</interceptors> 
 
 
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
+	<resources mapping="/upload/**" location="/resources/upload/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
