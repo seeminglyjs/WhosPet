@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -80,6 +81,22 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public Userpic getUserpic(User user) {
 		return mypageDao.selectPicByUNo(user);
+	}
+	@Override
+	public void update(User upuser) {
+		mypageDao.updateUser(upuser);
+		
+	}
+	@Override
+	public String out(User outuser, HttpSession session) {
+		int result = 0;
+		result = mypageDao.selectUserCnt(outuser);
+		if (result == 1) {
+			mypageDao.deleteUser(outuser);
+			session.invalidate();
+		}
+		return null;
+		
 	}
 
 
