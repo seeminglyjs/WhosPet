@@ -23,8 +23,8 @@ $(document).ready(function(){
 				$("#sp4").removeClass("green")
 				$("#sp4").text("잘못된 번호 형식입니다.").addClass("red")
 		}else{
-			$("#sp3").removeClass("red")
-			$("#sp3").text("멋진 이름입니다.").addClass("green")
+			$("#sp4").removeClass("red")
+			$("#sp4").text("알맞은 번호형식입니다.").addClass("green")
 		}
 	})
 })
@@ -32,48 +32,7 @@ $(document).ready(function(){
 
 /* form 전송전 체크 함수 */
 function check(){
-	
-	// id 인풋창 정규식 체크
-		var id = /^[A-Za-z\d]{4,12}$/ 
-			if(!id.test($("#id").val())){
-				$("#sp1").removeClass("green")
-				$("#sp1").text("잘못된 아이디 형식입니다.").addClass("red")
-				return false;
-		}else{
-			//중복검사ajax
-			$.ajax({
-				url : '/join/overlap/id'
-				,type : 'post'
-				,data : {id : $("#id").val() }
-				,dataType : 'html'
-				,success : function(data) {
-					console.log("1 = 중복o / 0 = 중복x : "+ data);										
-					if (data == 1) {
-						$("#sp1").removeClass("green")
-						$("#sp1").text("이미 존재하는 아이디입니다.").addClass("red")
-						return false;
-					}else {
-						$("#sp1").removeClass("red")
-						$("#sp1").text("사용 가능한 아이디입니다.").addClass("green")
-					}
-				}
-				, error : function() {
-					console.log("실패");
-					return false;
-				}
-			}); //ajax 끝	
-		}
-	
-	// pw 인풋창 정규식 체크	
-		var pw = /^[A-Za-z\d]{4,12}$/ 
-		if(!pw.test($("#pw").val())){
-				$("#sp2").removeClass("green")
-				$("#sp2").text("잘못된 비밀번호 형식입니다.").addClass("red")
-				$("#pw").focus()
-				return false;
-		}
 
-	
 	// name 인풋창 정규식 체크
 		var name = /^[가-힣]{2,6}$/
 			if(!name.test($("#name").val())){
@@ -90,68 +49,9 @@ function check(){
 				$("#sp4").text("잘못된 번호 형식입니다.").addClass("red")
 				$("#phone").focus()
 				return false;
-			}else{
-				//중복검사ajax
-				$.ajax({
-					url : '/join/overlap/phone'
-					,type : 'post'
-					,data : {phone : $("#phone").val() }
-					,dataType : 'html'
-					,success : function(data) {
-						console.log("1 = 중복o / 0 = 중복x : "+ data);										
-						if (data == 1) {
-							$("#sp4").removeClass("green")
-							$("#sp4").text("이미 존재하는 번호입니다.").addClass("red")
-							return false;
-						}else {
-							$("#sp4").removeClass("red")
-							$("#sp4").text("알맞은 전화 번호 입니다.").addClass("green")
-						}
-					}
-					, error : function() {
-						console.log("실패");
-						return false;
-					}
-				}); //ajax 끝	
 			}
 
-		
-		// email 인풋창 정규식 체크
-			var email = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
-				if(!email.test($("#email").val())){
-					$("#sp5").removeClass("green")
-					$("#sp5").text("잘못된 이메일 형식입니다.").addClass("red")
-					return false;
-			}else{
-				//중복검사ajax
-				$.ajax({
-					url : '/join/overlap/email'
-					,type : 'post'
-					,data : {email : $("#email").val() }
-					,dataType : 'html'
-					,success : function(data) {
-						console.log("1 = 중복o / 0 = 중복x : "+ data);										
-						if (data == 1) {
-							$("#sp5").removeClass("green")
-							$("#sp5").text("이미 존재하는 이메일입니다..").addClass("red")
-							return false;
-						}else {
-							$("#sp5").removeClass("red")
-							$("#sp5").text("사용 가능한 이메일입니다.").addClass("green")
-						}
-					}
-					, error : function() {
-						console.log("실패");
-						return false;
-					}
-				}); //ajax 끝	
-			}
-		
-	
-	
 }
-
-
 </script>
 
 <style type="text/css">
@@ -204,9 +104,7 @@ function check(){
 	  
 	  <div class="form-group">
 	    <div class="col-sm-offset-2 col-sm-10">
-	       <button type="submit" class="btn btn-primary" style="margin-left: 20px">아이디 찾기</button>
-	      <!-- 카카오톡 로그인  -->
-	      <a id="custom-login-btn" href="javascript:loginWithKakao()"><button type="button" class="btn btn-warning">Kakao 로그인</button></a>      
+	       <button type="submit" class="btn btn-primary">아이디 찾기</button>      
 	    </div> 
 	  </div>
 	  

@@ -139,6 +139,13 @@ public class LoginController {
 
 	//아이디 찾는 구현 메소드
 	@RequestMapping(value = "/login/searchId", method = RequestMethod.POST)
-	public void searchIdRes() {}
+	public String searchIdRes(HttpServletRequest request, Model model) {
+		
+		User user = loginService.findId(request);
+		
+		model.addAttribute("user", user);
+		
+		return "/login/searchIdResult";
+	}
 
 }
