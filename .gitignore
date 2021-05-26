@@ -136,4 +136,4 @@ MANIFEST.MF
 .LSOverride
 
 
-/*target/*
+/target/
