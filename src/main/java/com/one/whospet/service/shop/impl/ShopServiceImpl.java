@@ -27,14 +27,16 @@ private static final Logger logger = LoggerFactory.getLogger(ShopServiceImpl.cla
 		logger.info("totalCount: {}", totalCount);
 		//페이징 계산
 		ShopPaging paging = new ShopPaging( totalCount, inData.getCurPage() );
-		
+		logger.info("페이징할거야 :{}",paging);
 		return paging;
 	}
 
 	@Override
 	public List<Shop> list(ShopPaging paging) {
-		logger.info("list: {}" );
-		return null;
+		logger.info("list 객체 호출: {}", shopDao.selectPageList(paging));
+		
+		
+		return shopDao.selectPageList(paging);
 	}
 
 }
