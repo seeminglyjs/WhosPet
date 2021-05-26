@@ -443,7 +443,7 @@ function check(){
 /*  우편 번호만 수평 유지위한 css */
 #sample6_postcode{
 	display: inline !important;
-	width: 250px !important;
+	width: 270px !important;
 }
 
 
