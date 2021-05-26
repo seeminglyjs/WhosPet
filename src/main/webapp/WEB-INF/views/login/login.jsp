@@ -107,7 +107,7 @@
 	<div class="col-sm-offset-4 col-sm-10">
 		<ol class="breadcrumb">
 		  <li><a href="/login/searchId">아이디 찾기</a></li>
-		  <li><a href="#">비밀번호 찾기</a></li>
+		  <li><a href="/login/searchPw">비밀번호 찾기</a></li>
 		</ol>
 	</div>
 	

@@ -24,12 +24,16 @@ public class ShopController {
 	@RequestMapping(value="/shop/list", method=RequestMethod.GET)
 	public String shopList( ShopPaging inData, Model model ) {
 		logger.info("/shop/list [GET]");
+		logger.info("indata cccc {}", inData.getCurPage());
 		
 		//페이징 계산
 		ShopPaging paging = shopService.getPaging( inData );
-		logger.info("paging: {}",paging);
+		logger.info("pagingbdhdhdghgdhgd: {}",paging);
 		
 		List<Shop> list = shopService.list( paging );
+		logger.info(list.toString());
+		model.addAttribute("list", list);
+		model.addAttribute("paging", paging);
 		
 		return "shop/list";
 	}

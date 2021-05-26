@@ -1,6 +1,8 @@
 package com.one.whospet.controller.login;
 
 import java.util.HashMap;
+import java.util.Properties;
+
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.one.whospet.dto.User;
 import com.one.whospet.service.login.face.LoginService;
+
 
 @Controller
 public class LoginController {
@@ -146,6 +149,21 @@ public class LoginController {
 		model.addAttribute("user", user);
 		
 		return "/login/searchIdResult";
+	}
+	
+	
+	//비밀번호 찾는 뷰 메소드
+	@RequestMapping(value = "/login/searchPw")
+	public void searchPw() {}
+	
+	//비밀번호 찾는 구현 메소드
+	@RequestMapping(value = "/login/searchPw", method = RequestMethod.POST)
+	public void searchPwRes() {}
+	
+	//메일 보내는 메소드
+	@RequestMapping(value = "/login/mailSend", method = RequestMethod.POST)
+	public void mailSend(HttpServletRequest request, HttpSession session) {
+		
 	}
 
 }
