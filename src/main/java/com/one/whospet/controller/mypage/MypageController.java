@@ -63,6 +63,39 @@ public class MypageController {
 	@RequestMapping(value = "/mypage/info")
 	public void done() {}
 	
+	//회원 정보 수정 창
+	@RequestMapping(value = "/mypage/update", method=RequestMethod.GET)
+	public void update(HttpSession session, Model model) {
+		User user = (User) session.getAttribute("user");
+		User uinfo = mypageService.getUserInfo(user);
+		//모델값 전달
+		model.addAttribute("uinfo", uinfo);
+	}
+	
+	//회원 정보 수정 처리
+	@RequestMapping(value = "/mypage/update", method=RequestMethod.POST)
+	public String updateProc(User upuser) {
+		mypageService.update(upuser);
+		return "redirect: /mypage/info";
+	}
+	
+	//회원 탈퇴 페이지
+	@RequestMapping(value = "/mypage/userout", method=RequestMethod.GET)
+	public void deleteUser(HttpSession session, Model model) {
+		User user = (User) session.getAttribute("user");
+		User uinfo = mypageService.getUserInfo(user);
+		//모델값 전달
+		model.addAttribute("uinfo", uinfo);
+	}
+	
+	//회원 탈퇴 처리
+	@RequestMapping(value = "/mypage/userout", method=RequestMethod.POST)
+	public String deleteUserProc(User outuser, HttpSession session) {
+		mypageService.out(outuser, session);
+		return "/mypage/info";
+	}
+	
+	
 	
 	@RequestMapping(value = "/mypage/board")
 	public void boardinfo() {}
