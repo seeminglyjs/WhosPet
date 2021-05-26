@@ -2,6 +2,8 @@ package com.one.whospet.service.login.impl;
 
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +37,18 @@ public class LoginServiceImpl implements LoginService {
 		
 		//이메일 정보를 기준으로 해당 유저가 기존 가입 유저 인지 체크
 		user = loginDao.selectByEmail(kakaoEmail);
+		return user;
+	}
+	
+	@Override // 아이디 찾는 메소드
+	public User findId(HttpServletRequest request) {
+		
+		User user = new User();
+		user.setuName(request.getParameter("name"));
+		user.setuPhone(request.getParameter("phone"));
+		
+		user = loginDao.selectSearchId(user);
+		
 		return user;
 	}
 }
