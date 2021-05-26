@@ -23,4 +23,12 @@ public interface LoginDao {
 	 */
 	public User selectByEmail(String kakaoEmail);
 
+	/**
+	 * 유저 아이디를 찾는 쿼리
+	 * 
+	 * @param user
+	 * @return 
+	 */
+	public User selectSearchId(User user);
+
 }
