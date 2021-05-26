@@ -37,7 +37,7 @@
 		
 		<result column="b_title" property="bTitle"/>
 		<result column="b_content" property="bContent"/>
-		<result column="b_write_date" property="bWriteDate  "/>
+		<result column="b_write_date" property="bWriteDate"/>
 		<result column="b_update_date" property="bUpdateDate"/>
 		<result column="b_hit" property="bHit"/>
 		<result column="b_type" property="bType"/>
@@ -80,10 +80,10 @@
 	</delete>
 	
 	<select id="selectCntAll" parameterType="hashmap" resultType="int">
-		SELECT COUNT(*) FROM w_board WHERE U_No = #{uNo }
+		SELECT COUNT(*) FROM w_board WHERE u_no = #{uNo }
 	</select>
 	
 	<select id="selectAllBoard" parameterType="hashmap" resultMap="Board">
-		SELECT * FROM w_board WHERE U_No = #{uNo }
+		SELECT * FROM w_board WHERE u_no = #{uNo }
 	</select>
   </mapper>

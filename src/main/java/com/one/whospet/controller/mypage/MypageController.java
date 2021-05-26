@@ -2,6 +2,7 @@ package com.one.whospet.controller.mypage;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -111,9 +112,9 @@ public class MypageController {
 	public void boardinfo(@RequestParam(defaultValue = "0") int curPage, HttpSession session, Model model) {
 		
 		//해쉬맵 생성
-		HashMap<String, Object> data = new HashMap();
+		HashMap<String, Object> data = new HashMap<String, Object>();
 		
-		logger.debug("페이징 객체 가져오는지 확인해보기~~~!!! : {}", curPage);
+		logger.info("페이징 객체 가져오는지 확인해보기~~~!!! : {}", curPage);
 		//유저 번호와 현재 페이지 가져오기
 		User user = (User) session.getAttribute("user");
 		int uNo = user.getuNo();
@@ -128,12 +129,15 @@ public class MypageController {
 		
 		//페이징 객체 집어넣기
 		data.put("paging", paging);
-		
+		logger.info("data 객체 가져오는지 확인해보기~~~!!! : {}", data);
 		//유저번호에 따른 게시글 가져오기 서비스호출
 		List<Board> ublist = mypageService.getBoardByUser(data);
-		
+		for( int i=0; i<ublist.size(); i++) {
+			logger.info("게시글 목록" + ublist.get(i).toString());
+			}
 		//모델값 전달
 		model.addAttribute("ublist", ublist);
+		model.addAttribute("paging", paging);
 	}
 	
 	@RequestMapping(value = "/mypage/booking")

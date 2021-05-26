@@ -43,10 +43,14 @@ $(document).ready(function(){
     	})
     
     $("#boardinfo").click(function (){
+    	 var curpage = <%=request.getParameter("curPage") %>
+    	   if( !curpage ) {
+    	      curpage = 0;
+    	   }
     	$.ajax({
             type : "GET",
             url : "/mypage/board",
-            data: "",
+            data: curpage,
             dataType : "html",
             error : function() {
                 alert('통신실패!!');

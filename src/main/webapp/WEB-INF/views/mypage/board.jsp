@@ -36,7 +36,7 @@ td:nth-child(2) {
 	</tr>
 </thead>
 <tbody>
-<c:forEach items="${list }" var="board">
+<c:forEach items="${ublist }" var="ublist">
 	<tr>
 		<td>${ublist.bNo }</td>
 		<td>${ublist.bType }</td>
