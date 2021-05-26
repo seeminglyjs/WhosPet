@@ -1,0 +1,182 @@
+@charset "UTF-8";
+a, a:hover{
+	color:inherit;
+}
+.nodata{
+	width:289px;
+	height:253px;
+	background:url(/resources/img/nodata.png) 0 0 no-repeat;
+	margin: 50px auto;
+}
+
+.box{
+	border:1px solid #e5e5e5;
+	border-radius:10px;
+	padding:20px;
+}
+
+.box+.box{
+	margin-top:10px;
+}
+
+.mb15{
+	margin-bottom:15px;
+}
+.m40{
+	margin:40px 0;
+}
+.box:hover{
+	transition:all 0.5s;
+	border-color:#ff9800;
+}
+
+.box p{
+	margin-bottom:5px;
+}
+.box p:nth-of-type(1){
+	font-weight:bold;
+	font-size:16px;
+}
+.box p:nth-of-type(2){
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.box p:nth-of-type(4){
+	margin:10px 0;
+}
+.box button:hover{
+	transition:all 0.5s;
+	background-color:#ff9800;
+	color:#fff;
+}
+.reviewbox>p{
+	margin-bottom:0;
+}
+.reviewbox+.reviewbox{
+	margin-top:20px;
+}
+
+.reviewbox>.ruser>span{
+	font-size:13px;
+	color: #aaa;
+}
+.reviewbox>.rcontent{
+	margin:5px 0;
+}
+
+
+.reviewbox .ruser>span:last-child:before{
+	display: inline-block;
+    width: 1px;
+    height: 9px;
+    margin: 4px 6px 0;
+    background: #ededed;
+    vertical-align: baseline;
+    content: "";
+}
+
+.starW+b{
+	margin-left:10px;
+}
+.starW{
+	position:relative; 
+	width:100px; 
+	height:20px; 
+	background:url(/resources/img/empty.png) repeat-x; 
+	background-size:20px;
+}
+.starW>span{
+	position:absolute; 
+	top:0; 
+	left:0; 
+	height:100%; 
+	background:url(/resources/img/star.png) repeat-x; 
+	background-size:20px;
+}
+
+.star{
+	background-size: 30px !important;
+	width: 15px;
+    height: 30px;
+    float:left;
+    text-indent: -9999px;
+    cursor: pointer;
+    background: url(/resources/img/empty.png) no-repeat 0px 0;
+}
+.star.r2{
+	background-position:right 0;
+    margin-right: -7px;
+}
+.star.on{
+	background-image:url(/resources/img/star.png);
+}
+
+.reviewProc textarea{
+	margin:5px 0 10px;
+	resize:none;
+	height:80px;
+}
+.hospital_info{
+	margin-top:45px;
+}
+.hospital_info p{
+	margin-bottom:5px;
+}
+.hospital_info p:nth-of-type(2){
+	font-weight:bold;
+	margin:10px 0;
+	font-size:16px;
+}
+.hospital_info p:nth-of-type(6){
+	margin:20px 0;
+	line-height: 20px;
+}
+h4{
+	font-weight:bold;
+}
+
+.datepicker-inline {
+    width: 100% !important;
+}
+.datepicker table {
+    width: 100%;
+}
+.datepicker table tr td, .datepicker table tr th{
+	height:40px !important;
+}
+
+.reservation_area{
+	border:1px solid #eee;
+	padding:15px;	
+	position:relative;
+}
+.reservation_area.nologin:after{
+	content:"";
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(255,255,255, 0.8);
+}
+.reservation_area.nologin:before{
+	content: "로그인 후 이용 가능합니다";
+    display: block;
+    width: 80%;
+    height: 100px;
+    background: #fff;
+    border: 1px solid #ccc;
+    position: absolute;
+    top: calc(50% - 50px);
+    left: calc(50% - 40%);
+    z-index: 1;
+    font-size: 18px;
+    text-align: center;
+    line-height: 100px;
+    font-weight: bold;
+}
+
+
+
