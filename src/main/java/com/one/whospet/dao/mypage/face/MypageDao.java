@@ -31,6 +31,25 @@ public interface MypageDao {
 	 */
 	public void deleteUserPic(User user);
 
+	/**
+	 * 유저 정보 업데이트
+	 * @param upuser
+	 */
+	public void updateUser(User upuser);
+
+	/**
+	 * 아이디와 패스워드가 일치하는 회원 찾기
+	 * @param outuser
+	 * @return
+	 */
+	public int selectUserCnt(User outuser);
+
+	/**
+	 * 회원삭제
+	 * @param outuser
+	 */
+	public void deleteUser(User outuser);
+
 
 
 

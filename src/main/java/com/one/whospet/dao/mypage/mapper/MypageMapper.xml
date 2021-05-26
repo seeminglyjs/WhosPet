@@ -50,8 +50,19 @@
 	</select>
 	
 	<delete id="deleteUserPic" parameterType="com.one.whospet.dto.User">
-		DELETE from w_user_pic
+		DELETE FROM w_user_pic
 		WHERE U_No = #{uNo }
 	</delete>
 	
+	<update id="updateUser">
+		UPDATE w_user SET u_pw = #{uPw }, u_nick = #{uNick }, u_phone = #{uPhone }, u_email = #{uEmail }, u_address = #{uAddress }  WHERE u_no = #{uNo }
+	</update>
+	
+	<select id="selectUserCnt" parameterType="com.one.whospet.dto.User" resultType="int">
+		SELECT COUNT(*) FROM w_user WHERE u_no = #{uNo } and u_pw = #{uPw }
+	</select>
+	
+	<delete id="deleteUser" parameterType="com.one.whospet.dto.User">
+		DELETE FROM w_user WHERE U_No = #{uNo }
+	</delete>
   </mapper>

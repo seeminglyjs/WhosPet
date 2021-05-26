@@ -1,6 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    
+    
+//     $("#btnUpdate").click(function(){
+//     	$.ajax({
+//             type : "GET",
+//             url : "/mypage/update",
+//             data: "",
+//             dataType : "html",
+//             error : function() {
+//                 alert('통신실패!!');
+//             },
+//             success : function(data) {
+            
+//             	location.href = "/mypage/update";
+//             }
+    	
+//    			 });
+//     	})
+</script>
 <style>
 table {
 margin-left: 300px; 
@@ -26,11 +48,14 @@ padding: .5em .75em;
 }
 #colname {
 padding-left: 10px;
-padding-right: 80px;
+padding-right: 30px;
+background-color: #f6dcbf;
+font-weight: bold;
+text-align: center;
 }
 
 #colval{
-padding-right: 20px;
+padding-right: 60px;
 }
 
 #picture{
@@ -38,6 +63,7 @@ position: relative;
 top: 100px;
 left: 30px;
 }
+
 
 #buttons{
 position: relative;
@@ -95,7 +121,7 @@ left: 430px;
 <button type="button" id="btnPic" 
 style="margin-left: 45px; width: 100px;"
 onclick="window.open
-('/mypage/userpic','write','width=300,height=300,location=no,status=no,scrollbars=yes')">
+('/mypage/userpic','write','width=250,height=200,left=300, top=300, location=no,status=no,scrollbars=yes')">
 사진 변경</button>
 
  
@@ -123,6 +149,8 @@ onclick="window.open
 </tr>
 </table>
 <div id="buttons">
-<button type="button" id="btnWrite" style="margin-right: 20px;">정보 수정</button>
-<button type="button" id="btnCancel">회원 탈퇴</button>
+<button type="button" id="btnUpdate" style="margin-right: 20px;"
+onclick="window.open('/mypage/update','write','width=550,height=500,left=200, top=200, location=no,status=no,scrollbars=yes')">정보 수정</button>
+<button type="button" id="btnDelete"
+onclick="window.open('/mypage/userout','write','width=550,height=500,left=200, top=200, location=no,status=no,scrollbars=yes')">회원 탈퇴</button>
 </div>
