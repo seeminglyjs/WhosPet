@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.one.whospet.dto.Board;
+import com.one.whospet.dto.Booking;
 import com.one.whospet.dto.User;
 import com.one.whospet.dto.Userpic;
 import com.one.whospet.util.MypageBoardPaging;
@@ -68,5 +69,12 @@ public interface MypageService {
 	 * @return
 	 */
 	public List<Board> getBoardByUser(HashMap<String, Object> data);
+
+	 /**
+	 * 데이터 객체 속 유저번호로 부킹 목록 가져오기
+	 * @param data
+	 * @return
+	 */
+	public List<Booking> getBookingByUser(HashMap<String, Object> data);
 
 }

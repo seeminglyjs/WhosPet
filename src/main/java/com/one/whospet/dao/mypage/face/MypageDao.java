@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.one.whospet.dto.Board;
+import com.one.whospet.dto.Booking;
 import com.one.whospet.dto.User;
 import com.one.whospet.dto.Userpic;
 
@@ -67,6 +68,13 @@ public interface MypageDao {
 	 * @return
 	 */
 	public int selectCntAll(HashMap<String, Object> data);
+
+	/**
+	 * 총 예약 조회
+	 * @param data
+	 * @return
+	 */
+	public List<Booking> selectAllBooking(HashMap<String, Object> data);
 
 
 
