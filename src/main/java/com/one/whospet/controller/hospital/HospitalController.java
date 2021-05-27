@@ -107,8 +107,7 @@ public class HospitalController {
 		
 		int res = hospitalService.book(map);
 		if(res==1) {
-			//나중에 수정, 마이페이지-예약조회로 이동
-			out.println("<script>alert('예약에 성공하였습니다. '); location.href='/hospital/list' </script>");
+			out.println("<script>alert('예약에 성공하였습니다. '); location.href='/mypage/booking' </script>");
 		}
 		out.println("<script>alert('예약에 실패하였습니다. 관리자에게 문의해주세요. '); location.href='history.back()'; </script>");
 		
@@ -165,8 +164,7 @@ public class HospitalController {
 	
 	@RequestMapping(value = "/admin/hospitalReject")
 	public String adminHospitalReject(int[] hNoArr) {
-		System.out.println("===거절버튼 ====" + Arrays.toString(hNoArr));
-		
+				
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("hNoArr", hNoArr);
 		
