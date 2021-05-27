@@ -104,6 +104,38 @@ left: 430px;
   clip: rect(0, 0, 0, 0);
   border: 0;
 }
+
+#menubar {
+width: 200px;
+height: 100px;
+background-color: #f6dcbf;
+position: relative; left:0;
+padding-top: 10px;
+border-right: 15px solid black;
+}
+
+#menubar2 {
+width: 200px;
+height: 500px;
+background-color: white;
+position: relative; left:0; top:0;
+border-right: 15px solid gray;
+}
+#barlist {
+padding: 30px;
+list-style: none;
+}
+
+#div1{
+width: 700px;
+height: 500px;
+position: relative;
+right:-250px; top:-100px;
+}
+
+li {
+cursor:pointer;
+}
 </style>
 <h1>회원정보</h1>
 

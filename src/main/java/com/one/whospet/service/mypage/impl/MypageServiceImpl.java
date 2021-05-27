@@ -2,25 +2,33 @@ package com.one.whospet.service.mypage.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.one.whospet.dao.mypage.face.MypageDao;
+import com.one.whospet.dto.Board;
 import com.one.whospet.dto.User;
 import com.one.whospet.dto.Userpic;
 import com.one.whospet.service.mypage.face.MypageService;
+import com.one.whospet.util.MypageBoardPaging;
+
 
 
 @Service
 public class MypageServiceImpl implements MypageService {
 
+	//로거 객체
+	private static final Logger logger = LoggerFactory.getLogger(MypageServiceImpl.class);
 	@Autowired
 	private MypageDao mypageDao;
 	@Autowired ServletContext context;
@@ -98,6 +106,23 @@ public class MypageServiceImpl implements MypageService {
 		return null;
 		
 	}
+	@Override
+	public MypageBoardPaging getPaging(HashMap<String, Object> data) {
+		
+		logger.info("서비스쪽 data: {}", data);
+		// 총 게시글 수 조회
+		int totalCount = mypageDao.selectCntAll(data);
+		logger.info("totalCount는 : {}", totalCount);
+		
+		MypageBoardPaging paging = new MypageBoardPaging(totalCount, (Integer) data.get("curPage"));
+		return paging;
+	}
+	
+	@Override
+	public List<Board> getBoardByUser(HashMap<String, Object> data) {
+		return mypageDao.selectAllBoard(data);
+	}
+
 
 
 }

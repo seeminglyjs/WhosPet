@@ -1,5 +1,10 @@
 package com.one.whospet.dao.shop.face;
 
+import java.util.List;
+
+import com.one.whospet.dto.Shop;
+import com.one.whospet.util.ShopPaging;
+
 public interface ShopDao {
 
 	/**
@@ -8,5 +13,15 @@ public interface ShopDao {
 	 * @return 총 게시글 수
 	 */
 	public int selectCntAll();
+
+	
+	
+	/**
+	 * 페이징 적용된 전체 목록 게시글 조회
+	 * 
+	 * @param paging 페이징 정보 객체
+	 * @return 페이징이 적용된 게시글 리스트
+	 */
+	public List<Shop> selectPageList(ShopPaging paging);
 
 }

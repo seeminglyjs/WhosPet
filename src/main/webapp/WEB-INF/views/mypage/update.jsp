@@ -45,6 +45,7 @@ $(function(){
 					if(pwd1 == pwd2){
 						$("#alert-success").show();
 						$("#alert-danger").hide();
+						$("#btnConfirm").removeAttr("disabled")
 						return true;
 						
 					} else {
@@ -93,6 +94,16 @@ border-radius: .25em;
 color: #fff;
 font-size: inherit;
 padding: .5em .75em;
+cursor:pointer;
+}
+button:disabled {
+border: none;
+background-color: gray;
+border-radius: .25em;
+color: #fff;
+font-size: inherit;
+padding: .5em .75em;
+cursor:Default;
 }
 #colname {
 padding-left: 10px;
@@ -108,7 +119,6 @@ position: relative;
 top: 100px;
 left: 30px;
 }
-
 #buttons{
 position: relative;
 top: 50px;

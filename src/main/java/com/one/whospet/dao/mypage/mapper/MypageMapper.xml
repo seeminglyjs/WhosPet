@@ -30,6 +30,19 @@
 		<result column="UPIC_ORINAME" property="upicOriname"/>
 		<result column="UPIC_STONAME" property="upicStoname"/>
 	</resultMap>
+	
+	<!-- 보드 DTO 제정의  -->
+	<resultMap type="com.one.whospet.dto.Board" id="Board">
+		<id column="b_no" property="bNo"/>
+		
+		<result column="b_title" property="bTitle"/>
+		<result column="b_content" property="bContent"/>
+		<result column="b_write_date" property="bWriteDate"/>
+		<result column="b_update_date" property="bUpdateDate"/>
+		<result column="b_hit" property="bHit"/>
+		<result column="b_type" property="bType"/>
+		<result column="u_no" property="uNo"/>
+	</resultMap>
   
   	<select id="selectUserinfo" parameterType="com.one.whospet.dto.User" resultMap="User">
 	SELECT * FROM W_USER WHERE U_No = #{uNo }
@@ -65,4 +78,12 @@
 	<delete id="deleteUser" parameterType="com.one.whospet.dto.User">
 		DELETE FROM w_user WHERE U_No = #{uNo }
 	</delete>
+	
+	<select id="selectCntAll" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*) FROM w_board WHERE u_no = #{uNo }
+	</select>
+	
+	<select id="selectAllBoard" parameterType="hashmap" resultMap="Board">
+		SELECT * FROM w_board WHERE u_no = #{uNo }
+	</select>
   </mapper>

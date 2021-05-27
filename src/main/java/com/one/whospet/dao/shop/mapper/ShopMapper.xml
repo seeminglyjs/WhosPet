@@ -6,9 +6,32 @@
   
 <mapper namespace="com.one.whospet.dao.shop.face.ShopDao">
 
+	<resultMap type="com.one.whospet.dto.Shop" id="Shop">
+		<id column="s_no" property="sNo"/>
+		
+		<result column="u_no" property="uNo"/>
+		<result column="s_name" property="sName"/>
+		<result column="s_productType" property="sProductType"/>
+		<result column="s_amount" property="sAmount"/>
+		<result column="s_quantity" property="sQuantity"/>
+		<result column="s_date" property="sDate"/>
+		<result column="s_content" property="sContent"/>
+	</resultMap>
+
+
 	<select id="selectCntAll" resultType="int">
 		SELECT count(*) FROM w_shop
 	</select>
 
+	<select id="selectPageList" parameterType="com.one.whospet.util.ShopPaging" resultMap="Shop">
+		SELECT * FROM (
+			SELECT ROWNUM rnum, S.* FROM (
+				SELECT *
+				FROM w_shop
+				ORDER BY s_no desc
+			) S
+		) R
+		WHERE rnum BETWEEN #{startNo} AND #{endNo}
+	</select>
 
 </mapper>
