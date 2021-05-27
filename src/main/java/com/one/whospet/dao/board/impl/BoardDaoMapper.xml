@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 마이바티스 3 Mapper DOCTYPE -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  
+<mapper namespace="com.one.whospet.dao.board.face.BoardDao">
+	
+	<!-- 보드 DTO 제정의  -->
+	<resultMap type="com.one.whospet.dto.Board" id="Board">
+		<id column="b_no" property="bNo"/>
+		
+		<result column="b_title" property="bTitle"/>
+		<result column="b_content" property="bContent"/>
+		<result column="b_write_date" property="bWriteDate"/>
+		<result column="b_update_date" property="bUpdateDate"/>
+		<result column="b_hit" property="bHit"/>
+		<result column="b_type" property="bType"/>
+		<result column="u_no" property="uNo"/>
+	</resultMap>
+	
+	<select id="selectCntBoard" resultType="int">
+		select count(*) from w_board b , w_user u
+        where b.u_no = u.u_no
+	</select>
+	
+	<select id="selectAll" parameterType="com.one.whospet.util.BoardPaging" resultType="hashmap">
+	select * from
+	    (select rownum rnum, bjoin.* from 
+	        (select b.b_no, b.b_title, b.b_hit, b.b_write_date, u.u_nick from w_board b , w_user u
+	             where b.u_no = u.u_no order by b_no desc) bjoin
+	    ) board
+    where rnum between #{startNo} and #{endNo}
+	</select>
+
+</mapper>
