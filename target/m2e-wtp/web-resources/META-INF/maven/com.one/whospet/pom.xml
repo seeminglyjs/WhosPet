@@ -87,6 +87,22 @@
 		    <version>2.12.3</version>
 		</dependency>
 	
+		<!--메일 발송을 위한 JavaMailSenderImpl  -->
+		<dependency> 
+			<groupId>org.springframework</groupId> 
+			<artifactId>spring-context-support</artifactId> 
+			<version>${org.springframework-version}</version> 
+		</dependency>
+		<!--메일 발송을 위한 javax.mail.internet.MimeMessage -->
+		<dependency> 
+			<groupId>com.sun.mail</groupId> 
+			<artifactId>javax.mail</artifactId> 
+			<version>1.5.6</version> 
+		</dependency>
+
+	
+	
+	
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>

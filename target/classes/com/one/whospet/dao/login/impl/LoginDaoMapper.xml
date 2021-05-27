@@ -39,6 +39,11 @@
 	<select id="selectSearchId" parameterType="com.one.whospet.dto.User" resultMap="User">
 		select * from w_user where u_name = #{uName} and u_phone = #{uPhone}
 	</select>
+
+	<select id="selectSearchPw" parameterType="com.one.whospet.dto.User" resultMap="User">
+		select * from w_user where u_id = #{uId} and u_email = #{uEmail}
+	</select>
+	
 	
 
 </mapper>

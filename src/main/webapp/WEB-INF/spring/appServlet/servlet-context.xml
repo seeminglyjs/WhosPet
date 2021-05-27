@@ -76,6 +76,22 @@
 	</beans:bean> -->
 	
 	
+	<!-- Gmail로 메일을 보내기 위한 빈등록 -->
+	<beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"> 
+		<beans:property name="host" value="smtp.gmail.com" /> 
+		<beans:property name="port" value="587" /> 
+		<beans:property name="username" value="" /> <!-- 보낼 이메일 주소  --> 
+		<beans:property name="password" value="" /> <!-- 보낼 이메일 비밀번호  -->
+		<beans:property name="javaMailProperties"> 
+			<beans:props> 
+				<beans:prop key="mail.smtp.auth">true</beans:prop> 
+				<beans:prop key="mail.smtp.starttls.enable">true</beans:prop> 
+			</beans:props> 
+		</beans:property>
+	</beans:bean>
+
+	
+	
 	<!-- MultipartResolver 설정 -->
 	<!-- 파일업로드 요청(multipart/form-data)을 처리하는 클래스(빈) -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

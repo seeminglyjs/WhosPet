@@ -31,4 +31,12 @@ public interface LoginDao {
 	 */
 	public User selectSearchId(User user);
 
+	/**
+	 * 유저비밀번호를 찾는 쿼리
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public User selectSearchPw(User user);
+
 }
