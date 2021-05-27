@@ -142,5 +142,19 @@
 				WHERE rnum BETWEEN #{paging.startNo } AND #{paging.endNo }
 	</select>
 	
+	<select id="selectBookingByBookno" parameterType="int" resultMap="Booking">
+
+					SELECT * FROM w_booking
+                    FULL OUTER JOIN w_hospital ON (w_hospital.h_no = w_booking.h_no)
+					WHERE w_booking.book_no = #{bookNo }
+					
+	</select>
+	
+	<update id="updateBookingCancel" parameterType="com.one.whospet.dto.Booking">
+					UPDATE w_booking
+					SET book_status = 'N'
+					WHERE book_no = #{bookNo }
+	</update>
+	
 	
   </mapper>

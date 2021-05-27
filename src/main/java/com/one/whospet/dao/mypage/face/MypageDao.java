@@ -76,6 +76,21 @@ public interface MypageDao {
 	 */
 	public List<Booking> selectAllBooking(HashMap<String, Object> data);
 
+	/**
+	 * 예약번호를 받아 예약정보 가져오기
+	 * @param bookno
+	 * @return
+	 */
+	public Booking selectBookingByBookno(int bookno);
+
+	/**
+	 * 예약정보 취소로 상태변경
+	 * @param bookno
+	 */
+	public void updateBookingCancel(Booking bookno);
+
+
+
 
 
 
