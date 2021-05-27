@@ -150,7 +150,7 @@ cursor:pointer;
 }
 </style>
 <div id="boardtitle">
-<h1>회원정보</h1>
+<h1 style="display:inline;">내 정보 </h1><h4 style="display:inline; color: gray;">MyInfo</h4>
 <hr>
 </div>
 <div id="picture" style="width: 100px; height:80px;">
@@ -198,3 +198,5 @@ onclick="window.open('/mypage/update','write','width=550,height=500,left=200, to
 <button type="button" id="btnDelete"
 onclick="window.open('/mypage/userout','write','width=550,height=500,left=200, top=200, location=no,status=no,scrollbars=yes')">회원 탈퇴</button>
 </div>
+
+<%@ include file="/WEB-INF/views/layout/footerUser.jsp" %>

@@ -42,7 +42,7 @@ left: 130px;
 </style>
 
 <div id="boardtitle">
-<h1>게시판 정보</h1>
+<h1 style="display:inline;">나의 게시글  </h1><h4 style="display:inline; color: gray;">MyBoard</h4>
 <hr align="left" width="630">
 </div>
 <div id="cont2" class="container-fluid col-md-9">
@@ -80,6 +80,8 @@ left: 130px;
 <div class="clearfix"></div>
 <div id="page">
 <!-- 페이징 JSP -->
-<jsp:include page="/WEB-INF/views/util/paging.jsp" />
+<jsp:include page="/WEB-INF/views/util/mypageboardpaging.jsp" />
 
 </div><!-- .container -->
+
+<%@ include file="/WEB-INF/views/layout/footerUser.jsp" %>
