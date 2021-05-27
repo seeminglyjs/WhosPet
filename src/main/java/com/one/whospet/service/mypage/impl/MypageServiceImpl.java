@@ -127,6 +127,16 @@ public class MypageServiceImpl implements MypageService {
 	public List<Booking> getBookingByUser(HashMap<String, Object> data) {
 		return mypageDao.selectAllBooking(data);
 	}
+	@Override
+	public Booking view(int bookno) {
+		Booking viewdetail = mypageDao.selectBookingByBookno(bookno);
+		return viewdetail;
+	}
+	@Override
+	public void bookingCancel(Booking bookno) {
+		mypageDao.updateBookingCancel(bookno);
+		
+	}
 
 
 

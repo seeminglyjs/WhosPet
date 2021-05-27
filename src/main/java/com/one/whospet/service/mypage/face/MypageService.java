@@ -77,4 +77,17 @@ public interface MypageService {
 	 */
 	public List<Booking> getBookingByUser(HashMap<String, Object> data);
 
+	/**
+	 * 예약정보 상세보기
+	 * @param bookno
+	 * @return
+	 */
+	public Booking view(int bookno);
+
+	/**
+	 * 예약 취소하기
+	 * @param booking
+	 */
+	public void bookingCancel(Booking booking);
+
 }

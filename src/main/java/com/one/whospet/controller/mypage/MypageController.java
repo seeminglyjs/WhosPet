@@ -4,13 +4,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,6 +40,9 @@ public class MypageController {
 	//로그인 서비스 객체
 	@Autowired
 	private MypageService mypageService;
+	//메일 보내는 객체
+	@Autowired 
+	private JavaMailSenderImpl mailSender;
 	
 	@RequestMapping(value = "/mypage/main")
 	public void main() {}
@@ -172,6 +181,47 @@ public class MypageController {
 		//모델값 전달
 		model.addAttribute("booklist", booklist);
 		model.addAttribute("paging", paging);
+	}
+	
+	//예약정보 상세보기 가져오기
+	@RequestMapping(value = "/mypage/bookingDetail", method=RequestMethod.GET)
+	public void bookingdetail(int bookno, Model model) {
+		Booking view = mypageService.view(bookno);
+		//model에 첨부파일 속성값 설정
+		model.addAttribute("view", view);
+		
+	}
+	
+	//예약 취소 처리
+	@RequestMapping(value = "/mypage/bookingDetail", method=RequestMethod.POST)
+	public String bookingcancel(Booking booking, HttpSession session) {
+		
+		User user = (User) session.getAttribute("user");
+		final String uName = user.getuName();
+		logger.info("booking객체 확인" + booking.toString());
+		mypageService.bookingCancel(booking);
+		
+		// 메일 전송 객체 생성 
+		final MimeMessagePreparator preparator = new MimeMessagePreparator() {
+		@Override public void prepare(MimeMessage mimeMessage) throws Exception { 
+		final MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+						
+						
+			helper.setFrom("WhosPet <>"); // 보내는 사람 <> 이메일 주소
+			helper.setTo("kul32137@gmail.com");  // 받는 사람	
+			helper.setSubject( uName + "님의 예약이 취소되었습니다"); // 제목 
+			helper.setText("예약이 취소되었습니다~", true); //내용
+					} 
+					
+				}; 
+				mailSender.send(preparator); //메일을 보낸다.
+		
+		
+		
+		
+		return "redirect:/mypage/user";
+		
+		
 	}
 	
 	@RequestMapping(value = "/mypage/point")
