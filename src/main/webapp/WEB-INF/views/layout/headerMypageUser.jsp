@@ -145,7 +145,40 @@ $(document).ready(function(){
 }
 
 
-/*--------------header 영역 css 끝 ------------------  */
+#menubar {
+width: 200px;
+height: 100px;
+background-color: #f6dcbf;
+position: relative; left:0;
+padding-top: 10px;
+border-right: 15px solid black;
+}
+
+#menubar2 {
+width: 200px;
+height: 500px;
+background-color: white;
+position: relative; left:0; top:0;
+border-right: 15px solid gray;
+}
+#barlist {
+padding: 30px;
+list-style: none;
+}
+
+#div1{
+width: 700px;
+height: 500px;
+position: relative;
+right:-250px; top:-100px;
+}
+
+li {
+cursor:pointer;
+}
+
+
+
 
 
 
@@ -247,7 +280,7 @@ $(document).ready(function(){
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">게시판 <span class="caret"></span></a>
       <ul class="dropdown-menu" role="menu">
-        <li><a href="/board/list">자유게시판</a></li>
+        <li><a href="#">메뉴1</a></li>
         <li class="divider"></li>
         <li><a href="#">메뉴2</a></li>
         <li class="divider"></li>
@@ -289,3 +322,29 @@ $(document).ready(function(){
 </nav>     
 </div><!-- 네비게이션 영역 끝  -->
 <div id="containerAll" class="container"><!-- 콘텐츠 영역 시작  -->
+
+<div id="menubar">
+<h3 style="padding:10px;">마이페이지</h3>
+<div id="menubar2">
+<ul id="barlist">
+<li id="userinfo"><a href="/mypage/user" style="color:gray;">내 정보</a></li>
+<hr>
+<li id="boardinfo"><a href="/mypage/board" style="color:gray;">작성글 조회</a></li>
+<hr>
+<li id="bookinginfo"><a href="/mypage/booking" style="color:gray;">예약 정보</a></li>
+<hr>
+<li id="pointinfo"><a href="/mypage/point" style="color:gray;">포인트 조회</a></li>
+<hr>
+<li id="payinfo"><a href="/mypage/pay" style="color:gray;">구매내역</a></li>
+<hr>
+<li id="basketinfo"><a href="/mypage/basket" style="color:gray;">장바구니</a></li>
+<!-- 병원 관계자 시에만 보이는 메뉴 -->
+<c:if test="${user.uGrade eq 'H'}"> 
+<hr>
+<li style="color:#e1701a;"><a href="#" style="color:#e1701a;">병원 등록/조회/삭제</a></li>
+<hr>
+<li style="color:#e1701a;"><a href="#" style="color:#e1701a;">예약현황</a></li>
+</c:if>
+</ul>
+</div>
+</div>

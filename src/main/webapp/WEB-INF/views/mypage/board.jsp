@@ -1,10 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ include file="/WEB-INF/views/layout/headerMypageUser.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
 
 <style type="text/css">
-table {
-	table-layout: fixed;
+
+boardtable{
+position: relative;
+top: 100px;
+left: 600px;
 }
 
 table, th {
@@ -18,14 +24,32 @@ td:nth-child(2) {
 
 
 
+#boardtitle{
+position: relative;
+top: -100px;
+left: 220px;
+}
+#cont2 {
+float: right;
+top: -100px;
+}
+
+#page{
+position: relative;
+top: -100px;
+left: 130px;
+}
 </style>
 
-<div class="container-fluid">
-<div class="w-75">
+<div id="boardtitle">
 <h1>게시판 정보</h1>
-<hr>
+<hr align="left" width="630">
+</div>
+<div id="cont2" class="container-fluid col-md-9">
+<div class="w-50"> 
 
-<table class="table table-striped table-hover table-condensed">
+
+<table id="boardtable" class="table table-striped table-hover table-condensed">
 <thead>
 	<tr>
 		<th style="width: 10%">글번호</th>
@@ -36,7 +60,7 @@ td:nth-child(2) {
 	</tr>
 </thead>
 <tbody>
-<c:forEach items="${list }" var="board">
+<c:forEach items="${ublist }" var="ublist">
 	<tr>
 		<td>${ublist.bNo }</td>
 		<td>${ublist.bType }</td>
@@ -51,8 +75,10 @@ td:nth-child(2) {
 <span class="pull-left">total : ${paging.totalCount }</span>
 
 
+</div>
+</div>
 <div class="clearfix"></div>
-<div>
+<div id="page">
 <!-- 페이징 JSP -->
 <jsp:include page="/WEB-INF/views/util/paging.jsp" />
 

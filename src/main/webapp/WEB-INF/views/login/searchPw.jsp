@@ -46,19 +46,31 @@ $(document).ready(function(){
 	})
 	
 	
-		// email 인풋창 정규식 체크
+	// email 인풋창 정규식 체크
 	$("#email").on("propertychange change keyup paste input blur", function(){
 		var email = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
 			if(!email.test($("#email").val())){
 				$("#sp5").removeClass("green")
 				$("#sp5").text("잘못된 이메일 형식입니다.").addClass("red")
+				$("#emailSend").attr('disabled', true)
 		}else{
 			$("#sp5").removeClass("red")
 			$("#sp5").text("알맞은 이메일 형식입니다.").addClass("green")
+			$("#emailSend").attr('disabled', false)
 		}
 	})
 	
-	
+	// 전송문자 인풋창 정규식 체크
+	$("#sendText").on("propertychange change keyup paste input blur", function(){
+		var sendText = /^[A-Za-z\d]{4,4}$/ 
+			if(!sendText.test($("#sendText").val())){
+				$("#sp10").removeClass("green")
+				$("#sp10").text("전송 문자는 4자리입니다.").addClass("red")
+		}else{
+			$("#sp10").removeClass("red")
+			$("#sp10").text("입력 확인 되었습니다.").addClass("green")
+		}
+	})
 	
 
 })
@@ -84,6 +96,16 @@ function check(){
 				$("#name").focus()
 				return false;
 		}
+	
+	
+	// 전송문자 인풋창 정규식 체크
+	var sendText = /^[A-Za-z\d]{4,4}$/ 
+		if(!sendText.test($("#sendText").val())){
+			$("#sp10").removeClass("green")
+			$("#sp10").text("전송 문자는 4자리입니다.").addClass("red")
+			return false;
+		}
+	
 }
 </script>
 
@@ -97,7 +119,7 @@ function check(){
 /*  이메일 수평 유지위한 css */
 #email{
 	display: inline !important;
-	width: 270px !important;
+	width: 300px !important;
 }
 
 
@@ -123,7 +145,7 @@ function check(){
 	<form class="form-horizontal" action="/login/searchPw" method="post" onsubmit="return check()">
 	    
 	  <div class="form-group">
-	    <label for="id" class="col-sm-2 control-label">이름</label>
+	    <label for="id" class="col-sm-2 control-label">아이디</label>
 	    <div class="col-sm-10">
 	      <input type="text" class="form-control" id="id" name ="id" placeholder="아이디" autocomplete="off">
 	      <span id="sp1"></span>
@@ -134,16 +156,16 @@ function check(){
 	    <label for="email" class="col-sm-2 control-label">이메일</label>
 	    <div class="col-sm-10">
 	      <input type="text" class="form-control" id="email" name ="email" placeholder="avc@abvd.com" autocomplete="off">
-	      <button class="btn btn-default" id="emailSend">이메일 전송</button>
+	      <button class="btn btn-default" id="emailSend" type="button" disabled="disabled">이메일 전송</button>
     	 <span id="sp5"></span>
 	    </div>
 	  </div>
 	  
 	  
   	  <div class="form-group">
-	    <label for="sendNum" class="col-sm-2 control-label">전송번호</label>
+	    <label for="sendText" class="col-sm-2 control-label">전송문자</label>
 	    <div class="col-sm-10">
-	      <input type="text" class="form-control" id="sendNum" name ="sendNum" placeholder="이메일전송번호" autocomplete="off">
+	      <input type="text" class="form-control" id="sendText" name ="sendText" placeholder="이메일전송문자 4자리" autocomplete="off">
     	 <span id="sp10"></span>
 	    </div>
 	  </div>
@@ -152,6 +174,7 @@ function check(){
 	  <div class="form-group">
 	    <div class="col-sm-offset-2 col-sm-10">
 	       <button type="submit" class="btn btn-primary">비밀번호 찾기</button>      
+	       <button type="button" class="btn btn-danger" onclick="history.back()">뒤로가기</button>      
 	    </div> 
 	  </div>
 	  

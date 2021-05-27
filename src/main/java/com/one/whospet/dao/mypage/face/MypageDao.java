@@ -63,9 +63,10 @@ public interface MypageDao {
 
 	/**
 	 * 총 게시글 조회
+	 * @param data 
 	 * @return
 	 */
-	public int selectCntAll();
+	public int selectCntAll(HashMap<String, Object> data);
 
 
 

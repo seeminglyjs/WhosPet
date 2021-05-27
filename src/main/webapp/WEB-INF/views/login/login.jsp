@@ -103,7 +103,7 @@
 	  
 	</form>
 	
-	<!-- 아이디 찾기 비멀번호 찾기 -->
+	<!-- 아이디 찾기 비멀번호 찾기 테스트 -->
 	<div class="col-sm-offset-4 col-sm-10">
 		<ol class="breadcrumb">
 		  <li><a href="/login/searchId">아이디 찾기</a></li>
