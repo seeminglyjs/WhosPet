@@ -84,6 +84,13 @@
 	</select>
 	
 	<select id="selectAllBoard" parameterType="hashmap" resultMap="Board">
-		SELECT * FROM w_board WHERE u_no = #{uNo }
+			SELECT * FROM (
+				SELECT rownum rnum, B.* FROM (
+					SELECT * FROM w_board 
+					WHERE u_no = #{uNo }
+					ORDER BY b_No DESC
+					) B
+					) w_BOARD
+				WHERE rnum BETWEEN #{paging.startNo } AND #{paging.endNo }
 	</select>
   </mapper>
