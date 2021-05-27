@@ -33,5 +33,10 @@
 		) R
 		WHERE rnum BETWEEN #{startNo} AND #{endNo}
 	</select>
+	
+	<select id="selectShopBySno" parameterType="com.one.whospet.dto.Shop" resultMap="Shop">
+		SELECT * FROM w_shop
+		WHERE s_no = ${sNo}
+	</select>
 
 </mapper>

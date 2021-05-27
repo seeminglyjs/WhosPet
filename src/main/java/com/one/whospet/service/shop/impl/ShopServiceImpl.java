@@ -39,4 +39,9 @@ private static final Logger logger = LoggerFactory.getLogger(ShopServiceImpl.cla
 		return shopDao.selectPageList(paging);
 	}
 
+	@Override
+	public Shop view(Shop viewShop) {
+		return shopDao.selectShopBySno( viewShop );
+	}
+
 }
