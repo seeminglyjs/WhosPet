@@ -125,7 +125,7 @@
   	update w_hospital
 	<trim prefix="set" suffixOverrides=",">
 		<if test="hNoArr!=null ">
-		h_adcheck = 'Y',	
+		h_adcheck = 'Y', h_enroll_date = sysdate ,	
 		</if>
 	</trim>
 	where h_no in
@@ -138,7 +138,7 @@
   	update w_hospital
   	<trim prefix="set" suffixOverrides=",">
 		<if test="hNoArr!=null ">
-		h_adcheck='N',	
+		h_adcheck='N',	 h_enroll_date = null
 		</if>
 	</trim>
   	where h_no in
