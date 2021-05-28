@@ -13,7 +13,7 @@ $(document).ready(function() {
 	$("#btnUp").click(function() {
 		//<form> submit
 		$("#form").submit();
-		opener.location.reload();
+		window.opener.location.href = 'redirect:/mypage/user';
 	});
 	
 	//취소버튼 동작

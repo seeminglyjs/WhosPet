@@ -10,9 +10,12 @@
 $(document).ready(function(){
 	//글쓰기 버튼 누르면 이동
 	$("#btnCancel").click(function() {
-			if(confirm("[확인]을 누르시면 되돌릴 수 없습니다. 예약을 취소하시겠습니까?") ) {
+			if(confirm("[확인]을 누르시면 예약이 취소됩니다. 정말로 취소하시겠습니까?") ) {
 				$("#form").submit();
-	  		}
+	  		}	
+			else {
+				return false;
+			}
 	});
 })
 </script>
