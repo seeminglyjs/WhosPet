@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.MultipartRequest;
 
 import com.one.whospet.dto.Board;
@@ -87,8 +88,14 @@ public class BoardController {
 
 	//게시판 글쓰기 구현 컨트롤러
 	@RequestMapping(value = "/board/write", method = RequestMethod.POST)
-	public void writeRes(HttpSession session, HttpServletRequest request, @RequestParam(value="file", required=false) MultipartFile file) {
-		
+	public void writeRes(HttpSession session, HttpServletRequest request, MultipartHttpServletRequest fileRequest) {
+		logger.info(fileRequest.getParameter("title"));
+		logger.info(fileRequest.getParameter("content"));
+		List<MultipartFile> fileList = fileRequest.getFiles("file");
+		for (MultipartFile mf : fileList) {
+			System.out.println(mf.getOriginalFilename());
+			System.out.println(mf.getSize());
+		}
 	}
 	
 }

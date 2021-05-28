@@ -16,9 +16,30 @@ $(document).ready(function(){
 		//form submit 수행하기
 		$("form").submit();
 	})
+	
+	
+	$('#imgFile').change(function(){
+	    setImageFromFile(this, '#preview');
+	});
+})	
 
-})
+/* 미리보기 구현예정  */
+/* function setImageFromFile(input, expression) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $(expression).attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+} */
 </script>
+
+
+
+
+
+
 
 <style>
 
@@ -30,7 +51,7 @@ $(document).ready(function(){
 </style>
 
 <div class="container" id="writeDiv">
-	<form action="/board/write" method="post" id="writeForm" >
+	<form action="/board/write" method="post" id="writeForm" enctype="multipart/form-data" >
 		
 		<div>
 			<label for="title">제목</label>
@@ -38,17 +59,29 @@ $(document).ready(function(){
 		</div>
 		
 
-		<div>
+		<div onchange="dropfile();">
 			<label for="content">내용</label>
-			<textarea class="form-control" name="content" id="content" rows="15" cols="100" ></textarea>
+			<textarea class="form-control" name="content" id="content" rows="15" cols="100" >
+			</textarea>
 		</div>
+		
+		
+		<input multiple="multiple" type="file" name="file" />
+		
 	</form>
-	<div >
+	<br>
+	
+	
+	<!-- 미리보기 구현예정  -->
+<!-- 	<div>
+	<img id="preview" style="width: 25%;"/>
+	</div> -->
+	
+	<div>
 		<button class="btn btn-sm btn-primary" id="btnSave">게시글 등록</button>
 		<a href="/board/list"><button type="button" class="btn btn-sm btn-primary" id="btnList">목록</button></a>
 	</div>
 	
-
 </div>
 
 <!-- 스마트 에디터 스크립트 코드  -->
