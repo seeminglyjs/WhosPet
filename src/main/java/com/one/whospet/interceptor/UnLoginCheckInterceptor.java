@@ -21,7 +21,6 @@ public class UnLoginCheckInterceptor implements HandlerInterceptor{
 
 		//세션검사 - 비로그인 상태일 경우에만 컨트롤러로 보내기
 		
-		response.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
 
 		//세션 객체
