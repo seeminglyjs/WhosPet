@@ -45,4 +45,29 @@ public class BoardController {
 		model.addAttribute("list", list);		
 		model.addAttribute("listSize", list.size());
 	}
+	
+	
+	// 게시판 상세 화면을 보여주는 컨트롤러
+	@RequestMapping(value = "/board/detail")
+	public String detail(HttpServletRequest request, Model model) {
+		
+		String param = request.getParameter("boardNo");
+		int boardNo = -1;
+		if(param != null && !param.equals("")) { // 파라미터 체크
+			boardNo = Integer.parseInt(param);
+		}
+		
+		//게시글 정보를 가져오는 메소드
+		Board board = boardService.detailBoard(boardNo);
+		
+		//조회된 게시글 존재 여부 체크
+		if(board == null) {
+			return "redirect:/board/list";
+		}else {
+			// 게시판 정보 객체 전달
+			model.addAttribute("board", board);
+			return "/board/detail";
+		}
+		
+	}
 }

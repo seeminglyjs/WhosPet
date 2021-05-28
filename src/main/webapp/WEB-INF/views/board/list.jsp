@@ -15,7 +15,7 @@
 	<c:forEach var="board" begin="0" end="${listSize - 1}" items="${list }">
 	<tr>
 		<td style="width: 9%">${board.B_NO }</td>
-		<td style="width: 46%"><a href="#">${board.B_TITLE }</a></td>
+		<td style="width: 46%"><a href="/board/detail?boardNo=${board.B_NO }">${board.B_TITLE }</a></td>
 		<td style="width: 9%">${board.B_HIT }</td>
 		<td style="width: 20%">${board.U_NICK }</td>
 		<td style="width: 16%"><fmt:formatDate value="${board.B_WRITE_DATE }" pattern="yyyy/MM/dd"/></td>

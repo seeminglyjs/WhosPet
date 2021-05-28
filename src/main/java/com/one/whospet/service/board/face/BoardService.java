@@ -26,4 +26,12 @@ public interface BoardService {
 	 */
 	public List<HashMap<String, Object>> getList(BoardPaging paging);
 
+	/**
+	 * 게시글 상세 조회를 가져오는 메소드
+	 * 
+	 * @param boardNo
+	 * @return
+	 */
+	public Board detailBoard(int boardNo);
+
 }

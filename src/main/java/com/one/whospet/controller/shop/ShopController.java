@@ -21,6 +21,7 @@ public class ShopController {
 	
 	@Autowired ShopService shopService;
 	
+	//상품목록
 	@RequestMapping(value="/shop/list", method=RequestMethod.GET)
 	public String shopList( ShopPaging inData, Model model ) {
 		logger.info("/shop/list [GET]");
@@ -36,6 +37,33 @@ public class ShopController {
 		model.addAttribute("paging", paging);
 		
 		return "shop/list";
+	}
+	
+	//상품상세보기
+	@RequestMapping(value="/shop/view")
+	public void shopView(Shop viewShop, Model model) {
+		logger.info("/shop/view	[GET]");
+		
+		//게시글 번호를 통해 상세페이지 띄우기
+		logger.info("전달파라미터 shop : {}", viewShop);
+		shopService.view(viewShop);
+		logger.info("view 정보 : {}", shopService.view(viewShop));
+		
+		model.addAttribute("shop", shopService.view(viewShop));
+	}
+	
+	
+	//상품등록
+	@RequestMapping(value="/shop/write", method=RequestMethod.GET )
+	public void ShopWrite() {
+		logger.info("/shop/write [GET]");
+	}
+	
+	
+	@RequestMapping(value="/shop/write", method=RequestMethod.POST)
+	public void ShopWrite(Shop shop) {
+		logger.info("/shop/write [POST]");
+		logger.info("전달파라미터 shop : {}", shop);
 	}
 	
 	
