@@ -19,6 +19,9 @@ public class HospitalRegisterInterceptor implements HandlerInterceptor{
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out= response.getWriter();
 		
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("text/html; charset=utf-8");
+		
 		HttpSession session = request.getSession();
 		if( session.getAttribute("login")==null ) {
 			out.println("<script>alert('로그인해주세요!'); location.href='/login/login' </script>");

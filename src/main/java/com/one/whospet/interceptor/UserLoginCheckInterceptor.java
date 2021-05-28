@@ -1,5 +1,7 @@
 package com.one.whospet.interceptor;
 
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -32,8 +34,14 @@ public class UserLoginCheckInterceptor implements HandlerInterceptor{
 			//세션 만료시킴
 			session.invalidate();
 			
-			//에러안내 페이지로 리다이렉트
-			response.sendRedirect("/home/main");
+			response.setCharacterEncoding("utf-8");
+			response.setContentType("text/html; charset=utf-8");
+			
+			PrintWriter out = response.getWriter();
+			out.print("<script>alert('로그인을 진행해주세요!'); location.href='/login/login' </script>");
+			
+//			//에러안내 페이지로 리다이렉트
+//			response.sendRedirect("/");
 
 			return false;// 컨트롤러 접근 금지
 		}else {

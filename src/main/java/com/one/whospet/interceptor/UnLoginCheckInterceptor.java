@@ -20,6 +20,9 @@ public class UnLoginCheckInterceptor implements HandlerInterceptor{
 		logger.info("-----로그인 유저 접근 체크-----");
 
 		//세션검사 - 비로그인 상태일 경우에만 컨트롤러로 보내기
+		
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("text/html; charset=utf-8");
 
 		//세션 객체
 		HttpSession session = request.getSession();
