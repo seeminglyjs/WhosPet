@@ -30,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.one.whospet.dto.Board;
 import com.one.whospet.dto.Booking;
+import com.one.whospet.dto.Point;
 import com.one.whospet.dto.User;
 import com.one.whospet.dto.Userpic;
 import com.one.whospet.service.mypage.face.MypageService;
@@ -239,8 +240,44 @@ public class MypageController {
 		
 	}
 	
+	//포인트 이력 가져오기
 	@RequestMapping(value = "/mypage/point")
-	public void pointinfo() {}
+	public void pointinfo(@RequestParam(defaultValue = "0") int curPage, HttpSession session, Model model) {
+		//해쉬맵 생성
+		HashMap<String, Object> data = new HashMap<String, Object>();
+		
+		//유저 번호 가져오기
+		User user = (User) session.getAttribute("user");
+		int uNo = user.getuNo();
+		
+		//해쉬맵에 집어넣기
+		data.put("uNo", uNo);
+		data.put("curPage", curPage);
+		
+		//페이징 계산
+		MypageBoardPaging paging = mypageService.getPaging(data);
+		
+		//페이징 객체 집어넣기
+		data.put("paging", paging);
+		
+		logger.info("data 객체 가져오는지 확인해보기~~~!!! : {}", data);
+		
+		//유저번호에 따른 포인트이력 가져오기 서비스호출
+		List<Point> pointlist = mypageService.getPointByUser(data);
+		for( int i=0; i<pointlist.size(); i++) {
+			logger.info("포인트 이력" + pointlist.get(i).toString());
+			}
+		
+		//현재포인트(지금까지의 유저 총합포인트) 구하기
+		Point curpoint = mypageService.getCurpointByUser(uNo);
+		
+		//모델값 전달
+		model.addAttribute("pointlist", pointlist);
+		model.addAttribute("paging", paging);
+		model.addAttribute("curpoint", curpoint);
+	
+		
+	}
 	
 	@RequestMapping(value = "/mypage/pay")
 	public void payinfo() {}
