@@ -1,8 +1,9 @@
 package com.one.whospet.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class User {
+public class User implements Serializable {
 
 	private int uNo;
 	private String uGrade;
