@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
 import com.one.whospet.dto.Board;
 import com.one.whospet.dto.User;
 import com.one.whospet.util.BoardPaging;
@@ -49,5 +51,13 @@ public interface BoardService {
 	 * @param boardNo
 	 */
 	public void updateHit(int boardNo);
+
+	/**
+	 * 게시글을 작성하는 메소드
+	 * 
+	 * @param fileRequest
+	 * @param user
+	 */
+	public void writeBoard(MultipartHttpServletRequest fileRequest, User user);
 
 }

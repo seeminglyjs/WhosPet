@@ -88,14 +88,12 @@ public class BoardController {
 
 	//게시판 글쓰기 구현 컨트롤러
 	@RequestMapping(value = "/board/write", method = RequestMethod.POST)
-	public void writeRes(HttpSession session, HttpServletRequest request, MultipartHttpServletRequest fileRequest) {
-		logger.info(fileRequest.getParameter("title"));
-		logger.info(fileRequest.getParameter("content"));
-		List<MultipartFile> fileList = fileRequest.getFiles("file");
-		for (MultipartFile mf : fileList) {
-			System.out.println(mf.getOriginalFilename());
-			System.out.println(mf.getSize());
-		}
+	public String writeRes(HttpSession session, MultipartHttpServletRequest fileRequest) {	
+		User user = (User) session.getAttribute("user");
+		
+		boardService.writeBoard(fileRequest, user);
+		
+		return "redirect:/board/list";	
 	}
 	
 }

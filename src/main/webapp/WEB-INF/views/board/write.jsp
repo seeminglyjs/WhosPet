@@ -56,11 +56,20 @@ $(document).ready(function(){
 		<div>
 			<label for="title">제목</label>
 			<input type="text" class="form-control" name="title" id="title" placeholder="제목을 입력해 주세요">
-		</div>
-		
 
-		<div onchange="dropfile();">
+		</div>
+		<hr>
+		<div>
 			<label for="content">내용</label>
+	     	<div class="pull-right">
+	     	<label for="category" >게시판종류</label>
+			<select  id= "category" name="category" >
+				<option value="F" >자유게시판</option>
+				<option value="T" >치료게시판</option>
+				<option value="R" >리뷰게시파</option>						
+			</select>
+			</div>
+			<div class=”clearfix“></div>
 			<textarea class="form-control" name="content" id="content" rows="15" cols="100" >
 			</textarea>
 		</div>
@@ -77,12 +86,14 @@ $(document).ready(function(){
 	<img id="preview" style="width: 25%;"/>
 	</div> -->
 	
+
 	<div>
 		<button class="btn btn-sm btn-primary" id="btnSave">게시글 등록</button>
 		<a href="/board/list"><button type="button" class="btn btn-sm btn-primary" id="btnList">목록</button></a>
 	</div>
 	
-</div>
+	
+
 
 <!-- 스마트 에디터 스크립트 코드  -->
 <script type="text/javascript">

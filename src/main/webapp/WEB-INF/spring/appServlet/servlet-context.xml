@@ -43,6 +43,7 @@
 			<!-- 인터셉터가 적용될 URL -->
 			<mapping path ="/mypage/**"/>
 			<mapping path ="/board/detail/**"/>
+			<mapping path ="/board/write/**"/>
 			<!-- 인터셉터 클래스 지정 -->
 			<beans:bean class="com.one.whospet.interceptor.UserLoginCheckInterceptor"/>	
 		</interceptor>

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.one.whospet.dto.Board;
+import com.one.whospet.dto.BoardImg;
 import com.one.whospet.dto.User;
 import com.one.whospet.util.BoardPaging;
 
@@ -46,5 +47,26 @@ public interface BoardDao {
 	 * @param boardNo
 	 */
 	public void updateHit(int boardNo);
+
+	/**
+	 * 게시글 작성하는 메소드
+	 * 
+	 * @param board
+	 */
+	public void writeBoard(Board board);
+
+	/**
+	 * 현재 작성된 게시글의 번호를 가져오는 메소드
+	 * 
+	 * @return
+	 */
+	public int lastBoardNo();
+
+	/**
+	 * 이미지 정보를 저장하는 메소드
+	 * 
+	 * @param boardImg
+	 */
+	public void insertImgInfo(BoardImg boardImg);
 
 }
