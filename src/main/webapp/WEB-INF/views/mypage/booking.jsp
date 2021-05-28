@@ -26,7 +26,7 @@ td:nth-child(2) {
 
 #boardtitle{
 position: relative;
-top: -100px;
+top: -120px;
 left: 220px;
 }
 #cont2 {
@@ -54,21 +54,22 @@ left: 130px;
 	<tr>
 		<th style="width: 6%">번호</th>
 		<th style="width: 6%">상태</th>
-		<th style="width: 20%">예약날짜</th>
-		<th style="width: 20%">예약시간</th>
-		<th style="width: 15%">예약정보</th>
-		<th style="width: 35%">예약내용</th>
+		<th style="width: 20%">병원</th>
+		<th style="width: 20%">날짜</th>
+		<th style="width: 20%">시간</th>
+		<th style="width: 15%">정보</th>
+		
 	</tr>
 </thead>
 <tbody>
 <c:forEach items="${booklist }" var="booklist">
 	<tr>
-		<td>${booklist.bookNo }</td>
-		<td>${booklist.bookStatus }</td>
+		<td><a href="/mypage/bookingDetail?bookno=${booklist.bookNo }">${booklist.bookNo }</a></td>
+		<td><a href="/mypage/bookingDetail?bookno=${booklist.bookNo }">${booklist.bookStatus }</a></td>
+		<td><a href="/mypage/bookingDetail?bookno=${booklist.bookNo }">${booklist.hospital.hName }</a></td>
 		<td><fmt:formatDate value="${booklist.bookDate }" pattern="yy-MM-dd"/></td>
 		<td>${booklist.bookHour }</td>
-		<td>${booklist.bookPetInfo }</td>
-		<td>${booklist.bookText }</td>
+		<td><a href="/mypage/bookingDetail?bookno=${booklist.bookNo }">${booklist.bookPetInfo }</a></td>
 	</tr>
 </c:forEach>
 </tbody>

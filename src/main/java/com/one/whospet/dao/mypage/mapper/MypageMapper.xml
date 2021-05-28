@@ -73,12 +73,21 @@
   		<result column="h_enroll_date" property="hEnrollDate" />
   		<result column="h_hit" property="hHit" />
   	</resultMap>
+  	
+  	<!-- 포인트 DTO 제정의  -->
+  	<resultMap type="com.one.whospet.dto.Point" id="Point">
+  		<id column="po_no" property="poNo" />
+  		<result column="u_no" property="uNo" />
+  		<result column="s_no" property="sNo" />
+  		<result column="po_plus" property="poPlus" />
+  		<result column="po_minus" property="poMinus" />
+  		<result column="po_plus_y" property="poPlusY" />
+  		<result column="po_minus_y" property="poMinusY" />
+  		<result column="po_date" property="poDate" />
+  		<result column="po_sum" property="poSum" />
+  	</resultMap>
 	
-<!-- 병원 예약 조인 DTO 제정의  -->
-<!-- 	<resultMap type="com.one.whospet.dto.BookingAndHospital" id="BookingAndHospital"> -->
-<!-- 		<collection property="Booking" resultMap="Booking"/> -->
-<!-- 		<collection property="Hospital" resultMap="Hospital"/> -->
-<!-- 	</resultMap> -->
+
   
   	<select id="selectUserinfo" parameterType="com.one.whospet.dto.User" resultMap="User">
 	SELECT * FROM W_USER WHERE U_No = #{uNo }
@@ -141,6 +150,36 @@
 					) BOARD
 				WHERE rnum BETWEEN #{paging.startNo } AND #{paging.endNo }
 	</select>
+	
+	<select id="selectBookingByBookno" parameterType="int" resultMap="Booking">
+
+					SELECT * FROM w_booking
+                    FULL OUTER JOIN w_hospital ON (w_hospital.h_no = w_booking.h_no)
+					WHERE w_booking.book_no = #{bookNo }
+					
+	</select>
+	
+	<update id="updateBookingCancel" parameterType="com.one.whospet.dto.Booking">
+					UPDATE w_booking
+					SET book_status = 'N'
+					WHERE book_no = #{bookNo }
+	</update>
+	<select id="selectAllPoint" parameterType="hashmap" resultMap="Point">
+			SELECT * FROM (
+				SELECT rownum rnum, B.* FROM (
+					SELECT * FROM w_point 
+					WHERE u_no = #{uNo }
+					ORDER BY po_no ASC
+					) B
+					) w_BOARD
+				WHERE rnum BETWEEN #{paging.startNo } AND #{paging.endNo }
+	</select>
+	
+	<select id="selectLastPoint" parameterType="int" resultMap="Point">
+		SELECT * FROM (SELECT * FROM w_point WHERE u_no = #{uNo } ORDER BY po_no DESC) WHERE ROWNUM = 1
+	</select>
+	
+	
 	
 	
   </mapper>

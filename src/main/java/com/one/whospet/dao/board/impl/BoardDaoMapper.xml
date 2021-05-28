@@ -21,18 +21,74 @@
 		<result column="u_no" property="uNo"/>
 	</resultMap>
 	
+	<!-- 유저 DTO 제정의  -->
+	<resultMap type="com.one.whospet.dto.User" id="User">
+		<id column="U_No" property="uNo"/>
+		
+		<result column="U_GRADE" property="uGrade"/>
+		<result column="U_ID" property="uId"/>
+		<result column="U_PW" property="uPw"/>
+		<result column="U_NAME" property="uName"/>
+		<result column="U_PHONE" property="uPhone"/>
+		<result column="U_NICK" property="uNick"/>
+		<result column="U_EMAIL" property="uEmail"/>
+		<result column="U_ADDRESS" property="uAddress"/>
+		<result column="U_POST" property="uPost"/>
+		<result column="U_DETAIL_ADDRESS" property="uDetailAddress"/>
+		<result column="U_PET" property="uPet"/>
+		<result column="U_JOIN_DATE" property="uJoinDate"/>
+	</resultMap>
+	
+	<!-- 게시판 이미지 DTO 제정의  -->
+	<resultMap type="com.one.whospet.dto.BoardImg" id="BoardImg">
+		<id column="BI_NO" property="biNo"/>
+		
+		<result column="B_NO" property="bNo"/>
+		<result column="BI_ORIGIN_FILENAME" property="biOriginFilename"/>
+		<result column="BI_STORED_FILENAME" property="biStoredFilename"/>
+		<result column="BI_SIZE" property="biSize"/>
+		<result column="BI_CONTENT_TYPE" property="biContentType"/>
+	</resultMap>
+	
 	<select id="selectCntBoard" resultType="int">
 		select count(*) from w_board b , w_user u
         where b.u_no = u.u_no
 	</select>
 	
 	<select id="selectAll" parameterType="com.one.whospet.util.BoardPaging" resultType="hashmap">
-	select * from
-	    (select rownum rnum, bjoin.* from 
-	        (select b.b_no, b.b_title, b.b_hit, b.b_write_date, u.u_nick from w_board b , w_user u
-	             where b.u_no = u.u_no order by b_no desc) bjoin
-	    ) board
-    where rnum between #{startNo} and #{endNo}
+		select * from
+		    (select rownum rnum, bjoin.* from 
+		        (select b.b_no, b.b_title, b.b_hit, b.b_write_date, u.u_nick from w_board b , w_user u
+		             where b.u_no = u.u_no order by b_no desc) bjoin
+		    ) board
+	    where rnum between #{startNo} and #{endNo}
+	</select>
+	
+	<select id="selectBoardInfo" parameterType="int" resultMap="Board">
+		select * from w_board where b_no = #{boardNo}
+	</select>
+	
+	<select id="selectBoardWriterInfo" parameterType="int" resultMap="User">
+		select * from w_user where u_no = #{uNo}
 	</select>
 
+	<update id="updateHit" parameterType="int">
+		update w_board set b_hit = b_hit + 1 where b_no = #{boardNo}
+	</update>
+	
+	<insert id="writeBoard">
+		insert into w_board(b_no, b_title, b_content, b_type, u_no ) 
+		values(w_board_seq.nextval, #{bTitle}, #{bContent}, #{bType}, #{uNo})
+	</insert>
+	
+	<select id="lastBoardNo" parameterType="int" resultType="int">
+		select max(b_no) from w_board
+	</select>
+	
+	<insert id="insertImgInfo">
+		insert into w_board_img(bi_no, b_no, bi_origin_filename, bi_stored_filename, bi_size, bi_content_type) 
+		values(w_board_img_seq.nextval, #{bNo}, #{biOriginFilename}, #{biStoredFilename}, #{biSize}, #{biContentType})
+	</insert>
+	
+	
 </mapper>

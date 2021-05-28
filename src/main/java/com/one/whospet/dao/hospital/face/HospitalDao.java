@@ -7,6 +7,7 @@ import java.util.Map;
 import com.one.whospet.dto.Booking;
 import com.one.whospet.dto.Hospital;
 import com.one.whospet.dto.Review;
+import com.one.whospet.util.AdminHospitalPaging;
 import com.one.whospet.util.HospitalPaging;
 
 public interface HospitalDao {
@@ -30,6 +31,14 @@ public interface HospitalDao {
 	public int insertBook(HashMap<String, Object> map);
 
 	public int insertReview(HashMap<String, Object> map);
+
+	public void insertHospital(Hospital hospital);
+
+	public List<Map<String, Object>> selectAllHospital(AdminHospitalPaging paging);
+
+	public int updateHospitalStatusY(HashMap<String, Object> map);
+
+	public int updateHospitalStatusN(HashMap<String, Object> map);
 
 
 	

@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.one.whospet.dto.Board;
 import com.one.whospet.dto.Booking;
+import com.one.whospet.dto.Point;
 import com.one.whospet.dto.User;
 import com.one.whospet.dto.Userpic;
 import com.one.whospet.util.MypageBoardPaging;
@@ -64,6 +65,7 @@ public interface MypageService {
 	public MypageBoardPaging getPaging(HashMap<String, Object> data);
 	
 	/**
+	/**
 	 * 데이터 객체 속 유저번호로 게시글 목록 가져오기
 	 * @param data
 	 * @return
@@ -76,5 +78,32 @@ public interface MypageService {
 	 * @return
 	 */
 	public List<Booking> getBookingByUser(HashMap<String, Object> data);
+
+	/**
+	 * 예약정보 상세보기
+	 * @param bookno
+	 * @return
+	 */
+	public Booking view(int bookno);
+
+	/**
+	 * 예약 취소하기
+	 * @param booking
+	 */
+	public void bookingCancel(Booking booking);
+	
+	/**
+	 * 데이터 객체 속 유저번호로 포인트 이력 가져오기
+	 * @param data
+	 * @return
+	 */
+	public List<Point> getPointByUser(HashMap<String, Object> data);
+
+	/**
+	 * 현재포인트(지금까지의 유저 총합포인트) 구하기
+	 * @param uNo
+	 * @return
+	 */
+	public Point getCurpointByUser(int uNo);
 
 }
