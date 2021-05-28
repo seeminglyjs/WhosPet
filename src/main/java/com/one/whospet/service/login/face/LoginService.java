@@ -34,4 +34,12 @@ public interface LoginService {
 	 */
 	public User findId(HttpServletRequest request);
 
+
+	/**
+	 * 비밀번호 찾는 메소드
+	 * 
+	 * @param request
+	 */
+	public User searchPw(HttpServletRequest request);
+
 }

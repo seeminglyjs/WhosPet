@@ -51,4 +51,16 @@ public class LoginServiceImpl implements LoginService {
 		
 		return user;
 	}
+	
+	@Override // 유저정보 찾는 메소드 
+	public User searchPw(HttpServletRequest request) {
+		User user = new User();
+		user.setuId(request.getParameter("id"));
+		user.setuEmail(request.getParameter("email"));
+		
+		user = loginDao.selectSearchPw(user);
+		
+		return user;
+		
+	}
 }

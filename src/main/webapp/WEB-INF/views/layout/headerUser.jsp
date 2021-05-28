@@ -188,7 +188,7 @@ $(document).ready(function(){
 	      
 	      <c:if test="${login }">
 	      <ul class="dropdown-menu" role="menu">
-	        <li><a href="/mypage/main" id="mypage">마이페이지</a></li>
+	        <li><a href="/mypage/user" id="mypage">마이페이지</a></li>
 	        <li class="divider"></li>
 	        <li><a href="#" id="logout">로그아웃</a></li>
 	      </ul>
@@ -247,7 +247,7 @@ $(document).ready(function(){
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">게시판 <span class="caret"></span></a>
       <ul class="dropdown-menu" role="menu">
-        <li><a href="#">메뉴1</a></li>
+        <li><a href="/board/list">자유게시판</a></li>
         <li class="divider"></li>
         <li><a href="#">메뉴2</a></li>
         <li class="divider"></li>

@@ -67,13 +67,13 @@ padding: .5em .75em;
 <td>비밀번호 입력</td>
 </tr>
 <tr>
-<td><input type="password" id="uPw" name="uPw" value="${uinfo.uPw }"/></td>
+<td><input type="password" id="uPw" name="uPw"/></td>
 </tr>
 <tr>
 <td>비밀번호 확인</td>
 </tr>
 <tr>
-<td><input type="password" id="uPwCk" value="${uinfo.uPw }"/></td>
+<td><input type="password" id="uPwCk"/></td>
 </tr>
 </table>
 </div>

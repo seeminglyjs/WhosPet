@@ -443,7 +443,7 @@ function check(){
 /*  우편 번호만 수평 유지위한 css */
 #sample6_postcode{
 	display: inline !important;
-	width: 250px !important;
+	width: 270px !important;
 }
 
 
@@ -568,7 +568,8 @@ function check(){
 
 	  <div class="form-group">
 	    <div class="col-sm-offset-2 col-sm-10">
-	      <button type="submit" class="btn btn-primary" id="joinBtn">회원가입</button>     
+	      <button type="submit" class="btn btn-primary" id="joinBtn">회원가입</button>    
+	      <button type="submit" class="btn btn-danger" onclick="history.back()">뒤로가기</button>   
 	    </div>
 	  </div>
 	

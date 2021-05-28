@@ -1,5 +1,10 @@
 package com.one.whospet.dao.mypage.face;
 
+import java.util.HashMap;
+import java.util.List;
+
+import com.one.whospet.dto.Board;
+import com.one.whospet.dto.Booking;
 import com.one.whospet.dto.User;
 import com.one.whospet.dto.Userpic;
 
@@ -49,6 +54,42 @@ public interface MypageDao {
 	 * @param outuser
 	 */
 	public void deleteUser(User outuser);
+
+	/**
+	 * 글 목록 가져오기
+	 * @param data 
+	 * @return
+	 */
+	public List<Board> selectAllBoard(HashMap<String, Object> data);
+
+	/**
+	 * 총 게시글 조회
+	 * @param data 
+	 * @return
+	 */
+	public int selectCntAll(HashMap<String, Object> data);
+
+	/**
+	 * 총 예약 조회
+	 * @param data
+	 * @return
+	 */
+	public List<Booking> selectAllBooking(HashMap<String, Object> data);
+
+	/**
+	 * 예약번호를 받아 예약정보 가져오기
+	 * @param bookno
+	 * @return
+	 */
+	public Booking selectBookingByBookno(int bookno);
+
+	/**
+	 * 예약정보 취소로 상태변경
+	 * @param bookno
+	 */
+	public void updateBookingCancel(Booking bookno);
+
+
 
 
 

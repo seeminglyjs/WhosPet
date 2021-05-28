@@ -1,13 +1,17 @@
 package com.one.whospet.service.mypage.face;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.one.whospet.dto.Board;
+import com.one.whospet.dto.Booking;
 import com.one.whospet.dto.User;
 import com.one.whospet.dto.Userpic;
+import com.one.whospet.util.MypageBoardPaging;
 
 public interface MypageService {
 	/**
@@ -49,5 +53,41 @@ public interface MypageService {
 	 * @param session 
 	 */
 	public String out(User outuser, HttpSession session);
+
+
+
+	/**
+	 * 페이징 계산
+	 * @param data
+	 * @return
+	 */
+	public MypageBoardPaging getPaging(HashMap<String, Object> data);
+	
+	/**
+	 * 데이터 객체 속 유저번호로 게시글 목록 가져오기
+	 * @param data
+	 * @return
+	 */
+	public List<Board> getBoardByUser(HashMap<String, Object> data);
+
+	 /**
+	 * 데이터 객체 속 유저번호로 부킹 목록 가져오기
+	 * @param data
+	 * @return
+	 */
+	public List<Booking> getBookingByUser(HashMap<String, Object> data);
+
+	/**
+	 * 예약정보 상세보기
+	 * @param bookno
+	 * @return
+	 */
+	public Booking view(int bookno);
+
+	/**
+	 * 예약 취소하기
+	 * @param booking
+	 */
+	public void bookingCancel(Booking booking);
 
 }
