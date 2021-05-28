@@ -41,7 +41,13 @@ td {
 <div id="cont2" class="container-fluid col-md-9">
 <div class="w-50">
 <form action="/mypage/bookingDetail" method="post" id="form" >
+
+<!-- 예약취소에 전달할 매개변수 -->
 <input type="hidden" id="bookNo" name="bookNo" value="${view.bookNo }"/>
+<input type="hidden" id="bookDate" name="bookDate" value="${view.bookDate }"/>
+<input type="hidden" id="bookHour" name="bookNo" value="${view.bookHour }"/>
+
+<!-- 테이블 시작 -->
 <table class="table table-bordered">
 <tr>
 <td class="info" style="width: 30%;">
@@ -87,7 +93,7 @@ td {
 병원정보</td><td>${view.hospital.hInfo }</td>
 </tr>
 </table>
-
+<!-- .테이블   -->
 <div id="btnBox">
 	<button id="btnCancel" class="btn btn-primary">예약 취소</button>
 </div>

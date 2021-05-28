@@ -1,5 +1,7 @@
 package com.one.whospet.controller.mypage;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,11 +13,15 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.one.whospet.dto.Board;
 import com.one.whospet.dto.Booking;
+import com.one.whospet.dto.Point;
 import com.one.whospet.dto.User;
 import com.one.whospet.dto.Userpic;
 import com.one.whospet.service.mypage.face.MypageService;
@@ -43,6 +50,12 @@ public class MypageController {
 	//메일 보내는 객체
 	@Autowired 
 	private JavaMailSenderImpl mailSender;
+	
+	@InitBinder     
+	public void initBinder(WebDataBinder binder){
+	     binder.registerCustomEditor(       Date.class,     
+	                         new CustomDateEditor(new SimpleDateFormat("dd/MM/yyyy"), true, 10));   
+	}
 	
 	@RequestMapping(value = "/mypage/main")
 	public void main() {}
@@ -195,11 +208,16 @@ public class MypageController {
 	//예약 취소 처리
 	@RequestMapping(value = "/mypage/bookingDetail", method=RequestMethod.POST)
 	public String bookingcancel(Booking booking, HttpSession session) {
-		
+		//유저아이디와 예약정보 가져오고 저장
 		User user = (User) session.getAttribute("user");
-		final String uName = user.getuName();
+		final String uId = user.getuId();
+		final int bookno = booking.getBookNo();
+		
 		logger.info("booking객체 확인" + booking.toString());
 		mypageService.bookingCancel(booking);
+		
+		
+
 		
 		// 메일 전송 객체 생성 
 		final MimeMessagePreparator preparator = new MimeMessagePreparator() {
@@ -207,25 +225,59 @@ public class MypageController {
 		final MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 						
 						
-			helper.setFrom("WhosPet <>"); // 보내는 사람 <> 이메일 주소
-			helper.setTo("kul32137@gmail.com");  // 받는 사람	
-			helper.setSubject( uName + "님의 예약이 취소되었습니다"); // 제목 
-			helper.setText("예약이 취소되었습니다~", true); //내용
+			helper.setFrom("WhosPet <kul32137@gmail.com>"); // 보내는 사람 <> 이메일 주소
+			helper.setTo("kul321japan@gmail.com");  // 받는 사람	
+			helper.setSubject( uId + "님의 예약이 취소되었습니다"); // 제목 
+			helper.setText("예약번호"+bookno+"번의 예약이 취소되었습니다", true); //내용
 					} 
 					
 				}; 
 				mailSender.send(preparator); //메일을 보낸다.
 		
-		
-		
-		
+		//마이페이지 메인으로 리다이렉트
 		return "redirect:/mypage/user";
 		
 		
 	}
 	
+	//포인트 이력 가져오기
 	@RequestMapping(value = "/mypage/point")
-	public void pointinfo() {}
+	public void pointinfo(@RequestParam(defaultValue = "0") int curPage, HttpSession session, Model model) {
+		//해쉬맵 생성
+		HashMap<String, Object> data = new HashMap<String, Object>();
+		
+		//유저 번호 가져오기
+		User user = (User) session.getAttribute("user");
+		int uNo = user.getuNo();
+		
+		//해쉬맵에 집어넣기
+		data.put("uNo", uNo);
+		data.put("curPage", curPage);
+		
+		//페이징 계산
+		MypageBoardPaging paging = mypageService.getPaging(data);
+		
+		//페이징 객체 집어넣기
+		data.put("paging", paging);
+		
+		logger.info("data 객체 가져오는지 확인해보기~~~!!! : {}", data);
+		
+		//유저번호에 따른 포인트이력 가져오기 서비스호출
+		List<Point> pointlist = mypageService.getPointByUser(data);
+		for( int i=0; i<pointlist.size(); i++) {
+			logger.info("포인트 이력" + pointlist.get(i).toString());
+			}
+		
+		//현재포인트(지금까지의 유저 총합포인트) 구하기
+		Point curpoint = mypageService.getCurpointByUser(uNo);
+		
+		//모델값 전달
+		model.addAttribute("pointlist", pointlist);
+		model.addAttribute("paging", paging);
+		model.addAttribute("curpoint", curpoint);
+	
+		
+	}
 	
 	@RequestMapping(value = "/mypage/pay")
 	public void payinfo() {}

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.one.whospet.dto.Board;
 import com.one.whospet.dto.Booking;
+import com.one.whospet.dto.Point;
 import com.one.whospet.dto.User;
 import com.one.whospet.dto.Userpic;
 
@@ -88,6 +89,20 @@ public interface MypageDao {
 	 * @param bookno
 	 */
 	public void updateBookingCancel(Booking bookno);
+
+	/**
+	 * 유저 번호 별 포인트 이력을 받아옴
+	 * @param data
+	 * @return
+	 */
+	public List<Point> selectAllPoint(HashMap<String, Object> data);
+
+	/**
+	 * 유저번호로 마지막 포인트 행 가져오기
+	 * @param uNo
+	 * @return
+	 */
+	public Point selectLastPoint(int uNo);
 
 
 
