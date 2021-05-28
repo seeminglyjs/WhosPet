@@ -23,9 +23,15 @@
 	</c:forEach>
 </table>
 </div>
-<hr>
-<a href="/board/write"><button class="btn btn-default">글쓰기</button></a>
+
+<div class="pull-right">
+<c:if test="${login }">
+	<a href="/board/write"><button class="btn btn-default">글쓰기</button></a>
+</c:if>
 <a href="/"><button class="btn btn-default">홈으로</button></a>
+</div>
+<div class=”clearfix“></div>
+<br>
 
 <%@ include file="/WEB-INF/views/util/boardPaging.jsp" %>
 <%@ include file="/WEB-INF/views/layout/footerUser.jsp" %>

@@ -1,18 +1,26 @@
 package com.one.whospet.service.board.impl;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.one.whospet.dao.board.face.BoardDao;
 import com.one.whospet.dto.Board;
+import com.one.whospet.dto.BoardImg;
 import com.one.whospet.dto.User;
 import com.one.whospet.service.board.face.BoardService;
 import com.one.whospet.util.BoardPaging;
@@ -26,6 +34,11 @@ public class BoardServiceImpl implements BoardService {
 	// board Dao 의존성 주입
 	@Autowired
 	BoardDao boardDao;
+	
+	//서블릿 컨텍스트 객체
+	// 의존성주입으로 바로 사용가능한 상태로 얻어온다
+	@Autowired 
+	ServletContext context;
 	
 	@Override // 페이징을 구하는 메소드
 	public BoardPaging getPaging(HttpServletRequest request) {
@@ -77,5 +90,83 @@ public class BoardServiceImpl implements BoardService {
 	public void updateHit(int boardNo) {
 		
 		boardDao.updateHit(boardNo);
+	}
+	
+	@Override // 게시글을 작성하는 메소드
+	@Transactional // 트랜섹션
+	public void writeBoard(MultipartHttpServletRequest fileRequest, User user) {
+		
+		// 파라미터 정보 보드에 저장
+		Board board = new Board();
+		board.setbTitle(fileRequest.getParameter("title"));
+		board.setbContent(fileRequest.getParameter("content"));
+		board.setbType(fileRequest.getParameter("category"));
+		board.setuNo(user.getuNo());
+		
+		//게시글 작성
+		boardDao.writeBoard(board);
+		
+		//첨부 파일 정보 리스트로 받는다.
+		List<MultipartFile> fileList = fileRequest.getFiles("file");
+		
+		//첨부파일이 null이거나 없으면 게시글 파일이 없으면 작성 끝
+		if(fileList == null || fileList.isEmpty()) {
+			return;
+		}else {
+			//첨부 파일 숫자 만큼 반복한다.
+			for(int i = 0; i < fileList.size(); i++) {
+				//파일이 있는 경우
+
+				//파일의 저장될 경로 지정
+				String storePath = context.getRealPath("upload");
+
+				//파일경로가 만들어져 있는지 체크
+				File stored = new File(storePath);
+				if(!stored.exists()) {
+					stored.mkdir(); //없으면 파일 생성
+				}
+
+				//저장될 파일이름 설정
+				String filename = fileList.get(i).getOriginalFilename(); // 원본이름 가져오기
+
+				//컨텐츠타입저장(문자열 뒤에서 자르기)
+				String contentType = filename.substring(filename.lastIndexOf("."));
+
+				//uuid 값 가져온다.
+				String uid = UUID.randomUUID().toString().split("-")[4];
+
+				//파일이름에 uuid 값을 더한다.
+				filename += uid;
+
+				//저장될 파일 정보객체
+				File dest = new File(stored, filename); // 저장 경로와 저장파일 설정
+
+
+				try {// 업로드된 파일을 저장(변환)한다
+					fileList.get(i).transferTo(dest); 
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+				int boardNo = boardDao.lastBoardNo();
+
+
+				//파일 정보 객체 저장
+				BoardImg boardImg = new BoardImg();
+
+				boardImg.setBiOriginFilename(fileList.get(i).getOriginalFilename());
+				boardImg.setBiStoredFilename(filename);
+				boardImg.setbNo(boardNo);
+				boardImg.setBiContentType(contentType);
+				boardImg.setBiSize(fileList.get(i).getSize());
+				
+				//파일 정보 저장
+				boardDao.insertImgInfo(boardImg);
+
+			}
+		}
+		
 	}
 }
