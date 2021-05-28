@@ -37,7 +37,7 @@ public class BoardServiceImpl implements BoardService {
 			curPage = Integer.parseInt(param);
 		};
 		
-		//전체 게시글 수를 가져오는 메소드
+		// 전체 게시글 수를 가져오는 메소드
 		int totalCount = boardDao.selectCntBoard();
 		
 		BoardPaging paging = new BoardPaging(totalCount, curPage);
@@ -45,7 +45,7 @@ public class BoardServiceImpl implements BoardService {
 		return paging;
 	}
 	
-	@Override //게시글 리스트를 가져오는 메소드
+	@Override // 게시글 리스트를 가져오는 메소드
 	public List<HashMap<String, Object>>  getList(BoardPaging paging) {
 		
 		List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>> ();
@@ -53,6 +53,12 @@ public class BoardServiceImpl implements BoardService {
 		list = boardDao.selectAll(paging);
 
 		return list;
+	}
+	
+	@Override // 게시글 상세조회 정보를 가져오는 메소드
+	public Board detailBoard(int boardNo) {
+		
+		return null;
 	}
 	
 }
