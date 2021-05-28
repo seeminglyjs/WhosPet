@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.one.whospet.dto.Board;
+import com.one.whospet.dto.User;
 import com.one.whospet.util.BoardPaging;
 
 public interface BoardService {
@@ -33,5 +34,20 @@ public interface BoardService {
 	 * @return
 	 */
 	public Board detailBoard(int boardNo);
+
+	/**
+	 * 게시글 작성 유저의 정보를 가져오는 메소드
+	 * 
+	 * @param getuNo
+	 * @return
+	 */
+	public User getBoardWriterInfo(int getuNo);
+
+	/**
+	 * 게시글 조회수를 증가시키는 메소드
+	 * 
+	 * @param boardNo
+	 */
+	public void updateHit(int boardNo);
 
 }

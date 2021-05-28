@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.one.whospet.dto.Board;
+import com.one.whospet.dto.User;
 import com.one.whospet.service.board.face.BoardService;
 import com.one.whospet.util.BoardPaging;
 
@@ -58,14 +59,19 @@ public class BoardController {
 		}
 		
 		//게시글 정보를 가져오는 메소드
+		boardService.updateHit(boardNo);
 		Board board = boardService.detailBoard(boardNo);
 		
 		//조회된 게시글 존재 여부 체크
 		if(board == null) {
 			return "redirect:/board/list";
 		}else {
-			// 게시판 정보 객체 전달
+			// 게시글 작성 유저의 정보를 가져오는 메소드
+			User user = boardService.getBoardWriterInfo(board.getuNo());
+			
+			// 게시판 정보/ 작성유저 정보 객체 전달
 			model.addAttribute("board", board);
+			model.addAttribute("user", user);
 			return "/board/detail";
 		}
 		
