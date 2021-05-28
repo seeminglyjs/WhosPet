@@ -3,6 +3,7 @@ package com.one.whospet.controller.hospital;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,7 @@ import com.one.whospet.dto.Booking;
 import com.one.whospet.dto.Hospital;
 import com.one.whospet.dto.Review;
 import com.one.whospet.service.hospital.face.HospitalService;
+import com.one.whospet.util.AdminHospitalPaging;
 import com.one.whospet.util.HospitalPaging;
 
 @Controller
@@ -105,8 +107,7 @@ public class HospitalController {
 		
 		int res = hospitalService.book(map);
 		if(res==1) {
-			//나중에 수정, 마이페이지-예약조회로 이동
-			out.println("<script>alert('예약에 성공하였습니다. '); location.href='/hospital/list' </script>");
+			out.println("<script>alert('예약에 성공하였습니다. '); location.href='/mypage/booking' </script>");
 		}
 		out.println("<script>alert('예약에 실패하였습니다. 관리자에게 문의해주세요. '); location.href='history.back()'; </script>");
 		
@@ -114,16 +115,64 @@ public class HospitalController {
 	
 	@RequestMapping(value = "/hospital/reviewProc")
 	public @ResponseBody int reviewProc(@RequestParam HashMap<String, Object> map) {
+		
 		int res = hospitalService.addReview(map);		
 		return res;
 	}
 	
-	@RequestMapping(value = "/hospital/register")
+	@RequestMapping(value = "/hospital/register", method=RequestMethod.GET)
 	public void register() {}
 	
 	@RequestMapping(value = "/hospital/register", method = RequestMethod.POST)
-	public void registerProc(Hospital hospital) {
-		System.out.println("----hospital"+hospital);
+	public String registerProc(Hospital hospital) {
+		
+		hospitalService.registerHospital(hospital);
+		return "redirect:/hospital/registerComplete?hNo="+hospital.gethNo();
+	}
+	
+	@RequestMapping( value = "/hospital/registerComplete")
+	public void registerComplete(int hNo, Model model) {
+		
+		Hospital hospital = hospitalService.getView(hNo);
+		model.addAttribute("info", hospital);
+		
+	}
+	
+	@RequestMapping(value = "/admin/hospitalList")
+	public void adminHospital(Model model, @RequestParam(defaultValue = "1", required = true) int curPage) {
+		
+		AdminHospitalPaging paging = hospitalService.getAdminPaging(curPage);
+		List<Map<String, Object>> list = hospitalService.getHospital(paging);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("paging", paging);
+		
+	}
+	
+	@RequestMapping(value = "/admin/hospitalApprove")
+	public String adminHospitalApprove(int[] hNoArr) {
+
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("hNoArr", hNoArr);
+		
+		int res = hospitalService.appoveHospital(map);
+		if(res>0) {
+			return "redirect:/admin/hospitalList";
+		}
+		return null;
+	}
+	
+	@RequestMapping(value = "/admin/hospitalReject")
+	public String adminHospitalReject(int[] hNoArr) {
+				
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("hNoArr", hNoArr);
+		
+		int res = hospitalService.rejectHospital(map);
+		if(res>0) {
+			return "redirect:/admin/hospitalList";
+		}
+		return null;
 	}
 	
 }

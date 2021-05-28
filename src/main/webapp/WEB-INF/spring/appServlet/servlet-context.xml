@@ -48,6 +48,10 @@
 			<mapping path="/hospital/register" />
 			<beans:bean class="com.one.whospet.interceptor.HospitalRegisterInterceptor" />
 		</interceptor>
+		<interceptor>
+			<mapping path="/admin/**" />
+			<beans:bean class="com.one.whospet.interceptor.AdminLoginCheckInterceptor" />
+		</interceptor>
 	</interceptors> 
 
 

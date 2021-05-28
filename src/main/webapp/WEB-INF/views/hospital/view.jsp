@@ -115,9 +115,9 @@
 	
 	<hr>
 	<div class="reviewProc">
-		<input type="text" name="hNo" value="${info.hNo }" id="hNo">	
-		<input type="text" name="uNo" value="${user.uNo }" id="uNo">
-		<input type="text" name="rStar" value="0.5" id="rStar">
+		<input type="hidden" name="hNo" value="${info.hNo }" id="hNo">	
+		<input type="hidden" name="uNo" value="${user.uNo }" id="uNo">
+		<input type="hidden" name="rStar" value="0.5" id="rStar">
 		<div class="starRev clearfix">
 		  <span class="star r1 on"></span>
 		  <span class="star r2"></span>

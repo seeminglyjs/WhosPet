@@ -3,8 +3,8 @@
 <%@ include file="/WEB-INF/views/layout/headerUser.jsp" %>
 <link href="/resources/css/hospital.css" rel="stylesheet"> 
 	<h3>병원등록</h3>
-	<form action="/hospital/register" method="post">
-		<input type="text" name="uNo" value="${user.uNo }">
+	<form action="/hospital/register" method="post" onsubmit="return check()">
+		<input type="hidden" name="uNo" value="${user.uNo }">
 		<div class="form-group">
 			<label for="hName">병원이름</label>
 			<input type="text" class="form-control" id="hName" name="hName" placeholder="병원이름을 입력해주세요">
@@ -32,7 +32,7 @@
 		</div>
 		<div class="form-group">
 			<label for="hInfo">병원소개</label>
-			<textarea class="form-control" name="hInfo" placeholder="병원소개를 입력해주세요" style="height:200px; resize:none;"></textarea>
+			<textarea class="form-control" name="hInfo" id="hInfo" placeholder="병원소개를 입력해주세요" style="height:200px; resize:none;"></textarea>
 		</div>
 		<div class="row">
 			<div class="col-md-6">
@@ -82,6 +82,47 @@ function execPostCode() {
        }
     }).open();
 }
+
+//폼 유효성검사
+function check(){
+	
+	if( $("#hName").val()=="" ){
+		alert("병원이름를 입력해주세요!")
+		$("#hName").focus();
+		return false;
+	}
+	
+	if( $("#addr2").val()=="" ){
+		alert("병원 위치를 입력해주세요!")
+		$("#addr2").focus();
+		return false;
+	}
+	
+	if( $("#addr3").val()=="" ){
+		alert("병원 상세주소를 입력해주세요!")
+		$("#addr3").focus();
+		return false;
+	}
+	
+	if( $("#hHour").val()=="" ){
+		alert("진료시간을 입력해주세요!")
+		$("#hHour").focus();
+		return false;
+	}
+	
+	if( $("#hTel").val()=="" ){
+		alert("병원 전화번호를 입력해주세요!")
+		$("#hTel").focus();
+		return false;
+	}
+	
+	if( $("#hInfo").val()=="" ){
+		alert("병원 전화번호를 입력해주세요!")
+		$("#hInfo").focus();
+		return false;
+	}
+}
+
 
 </script>
 	
