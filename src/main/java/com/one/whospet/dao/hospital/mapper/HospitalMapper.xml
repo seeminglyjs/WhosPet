@@ -103,4 +103,49 @@
   	values(w_review_seq.nextval, #{uNo}, #{hNo}, #{rContent}, #{rStar} )
   	</insert>
   
+  	<insert id="insertHospital" parameterType="com.one.whospet.dto.Hospital">
+  	<selectKey order="BEFORE" keyProperty="hNo" resultType="int">
+  	select w_hospital_seq.nextval from dual
+  	</selectKey>
+  	insert into w_hospital(h_no, u_no, h_name, h_road_address, h_detail_address, h_hour, h_tel, h_info)
+	values (#{hNo}, #{uNo}, #{hName}, #{hRoadAddress}, #{hDetailAddress},#{hHour},#{hTel},#{hInfo})
+  	</insert>
+  	
+  	<select id="selectAllHospital" resultType="hashmap" parameterType="com.one.whospet.util.AdminHospitalPaging">
+  	select * from (
+	    select rownum rnum,H.* from (
+	        select * from w_hospital
+	        order by h_no desc
+	    )H
+	)
+	where rnum between #{startNo} and #{endNo}
+  	</select>
+  	
+  	<update id="updateHospitalStatusY" parameterType="hashmap">
+  	update w_hospital
+	<trim prefix="set" suffixOverrides=",">
+		<if test="hNoArr!=null ">
+		h_adcheck = 'Y', h_enroll_date = sysdate ,	
+		</if>
+	</trim>
+	where h_no in
+	<foreach collection="hNoArr"  item="hNo" open="(" close=")" separator=",">
+	#{hNo}
+	</foreach>
+  	</update>
+  	
+  	<update id="updateHospitalStatusN" parameterType="hashmap">
+  	update w_hospital
+  	<trim prefix="set" suffixOverrides=",">
+		<if test="hNoArr!=null ">
+		h_adcheck='N',	 h_enroll_date = null
+		</if>
+	</trim>
+  	where h_no in
+	<foreach collection="hNoArr" item="hNo" open="(" close=")" separator=",">
+	#{hNo}
+	</foreach>
+  	</update>
+  	
+  
   </mapper>

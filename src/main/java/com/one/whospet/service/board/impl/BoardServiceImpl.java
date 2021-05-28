@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.one.whospet.dao.board.face.BoardDao;
 import com.one.whospet.dto.Board;
+import com.one.whospet.dto.User;
 import com.one.whospet.service.board.face.BoardService;
 import com.one.whospet.util.BoardPaging;
 
@@ -37,7 +38,7 @@ public class BoardServiceImpl implements BoardService {
 			curPage = Integer.parseInt(param);
 		};
 		
-		//전체 게시글 수를 가져오는 메소드
+		// 전체 게시글 수를 가져오는 메소드
 		int totalCount = boardDao.selectCntBoard();
 		
 		BoardPaging paging = new BoardPaging(totalCount, curPage);
@@ -45,7 +46,7 @@ public class BoardServiceImpl implements BoardService {
 		return paging;
 	}
 	
-	@Override //게시글 리스트를 가져오는 메소드
+	@Override // 게시글 리스트를 가져오는 메소드
 	public List<HashMap<String, Object>>  getList(BoardPaging paging) {
 		
 		List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>> ();
@@ -55,4 +56,26 @@ public class BoardServiceImpl implements BoardService {
 		return list;
 	}
 	
+	@Override // 게시글 상세조회 정보를 가져오는 메소드
+	public Board detailBoard(int boardNo) {
+		
+		Board board = boardDao.selectBoardInfo(boardNo);
+		
+		return board;
+	}
+	
+	
+	@Override // 게시글 작성 유저의 정보를 가져오는 메소드
+	public User getBoardWriterInfo(int getuNo) {
+		
+		User user = boardDao.selectBoardWriterInfo(getuNo);
+		
+		return user;
+	}
+	
+	@Override //게시글 조회수를 증가시키는 메소드
+	public void updateHit(int boardNo) {
+		
+		boardDao.updateHit(boardNo);
+	}
 }
