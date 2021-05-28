@@ -152,7 +152,7 @@ public class HospitalController {
 	@RequestMapping(value = "/admin/hospitalApprove")
 	public String adminHospitalApprove(int[] hNoArr) {
 
-		HashMap<String, Object> map = new HashMap<>();
+		HashMap<String, Object> map = new HashMap<String,Object>();
 		map.put("hNoArr", hNoArr);
 		
 		int res = hospitalService.appoveHospital(map);

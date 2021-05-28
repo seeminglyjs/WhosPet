@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.one.whospet.controller.login.LoginController;
 import com.one.whospet.dto.User;
 import com.one.whospet.service.join.face.JoinService;
 
@@ -18,7 +17,7 @@ import com.one.whospet.service.join.face.JoinService;
 public class JoinContoller {
 
 	//로거 객체
-	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+	private static final Logger logger = LoggerFactory.getLogger(JoinContoller.class);
 
 	@Autowired
 	private JoinService joinService;
