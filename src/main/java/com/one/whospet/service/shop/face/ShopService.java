@@ -25,4 +25,11 @@ public interface ShopService {
 	 */
 	public List<Shop> list(ShopPaging paging);
 
+	/**
+	 * 상품번호를 통해 상품상세정보 객체 얻기
+	 * 
+	 * @param shop 쿼리스트링으로 게시글 번호를 전달받은 객체
+	 */
+	public Shop view(Shop viewShop);
+
 }

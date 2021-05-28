@@ -24,4 +24,13 @@ public interface ShopDao {
 	 */
 	public List<Shop> selectPageList(ShopPaging paging);
 
+
+	/**
+	 * 상품번호로 상품정보 조회
+	 * 
+	 * @param shop 상품번호를 가진 객체
+	 * @return 상품정보객체
+	 */
+	public Shop selectShopBySno(Shop viewShop);
+
 }
