@@ -22,8 +22,9 @@
 
 <!-- 인터셉터 추가(설정) 코드 -->
 	<interceptors>
-			<interceptor>
 		
+<!--*****로그인 한 유저가 접근하면 안되는 페이지 설정 인터셉터****** -->
+		<interceptor>
 			<!-- 인터셉터가 적용될 url -->
 			<mapping path="/login/login"/><!-- 로그인 유저가 접근시  -->
 			<mapping path="/login/kakaoLogin"/><!-- 로그인 유저가 접근시  -->
@@ -34,21 +35,31 @@
 			<!-- 인터셉터 클래스 지정 파일 경로를 입력 --> 	
 			<!-- 비로그인 체크 인터셉터  -->
 			<beans:bean class="com.one.whospet.interceptor.UnLoginCheckInterceptor"/>
-		
-		<!-- 마이페이지 인터셉터 -->
-		</interceptor>	
-			<interceptor>
+		</interceptor>
+
+<!--*****로그인 되지않은 유저가 접근하면 안되는 페이지 설정 인터셉터****** -->		
+		<!-- 마이페이지 인터셉터 -->			
+		<interceptor>
 			<!-- 인터셉터가 적용될 URL -->
 			<mapping path ="/mypage/**"/>
+			<mapping path ="/board/detail/**"/>
+			<mapping path ="/board/write/**"/>
 			<!-- 인터셉터 클래스 지정 -->
-			<beans:bean class="com.one.whospet.interceptor.UserLoginCheckInterceptor"/>
-			
+			<beans:bean class="com.one.whospet.interceptor.UserLoginCheckInterceptor"/>	
 		</interceptor>
+
+<!--*****병원등급이 아닌 유저가 접근하면 안되는 페이지 설정 인터셉터****** -->		
 		<interceptor>
 			<mapping path="/hospital/register" />
 			<beans:bean class="com.one.whospet.interceptor.HospitalRegisterInterceptor" />
 		</interceptor>
-	</interceptors> 
+
+<!--*****관리자가 아닌 유저가 접근하면 안되는 페이지 설정 인터셉터****** -->
+		<interceptor>
+			<mapping path="/admin/**" />
+			<beans:bean class="com.one.whospet.interceptor.AdminLoginCheckInterceptor" />
+		</interceptor>
+		</interceptors> 
 
 
 
@@ -74,6 +85,22 @@
 	<!-- 스프링 viewResolver 에서의 빈등록 할 태그  -->
 <!-- 	<beans:bean id="down" class="file.view.DownloadView">
 	</beans:bean> -->
+	
+	
+	<!-- Gmail로 메일을 보내기 위한 빈등록 -->
+	<beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"> 
+		<beans:property name="host" value="smtp.gmail.com" /> 
+		<beans:property name="port" value="587" /> 
+		<beans:property name="username" value="" /> <!-- 보낼 이메일 주소  --> 
+		<beans:property name="password" value="" /> <!-- 보낼 이메일 비밀번호  -->
+		<beans:property name="javaMailProperties"> 
+			<beans:props> 
+				<beans:prop key="mail.smtp.auth">true</beans:prop> 
+				<beans:prop key="mail.smtp.starttls.enable">true</beans:prop> 
+			</beans:props> 
+		</beans:property>
+	</beans:bean>
+
 	
 	
 	<!-- MultipartResolver 설정 -->

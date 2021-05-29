@@ -178,5 +178,34 @@ h4{
     font-weight: bold;
 }
 
+.register_status{
+	margin:20px 0;
+}
+.register_status .badge{
+	background:#ddd;
+}
+.register_status>div{
+	margin-top:5px;
+}
+.status_w .on{
+	background:#ffa500;
+}
+.status_w>div{
+	color:#ffa500;
+}
+
+.status_y .on{
+	background:#87ceeb;
+}
+.status_y>div{
+	color:#87ceeb;
+}
+
+.status_n .on{
+	background:red;
+}
+.status_n>div{
+	color:red;
+}
 
 

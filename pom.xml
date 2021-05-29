@@ -80,12 +80,35 @@
 		    <version>1.4</version>
 		</dependency>
 		
+		<!-- 파일 입출력 라이브러리  -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.5</version>
+        </dependency>
+		
 		<!-- jackson databind 2.12.3  -->
 		<dependency>
 		    <groupId>com.fasterxml.jackson.core</groupId>
 		    <artifactId>jackson-databind</artifactId>
 		    <version>2.12.3</version>
 		</dependency>
+	
+		<!--메일 발송을 위한 JavaMailSenderImpl  -->
+		<dependency> 
+			<groupId>org.springframework</groupId> 
+			<artifactId>spring-context-support</artifactId> 
+			<version>${org.springframework-version}</version> 
+		</dependency>
+		<!--메일 발송을 위한 javax.mail.internet.MimeMessage -->
+		<dependency> 
+			<groupId>com.sun.mail</groupId> 
+			<artifactId>javax.mail</artifactId> 
+			<version>1.5.6</version> 
+		</dependency>
+
+	
+	
 	
 		<!-- Spring -->
 		<dependency>

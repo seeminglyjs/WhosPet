@@ -1,9 +1,9 @@
 package com.one.whospet.controller.login;
 
 import java.util.HashMap;
-import java.util.Properties;
+import java.util.UUID;
 
-
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,7 +12,9 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -30,6 +32,11 @@ public class LoginController {
 	//로거 객체
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
+	//메일 보내는 객체
+	@Autowired 
+	private JavaMailSenderImpl mailSender;
+
+	
 	//로그인 서비스 객체
 	@Autowired
 	private LoginService loginService;
@@ -105,7 +112,7 @@ public class LoginController {
 
 		//이메일 정보를 받아온다.
 		String kakaoEmail = request.getParameter("kakaoEmail");
-		
+
 		//받아온 이메일 정보를 출력한다
 		logger.info(kakaoEmail);
 
@@ -113,7 +120,7 @@ public class LoginController {
 		User user = loginService.findUserByEmail(kakaoEmail);
 
 		// 유저인지 관리자 인지 체크
-		
+
 		if(user == null) {
 			session.invalidate(); // 세션 만료시켜버림
 			model.addAttribute("kakaoEmail", kakaoEmail); // 카카오 이메일 정보를 모델로 넘겨준다.
@@ -126,7 +133,7 @@ public class LoginController {
 			return "/home/main"; // 기존 가입 유저 메인으로 보내기
 		}
 
-		
+
 	}
 
 	// 로그아웃 하는 메소드
@@ -143,27 +150,78 @@ public class LoginController {
 	//아이디 찾는 구현 메소드
 	@RequestMapping(value = "/login/searchId", method = RequestMethod.POST)
 	public String searchIdRes(HttpServletRequest request, Model model) {
-		
+
 		User user = loginService.findId(request);
-		
+
 		model.addAttribute("user", user);
-		
+
 		return "/login/searchIdResult";
 	}
-	
-	
+
+
 	//비밀번호 찾는 뷰 메소드
 	@RequestMapping(value = "/login/searchPw")
 	public void searchPw() {}
-	
+
 	//비밀번호 찾는 구현 메소드
 	@RequestMapping(value = "/login/searchPw", method = RequestMethod.POST)
-	public void searchPwRes() {}
+	public String searchPwRes(HttpServletRequest request, HttpSession session, Model model) {
+		
+		//기존 생성 랜덤 문자 4자리 값 가져오기
+		String ranText = (String) session.getAttribute("ranText");
+		logger.info(ranText);
+		
+		//유저가 입력해서 보낸 랜덤 번호값
+		String sendText = request.getParameter("sendText");
+		logger.info(sendText);
+		if(sendText == null || !ranText.equals(sendText)) {
+			session.invalidate();
+			return "/login/searchPwResult";
+		}else {
+			logger.info("메인인증번호 맞음");
+			//인증 번호가 맞음 아이디 이메일 같은지 여부 체크
+			User user = loginService.searchPw(request);
+			
+			model.addAttribute("user", user);
+			
+			return "/login/searchPwResult";
+		}
+	}
+
 	
-	//메일 보내는 메소드
+	
+	//메일 보내는 메소드[보내는 사람이 Gmail 계정이 있어야지만 가능]
 	@RequestMapping(value = "/login/mailSend", method = RequestMethod.POST)
 	public void mailSend(HttpServletRequest request, HttpSession session) {
 		
+		// 받는 사람 이메일 변수화
+		final String email = (String)request.getParameter("email");
+		
+		//받는 사람 이메일 확인
+		logger.info("메일 전송 {}", email);	
+		
+		//uuid 값 가져온다. 4자리 문자 (숫자 /영어)
+		final String ranText = UUID.randomUUID().toString().split("-")[1];
+		
+		//세션에 번호 저장
+		session.setAttribute("ranText", ranText);
+		
+		// 메일 전송 객체 생성 
+		final MimeMessagePreparator preparator = new MimeMessagePreparator() {
+			@Override public void prepare(MimeMessage mimeMessage) throws Exception { 
+				final MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				
+				
+				helper.setFrom("WhosPet <>"); // 보내는 사람 <> 이메일 주소
+				helper.setTo(email);  // 받는 사람	
+				helper.setSubject("비밀번호 확인용 인증번호"); // 제목 
+				helper.setText(
+						"<h3>회원님의 인증번호</h3>"
+						+ "<p>" + ranText + "</p>"
+						, true); //내용
+			} 
+			
+		}; 
+		mailSender.send(preparator); //메일을 보낸다.
 	}
-
 }

@@ -22,11 +22,11 @@
 <c:forEach items="${list }"  var="board">
 <tr>
 <td>${board.sNo }</td>
-<td>${board.sName }</td>
+<td><a href="/shop/view?sNo=${board.sNo }">${board.sName }</a></td>
 <td>${board.sAmount }</td>
 <td>${board.sQuantity }</td>
 <td>${board.sProductType }</td>
-<td>${board.sDate }</td>
+<td><fmt:formatDate value="${board.sDate }" pattern="yy-MM-dd"/></td>
 </tr>
 </c:forEach>
 
@@ -45,13 +45,14 @@
 
 
 
+<div align="right">
+<button><a href="/shop/register">상품등록</a></button>
+</div>
 
 
 
 
 
-
-
-<c:import url="/WEB-INF/views/shop/paging.jsp" />
+<c:import url="/WEB-INF/views/util/shopPaging.jsp" />
 
 <c:import url="/WEB-INF/views/layout/footerAdmin.jsp" />

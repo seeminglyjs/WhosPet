@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/layout/headerMypageUser.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
 <script type="text/javascript">
@@ -25,9 +26,14 @@ $(document).ready(function(){
 </script>
 <style>
 table {
-margin-left: 300px; 
+margin-left: 520px; 
 margin-right: 0px;
 border-left: 10px double #f7a440;
+}
+
+tbody{
+width: 300px;
+
 }
 tr{
 border: 4px solid #f6dcbf;
@@ -61,14 +67,14 @@ padding-right: 60px;
 #picture{
 position: relative;
 top: 100px;
-left: 30px;
+left: 280px;
 }
 
 
 #buttons{
 position: relative;
-top: 50px;
-left: 430px;
+top: 100px;
+left: 400px;
 }
 .filebox label {
   display: inline-block;
@@ -112,6 +118,7 @@ background-color: #f6dcbf;
 position: relative; left:0;
 padding-top: 10px;
 border-right: 15px solid black;
+float: left;
 }
 
 #menubar2 {
@@ -133,14 +140,19 @@ position: relative;
 right:-250px; top:-100px;
 }
 
+#boardtitle{
+position: relative;
+left: 20px;
+}
+
 li {
 cursor:pointer;
 }
 </style>
-<h1>회원정보</h1>
-
-
+<div id="boardtitle">
+<h1 style="display:inline;">내 정보 </h1><h4 style="display:inline; color: gray;">MyInfo</h4>
 <hr>
+</div>
 <div id="picture" style="width: 100px; height:80px;">
 <c:if test="${empty upic}"> 
 <img style="width: 200px; height: 200px; border-radius: 50%" src="../resources/img/defaultImage.png"/>
@@ -186,3 +198,5 @@ onclick="window.open('/mypage/update','write','width=550,height=500,left=200, to
 <button type="button" id="btnDelete"
 onclick="window.open('/mypage/userout','write','width=550,height=500,left=200, top=200, location=no,status=no,scrollbars=yes')">회원 탈퇴</button>
 </div>
+
+<%@ include file="/WEB-INF/views/layout/footerUser.jsp" %>

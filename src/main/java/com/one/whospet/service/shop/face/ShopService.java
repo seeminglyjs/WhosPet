@@ -2,7 +2,10 @@ package com.one.whospet.service.shop.face;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.one.whospet.dto.Shop;
+import com.one.whospet.dto.ShopImg;
 import com.one.whospet.util.ShopPaging;
 
 public interface ShopService {
@@ -24,5 +27,26 @@ public interface ShopService {
 	 * @return 페이징 처리된 쇼핑몰 목록
 	 */
 	public List<Shop> list(ShopPaging paging);
+
+	/**
+	 * 상품번호를 통해 상품상세정보 객체 얻기
+	 * 
+	 * @param shop 쿼리스트링으로 게시글 번호를 전달받은 객체
+	 */
+	public Shop view(Shop viewShop);
+
+	/**
+	 * 상품등록하기
+	 * 
+	 * @param uNo 로그인정보의 유저번호
+	 */
+	public void register(Shop shop, MultipartFile file);
+
+	/**
+	 * 
+	 * 
+	 * @param getsNo 
+	 */
+	public ShopImg getAttachFile(int sNo);
 
 }

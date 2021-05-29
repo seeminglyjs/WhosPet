@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	
+	<settings>
+		<!-- 각 매퍼에 설정된 캐시 사용 여부(기본값:true) -->
+		<!-- 	캐시에 저장된 값때문에 DB데이터가 변경되지 않으면 false로 설정 -->
+		<setting name="cacheEnabled" value="false"/>
+		
+		<!-- 지정한 타입에 대한 NULL값을 허용한다(기본값:OTHER) -->
+		<setting name="jdbcTypeForNull" value="NULL"/>
+		
+		<!-- DB의 SnakeCase(_를 이용한 식별자)를 자동으로
+			CamelCase(대문자를 이용한 식별자)로 변환해준다 (기본값:false) -->
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+	</settings>
+</configuration>

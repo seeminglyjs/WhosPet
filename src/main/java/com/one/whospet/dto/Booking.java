@@ -11,11 +11,12 @@ public class Booking {
 	private String bookHour;
 	private String bookPetInfo;
 	private String bookText;
+	private Hospital hospital;
 	@Override
 	public String toString() {
 		return "Booking [bookNo=" + bookNo + ", uNo=" + uNo + ", hNo=" + hNo + ", bookStatus=" + bookStatus
 				+ ", bookDate=" + bookDate + ", bookHour=" + bookHour + ", bookPetInfo=" + bookPetInfo + ", bookText="
-				+ bookText + "]";
+				+ bookText + ", hospital=" + hospital + "]";
 	}
 	public int getBookNo() {
 		return bookNo;
@@ -65,6 +66,13 @@ public class Booking {
 	public void setBookText(String bookText) {
 		this.bookText = bookText;
 	}
+	public Hospital getHospital() {
+		return hospital;
+	}
+	public void setHospital(Hospital hospital) {
+		this.hospital = hospital;
+	}
+	
 	
 	
 }

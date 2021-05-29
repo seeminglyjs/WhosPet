@@ -17,6 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.one.whospet.dao.mypage.face.MypageDao;
 import com.one.whospet.dto.Board;
+import com.one.whospet.dto.Booking;
+import com.one.whospet.dto.Point;
 import com.one.whospet.dto.User;
 import com.one.whospet.dto.Userpic;
 import com.one.whospet.service.mypage.face.MypageService;
@@ -121,6 +123,28 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public List<Board> getBoardByUser(HashMap<String, Object> data) {
 		return mypageDao.selectAllBoard(data);
+	}
+	@Override
+	public List<Booking> getBookingByUser(HashMap<String, Object> data) {
+		return mypageDao.selectAllBooking(data);
+	}
+	@Override
+	public Booking view(int bookno) {
+		Booking viewdetail = mypageDao.selectBookingByBookno(bookno);
+		return viewdetail;
+	}
+	@Override
+	public void bookingCancel(Booking bookno) {
+		mypageDao.updateBookingCancel(bookno);
+		
+	}
+	@Override
+	public List<Point> getPointByUser(HashMap<String, Object> data) {
+		return mypageDao.selectAllPoint(data);
+	}
+	@Override
+	public Point getCurpointByUser(int uNo) {
+		return mypageDao.selectLastPoint(uNo);
 	}
 
 
