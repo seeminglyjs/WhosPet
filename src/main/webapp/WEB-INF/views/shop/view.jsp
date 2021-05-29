@@ -42,6 +42,11 @@
 
 </table>
 </div>
+
+<div>
+<img alt="이미지" src="/resources/shopimgupload/${shopImg }" style="width: 900px;">
+</div>
+
 	
 
 <!-- 페이징 임포트 -->
