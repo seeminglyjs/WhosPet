@@ -32,6 +32,6 @@
 </div>
 <div class=”clearfix“></div>
 <br>
-
+<br>
 <%@ include file="/WEB-INF/views/util/boardPaging.jsp" %>
 <%@ include file="/WEB-INF/views/layout/footerUser.jsp" %>

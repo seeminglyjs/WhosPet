@@ -60,4 +60,20 @@ public interface BoardService {
 	 */
 	public void writeBoard(MultipartHttpServletRequest fileRequest, User user);
 
+	/**
+	 * 게시글을 삭제하는 메소드
+	 * 
+	 * @param boardNo
+	 */
+	public void deleteBoard(int boardNo);
+
+	/**
+	 * 게시글 작성 유저 번호를 가져오는 메소드
+	 * 
+	 * @param boardNo
+	 * @return
+	 */
+	public int getBoardWriterUno(int boardNo);
+
+
 }

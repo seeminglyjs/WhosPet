@@ -36,8 +36,10 @@
 ${board.bContent }
 
 </div>
-
-<a href="/board/list"><button class="btn btn-default">목록으로</button></a>
+<a href="/board/list"><button class="btn btn-default" type="button">목록으로</button></a>
+<c:if test="${sessionScope.user.uNo eq board.uNo }">
+<a href="/board/delete?boardNo=${board.bNo }"><button class="btn btn-default" type="button">게시글삭제</button></a>
+</c:if>
 </div>
 
 <%@ include file="/WEB-INF/views/layout/footerUser.jsp" %>
