@@ -49,7 +49,7 @@
       }
       
       .content {
-         margin-top: 50px;
+        margin-top: 50px;
         margin-right: 30px;
         margin-bottom: 50px;
         width: 250px;
@@ -176,6 +176,7 @@
      .container .list h1{
       font-size: 32px;
       font-weight: 700;
+      color:
       
      }
      
@@ -201,8 +202,10 @@
        color: #000;
      }
       
-      
-    </style>
+      </style>
+   
+   
+   
     <script>
       window.console = window.console || function (t) {};
     </script>
@@ -211,8 +214,12 @@
         window.parent.postMessage("resize", "*");
       }
     </script>
-  </head>
+   
+   
     <div class="container">
+    <h1>진료비 검색</h1>
+     <hr>
+     <br>
       <form action="" class="Search">
         <input
           class="Search-box"
@@ -276,9 +283,9 @@
 	     </ul>
      </div>
      
-  </body>
+
     
-    
+  
     
     
     
