@@ -9,10 +9,10 @@ import com.one.whospet.dto.Treatment;
 public interface TreatmentDao {
 
    /**
-    * 로그인한 유저 정보를 찾는 쿼리 메소드
+    * 등록된 모든 진료항목을 찾음.
     * 
-    * @param map
-    * @return
+    * @param 
+    * @return List 
     */
    public List<HashMap<String, Object>> selectAllTreatment();
 

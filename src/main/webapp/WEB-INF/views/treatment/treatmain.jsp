@@ -164,16 +164,19 @@
           transform: translate(calc(-100% + (5 * 300px)));
         }
       }
+     
+      
      .container .list{
       display: flex;
       position: absolute;
       text-align:center;
-      justify-content: center;
+      
      }
      
      .container .list h1{
       font-size: 32px;
       font-weight: 700;
+      
      }
      
      
@@ -182,6 +185,7 @@
        list-style: none;
        margin-top: 50px;
        margin-left: 100px;
+       
      }
      
      .content-list li {

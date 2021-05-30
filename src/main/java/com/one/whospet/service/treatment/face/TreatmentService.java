@@ -8,9 +8,9 @@ import com.one.whospet.dto.User;
 public interface TreatmentService {
 
    /**
-    *로그인한 유저 정보를 찾는 메소드 
+    * 모든 진료 항목 가져오기 
     * 
-    * @param map  -> id 와 pw 가 들어 있다.
+    * @param
     * @return
     */
    public List<HashMap<String, Object>> selectAllTreatment();
