@@ -273,7 +273,7 @@ $(document).ready(function(){
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">진료비조회 <span class="caret"></span></a>
       <ul class="dropdown-menu" role="menu">
-        <li><a href="treatmain">진료비 조회</a></li>
+        <li><a href="/treatment/treatmain">진료비 조회</a></li>
         
       </ul>
     </li>

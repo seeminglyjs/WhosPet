@@ -18,7 +18,7 @@ public class TreatmentController {
 	@Autowired
 	private TreatmentService treatmentService;
 	
-	@RequestMapping(value = "/treatmain", method = RequestMethod.GET)
+	@RequestMapping(value = "/treatment/treatmain", method = RequestMethod.GET)
 	public String treatmainView(Model model) {
 		List<HashMap<String, Object>> treatmentList = treatmentService.selectAllTreatment();
 		model.addAttribute("treatmentList", treatmentList);

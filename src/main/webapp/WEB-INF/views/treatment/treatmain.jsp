@@ -61,7 +61,7 @@
         display: inline-block;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
         color: rgba(0, 0, 0, 0.7);
-        font-size: 30px;
+        font-size: 20px;
         font-weight: 700;
         padding-top: 20px;
       }
