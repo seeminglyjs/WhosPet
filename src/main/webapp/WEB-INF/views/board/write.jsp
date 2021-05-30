@@ -35,6 +35,26 @@ $(document).ready(function(){
 } */
 </script>
 
+<!-- 정규식  -->
+<script type="text/javascript">
+$(document).ready(function(){
+
+
+
+
+})
+
+
+function check(){
+	// 제목 인풋창 정규식 체크		
+		var title = /^[0-9a-zA-Z가-힣!@#$%^&*()<>?/\+-]{5,20}$/i
+		if(!title.test($("#title").val())){
+				alert("제목은 5글자 이상 20이하 입력해야 합니다.")
+				return false;
+		}
+}
+
+</script>
 
 
 
@@ -51,7 +71,7 @@ $(document).ready(function(){
 </style>
 
 <div class="container" id="writeDiv">
-	<form action="/board/write" method="post" id="writeForm" enctype="multipart/form-data" >
+	<form action="/board/write" method="post" id="writeForm" enctype="multipart/form-data" onsubmit="return check()">
 		
 		<div>
 			<label for="title">제목</label>
@@ -75,7 +95,7 @@ $(document).ready(function(){
 		</div>
 		
 		
-		<input multiple="multiple" type="file" name="file" />
+		<input multiple="multiple" type="file" name="file"  accept="image/*"/>
 		
 	</form>
 	<br>
@@ -91,7 +111,7 @@ $(document).ready(function(){
 		<button class="btn btn-sm btn-primary" id="btnSave">게시글 등록</button>
 		<a href="/board/list"><button type="button" class="btn btn-sm btn-primary" id="btnList">목록</button></a>
 	</div>
-	
+</div>	
 	
 
 

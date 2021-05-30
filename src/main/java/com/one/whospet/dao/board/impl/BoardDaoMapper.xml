@@ -90,5 +90,25 @@
 		values(w_board_img_seq.nextval, #{bNo}, #{biOriginFilename}, #{biStoredFilename}, #{biSize}, #{biContentType})
 	</insert>
 	
+	<select id="deleteFileInfo" parameterType="int" resultMap="BoardImg">
+		select * from w_board_img where b_no = #{boardNo}
+	</select>
+	
+	<delete id="deleteBoardFile" parameterType="int">
+		delete w_board_img where b_no = #{boardNo}
+	</delete>
+	
+	<delete id="deleteBoard" parameterType="int">
+		delete w_board where b_no = #{boardNo}
+	</delete>
+	
+	<select id="selectBoardUno" parameterType="int" resultType="int">
+		select u_no from w_board where b_no = #{boardNo}
+	</select>
+	
+	<select id="selectBoardImgInfo" parameterType="int" resultMap="BoardImg">
+		select * from w_board_img where b_no = #{boardNo}
+	</select>
+	
 	
 </mapper>
