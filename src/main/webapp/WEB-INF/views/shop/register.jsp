@@ -47,9 +47,9 @@ $(document).ready(function() {
 <table class="table table-striper table-hover">
 
 <tr>
-	<th>상품명</th><td><input type="text" id="sName" name="sName" required/><br><br></td>
+	<th>상품명</th><td><input type="text" id="sName" name="sName" required/><br><br><input type="file" name="thumbnail" id="thumbnail"/></td>
 </tr>
-<!-- <input type="file" name="file" id="file" value="상품사진"/> -->
+
 <tr>
 	
 </tr>
@@ -83,7 +83,7 @@ $(document).ready(function() {
 </table>
 
 <label for="file">첨부파일</label>
-<input type="file" name="file" id="file"/><br><br>
+<input type="file" name="file" id="file" multiple="multiple"/><br><br>
 
 
 

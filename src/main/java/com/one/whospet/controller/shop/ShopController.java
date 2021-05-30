@@ -1,5 +1,6 @@
 package com.one.whospet.controller.shop;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.one.whospet.dto.Shop;
 import com.one.whospet.dto.ShopImg;
@@ -57,11 +59,16 @@ public class ShopController {
 		model.addAttribute("shop", view);
 		
 		int sNo = view.getsNo();
-		logger.info(String.valueOf(sNo));
-		//첨부파일 조회하기
-		ShopImg shopImg = shopService.getAttachFile( sNo );
+		//첨부파일 조회하기 (siThumbnail = "N" 인 부분)
+		List<ShopImg> shopImg = (List<ShopImg>) shopService.getAttachFile( sNo );
+		
+		//썸네일 첨부파일 조회하기 ( siThumbnail = "Y" 인 부분)
+		ShopImg thumbnail = (ShopImg) shopService.getAttachThumbnailFile(sNo);
+		
 		logger.info("shopImg 정보 : {}", shopImg.toString());
-		model.addAttribute("shopImg", shopImg.getSiStoredFilename());
+		logger.info("thumbnail 정보 : {}", thumbnail.toString());
+		model.addAttribute("shopImg",  shopImg);
+		model.addAttribute("thumbnail", thumbnail);
 	}
 	
 	
@@ -73,20 +80,25 @@ public class ShopController {
 	
 	//상품등록 [POST]
 	@RequestMapping(value="/shop/register", method=RequestMethod.POST)
-	public String ShopRegisterProc(Shop shop, MultipartFile file,HttpSession session) {
+	public String ShopRegisterProc(Shop shop, MultipartHttpServletRequest mtfRequest,HttpSession session) {
 		logger.info("/shop/register [POST]");
+		
 		logger.info("전달파라미터 shop : {}", shop);
-		logger.info("받아오는 file 정보 : {}", file);
+		logger.info("받아오는 file 정보 : {}", mtfRequest);
 		logger.info("session 정보 : {}", session.getAttribute("login"));
 		logger.info("session 정보 : {}", (User) session.getAttribute("user"));
-//		logger.info("session 정보 : {}", session.getAttribute("user").toString()) ;
-//		logger.info("session 정보 : {}", ( (User) (session.getAttribute("user")) ).getuNo()   ) ;
+			
+		List<MultipartFile> fileList = mtfRequest.getFiles("file");
+		MultipartFile thumbnail = mtfRequest.getFile("thumbnail");
+		fileList.add(thumbnail);
+		logger.info("fileList : {}", fileList);
+		logger.info("thumbnail : {}", thumbnail);
+		
 		int uNo = ( (User) (session.getAttribute("user")) ).getuNo();
 		shop.setuNo(uNo);
+		
 		logger.info("삽입할 shop : {}", shop);
-		
-		
-		shopService.register(shop,file);
+		shopService.register(shop,fileList);
 		
 		return "redirect:/shop/list";
 	}

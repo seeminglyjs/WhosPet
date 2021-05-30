@@ -2,6 +2,7 @@ package com.one.whospet.service.shop.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.one.whospet.dao.shop.face.ShopDao;
@@ -42,6 +42,7 @@ private static final Logger logger = LoggerFactory.getLogger(ShopServiceImpl.cla
 		return paging;
 	}
 
+	//목록조회
 	@Override
 	public List<Shop> list(ShopPaging paging) {
 		logger.info("list 객체 호출: {}", shopDao.selectPageList(paging));
@@ -49,23 +50,48 @@ private static final Logger logger = LoggerFactory.getLogger(ShopServiceImpl.cla
 		
 		return shopDao.selectPageList(paging);
 	}
-
+	
+	
+	//상세보기
 	@Override
 	public Shop view(Shop viewShop) {
 		return shopDao.selectShopBySno( viewShop );
 	}
 
 	@Override
+	public List<ShopImg> getAttachFile(int sNo) {
+		
+		return (List<ShopImg>) shopDao.selectShopImgBySNo( sNo );
+	}
+
+	@Override
+	public ShopImg getAttachThumbnailFile(int sNo) {
+
+		return shopDao.selectThumbnailBySNo( sNo );
+	}
+	
+	
+	//상품등록하기
+	@Override
 //	@Transactional
-	public void register(Shop shop, MultipartFile file) {
+	public void register(Shop shop, List<MultipartFile> fileList) {
 		logger.info("register , shop 객체 : {}", shop);
-		logger.info("register , file 객체 : {}", file);
+		logger.info("register , file 객체 : {}", fileList);
 		//게시글 정보 삽입
 		shopDao.insertShop( shop );
 		
-		if( file.getSize() <= 0) {
+		if( fileList.size() <= 0) {
+			logger.info("파일사이즈가 0이하야");
 			return;
 		}
+		
+		
+		
+		logger.info("register , file 객체 여기까지오나? : {}", fileList);
+		
+		//반복문으로 파일정보 리스트 형식으로 넣기
+		for( MultipartFile file : fileList) {
+			
 		
 		//파일이 저장될 경로(real path)
 		String storedPath = context.getRealPath("/resources/shopimgupload");
@@ -85,7 +111,7 @@ private static final Logger logger = LoggerFactory.getLogger(ShopServiceImpl.cla
 		//원본파일이름에 UUID 추가하기(파일명이 중복되지않도록 설정)
 		String storedName = originName + UUID.randomUUID().toString().split("-")[4]	+ "." + extension;
 		
-		//저장돌 파일 정보 객체
+		//저장될 파일 정보 객체
 		File dest = new File(stored, storedName);
 		
 		try {
@@ -98,21 +124,28 @@ private static final Logger logger = LoggerFactory.getLogger(ShopServiceImpl.cla
 		}
 		
 		//------------------------------
+		
+		logger.info("MultipartFile file : {}", (String) file.toString());
+		
 		ShopImg shopImg = new ShopImg();
 		shopImg.setsNo(shop.getsNo());
 		shopImg.setSiOriginFilename(fileFullName);
 		shopImg.setSiStoredFilename(storedName);
+		if( "thumbnail".equals( file.getName() ) ) {
+			logger.info("getName() : {}",file.getName());
+			
+			shopImg.setSiThumbnail("Y");
+		} else {
+			shopImg.setSiThumbnail("N");
+		}
 		
-		logger.info("shopImg 객체안의 sNo : {}", shopImg.getsNo());
+		
+		logger.info("shopImg 객체안의 sNo : {}", (String) shopImg.toString());
 		//첨부파일 삽입
 		shopDao.insertFile( shopImg );
-		
+		}
 	}
 
-	@Override
-	public ShopImg getAttachFile(int sNo) {
 
-		return shopDao.selectShopImgBySNo( sNo );
-	}
 
 }
