@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.one.whospet.dto.Board;
+import com.one.whospet.dto.BoardImg;
 import com.one.whospet.dto.User;
 import com.one.whospet.util.BoardPaging;
 
@@ -74,6 +75,14 @@ public interface BoardService {
 	 * @return
 	 */
 	public int getBoardWriterUno(int boardNo);
+
+	/**
+	 * 게시글의 이미지 정보를 가져오는 메소드
+	 * 
+	 * @param board
+	 * @return
+	 */
+	public List<BoardImg> getBoardImgInfo(Board board);
 
 
 }

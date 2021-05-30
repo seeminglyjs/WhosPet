@@ -99,4 +99,12 @@ public interface BoardDao {
 	 */
 	public int selectBoardUno(int boardNo);
 
+	/**
+	 * 게시판의 등록된 이미지 정보를 가져온다.
+	 * 
+	 * @param getbNo
+	 * @return
+	 */
+	public List<BoardImg> selectBoardImgInfo(int getbNo);
+
 }
