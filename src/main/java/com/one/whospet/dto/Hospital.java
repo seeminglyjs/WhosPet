@@ -16,6 +16,28 @@ public class Hospital {
 	private Date hEnrollDate;
 	private int hHit;
 	
+	
+	
+	
+	public Hospital(int hNo, int uNo, String hAdcheck, String hName, String hRoadAddress, String hDetailAddress,
+			String hHour, String hTel, String hInfo, Date hRequestDate, Date hEnrollDate, int hHit) {
+		super();
+		this.hNo = hNo;
+		this.uNo = uNo;
+		this.hAdcheck = hAdcheck;
+		this.hName = hName;
+		this.hRoadAddress = hRoadAddress;
+		this.hDetailAddress = hDetailAddress;
+		this.hHour = hHour;
+		this.hTel = hTel;
+		this.hInfo = hInfo;
+		this.hRequestDate = hRequestDate;
+		this.hEnrollDate = hEnrollDate;
+		this.hHit = hHit;
+	}
+	
+	
+	
 	@Override
 	public String toString() {
 		return "Hospital [hNo=" + hNo + ", uNo=" + uNo + ", hAdcheck=" + hAdcheck + ", hName=" + hName

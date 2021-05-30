@@ -19,8 +19,7 @@
                     </div>
                     <div class="col-md-6 item text">
                         <h3>WhosPet</h3>
-                        <p>Kh정보 교육원 파이널 프로젝트 1조 [ 프로젝트: WhosPet ]</p>
-                        <p>Groups: 강민서, 고이삭, 기보람, 손홍백, 유상우, 장성우</p>
+                        
                     </div>
                     <div class="col item social"><a href="#"><i class="icon ion-social-facebook"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-instagram"></i></a></div>
                 </div>
