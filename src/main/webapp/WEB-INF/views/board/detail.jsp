@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/layout/headerUser.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <style type="text/css">
 
@@ -33,6 +34,20 @@
 	</div>
 
 <div id="boardDetailText"  class="text-center" style="min-height: 500px; ">
+
+
+<c:if test="${not empty fileList }">
+	
+	
+	<c:forEach items="${fileList}" var="img">
+		<div class="imgDiv">
+		<img src="/upload/${img }" alt="이미지 찾을 수 없음"/>
+		</div>
+		<br>
+	</c:forEach>
+	
+</c:if>
+
 ${board.bContent }
 
 </div>

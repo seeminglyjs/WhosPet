@@ -148,10 +148,13 @@ public class BoardServiceImpl implements BoardService {
 
 				//파일이름에 uuid 값을 더한다.
 				filename += uid;
+				
+				//확장자 명을 더한다.
+				filename += contentType;
 
 				//저장될 파일 정보객체
 				File dest = new File(stored, filename); // 저장 경로와 저장파일 설정
-
+				
 
 				try {// 업로드된 파일을 저장(변환)한다
 					fileList.get(i).transferTo(dest); 
@@ -225,4 +228,17 @@ public class BoardServiceImpl implements BoardService {
 		uNo = boardDao.selectBoardUno(boardNo);
 		return uNo;
 	}
+	
+	@Override // 게시글에 포함된 이미지 정보를 가져온다.
+	public List<BoardImg> getBoardImgInfo(Board board) {
+		
+		List<BoardImg> imgList = new ArrayList<BoardImg>();
+		
+		imgList = boardDao.selectBoardImgInfo(board.getbNo());
+		
+		
+		return imgList;
+	}
+	
+	
 }

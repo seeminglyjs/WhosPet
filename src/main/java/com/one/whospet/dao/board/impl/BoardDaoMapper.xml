@@ -106,4 +106,9 @@
 		select u_no from w_board where b_no = #{boardNo}
 	</select>
 	
+	<select id="selectBoardImgInfo" parameterType="int" resultMap="BoardImg">
+		select * from w_board_img where b_no = #{boardNo}
+	</select>
+	
+	
 </mapper>

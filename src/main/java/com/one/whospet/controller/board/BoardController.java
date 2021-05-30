@@ -1,9 +1,11 @@
 package com.one.whospet.controller.board;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -14,12 +16,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.MultipartRequest;
 
 import com.one.whospet.dto.Board;
+import com.one.whospet.dto.BoardImg;
 import com.one.whospet.dto.User;
 import com.one.whospet.service.board.face.BoardService;
 import com.one.whospet.util.BoardPaging;
@@ -61,13 +61,31 @@ public class BoardController {
 		String param = request.getParameter("boardNo");
 		int boardNo = -1;
 		if(param != null && !param.equals("")) { // 파라미터 체크
-			boardNo = Integer.parseInt(param);
+			try { // 숫자가 아닌 문자열 이나 공백문자를 받을 경우 리스트로 보내버림
+				boardNo = Integer.parseInt(param);
+			} catch (NumberFormatException e) {
+				return "redirect:/board/list";
+			}	
 		}
-
 		//게시글 정보를 가져오는 메소드
 		boardService.updateHit(boardNo);
 		Board board = boardService.detailBoard(boardNo);
-
+		
+		List<BoardImg> imgList = new ArrayList<BoardImg>();
+		
+		//게시판에 등록된 이미지 정보를 리스트에 담는
+		imgList = boardService.getBoardImgInfo(board);
+		
+		//게시판의 등록된 이미지 정보가 있으면
+		List<String> fileList = new ArrayList<String>();
+		if(imgList != null && !imgList.isEmpty()) {
+			//등록된 이미지 만큼 반복한다.
+			for(int i = 0; i < imgList.size(); i++) {
+				//파일 경로 지정
+				fileList.add(imgList.get(i).getBiStoredFilename());
+			}
+		}
+		
 		//조회된 게시글 존재 여부 체크
 		if(board == null) {
 			return "redirect:/board/list";
@@ -75,7 +93,8 @@ public class BoardController {
 			// 게시글 작성 유저의 정보를 가져오는 메소드
 			User user = boardService.getBoardWriterInfo(board.getuNo());
 
-			// 게시판 정보/ 작성유저 정보 객체 전달
+			// 게시판 정보/ 작성유저 정보 객체 전달/파일 정보 저장
+			model.addAttribute("fileList", fileList);
 			model.addAttribute("board", board);
 			model.addAttribute("user", user);
 			return "/board/detail";
@@ -107,8 +126,13 @@ public class BoardController {
 			return "redirect:/board/list";
 		}
 		
-		int boardNo = Integer.parseInt(param);
-
+		int boardNo = 0;
+		try { // 예외 발생시 리스트로 보내버림
+			boardNo = Integer.parseInt(param);
+		} catch (Exception e) {
+			return "redirect:/board/list";
+		}
+		
 		// 게시글 작성 유저의 정보를 가져오는 메소드
 		int uNo = boardService.getBoardWriterUno(boardNo);
 		
