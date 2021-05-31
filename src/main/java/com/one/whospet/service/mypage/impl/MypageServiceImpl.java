@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.one.whospet.dao.mypage.face.MypageDao;
 import com.one.whospet.dto.Board;
 import com.one.whospet.dto.Booking;
+import com.one.whospet.dto.Hospital;
 import com.one.whospet.dto.Point;
 import com.one.whospet.dto.User;
 import com.one.whospet.dto.Userpic;
@@ -45,7 +46,7 @@ public class MypageServiceImpl implements MypageService {
 			return;
 		}
 		
-		String storedPath = context.getRealPath("resources/upload");
+		String storedPath = context.getRealPath("upload");
 		
 		File stored = new File(storedPath);
 		if( !stored.exists() ) {
@@ -109,14 +110,32 @@ public class MypageServiceImpl implements MypageService {
 		
 	}
 	@Override
-	public MypageBoardPaging getPaging(HashMap<String, Object> data) {
+	public MypageBoardPaging getBoardPaging(HashMap<String, Object> data) {
 		
 		logger.info("서비스쪽 data: {}", data);
 		// 총 게시글 수 조회
-		int totalCount = mypageDao.selectCntAll(data);
+		int totalCount = mypageDao.selectBoardCntAll(data);
 		logger.info("totalCount는 : {}", totalCount);
 		
 		MypageBoardPaging paging = new MypageBoardPaging(totalCount, (Integer) data.get("curPage"));
+		return paging;
+	}
+	
+	@Override
+	public MypageBoardPaging getBookingPaging(HashMap<String, Object> data) {
+		// 총 게시글 수 조회
+		int totalCount = mypageDao.selectBookingCntAll(data);
+		logger.info("totalCount는 : {}", totalCount);
+		MypageBoardPaging paging = new MypageBoardPaging(totalCount, (Integer) data.get("curPage"));
+		return paging;
+	}
+
+	@Override
+	public MypageBoardPaging getHospitalPaging(int curPage) {
+		// 총 병원 수 조회
+		int totalCount = mypageDao.selectHospitalCntAll();
+		logger.info("totalCount는 : {}", totalCount);
+		MypageBoardPaging paging = new MypageBoardPaging(totalCount, curPage);
 		return paging;
 	}
 	
@@ -139,12 +158,44 @@ public class MypageServiceImpl implements MypageService {
 		
 	}
 	@Override
+	public MypageBoardPaging getPointPaging(HashMap<String, Object> data) {
+		// 총 게시글 수 조회
+		int totalCount = mypageDao.selectPointCntAll(data);
+		logger.info("totalCount는 : {}", totalCount);
+		MypageBoardPaging paging = new MypageBoardPaging(totalCount, (Integer) data.get("curPage"));
+		return paging;
+	}
+	@Override
 	public List<Point> getPointByUser(HashMap<String, Object> data) {
 		return mypageDao.selectAllPoint(data);
 	}
 	@Override
 	public Point getCurpointByUser(int uNo) {
 		return mypageDao.selectLastPoint(uNo);
+	}
+	@Override
+	public MypageBoardPaging getPaging(int curPage) {
+		// 총 게시글 수 조회
+		int totalCount = mypageDao.selectHospitalCntAll();
+		MypageBoardPaging paging = new MypageBoardPaging(totalCount, curPage);
+		return paging;
+	}
+	@Override
+	public List<Hospital> hospitalList(MypageBoardPaging paging) {
+		return mypageDao.selectAllHospital(paging);
+	}
+	@Override
+	public MypageBoardPaging getHosBookingaging(int curPage) {
+		// 총 예약 수 조회
+		int totalCount = mypageDao.selectHosBookingCntAll();
+		logger.info("totalCount는 : {}", totalCount);
+		MypageBoardPaging paging = new MypageBoardPaging(totalCount, curPage);
+		return paging;
+	}
+
+	@Override
+	public List<Booking> bookingList(MypageBoardPaging paging) {
+		return mypageDao.selectAllHosBooking(paging);
 	}
 
 
