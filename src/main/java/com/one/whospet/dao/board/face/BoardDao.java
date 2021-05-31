@@ -12,18 +12,19 @@ public interface BoardDao {
 
 	/**
 	 *  게시글의 전체수를 조회한다
+	 * @param bType 
 	 *  
 	 * @return
 	 */
-	public int selectCntBoard();
+	public int selectCntBoard(String bType);
 
 	/**
 	 * 게시글 전체를 가져온다.
 	 * 
-	 * @param paging
+	 * @param map
 	 * @return
 	 */
-	public List<HashMap<String, Object>> selectAll(BoardPaging paging);
+	public List<HashMap<String, Object>> selectAll(HashMap<String, Object> map);
 
 	/**
 	 * 게시글의 상세 정보를 가져온다.
@@ -106,5 +107,12 @@ public interface BoardDao {
 	 * @return
 	 */
 	public List<BoardImg> selectBoardImgInfo(int getbNo);
+
+	/**
+	 * 게시글을 업데이트 하는 메소드
+	 * 
+	 * @param board
+	 */
+	public void updateBoard(Board board);
 
 }

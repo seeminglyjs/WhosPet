@@ -50,18 +50,18 @@
 		<result column="BI_CONTENT_TYPE" property="biContentType"/>
 	</resultMap>
 	
-	<select id="selectCntBoard" resultType="int">
+	<select id="selectCntBoard" resultType="int" parameterType="String">
 		select count(*) from w_board b , w_user u
-        where b.u_no = u.u_no
+        where b.u_no = u.u_no and b.b_type = #{bType}
 	</select>
 	
-	<select id="selectAll" parameterType="com.one.whospet.util.BoardPaging" resultType="hashmap">
+	<select id="selectAll" parameterType="hashmap" resultType="hashmap">
 		select * from
 		    (select rownum rnum, bjoin.* from 
 		        (select b.b_no, b.b_title, b.b_hit, b.b_write_date, u.u_nick from w_board b , w_user u
-		             where b.u_no = u.u_no order by b_no desc) bjoin
+		             where b.u_no = u.u_no and b.b_type = #{bType} order by b_no desc) bjoin
 		    ) board
-	    where rnum between #{startNo} and #{endNo}
+	    where rnum between #{paging.startNo} and #{paging.endNo}
 	</select>
 	
 	<select id="selectBoardInfo" parameterType="int" resultMap="Board">
@@ -110,5 +110,8 @@
 		select * from w_board_img where b_no = #{boardNo}
 	</select>
 	
+	<update id="updateBoard" parameterType="com.one.whospet.dto.Board">
+		update w_board set b_title = #{bTitle}, b_content = #{bContent}, b_type=#{bType} where b_no = #{bNo}
+	</update>
 	
 </mapper>
