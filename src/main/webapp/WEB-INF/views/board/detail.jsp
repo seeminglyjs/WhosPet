@@ -37,23 +37,20 @@
 
 
 <c:if test="${not empty fileList }">
-	
-	
 	<c:forEach items="${fileList}" var="img">
 		<div class="imgDiv">
-		<img src="/upload/${img }" alt="이미지 찾을 수 없음"/>
+		<img src="/upload/${img }" alt="이미지 찾을 수 없음" style="width: 45%; height: 45%; border: 1px solid #ccc; margin-bottom: 10px"/>
 		</div>
-		<br>
 	</c:forEach>
-	
 </c:if>
 
 ${board.bContent }
 
 </div>
-<a href="/board/list"><button class="btn btn-default" type="button">목록으로</button></a>
+<a href="/board/list?bType=${board.bType }"><button class="btn btn-default" type="button">목록으로</button></a>
 <c:if test="${sessionScope.user.uNo eq board.uNo }">
 <a href="/board/delete?boardNo=${board.bNo }"><button class="btn btn-default" type="button">게시글삭제</button></a>
+<a href="/board/update?boardNo=${board.bNo }"><button class="btn btn-default" type="button">게시글수정</button></a>
 </c:if>
 </div>
 
