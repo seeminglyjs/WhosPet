@@ -1,8 +1,46 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/layout/headerUser.jsp" %>
-<div id="boardList"  class="text-center">
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+})
+
+function chageSelect(){ 
+	
+	var selectList = document.getElementById("category")
+	
+	if(selectList.options[selectList.selectedIndex].value == "F"){
+		location.href = "/board/list?bType=F";
+	}
+	if(selectList.options[selectList.selectedIndex].value == "T"){
+		location.href = "/board/list?bType=T";
+	}
+	if(selectList.options[selectList.selectedIndex].value == "R"){
+		location.href = "/board/list?bType=R";
+	}
+}
+
+</script>
+
+
+
 <h1>유저 게시판 리스트</h1>
+<hr>
+
+<div class="pull-left">
+	<label for="category" >게시판종류</label>
+	<select  id= "category" name="category" onchange="chageSelect()">
+		<option value="X" selected="selected" >카테고리</option>
+		<option value="F" >자유게시판</option>		
+		<option value="T" >치료게시판</option>
+		<option value="R" >리뷰게시판</option>						
+	</select>
+</div>
+		<div class=”clearfix“></div>
+<div id="boardList"  class="text-center">
+
 <table class="table table-bordered table-striped table-condensed">
 	<tr>
 		<td><strong>글번호</strong></td>

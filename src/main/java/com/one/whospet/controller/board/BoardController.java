@@ -38,14 +38,30 @@ public class BoardController {
 	@RequestMapping(value = "/board/list")
 	public void list(HttpServletRequest request, Model model) {
 		logger.info("board/view");
-
+		
 		// 페이징을 얻어온다.
 		BoardPaging paging = boardService.getPaging(request);
 
 		List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("paging", paging);	
+		// 게시판 카테고리 체크
+		String param2 = "";
+		param2 = request.getParameter("bType");
+		logger.info("게시글 카테고리 " + param2);
+		String bType = "F";
+		
+		if(param2 != null && param2.equals("R")) {
+			bType = param2;
+		}else if(param2 != null && param2.equals("T")) {
+			bType = param2;
+		}		
+		map.put("bType", bType);
+		
 		// 페이지의 해당 하는 게시글 목록을 얻어온다.
-		list = boardService.getList(paging);
+		list = boardService.getList(map);
 
 		//페이징/ 게시글과 게시글갯수를 넘긴다.
 		model.addAttribute("paging", paging);
@@ -147,5 +163,65 @@ public class BoardController {
 			return "redirect:/board/list";
 		}
 	}
+	
+	// 게시글 수정 화면을 보여주는 view [Get] 
+	@RequestMapping(value="/board/update")
+	public String updateBoard(HttpServletRequest request, HttpSession session, Model model) {
+		String param = request.getParameter("boardNo");
 
+		//요청 파라미터가 null 이거나 빈문자열이면 돌려보냄
+		if(param == null || param.equals("")) {
+			return "redirect:/board/list";
+		}
+		
+		int boardNo = 0;
+		try { // 예외 발생시 리스트로 보내버림
+			boardNo = Integer.parseInt(param);
+		} catch (Exception e) {
+			return "redirect:/board/list";
+		}
+		
+		//게시글 정보를 가져오는 메소드
+		Board board = boardService.detailBoard(boardNo);
+		
+		//조회된 게시글 존재 여부 체크
+		if(board == null) {
+			return "redirect:/board/list";
+		}else {
+			List<BoardImg> imgList = new ArrayList<BoardImg>();
+			
+			//게시판에 등록된 이미지 정보를 리스트에 담는
+			imgList = boardService.getBoardImgInfo(board);
+			
+			//게시판의 등록된 이미지 정보가 있으면
+			List<String> fileList = new ArrayList<String>();
+			if(imgList != null && !imgList.isEmpty()) {
+				//등록된 이미지 만큼 반복한다.
+				for(int i = 0; i < imgList.size(); i++) {
+					//파일 경로 지정
+					fileList.add(imgList.get(i).getBiStoredFilename());
+				}
+			}
+			// 게시글 작성 유저의 정보를 가져오는 메소드
+			User user = boardService.getBoardWriterInfo(board.getuNo());
+
+			// 게시판 정보/ 작성유저 정보 객체 전달/파일 정보 저장
+			model.addAttribute("fileList", fileList);
+			model.addAttribute("board", board);
+			model.addAttribute("user", user);
+			return "/board/update";
+		}	
+	}
+	
+	// 게시글 수정이 이루어지는 메소드
+	@RequestMapping(value="/board/update", method = RequestMethod.POST)
+	public String updateBoardRes(HttpSession session, MultipartHttpServletRequest fileRequest) {
+		User user = (User) session.getAttribute("user");
+		
+		boardService.updateBoard(fileRequest, user);
+
+		return "redirect:/board/list";	
+	}
+	
+	
 }
