@@ -63,10 +63,11 @@
 		</interceptors> 
 
 
-
+	<!-- mapping은 url location은 실제 파일 경로  -->
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
-	<resources mapping="/upload/**" location="/resources/upload/" />
+	<!-- 파일불러오기 위한 upload 폴더 위치 설정 -->
+	<resources mapping="/upload/**" location="/upload/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
