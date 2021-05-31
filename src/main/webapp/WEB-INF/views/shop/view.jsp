@@ -10,6 +10,10 @@
 
 <h1>상품 상세 정보</h1>
 
+<div>
+<img alt="섬네일" src="/resources/shopimgupload/${thumbnail.siStoredFilename }" style="width: 100px;">
+</div>
+
 <table class="table table-striper table-hover">
 <tr>
 	<th>상품번호</th><td>${shop.sNo }</td>
@@ -42,6 +46,13 @@
 
 </table>
 </div>
+
+<c:forEach var="contentImg" items="${shopImg }">
+<div>
+<img alt="이미지" src="/resources/shopimgupload/${contentImg.siStoredFilename }" style="width: 900px;">
+</div>
+</c:forEach>
+
 	
 
 <!-- 페이징 임포트 -->

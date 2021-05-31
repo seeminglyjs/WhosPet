@@ -26,7 +26,7 @@
 <td>${board.sAmount }</td>
 <td>${board.sQuantity }</td>
 <td>${board.sProductType }</td>
-<td>${board.sDate }</td>
+<td><fmt:formatDate value="${board.sDate }" pattern="yy-MM-dd"/></td>
 </tr>
 </c:forEach>
 
@@ -46,7 +46,7 @@
 
 
 <div align="right">
-<button><a href="/shop/write">상품등록</a></button>
+<button><a href="/shop/register">상품등록</a></button>
 </div>
 
 

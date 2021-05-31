@@ -69,4 +69,42 @@ public interface BoardDao {
 	 */
 	public void insertImgInfo(BoardImg boardImg);
 
+	/**
+	 * 삭제할 파일 정보를 가져온다.
+	 * 
+	 * @param boardNo
+	 * @return
+	 */
+	public List<BoardImg> deleteFileInfo(int boardNo);
+
+	/**
+	 * 파일 정보를 DB에서 지운다.
+	 * 
+	 * @param boardNo
+	 */
+	public void deleteBoardFile(int boardNo);
+
+	/**
+	 * 게시판 정보를 DB에서 지운다.
+	 * 
+	 * @param boardNo
+	 */
+	public void deleteBoard(int boardNo);
+
+	/**
+	 * 게시판 작성 유저의 번호를 가져온다.
+	 * 
+	 * @param boardNo
+	 * @return
+	 */
+	public int selectBoardUno(int boardNo);
+
+	/**
+	 * 게시판의 등록된 이미지 정보를 가져온다.
+	 * 
+	 * @param getbNo
+	 * @return
+	 */
+	public List<BoardImg> selectBoardImgInfo(int getbNo);
+
 }

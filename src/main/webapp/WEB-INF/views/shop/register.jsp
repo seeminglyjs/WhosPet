@@ -12,12 +12,19 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	
+	$("form").submit(function() {
+		if( $("#sName").val() == '' ) {
+			alert(111)
+			return false;
+		}
+	})
+	
 	$("#btnWrite").click(function() {
 		//스마트에디터의 내용을 <textare>에 적용하기
 		submitContents( $("#btnWrite") );
 		
 		//form submit 수행하기
-		$("form").submit();
+		$("form").submit();	
 	})
 	
 	$("#cancel").click(function() {
@@ -36,31 +43,31 @@ $(document).ready(function() {
 
 <h1>상품 등록</h1>
 
-<form action="/shop/write" method="post" enctype="multipart/form-data">
+<form action="/shop/register" method="post" enctype="multipart/form-data">
 <table class="table table-striper table-hover">
+
 <tr>
-	<th>상품번호</th><td><input type="hidden" id="sNo"name="sNo"/></td>
+	<th>상품명</th><td><input type="text" id="sName" name="sName" required/><br><br><input type="file" name="thumbnail" id="thumbnail"/></td>
 </tr>
 
 <tr>
-	<th>상품명</th><td><input type="text" id="sName" name="sName"/></td>
+	
 </tr>
 
 <tr>
 	<th>상품종류</th>
 	<td>
-		<input type="text" id="sProductType" name="sProductType"/>
-		<select>
-			<option>사료</option>
-			<option>간식</option>
-			<option>영양제</option>
-			<option>장난감</option>
+		<select name="sProductType" id="sProductType">
+			<option value="사료">사료</option>
+			<option value="간식">간식</option>
+			<option value="영양제">영양제</option>
+			<option value="장난감">장난감</option>
 		</select>
 	</td>
 </tr>
 
 <tr>
-	<th>상품금액</th><td><input type="number" id="sAmount" name="sAmount"/></td>
+	<th>상품금액</th><td><input type="number" id="sAmount" name="sAmount" required="required" /></td>
 </tr>
 
 <tr>
@@ -70,12 +77,17 @@ $(document).ready(function() {
 <tr>
 	<th>상품소개</th>
 	<td>
-	<div>
-	<label><textarea rows="10" style="width: 100%" id="content" name="content"></textarea></label>
-	</div>
+	<textarea style="width: 98%" id="sContent" name="sContent"></textarea>
 	</td>
 </tr>
 </table>
+
+<label for="file">첨부파일</label>
+<input type="file" name="file" id="file" multiple="multiple"/><br><br>
+
+
+
+
 
 
 <div class="text-center">
@@ -91,16 +103,17 @@ $(document).ready(function() {
 var oEditors = [];
 nhn.husky.EZCreator.createInIFrame({
 	oAppRef: oEditors,
-	elPlaceHolder: "content", //에디터가 적용될 <textarea>의 id
+	elPlaceHolder: "sContent", //에디터가 적용될 <textarea>의 id
 	sSkinURI: "/resources/se2/SmartEditor2Skin.html", //에디터 스킨
 	fCreator: "createSEditor2"
+/* 	bUseModeChanger : true */
 })
 
 // <form>태그가 submit되면 스마트에디터에 작성된 내용이 <textarea>에
 //적용되도록 하는 코드
 function submitContents(elClickedObj) {
 	
-	oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
+	oEditors.getById["sContent"].exec("UPDATE_CONTENTS_FIELD", []);
 	
 	try {
 		elClickedObj.form.submit();
