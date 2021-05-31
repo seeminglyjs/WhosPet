@@ -71,25 +71,24 @@ public class BoardController {
 		boardService.updateHit(boardNo);
 		Board board = boardService.detailBoard(boardNo);
 		
-		List<BoardImg> imgList = new ArrayList<BoardImg>();
-		
-		//게시판에 등록된 이미지 정보를 리스트에 담는
-		imgList = boardService.getBoardImgInfo(board);
-		
-		//게시판의 등록된 이미지 정보가 있으면
-		List<String> fileList = new ArrayList<String>();
-		if(imgList != null && !imgList.isEmpty()) {
-			//등록된 이미지 만큼 반복한다.
-			for(int i = 0; i < imgList.size(); i++) {
-				//파일 경로 지정
-				fileList.add(imgList.get(i).getBiStoredFilename());
-			}
-		}
-		
 		//조회된 게시글 존재 여부 체크
 		if(board == null) {
 			return "redirect:/board/list";
 		}else {
+			List<BoardImg> imgList = new ArrayList<BoardImg>();
+			
+			//게시판에 등록된 이미지 정보를 리스트에 담는
+			imgList = boardService.getBoardImgInfo(board);
+			
+			//게시판의 등록된 이미지 정보가 있으면
+			List<String> fileList = new ArrayList<String>();
+			if(imgList != null && !imgList.isEmpty()) {
+				//등록된 이미지 만큼 반복한다.
+				for(int i = 0; i < imgList.size(); i++) {
+					//파일 경로 지정
+					fileList.add(imgList.get(i).getBiStoredFilename());
+				}
+			}
 			// 게시글 작성 유저의 정보를 가져오는 메소드
 			User user = boardService.getBoardWriterInfo(board.getuNo());
 
