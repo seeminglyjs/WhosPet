@@ -25,10 +25,10 @@ public interface BoardService {
 	/**
 	 * 게시글 리스트를 가져오는 메소드
 	 * 
-	 * @param paging
+	 * @param map
 	 * @return
 	 */
-	public List<HashMap<String, Object>> getList(BoardPaging paging);
+	public List<HashMap<String, Object>> getList(HashMap<String, Object> map);
 
 	/**
 	 * 게시글 상세 조회를 가져오는 메소드
@@ -83,6 +83,14 @@ public interface BoardService {
 	 * @return
 	 */
 	public List<BoardImg> getBoardImgInfo(Board board);
+
+	/**
+	 * 게시글 수정이 이루어지는 메소드
+	 * 
+	 * @param fileRequest
+	 * @param user
+	 */
+	public void updateBoard(MultipartHttpServletRequest fileRequest, User user);
 
 
 }

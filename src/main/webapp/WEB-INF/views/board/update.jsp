@@ -47,7 +47,7 @@ $(document).ready(function(){
 
 function check(){
 	// 제목 인풋창 정규식 체크		
-		var title = /^[0-9a-zA-Z가-힣!@#$%^&*()<>?/\+-]{5,20}$/i
+		var title = /^[0-9a-zA-Z가-힣ㄱ-ㅎ!@#$%^&*()<>?/\+-\s]{5,20}$/i
 		if(!title.test($("#title").val())){
 				alert("제목은 5글자 이상 20이하 입력해야 합니다.")
 				return false;
@@ -71,12 +71,12 @@ function check(){
 </style>
 
 <div class="container" id="writeDiv">
-	<form action="/board/write" method="post" id="writeForm" enctype="multipart/form-data" onsubmit="return check()">
+	<form action="/board/update" method="post" id="writeForm" enctype="multipart/form-data" onsubmit="return check()">
 		
 		<div>
 			<label for="title">제목</label>
-			<input type="text" class="form-control" name="title" id="title" placeholder="제목을 입력해 주세요">
-
+			<input type="text" class="form-control" name="title" id="title" placeholder="제목을 입력해 주세요" value="${board.bTitle }">
+			<input type="hidden" name="boardNo" value="${board.bNo }">
 		</div>
 		<hr>
 		<div>
@@ -90,25 +90,33 @@ function check(){
 			</select>
 			</div>
 			<div class=”clearfix“></div>
-			<textarea class="form-control" name="content" id="content" rows="15" cols="100" >
+			<textarea class="form-control" name="content" id="content" rows="15" cols="100">
+			${board.bContent }
 			</textarea>
 		</div>
 		
-		
+		<div style="color: red; font-size: 12px;">※신규 등록시 기존 파일 삭제</div>
 		<input multiple="multiple" type="file" name="file"  accept="image/*"/>
 		
 	</form>
 	<br>
 	
-	
-	<!-- 미리보기 구현예정  -->
-<!-- 	<div>
-	<img id="preview" style="width: 25%;"/>
-	</div> -->
+	<!--기존 파일 체크 영역  -->
+	<c:if test="${not empty fileList }">
+		<p style="font-weight: bolder;">${user.uNick }님의 기존 등록 이미지</p>
+		<div style="border: 1px solid #ccc; margin-bottom: 10px;">
+		<c:forEach items="${fileList}" var="img">
+			<div class="imgDiv" style="margin-bottom: 3px; font-size: 12px;">
+			<img src="/upload/${img }" alt="이미지 찾을 수 없음" style="width: 10%; height: 10%; border: 1px solid #ccc;" class="pull-left"/>
+			</div>
+		</c:forEach>
+		<div class="clearfix"></div>
+		</div>
+	</c:if>
 	
 
 	<div style="text-align: center">
-		<button class="btn btn-sm btn-primary" id="btnSave">게시글 등록</button>
+		<button class="btn btn-sm btn-primary" id="btnSave">게시글 수정</button>
 		<button type="button" class="btn btn-sm btn-danger" onclick="history.back()">취소</button>
 	</div>
 </div>	

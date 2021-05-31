@@ -2,6 +2,7 @@ package com.one.whospet.service.board.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,8 +52,21 @@ public class BoardServiceImpl implements BoardService {
 			curPage = Integer.parseInt(param);
 		};
 		
-		// 전체 게시글 수를 가져오는 메소드
-		int totalCount = boardDao.selectCntBoard();
+		// 게시판 카테고리 체크
+		String param2 = "";
+		param2 = request.getParameter("bType");
+		logger.info("게시글 카테고리 " + param2);
+		String bType = "F";
+		
+		if(param2 != null && param2.equals("R")) {
+			bType = param2;
+		}else if(param2 != null && param2.equals("T")) {
+			bType = param2;
+		}
+
+		logger.info("게시글 카테고리 " + bType);
+		// 카테고리에 맞는 전체 게시글 수를 가져오는 메소드
+		int totalCount = boardDao.selectCntBoard(bType);
 		
 		BoardPaging paging = new BoardPaging(totalCount, curPage);
 		
@@ -60,11 +74,11 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override // 게시글 리스트를 가져오는 메소드
-	public List<HashMap<String, Object>>  getList(BoardPaging paging) {
+	public List<HashMap<String, Object>>  getList(HashMap<String, Object> map) {
 		
 		List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>> ();
 
-		list = boardDao.selectAll(paging);
+		list = boardDao.selectAll(map);
 
 		return list;
 	}
@@ -240,5 +254,127 @@ public class BoardServiceImpl implements BoardService {
 		return imgList;
 	}
 	
+	@Override // 게시글 수정이 이루어 지는 메소드
+	@Transactional
+	public void updateBoard(MultipartHttpServletRequest fileRequest, User user) {
+		// 파라미터 정보 보드에 저장
+		Board board = new Board();
+		board.setbTitle(fileRequest.getParameter("title"));
+		board.setbContent(fileRequest.getParameter("content"));
+		board.setbType(fileRequest.getParameter("category"));
+		board.setuNo(user.getuNo());
+		
+		String param = fileRequest.getParameter("boardNo");
+		
+		int boardNo = 0;
+		try { // 형변환 오류 발생 바로 return 해버림
+			boardNo = Integer.parseInt(param);
+		}catch (Exception e) {
+			return;
+		}
+		
+		board.setbNo(boardNo);
+
+		
+		// 만약에 내용을 등록하지 않았으면 제목과 동일하게 지정
+		if(board.getbContent() == null || board.getbContent().equals("<p><br></p>") ) {
+			board.setbContent(board.getbTitle());
+		}
+		
+		//게시글 업데이트
+		boardDao.updateBoard(board);
+		
+		//첨부 파일 정보 리스트로 받는다.
+		List<MultipartFile> fileList = fileRequest.getFiles("file");
+		
+		logger.info("{}",fileList.isEmpty());
+		
+		//첨부파일이 null이거나 없으면 게시글 파일이 없으면 작성 끝
+		if(fileList == null || fileList.isEmpty() || fileList.get(0).getSize() == 0) {
+			logger.info("파일 없음");
+			return;
+		}else {
+			logger.info("파일 있음");
+			//파일이 있는 경우
+			//삭제할 파일 정보를 가져온다.
+			List<BoardImg> list = boardDao.deleteFileInfo(boardNo);
+			
+			//저장된 파일정보가 null이 아니고 리스트가 비어있지 않으면 실행
+			if(list != null && !list.isEmpty()) {
+				for(int i = 0; i < list.size(); i++) {
+					//파일 경로 지정
+					String path = context.getRealPath("upload");
+					
+					//현재 게시판에 존재하는 파일객체를 만듬
+					File file = new File(path + "\\" + list.get(i).getBiStoredFilename());
+					
+					if(file.exists()) { // 파일이 존재하면
+						file.delete(); // 파일 삭제	
+					}
+				}
+				
+				//저장된 파일을 모두 제거한 후 DB 에서도 지운다.
+				boardDao.deleteBoardFile(boardNo);
+			}	
+			
+			//-------------- 새로운 파일을 등록 하는 코드
+			
+			//첨부 파일 숫자 만큼 반복한다.
+			for(int i = 0; i < fileList.size(); i++) {
+				
+				if(fileList.get(i).getOriginalFilename() == null || fileList.get(i).getOriginalFilename().equals("")) {
+					return;
+				}
+
+				//파일의 저장될 경로 지정
+				String storePath = context.getRealPath("upload");
+
+				//파일경로가 만들어져 있는지 체크
+				File stored = new File(storePath);
+				if(!stored.exists()) {
+					stored.mkdir(); //없으면 파일 생성
+				}
+
+				//저장될 파일이름 설정
+				String filename = fileList.get(i).getOriginalFilename(); // 원본이름 가져오기
+
+				//컨텐츠타입저장(문자열 뒤에서 자르기)
+				String contentType = filename.substring(filename.lastIndexOf("."));
+
+				//uuid 값 가져온다.
+				String uid = UUID.randomUUID().toString().split("-")[4];
+
+				//파일이름에 uuid 값을 더한다.
+				filename += uid;
+				
+				//확장자 명을 더한다.
+				filename += contentType;
+
+				//저장될 파일 정보객체
+				File dest = new File(stored, filename); // 저장 경로와 저장파일 설정
+				
+
+				try {// 업로드된 파일을 저장(변환)한다
+					fileList.get(i).transferTo(dest); 
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+				//파일 정보 객체 저장
+				BoardImg boardImg = new BoardImg();
+
+				boardImg.setBiOriginFilename(fileList.get(i).getOriginalFilename());
+				boardImg.setBiStoredFilename(filename);
+				boardImg.setbNo(boardNo);
+				boardImg.setBiContentType(contentType);
+				boardImg.setBiSize(fileList.get(i).getSize());
+				
+				//파일 정보 저장
+				boardDao.insertImgInfo(boardImg);
+			}
+		}	
+	}
 	
 }
