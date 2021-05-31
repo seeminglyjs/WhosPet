@@ -52,8 +52,8 @@
         margin-top: 50px;
         margin-right: 30px;
         margin-bottom: 50px;
-        width: 250px;
-        height: 150px;
+        width: 180px;
+        height: 100px;
         background-color: #fff;
         border-radius: 20%;
         text-align: center;
@@ -63,7 +63,7 @@
         color: rgba(0, 0, 0, 0.7);
         font-size: 20px;
         font-weight: 700;
-        padding-top: 20px;
+       
       }
       
       .name {
@@ -115,11 +115,7 @@
       }
       
       .faders .left {
-        background: linear-gradient(
-          to right,
-          rgba(245, 245, 245, 1) 0%,
-          rgba(255, 255, 255, 0) 100%
-        );
+        
         margin-top: 10px;
         width: 15%;
         height: 10.5%;
@@ -134,11 +130,7 @@
         position: absolute;
         z-index: 200;
         right: 470px;
-        background: linear-gradient(
-          to left,
-          rgba(245, 245, 245, 1) 0%,
-          rgba(255, 255, 255, 0) 100%
-        );
+       
       }
       
       @media only screen and (max-width: 768px) {
@@ -164,6 +156,7 @@
           transform: translate(calc(-100% + (5 * 300px)));
         }
       }
+     
      
       
      .container .list{
@@ -250,6 +243,7 @@
 	           		<div class="entry">
 		             	<h3 class="name">${t.TR_NAME}</h3>
 		             	<p class="quote">가격 : ${t.TR_PRICE}원</p>
+		             	<p class="quote">${t.TR_DESC}</p>
 	             	</div>
              	</a>
 	        </c:forEach>     
