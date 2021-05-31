@@ -103,5 +103,29 @@ public class ShopController {
 		return "redirect:/shop/list";
 	}
 	
+	//수정
+	@RequestMapping(value="/shop/update", method=RequestMethod.GET)
+	public void shopUpdate( Shop shop, Model model) {
+		logger.info("/shop/update [GET]");
+		logger.info("전달 파라미터 shop : {}",shop);
+		
+		//상품 수정 정보
+		Shop updateView = shopService.view(shop);
+		logger.info("updateView 정보 : {}", updateView);
+		
+		model.addAttribute("updateView", updateView);
+		
+		//상품 다중 첨부파일
+		List<ShopImg> shopImg = shopService.getAttachFile(shop.getsNo());
+		logger.info("Update shopImg 정보 : {}",shopImg);
+		model.addAttribute("shopImg", shopImg);
+		
+		//상품 섬네일 첨부파일
+		ShopImg thumbnail = shopService.getAttachThumbnailFile(shop.getsNo());
+		logger.info("Update thumbnail 정보 : {}",thumbnail);
+		model.addAttribute("thumbnail", thumbnail);
+		
+	}
+	
 	
 }

@@ -6,11 +6,15 @@
 
 <c:import url="/WEB-INF/views/layout/headerAdmin.jsp" /> 
 
+<script type="text/javascript" src="//code.jquery.com/jquery-2.2.4.min.js"></script>
+
 <!-- 스마트 에디터2 라이브러리 로드 -->
 <script type="text/javascript" src="/resources/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {
+	
+	$("#sProductType").val('${updateView.sProductType }')
 	
 	$("form").submit(function() {
 		if( $("#sName").val() == '' ) {
@@ -19,9 +23,9 @@ $(document).ready(function() {
 		}
 	})
 	
-	$("#btnWrite").click(function() {
+	$("#btnUpdate").click(function() {
 		//스마트에디터의 내용을 <textare>에 적용하기
-		submitContents( $("#btnWrite") );
+		submitContents( $("#btnUpdate") );
 		
 		//form submit 수행하기
 		$("form").submit();	
@@ -33,6 +37,23 @@ $(document).ready(function() {
 })
 </script>
 
+<script type="text/javascript">
+$(document).ready(function(){
+	
+		$("#delFile").click(function(){
+			console.log("delFile");
+			$("#originFile").detach();
+		})
+	
+	if(${empty shopImg}){
+		$("#newFile").show();
+	} else {
+		$("#originFile").show();
+	}
+})
+
+
+</script>
 
 
 
@@ -41,13 +62,17 @@ $(document).ready(function() {
 
 <div class="container">
 
-<h1>상품 등록</h1>
+<h1>상품 정보 수정</h1>
+
+<div>
+<img alt="섬네일" src="/resources/shopimgupload/${thumbnail.siStoredFilename }" style="width: 100px;">
+</div>
 
 <form action="/shop/register" method="post" enctype="multipart/form-data">
 <table class="table table-striper table-hover">
 
 <tr>
-	<th>상품명</th><td><input type="text" id="sName" name="sName" required/></td><td><input type="file" name="thumbnail" id="thumbnail"/></td>
+	<th>상품명</th><td><input type="text" id="sName" name="sName" value="${updateView.sName }" required/><br><br><input type="file" name="thumbnail" id="thumbnail"/></td>
 </tr>
 
 <tr>
@@ -56,7 +81,7 @@ $(document).ready(function() {
 
 <tr>
 	<th>상품종류</th>
-	<td colspan="2">
+	<td>
 		<select name="sProductType" id="sProductType">
 			<option value="사료">사료</option>
 			<option value="간식">간식</option>
@@ -67,23 +92,39 @@ $(document).ready(function() {
 </tr>
 
 <tr>
-	<th>상품금액</th><td colspan="2"><input type="number" id="sAmount" name="sAmount" required="required" /></td>
+	<th>상품금액</th><td><input type="number" id="sAmount" name="sAmount" value="${updateView.sAmount }" required="required" /></td>
 </tr>
 
 <tr>
-	<th>상품수량</th><td colspan="2"><input type="number" value="1" id="sQuantity" name="sQuantity"/></td>
+	<th>상품수량</th><td><input type="number" value="${updateView.sQuantity }" id="sQuantity" name="sQuantity"/></td>
 </tr>
 
 <tr>
 	<th>상품소개</th>
-	<td colspan="2">
-	<textarea style="width: 98%" id="sContent" name="sContent"></textarea>
+	<td>
+	<textarea style="width: 98%" id="sContent" name="sContent">${updateView.sContent }</textarea>
 	</td>
 </tr>
 </table>
 
-<label for="file">첨부파일</label>
-<input type="file" name="file" id="file" multiple="multiple"/><br><br>
+<!-- file 두가지 경우 -->
+<div id="fileBox">
+	<!-- 기존의 file -->
+	<c:forEach var="originFile" items="${shopImg }" varStatus="status">
+	<div id="originFile${status.count }">
+		<img alt="기존 이미지" src="/resources/shopimgupload/${originFile.siStoredFilename }" style="width: 100px;" />
+		<span id="delFile${status.count }">x</span>
+	</div>
+	</c:forEach>
+	
+	<!-- 새로운 file -->
+	<div id="newFile">
+		<label for="file">새로운 첨부파일</label>
+		<input type="file" id="file" name="file"/><br>
+		<small> ** 새로운 파일을 첨부하면 기존파일이 삭제 됩니다</small>
+	</div>
+</div>
+
 
 
 
@@ -91,7 +132,7 @@ $(document).ready(function() {
 
 
 <div class="text-center">
-	<button class="btn btn-primary" id="btnWrite">작성</button>
+	<button class="btn btn-primary" id="btnUpdate">수정</button>
 	<input type="reset" id="cancel" class="btn btn-danger" value="취소" />
 </div>
 

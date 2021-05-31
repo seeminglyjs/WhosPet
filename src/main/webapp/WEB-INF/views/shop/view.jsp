@@ -10,12 +10,13 @@
 
 <h1>상품 상세 정보</h1>
 
-<div>
-<img alt="섬네일" src="/resources/shopimgupload/${thumbnail.siStoredFilename }" style="width: 100px;">
+<div align="center">
+<img alt="섬네일" src="/resources/shopimgupload/${thumbnail.siStoredFilename }" style="width: 150px;">
 </div>
 
 <table class="table table-striper table-hover">
-<tr>
+
+<tr hidden="">
 	<th>상품번호</th><td>${shop.sNo }</td>
 </tr>
 
@@ -53,6 +54,12 @@
 </div>
 </c:forEach>
 
+<br><br><br>
+
+<div align="center">
+	<a href="/shop/update?sNo=${shop.sNo }"><button class="btn btn-primary">수정</button></a>
+	<a href="/shop/delete?sNo=${shop.sNo }"><button class="btn btn-danger">삭제</button></a>
+</div>
 	
 
 <!-- 페이징 임포트 -->
