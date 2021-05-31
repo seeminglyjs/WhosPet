@@ -37,7 +37,7 @@ td {
 </head>
 <body>
 <div id="boardtitle">
-<h1>예약 상세 정보</h1>
+<h1>예약 상세 정보</h1><h4 style="display:inline; color: gray;">MyBooking</h4>
 <hr align="left" width="630">
 </div>
 

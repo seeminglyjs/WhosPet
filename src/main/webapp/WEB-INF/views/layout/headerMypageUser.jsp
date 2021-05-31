@@ -341,9 +341,9 @@ cursor:pointer;
 <!-- 병원 관계자 시에만 보이는 메뉴 -->
 <c:if test="${user.uGrade eq 'H'}"> 
 <hr>
-<li style="color:#e1701a;"><a href="#" style="color:#e1701a;">병원 등록/조회/삭제</a></li>
+<li style="color:#e1701a;"><a href="/mypage/hospital" style="color:#e1701a;">병원 등록/조회/삭제</a></li>
 <hr>
-<li style="color:#e1701a;"><a href="#" style="color:#e1701a;">예약현황</a></li>
+<li style="color:#e1701a;"><a href="/mypage/hosBooking" style="color:#e1701a;">예약현황</a></li>
 </c:if>
 </ul>
 </div>
