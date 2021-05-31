@@ -36,17 +36,29 @@ public interface ShopService {
 	public Shop view(Shop viewShop);
 
 	/**
+	 * 상품번호에 맞는 상품이미지 정보 얻기
+	 * 
+	 * @param sNo 상품번호
+	 * @return 상품번호에 맞는 이미지 정보
+	 */
+	public List<ShopImg> getAttachFile(int sNo);
+
+	/**
+	 * 상품번호에 맞는 섬네일 객체 정보 얻기
+	 * 
+	 * @param sNo 상품번호
+	 * @return 상품번호에 맞는 이미지 정보
+	 */
+	public ShopImg getAttachThumbnailFile(int sNo);
+
+	
+	/**
 	 * 상품등록하기
 	 * 
 	 * @param uNo 로그인정보의 유저번호
 	 */
-	public void register(Shop shop, MultipartFile file);
+	public void register(Shop shop, List<MultipartFile> fileList);
 
-	/**
-	 * 
-	 * 
-	 * @param getsNo 
-	 */
-	public ShopImg getAttachFile(int sNo);
+
 
 }
