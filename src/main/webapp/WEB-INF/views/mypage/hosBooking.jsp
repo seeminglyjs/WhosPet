@@ -28,10 +28,12 @@ td:nth-child(2) {
 position: relative;
 top: -120px;
 left: 220px;
+font-family: 'InfinitySans-RegularA1';
 }
 #cont2 {
 float: right;
 top: -100px;
+font-family: 'InfinitySans-RegularA1';
 }
 
 #page{
@@ -64,12 +66,16 @@ left: 130px;
 <tbody>
 <c:forEach items="${booklist }" var="booklist">
 	<tr>
-		<td><a href="/mypage/bookingDetail?bookno=${booklist.bookNo }">${booklist.bookNo }</a></td>
-		<td><a href="/mypage/bookingDetail?bookno=${booklist.bookNo }">${booklist.bookStatus }</a></td>
-		<td><a href="/mypage/bookingDetail?bookno=${booklist.bookNo }">${booklist.hospital.hName }</a></td>
+		<td><a href="#" onclick="window.open
+('/mypage/hosBookingDetail?bookno=${booklist.bookNo }','write','width=450,height=600,left=300, top=260, location=no,status=no,scrollbars=yes')">${booklist.bookNo }</a></td>
+		<td><a href="#" onclick="window.open
+('/mypage/hosBookingDetail?bookno=${booklist.bookNo }','write','width=450,height=600,left=300, top=260, location=no,status=no,scrollbars=yes')">${booklist.bookStatus }</a></td>
+		<td><a href="#" onclick="window.open
+('/mypage/hosBookingDetail?bookno=${booklist.bookNo }','write','width=450,height=600,left=300, top=260, location=no,status=no,scrollbars=yes')">${booklist.hospital.hName }</a></td>
 		<td><fmt:formatDate value="${booklist.bookDate }" pattern="yy-MM-dd"/></td>
 		<td>${booklist.bookHour }</td>
-		<td><a href="/mypage/bookingDetail?bookno=${booklist.bookNo }">${booklist.bookPetInfo }</a></td>
+		<td><a href="#" onclick="window.open
+('/mypage/hosBookingDetail?bookno=${booklist.bookNo }','write','width=450,height=600,left=300, top=260, location=no,status=no,scrollbars=yes')">${booklist.bookPetInfo }</a></td>
 	</tr>
 </c:forEach>
 </tbody>

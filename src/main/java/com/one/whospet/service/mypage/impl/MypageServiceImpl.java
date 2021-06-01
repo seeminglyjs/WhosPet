@@ -197,6 +197,21 @@ public class MypageServiceImpl implements MypageService {
 	public List<Booking> bookingList(MypageBoardPaging paging) {
 		return mypageDao.selectAllHosBooking(paging);
 	}
+	
+	@Override
+	public int deleteHospital(HashMap<String, Object> map) {
+		return mypageDao.deleteHospitals(map);
+	}
+	@Override
+	public void bookingApprove(Booking booking) {
+		mypageDao.updateBookingStatusY(booking);
+		
+	}
+	@Override
+	public void bookingReject(Booking booking) {
+		mypageDao.updateBookingStatusN(booking);
+		
+	}
 
 
 

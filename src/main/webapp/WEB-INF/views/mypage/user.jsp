@@ -25,10 +25,19 @@ $(document).ready(function(){
 //     	})
 </script>
 <style>
+@font-face {
+    font-family: 'IBMPlexSansKR-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 table {
 margin-left: 520px; 
 margin-right: 0px;
-border-left: 10px double #f7a440;
+border-left: 20px double #f6dcbf;
+font-family: 'InfinitySans-RegularA1';
+text-align: center;
 }
 
 tbody{
@@ -36,7 +45,7 @@ width: 300px;
 
 }
 tr{
-border: 4px solid #f6dcbf;
+border: 1px solid #f6dcbf;
 
 }
 
@@ -45,19 +54,26 @@ padding: 20px;
 }
 
 button{
+display: inline-block;
 border: none;
 background-color: #f7a440;
 border-radius: .25em;
 color: #fff;
 font-size: inherit;
-padding: .5em .75em;
+padding: 10px 20px;
+box-shadow: inset 0 0 3px white; 
+font-family: 'IBMPlexSansKR-Regular';
+-webkit-transition: background-color 0.2s;
+transition: background-color 0.2s;
+
 }
 #colname {
-padding-left: 10px;
+padding-left: 20px;
 padding-right: 30px;
 background-color: #f6dcbf;
 font-weight: bold;
 text-align: center;
+box-shadow: inset 30px 0 40px #white;
 }
 
 #colval{
@@ -73,9 +89,19 @@ left: 280px;
 
 #buttons{
 position: relative;
-top: 100px;
+top: 80px;
 left: 400px;
+
 }
+
+button:hover {
+  background-color: #f6dcbf;
+}
+
+button:active {
+  background-color: #f6dcbf;
+}
+
 .filebox label {
   display: inline-block;
   padding: .5em .75em;
@@ -143,10 +169,16 @@ right:-250px; top:-100px;
 #boardtitle{
 position: relative;
 left: 20px;
+font-family: 'InfinitySans-RegularA1';
 }
 
 li {
 cursor:pointer;
+}
+
+.pict{
+border: 1px solid #f6dcbf;
+padding: 10px;
 }
 </style>
 <div id="boardtitle">
@@ -155,10 +187,10 @@ cursor:pointer;
 </div>
 <div id="picture" style="width: 100px; height:80px;">
 <c:if test="${empty upic}"> 
-<img style="width: 200px; height: 200px; border-radius: 50%" src="../resources/img/defaultImage.png"/>
+<img class="pict" style="width: 200px; height: 200px; border-radius: 50%" src="../resources/img/defaultImage.png"/>
 </c:if>
 <c:if test="${!empty upic}"> 
-<img src="/upload/${upic.upicStoname  }" style="width: 200px; height: 200px; border-radius: 50%"">
+<img class="pict" src="/upload/${upic.upicStoname  }" style="width: 200px; height: 200px; border-radius: 50%"">
 </c:if>
 <br>
 <br>

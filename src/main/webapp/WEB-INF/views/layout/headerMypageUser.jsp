@@ -15,6 +15,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+
 <meta charset="UTF-8">
 <title>WhosPet</title>
 
@@ -59,6 +60,13 @@ $(document).ready(function(){
 </script>
 
 <style type="text/css">
+@font-face {
+    font-family: 'InfinitySans-RegularA1';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 /*컨테이너 전체 넓이 지정  */
 .container{
 	width:900px;
@@ -151,7 +159,10 @@ height: 100px;
 background-color: #f6dcbf;
 position: relative; left:0;
 padding-top: 10px;
+box-shadow: inset 0 0 8px #EFAE4C;
 border-right: 15px solid black;
+font-family: 'InfinitySans-RegularA1';
+text-align: center;
 }
 
 #menubar2 {
@@ -324,7 +335,7 @@ cursor:pointer;
 <div id="containerAll" class="container"><!-- 콘텐츠 영역 시작  -->
 
 <div id="menubar">
-<h3 style="padding:10px;">마이페이지</h3>
+<h3 style="padding-bottom:15px;">마이페이지</h3>
 <div id="menubar2">
 <ul id="barlist">
 <li id="userinfo"><a href="/mypage/user" style="color:gray;">내 정보</a></li>

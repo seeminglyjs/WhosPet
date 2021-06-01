@@ -123,7 +123,7 @@
 	<delete id="deleteUser" parameterType="com.one.whospet.dto.User">
 		DELETE FROM w_user WHERE U_No = #{uNo }
 	</delete>
-	
+
 	<select id="selectBoardCntAll" parameterType="hashmap" resultType="int">
 		SELECT COUNT(*) FROM w_board WHERE u_no = #{uNo }
 	</select>
@@ -221,6 +221,19 @@
 
 	</select>
 	
+	<delete id="deleteHospitals" parameterType="hashmap">
+	  	DELETE FROM w_hospital WHERE h_no IN
+	<foreach collection="hNoArr"  item="hNo" open="(" close=")" separator=" , ">
+	#{hNo}
+	</foreach>
+	</delete>
 	
+	<update id="updateBookingStatusY" parameterType="com.one.whospet.dto.Booking">
+		UPDATE w_booking SET book_status = 'Y' WHERE book_no = #{bookNo }
+	</update>
+	
+	<update id="updateBookingStatusN" parameterType="com.one.whospet.dto.Booking">
+		UPDATE w_booking SET book_status = 'N' WHERE book_no = #{bookNo }
+	</update>
 	
   </mapper>
