@@ -68,9 +68,23 @@
 	<select id="selectAll" parameterType="hashmap" resultType="hashmap">
 		select * from
 		    (select rownum rnum, bjoin.* from 
-		        (select b.b_no, b.b_title, b.b_hit, b.b_write_date, u.u_nick from w_board b , w_user u
+		    
+		        <choose>
+		        
+		        <when test='search != null and !search.equals("")'>
+		        (select b.b_no, b.b_title, b.b_type, b.b_hit, b.b_write_date, u.u_nick from w_board b , w_user u
+		             where b.u_no = u.u_no and b.${searchCategory} LIKE '%' || #{search} || '%' order by b_no desc) bjoin
+		        
+		        </when>
+		        
+		        <otherwise>
+		        (select b.b_no, b.b_title, b.b_type, b.b_hit, b.b_write_date, u.u_nick from w_board b , w_user u
 		             where b.u_no = u.u_no and b.b_type = #{bType} order by b_no desc) bjoin
-		    ) board
+				</otherwise>
+				
+				
+				</choose>
+		) board
 	    where rnum between #{paging.startNo} and #{paging.endNo}
 	</select>
 	
@@ -129,13 +143,28 @@
 		values(w_comment_seq.nextval, #{content}, #{bNo}, #{uNo})
 	</insert>
 	
-	<select id="selectCommentAll" parameterType="int" resultType="hashmap">
-		select c.c_no, c.c_content, c.c_write_date, c.b_no, c.u_no, u.u_nick from w_comment c, w_user u 
-		where c.u_no = u.u_no and b_no = #{bNo}
+	<select id="selectCommentAll" parameterType="hashmap" resultType="hashmap">
+		select * from        
+			(select rownum rnum,  c.* from(
+    			select c.c_no, c.c_content, c.c_write_date, c.b_no, c.u_no, u.u_nick from w_comment c, w_user u 
+    			where c.u_no = u.u_no and b_no = #{bNo} order by c.c_write_date DESC) c) comm
+    	where rnum between 1 and #{curCommentSize}
 	</select>
 	
 	<delete id="deleteComment" parameterType="int">
 		delete w_comment where c_no = #{cNo}
 	</delete>
+
+	<delete id="deleteBoardComment" parameterType="int">
+		delete w_comment where b_no = #{bNo}
+	</delete>
+	
+	<select id="selectSearchCntBoard" resultType="int" parameterType="hashmap">
+		select count(*) from w_board WHERE ${searchCategory} LIKE '%' || #{search} || '%'
+	</select>
+	
+	<select id="selectCommentTotalCount" parameterType="int" resultType="int">
+		select count(*) from w_comment where b_no = #{bNo}
+	</select>
 	
 </mapper>

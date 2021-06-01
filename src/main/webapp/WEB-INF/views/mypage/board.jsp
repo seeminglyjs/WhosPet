@@ -28,10 +28,12 @@ td:nth-child(2) {
 position: relative;
 top: -100px;
 left: 220px;
+font-family: 'InfinitySans-RegularA1';
 }
 #cont2 {
 float: right;
 top: -100px;
+font-family: 'InfinitySans-RegularA1';
 }
 
 #page{

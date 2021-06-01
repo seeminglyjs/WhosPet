@@ -157,6 +157,25 @@ public interface MypageService {
 	 */
 	public List<Booking> bookingList(MypageBoardPaging paging);
 
+	/**
+	 * 선택된 병원 삭제 
+	 * @param map
+	 * @return
+	 */
+	public int deleteHospital(HashMap<String, Object> map);
+
+	/**
+	 * 예약 승인
+	 * @param booking
+	 */
+	public void bookingApprove(Booking booking);
+
+	/**
+	 * 예약 거절
+	 * @param booking
+	 */
+	public void bookingReject(Booking booking);
+
 
 
 	

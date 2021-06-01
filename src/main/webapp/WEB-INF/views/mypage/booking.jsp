@@ -26,12 +26,15 @@ td:nth-child(2) {
 
 #boardtitle{
 position: relative;
-top: -120px;
+top: -100px;
 left: 220px;
+font-family: 'InfinitySans-RegularA1';
+
 }
 #cont2 {
 float: right;
 top: -100px;
+font-family: 'InfinitySans-RegularA1';
 }
 
 #page{
@@ -42,7 +45,7 @@ left: 130px;
 </style>
 
 <div id="boardtitle">
-<h1>내 예약 정보</h1>
+<h1 style="display:inline;">내 예약 정보 </h1><h4 style="display:inline; color: gray;">MyBooking</h4>
 <hr align="left" width="630">
 </div>
 <div id="cont2" class="container-fluid col-md-9">

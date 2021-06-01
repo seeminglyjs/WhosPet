@@ -286,6 +286,7 @@ public class MypageController {
 	@RequestMapping(value = "/mypage/basket")
 	public void basketinfo() {}
 	
+	//병원관계자 병원관리페이지
 	@RequestMapping(value="/mypage/hospital")
 	public void hospitalinfo(@RequestParam(defaultValue = "0") int curPage, Model model) {
 		
@@ -300,6 +301,23 @@ public class MypageController {
 			model.addAttribute("paging", paging);
 	}
 	
+	//병원관계자가 병원삭제
+	@RequestMapping(value = "/mypage/hospitalDelete")
+	public String hospitalDelete(int[] hNoArr) {
+
+
+		HashMap<String, Object> map = new HashMap<String,Object>();
+		map.put("hNoArr", hNoArr);
+		
+		
+		int res = mypageService.deleteHospital(map);
+		if(res>0) {
+			return "redirect:/mypage/hospital";
+		}
+		return null;
+	}
+	
+	//병원예약 관리 페이지
 	@RequestMapping(value="/mypage/hosBooking")
 	public void hosbookinginfo(@RequestParam(defaultValue = "0") int curPage, Model model) {
 		MypageBoardPaging paging = mypageService.getHosBookingaging(curPage);
@@ -312,5 +330,32 @@ public class MypageController {
 		//모델값 전달
 		model.addAttribute("booklist",list);
 		model.addAttribute("paging", paging);
+	}
+	
+	//병원예약 상세 정보
+	@RequestMapping(value="/mypage/hosBookingDetail", method=RequestMethod.GET)
+	public void hosBookingInfoDetail(int bookno, Model model) {
+		Booking view = mypageService.view(bookno);
+		//model에 첨부파일 속성값 설정
+		model.addAttribute("view", view);
+	}
+	
+	//예약 승인
+	@RequestMapping(value="/mypage/bookingApprove", method=RequestMethod.POST)
+	public String bookingApprove(Booking booking) {
+		final int bookno = booking.getBookNo();
+		mypageService.bookingApprove(booking);
+		return "redirect: /mypage/info";
+	}
+	
+	
+	//예약 거절
+	@RequestMapping(value="/mypage/bookingReject", method=RequestMethod.POST)
+	public String bookingReject(Booking booking) {
+		final int bookno = booking.getBookNo();
+		mypageService.bookingReject(booking);
+		
+		return "redirect: /mypage/info";
+	
 	}
 }
