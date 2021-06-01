@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.one.whospet.dao.board.face.BoardDao;
 import com.one.whospet.dto.Board;
 import com.one.whospet.dto.BoardImg;
+import com.one.whospet.dto.Comment;
 import com.one.whospet.dto.User;
 import com.one.whospet.service.board.face.BoardService;
 import com.one.whospet.util.BoardPaging;
@@ -46,28 +47,49 @@ public class BoardServiceImpl implements BoardService {
 		
 		String param = request.getParameter("curPage");
 		int curPage = 0;
+		int totalCount = 0;
 		
 		// 파라미터 정보가 있는지 없는지 체크
 		if(param != null && !param.equals("")) {
 			curPage = Integer.parseInt(param);
 		};
 		
-		// 게시판 카테고리 체크
-		String param2 = "";
-		param2 = request.getParameter("bType");
-		logger.info("게시글 카테고리 " + param2);
-		String bType = "F";
-		
-		if(param2 != null && param2.equals("R")) {
-			bType = param2;
-		}else if(param2 != null && param2.equals("T")) {
-			bType = param2;
+		//검색했는지 여부 체크
+		String search = request.getParameter("search");
+		if(search != null && !search.equals("")) {
+			String searchCategory = request.getParameter("searchCategory");
+			
+			//카테고리가 없으면
+			if(searchCategory == null || !searchCategory.equals("b_title") && !searchCategory.equals("b_content")) {
+				searchCategory = "b_title";
+			}
+			
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("search", search);
+			map.put("searchCategory", searchCategory);
+			
+			//검색한 내용 기준으로 총 게시글 수 체크
+			totalCount = boardDao.selectSearchCntBoard(map);
+			
+		}else {//검색안했음 카테고리만 체크해서 넘김
+			
+			// 게시판 카테고리 체크
+			String param2 = "";
+			param2 = request.getParameter("bType");
+			logger.info("게시글 카테고리 " + param2);
+			String bType = "F";
+			
+			if(param2 != null && param2.equals("R")) {
+				bType = param2;
+			}else if(param2 != null && param2.equals("T")) {
+				bType = param2;
+			}
+
+			logger.info("게시글 카테고리 " + bType);
+			// 카테고리에 맞는 전체 게시글 수를 가져오는 메소드
+			totalCount = boardDao.selectCntBoard(bType);
 		}
 
-		logger.info("게시글 카테고리 " + bType);
-		// 카테고리에 맞는 전체 게시글 수를 가져오는 메소드
-		int totalCount = boardDao.selectCntBoard(bType);
-		
 		BoardPaging paging = new BoardPaging(totalCount, curPage);
 		
 		return paging;
@@ -84,9 +106,9 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override // 게시글 상세조회 정보를 가져오는 메소드
-	public Board detailBoard(int boardNo) {
+	public Board detailBoard(int bNo) {
 		
-		Board board = boardDao.selectBoardInfo(boardNo);
+		Board board = boardDao.selectBoardInfo(bNo);
 		
 		return board;
 	}
@@ -101,9 +123,9 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override //게시글 조회수를 증가시키는 메소드
-	public void updateHit(int boardNo) {
+	public void updateHit(int bNo) {
 		
-		boardDao.updateHit(boardNo);
+		boardDao.updateHit(bNo);
 	}
 	
 	@Override // 게시글을 작성하는 메소드
@@ -178,7 +200,7 @@ public class BoardServiceImpl implements BoardService {
 					e.printStackTrace();
 				}
 
-				int boardNo = boardDao.lastBoardNo();
+				int bNo = boardDao.lastBoardNo();
 
 
 				//파일 정보 객체 저장
@@ -186,7 +208,7 @@ public class BoardServiceImpl implements BoardService {
 
 				boardImg.setBiOriginFilename(fileList.get(i).getOriginalFilename());
 				boardImg.setBiStoredFilename(filename);
-				boardImg.setbNo(boardNo);
+				boardImg.setbNo(bNo);
 				boardImg.setBiContentType(contentType);
 				boardImg.setBiSize(fileList.get(i).getSize());
 				
@@ -200,10 +222,10 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Override // 게시글을 삭제하는 메소드
 	@Transactional // 
-	public void deleteBoard(int boardNo) {
+	public void deleteBoard(int bNo) {
 		
 		//게시글을 조회 한다.
-		Board board = boardDao.selectBoardInfo(boardNo);
+		Board board = boardDao.selectBoardInfo(bNo);
 		
 		//만약에 게시글이 없으면 리턴
 		if(board == null) {
@@ -211,7 +233,7 @@ public class BoardServiceImpl implements BoardService {
 		}
 		
 		//삭제할 파일 정보를 가져온다.
-		List<BoardImg> list = boardDao.deleteFileInfo(boardNo);
+		List<BoardImg> list = boardDao.deleteFileInfo(bNo);
 		
 		//저장된 파일정보가 null이 아니고 리스트가 비어있지 않으면 실행
 		if(list != null && !list.isEmpty()) {
@@ -228,18 +250,18 @@ public class BoardServiceImpl implements BoardService {
 			}
 			
 			//저장된 파일을 모두 제거한 후 DB 에서도 지운다.
-			boardDao.deleteBoardFile(boardNo);
+			boardDao.deleteBoardFile(bNo);
 		}	
 			
 		//파일 정보가 모두 삭제되면 게시판 정보도 지운다.	
-		boardDao.deleteBoard(boardNo);
+		boardDao.deleteBoard(bNo);
 		
 	}
 	
 	@Override // 게시글 작성유저의 번호를 가져온다.
-	public int getBoardWriterUno(int boardNo) {		
+	public int getBoardWriterUno(int bNo) {		
 		int uNo = 0;	
-		uNo = boardDao.selectBoardUno(boardNo);
+		uNo = boardDao.selectBoardUno(bNo);
 		return uNo;
 	}
 	
@@ -264,16 +286,16 @@ public class BoardServiceImpl implements BoardService {
 		board.setbType(fileRequest.getParameter("category"));
 		board.setuNo(user.getuNo());
 		
-		String param = fileRequest.getParameter("boardNo");
+		String param = fileRequest.getParameter("bNo");
 		
-		int boardNo = 0;
+		int bNo = 0;
 		try { // 형변환 오류 발생 바로 return 해버림
-			boardNo = Integer.parseInt(param);
+			bNo = Integer.parseInt(param);
 		}catch (Exception e) {
 			return;
 		}
 		
-		board.setbNo(boardNo);
+		board.setbNo(bNo);
 
 		
 		// 만약에 내용을 등록하지 않았으면 제목과 동일하게 지정
@@ -297,7 +319,7 @@ public class BoardServiceImpl implements BoardService {
 			logger.info("파일 있음");
 			//파일이 있는 경우
 			//삭제할 파일 정보를 가져온다.
-			List<BoardImg> list = boardDao.deleteFileInfo(boardNo);
+			List<BoardImg> list = boardDao.deleteFileInfo(bNo);
 			
 			//저장된 파일정보가 null이 아니고 리스트가 비어있지 않으면 실행
 			if(list != null && !list.isEmpty()) {
@@ -314,7 +336,7 @@ public class BoardServiceImpl implements BoardService {
 				}
 				
 				//저장된 파일을 모두 제거한 후 DB 에서도 지운다.
-				boardDao.deleteBoardFile(boardNo);
+				boardDao.deleteBoardFile(bNo);
 			}	
 			
 			//-------------- 새로운 파일을 등록 하는 코드
@@ -367,7 +389,7 @@ public class BoardServiceImpl implements BoardService {
 
 				boardImg.setBiOriginFilename(fileList.get(i).getOriginalFilename());
 				boardImg.setBiStoredFilename(filename);
-				boardImg.setbNo(boardNo);
+				boardImg.setbNo(bNo);
 				boardImg.setBiContentType(contentType);
 				boardImg.setBiSize(fileList.get(i).getSize());
 				
@@ -376,5 +398,106 @@ public class BoardServiceImpl implements BoardService {
 			}
 		}	
 	}
+		
+	@Override // 게시글의 댓글을 작성하는 메소드
+	public void writeComment(HttpServletRequest request) {
+		String param1 = request.getParameter("uNo");
+		String param2 = request.getParameter("bNo");
+			
+		int uNo = 0;
+		int bNo = 0;
+		try {// 파라미터 형변환 체크
+			uNo = Integer.parseInt(param1);
+			bNo = Integer.parseInt(param2);
+		} catch (Exception e) {
+			logger.info("-----게시글 댓글 달기 형변환 중 오류 발생");
+			e.printStackTrace();
+			return;
+		}
+		
+		//전달받은 댓글 내용을 체크
+		String content = "";
+		content = request.getParameter("content");
+		
+		if(content == null || content.equals("")) {
+			content = "Default";
+		}
+		
+		// mapper 전달으 위해 hashmap에 담아준다.
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("uNo", uNo);
+		map.put("bNo", bNo);
+		map.put("content", content);
+		
+		// 댓글을 작성한다.
+		boardDao.writeComment(map);
+	}
 	
+	
+	@Override // 댓글의 리스트를 가져오는 메소드
+	public List<HashMap<String, Object>> getComment(HttpServletRequest request) {
+		
+		List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>(); 
+		
+		String param = request.getParameter("bNo");
+		String param2 = request.getParameter("curCommentSize");
+		
+		//기본 댓글 값 최대 10개 까지
+		int curCommentSize = 10;
+		
+		//더보기 버튼 눌렀는지 체크 눌렀으며 10개 더해줌
+		if(param2 != null && !param2.equals("")) {
+			curCommentSize = Integer.parseInt(param2);
+			curCommentSize += 10;
+		}
+		
+		logger.info("댓글의 가져올 게시판 번호" + param);
+		
+		int bNo = 0;
+		try {
+			bNo = Integer.parseInt(param);
+		} catch (Exception e) {
+			logger.info("댓글리스트를 불러오는 도중 형변환 오류 발생");
+			e.printStackTrace();
+		}
+		
+		//게시글 번호하고 댓글의 마지막 갯수  번호를 넣을 맵
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("bNo", bNo);
+		map.put("curCommentSize", curCommentSize);
+		
+		list = boardDao.selectCommentAll(map);
+		
+		return list;
+	}
+	
+	@Override //댓글을 삭제하는 메소드
+	public void deleteComment(int cNo) {
+		boardDao.deleteComment(cNo);
+		
+	}
+	
+	@Override // 게시글의 삭제시 댓글을 삭제하는 메소드
+	public void deleteBoardComment(int bNo) {
+		boardDao.deleteBoardComment(bNo);
+		
+	}
+	
+	@Override // 댓글의 총 댓글 수를 가져오는 메소드
+	public int getCommentTotalCount(HttpServletRequest request) {
+		
+		String param = request.getParameter("bNo");
+		
+		int bNo = 0;
+		
+		try {
+			bNo = Integer.parseInt(param);
+		}catch (Exception e) {
+			logger.info("**** 총 댓글 수 더보기 오류");
+		}
+			
+		int total = boardDao.selectCommentTotalCount(bNo);		
+		return total;
+	}
 }
