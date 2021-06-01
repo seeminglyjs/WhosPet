@@ -30,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.one.whospet.dto.Board;
 import com.one.whospet.dto.Booking;
+import com.one.whospet.dto.Hospital;
 import com.one.whospet.dto.Point;
 import com.one.whospet.dto.User;
 import com.one.whospet.dto.Userpic;
@@ -148,7 +149,7 @@ public class MypageController {
 		data.put("curPage", curPage);
 		
 		//페이징 계산
-		MypageBoardPaging paging = mypageService.getPaging(data);
+		MypageBoardPaging paging = mypageService.getBoardPaging(data);
 		
 		//페이징 객체 집어넣기
 		data.put("paging", paging);
@@ -179,7 +180,7 @@ public class MypageController {
 		data.put("curPage", curPage);
 		
 		//페이징 계산
-		MypageBoardPaging paging = mypageService.getPaging(data);
+		MypageBoardPaging paging = mypageService.getBookingPaging(data);
 		
 		//페이징 객체 집어넣기
 		data.put("paging", paging);
@@ -255,7 +256,7 @@ public class MypageController {
 		data.put("curPage", curPage);
 		
 		//페이징 계산
-		MypageBoardPaging paging = mypageService.getPaging(data);
+		MypageBoardPaging paging = mypageService.getPointPaging(data);
 		
 		//페이징 객체 집어넣기
 		data.put("paging", paging);
@@ -284,4 +285,32 @@ public class MypageController {
 	
 	@RequestMapping(value = "/mypage/basket")
 	public void basketinfo() {}
+	
+	@RequestMapping(value="/mypage/hospital")
+	public void hospitalinfo(@RequestParam(defaultValue = "0") int curPage, Model model) {
+		
+			MypageBoardPaging paging = mypageService.getHospitalPaging(curPage);
+			//병원 목록 조회
+			List<Hospital> list = mypageService.hospitalList(paging);
+			for( int i=0; i<list.size(); i++) {
+			logger.debug(list.get(i).toString());
+			}
+			//모델값 전달
+			model.addAttribute("hoslist",list);
+			model.addAttribute("paging", paging);
+	}
+	
+	@RequestMapping(value="/mypage/hosBooking")
+	public void hosbookinginfo(@RequestParam(defaultValue = "0") int curPage, Model model) {
+		MypageBoardPaging paging = mypageService.getHosBookingaging(curPage);
+		
+		//예약 목록 조회
+		List<Booking> list = mypageService.bookingList(paging);
+		for( int i=0; i<list.size(); i++) {
+		logger.debug(list.get(i).toString());
+		}
+		//모델값 전달
+		model.addAttribute("booklist",list);
+		model.addAttribute("paging", paging);
+	}
 }

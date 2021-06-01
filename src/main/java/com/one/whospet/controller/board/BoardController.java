@@ -1,11 +1,9 @@
 package com.one.whospet.controller.board;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -20,6 +18,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.one.whospet.dto.Board;
 import com.one.whospet.dto.BoardImg;
+import com.one.whospet.dto.Comment;
 import com.one.whospet.dto.User;
 import com.one.whospet.service.board.face.BoardService;
 import com.one.whospet.util.BoardPaging;
@@ -38,28 +37,28 @@ public class BoardController {
 	@RequestMapping(value = "/board/list")
 	public void list(HttpServletRequest request, Model model) {
 		logger.info("board/view");
-		
+
 		// 페이징을 얻어온다.
 		BoardPaging paging = boardService.getPaging(request);
 
 		List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		
+
 		map.put("paging", paging);	
 		// 게시판 카테고리 체크
 		String param2 = "";
 		param2 = request.getParameter("bType");
 		logger.info("게시글 카테고리 " + param2);
 		String bType = "F";
-		
+
 		if(param2 != null && param2.equals("R")) {
 			bType = param2;
 		}else if(param2 != null && param2.equals("T")) {
 			bType = param2;
 		}		
 		map.put("bType", bType);
-		
+
 		// 페이지의 해당 하는 게시글 목록을 얻어온다.
 		list = boardService.getList(map);
 
@@ -74,41 +73,53 @@ public class BoardController {
 	@RequestMapping(value = "/board/detail")
 	public String detail(HttpServletRequest request, Model model) {
 
-		String param = request.getParameter("boardNo");
-		int boardNo = -1;
+		String param = request.getParameter("bNo");
+		int bNo = -1;
 		if(param != null && !param.equals("")) { // 파라미터 체크
 			try { // 숫자가 아닌 문자열 이나 공백문자를 받을 경우 리스트로 보내버림
-				boardNo = Integer.parseInt(param);
+				bNo = Integer.parseInt(param);
 			} catch (NumberFormatException e) {
 				return "redirect:/board/list";
 			}	
 		}
 		//게시글 정보를 가져오는 메소드
-		boardService.updateHit(boardNo);
-		Board board = boardService.detailBoard(boardNo);
-		
+		boardService.updateHit(bNo);
+		Board board = boardService.detailBoard(bNo);
+
 		//조회된 게시글 존재 여부 체크
 		if(board == null) {
 			return "redirect:/board/list";
 		}else {
+			//게시글 이미지 정보를 담을 리스트
 			List<BoardImg> imgList = new ArrayList<BoardImg>();
-			
+
+			//댓글 리스트를 담을 리스트
+			List<HashMap<String, Object>> listC = new ArrayList<HashMap<String, Object>>();
+
+			//댓글 리스트를 가져오는 메
+			listC = boardService.getComment(request);
+
+			//댓글의 총 갯수
+			int listCSize = listC.size();
+
 			//게시판에 등록된 이미지 정보를 리스트에 담는
 			imgList = boardService.getBoardImgInfo(board);
-			
+
 			//게시판의 등록된 이미지 정보가 있으면
 			List<String> fileList = new ArrayList<String>();
 			if(imgList != null && !imgList.isEmpty()) {
 				//등록된 이미지 만큼 반복한다.
 				for(int i = 0; i < imgList.size(); i++) {
 					//파일 경로 지정
-					fileList.add(imgList.get(i).getBiStoredFilename());
+					fileList.add(imgList.get(i).getBiStoredFilename());					
 				}
 			}
 			// 게시글 작성 유저의 정보를 가져오는 메소드
 			User user = boardService.getBoardWriterInfo(board.getuNo());
 
 			// 게시판 정보/ 작성유저 정보 객체 전달/파일 정보 저장
+			model.addAttribute("listC", listC);
+			model.addAttribute("listCSize", listCSize);			
 			model.addAttribute("fileList", fileList);
 			model.addAttribute("board", board);
 			model.addAttribute("user", user);
@@ -134,23 +145,23 @@ public class BoardController {
 	@RequestMapping(value = "/board/delete")
 	public String deleteBoard(HttpServletRequest request, HttpSession session) {
 
-		String param = request.getParameter("boardNo");
+		String param = request.getParameter("bNo");
 
 		//요청 파라미터가 null 이거나 빈문자열이면 돌려보냄
 		if(param == null || param.equals("")) {
 			return "redirect:/board/list";
 		}
-		
-		int boardNo = 0;
+
+		int bNo = 0;
 		try { // 예외 발생시 리스트로 보내버림
-			boardNo = Integer.parseInt(param);
+			bNo = Integer.parseInt(param);
 		} catch (Exception e) {
 			return "redirect:/board/list";
 		}
-		
+
 		// 게시글 작성 유저의 정보를 가져오는 메소드
-		int uNo = boardService.getBoardWriterUno(boardNo);
-		
+		int uNo = boardService.getBoardWriterUno(bNo);
+
 		//로그인 유저 정보 가져온다.
 		User loginUser = (User) session.getAttribute("user");
 
@@ -158,41 +169,41 @@ public class BoardController {
 		if(loginUser.getuNo() != uNo) {
 			return "redirect:/board/list";
 		}else {
-			boardService.deleteBoard(boardNo);
+			boardService.deleteBoard(bNo);
 			//삭제 진행후 다시 리스트로 보낸다.
 			return "redirect:/board/list";
 		}
 	}
-	
+
 	// 게시글 수정 화면을 보여주는 view [Get] 
 	@RequestMapping(value="/board/update")
 	public String updateBoard(HttpServletRequest request, HttpSession session, Model model) {
-		String param = request.getParameter("boardNo");
+		String param = request.getParameter("bNo");
 
 		//요청 파라미터가 null 이거나 빈문자열이면 돌려보냄
 		if(param == null || param.equals("")) {
 			return "redirect:/board/list";
 		}
-		
-		int boardNo = 0;
+
+		int bNo = 0;
 		try { // 예외 발생시 리스트로 보내버림
-			boardNo = Integer.parseInt(param);
+			bNo = Integer.parseInt(param);
 		} catch (Exception e) {
 			return "redirect:/board/list";
 		}
-		
+
 		//게시글 정보를 가져오는 메소드
-		Board board = boardService.detailBoard(boardNo);
-		
+		Board board = boardService.detailBoard(bNo);
+
 		//조회된 게시글 존재 여부 체크
 		if(board == null) {
 			return "redirect:/board/list";
 		}else {
 			List<BoardImg> imgList = new ArrayList<BoardImg>();
-			
+
 			//게시판에 등록된 이미지 정보를 리스트에 담는
 			imgList = boardService.getBoardImgInfo(board);
-			
+
 			//게시판의 등록된 이미지 정보가 있으면
 			List<String> fileList = new ArrayList<String>();
 			if(imgList != null && !imgList.isEmpty()) {
@@ -212,16 +223,87 @@ public class BoardController {
 			return "/board/update";
 		}	
 	}
-	
+
 	// 게시글 수정이 이루어지는 메소드
 	@RequestMapping(value="/board/update", method = RequestMethod.POST)
 	public String updateBoardRes(HttpSession session, MultipartHttpServletRequest fileRequest) {
 		User user = (User) session.getAttribute("user");
-		
+
 		boardService.updateBoard(fileRequest, user);
 
 		return "redirect:/board/list";	
 	}
-	
-	
+
+
+	// 댓글쓰기 컨트롤러
+	@RequestMapping(value = "/board/comment", method = RequestMethod.POST)
+	public void writeComment(HttpServletRequest request, Model model) {
+
+		//게시글의 댓글을 작성하는 메소드
+		boardService.writeComment(request);
+
+		//댓글 리스트를 담을 리스트
+		List<HashMap<String, Object>> listC = new ArrayList<HashMap<String, Object>>();
+
+		//댓글 작성 후 댓글 리스트를 가져오는 메
+		listC = boardService.getComment(request);
+
+		// 댓글리스트가 null이거나 비어있으면 null 할당
+		if(listC == null || listC.isEmpty()) {
+			listC = null;
+		}else {
+			model.addAttribute("listCSize", listC.size());
+		}
+
+		logger.info("listC {}", listC);
+		//댓글의 총 갯수
+		int listCSize = -1;
+		
+		if(listC != null) {
+			listCSize = listC.size();
+		}
+		model.addAttribute("listC", listC);
+		model.addAttribute("listCSize", listCSize);
+	}
+
+	//댓글삭제 컨트롤러
+	@RequestMapping(value = "/board/commentDelete", method = RequestMethod.POST)
+	public void deleteComment(HttpServletRequest request, Model model) {
+		String param = request.getParameter("cNo");
+		
+		int cNo = 0;
+		try { //파라미터 값 체크
+			cNo = Integer.parseInt(param);
+		} catch (Exception e) {
+			logger.info("****");
+			logger.info("**** 댓글 삭제 형변환 오류 발생");
+		}
+
+		//댓글을 삭제한다. 
+		boardService.deleteComment(cNo);
+
+		//댓글 리스트를 담을 리스트
+		List<HashMap<String, Object>> listC = new ArrayList<HashMap<String, Object>>();
+
+		//댓글 작성 후 댓글 리스트를 가져오는 메
+		listC = boardService.getComment(request);
+
+		// 댓글리스트가 null이거나 비어있으면 null 할당
+		if(listC == null || listC.isEmpty()) {
+			listC = null;
+		}else {
+			model.addAttribute("listCSize", listC.size());
+		}
+
+		logger.info("listC {}", listC);
+		//댓글의 총 갯수
+		int listCSize = -1;
+		
+		if(listC != null) {
+			listCSize = listC.size();
+		}
+		
+		model.addAttribute("listC", listC);
+		model.addAttribute("listCSize", listCSize);
+	}
 }
