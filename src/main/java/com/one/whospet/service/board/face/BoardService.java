@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.one.whospet.dto.Board;
 import com.one.whospet.dto.BoardImg;
+import com.one.whospet.dto.Comment;
 import com.one.whospet.dto.User;
 import com.one.whospet.util.BoardPaging;
 
@@ -33,10 +34,10 @@ public interface BoardService {
 	/**
 	 * 게시글 상세 조회를 가져오는 메소드
 	 * 
-	 * @param boardNo
+	 * @param bNo
 	 * @return
 	 */
-	public Board detailBoard(int boardNo);
+	public Board detailBoard(int bNo);
 
 	/**
 	 * 게시글 작성 유저의 정보를 가져오는 메소드
@@ -49,9 +50,9 @@ public interface BoardService {
 	/**
 	 * 게시글 조회수를 증가시키는 메소드
 	 * 
-	 * @param boardNo
+	 * @param bNo
 	 */
-	public void updateHit(int boardNo);
+	public void updateHit(int bNo);
 
 	/**
 	 * 게시글을 작성하는 메소드
@@ -64,17 +65,17 @@ public interface BoardService {
 	/**
 	 * 게시글을 삭제하는 메소드
 	 * 
-	 * @param boardNo
+	 * @param bNo
 	 */
-	public void deleteBoard(int boardNo);
+	public void deleteBoard(int bNo);
 
 	/**
 	 * 게시글 작성 유저 번호를 가져오는 메소드
 	 * 
-	 * @param boardNo
+	 * @param bNo
 	 * @return
 	 */
-	public int getBoardWriterUno(int boardNo);
+	public int getBoardWriterUno(int bNo);
 
 	/**
 	 * 게시글의 이미지 정보를 가져오는 메소드
@@ -91,6 +92,28 @@ public interface BoardService {
 	 * @param user
 	 */
 	public void updateBoard(MultipartHttpServletRequest fileRequest, User user);
+
+	/**
+	 * 게시글의 댓글을 작성하는 메소드
+	 * 
+	 * @param request
+	 */
+	public void writeComment(HttpServletRequest request);
+
+	/**
+	 * 댓글 리스트를 가져오는 메소드
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public List<HashMap<String, Object>> getComment(HttpServletRequest request);
+
+	/**
+	 * 댓글을 삭제하는 메소드
+	 * 
+	 * @param cNo
+	 */
+	public void deleteComment(int cNo);
 
 
 }

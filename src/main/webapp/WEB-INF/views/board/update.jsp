@@ -76,7 +76,7 @@ function check(){
 		<div>
 			<label for="title">제목</label>
 			<input type="text" class="form-control" name="title" id="title" placeholder="제목을 입력해 주세요" value="${board.bTitle }">
-			<input type="hidden" name="boardNo" value="${board.bNo }">
+			<input type="hidden" name="bNo" value="${board.bNo }">
 		</div>
 		<hr>
 		<div>

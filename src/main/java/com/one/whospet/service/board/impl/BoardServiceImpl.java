@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.one.whospet.dao.board.face.BoardDao;
 import com.one.whospet.dto.Board;
 import com.one.whospet.dto.BoardImg;
+import com.one.whospet.dto.Comment;
 import com.one.whospet.dto.User;
 import com.one.whospet.service.board.face.BoardService;
 import com.one.whospet.util.BoardPaging;
@@ -84,9 +85,9 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override // 게시글 상세조회 정보를 가져오는 메소드
-	public Board detailBoard(int boardNo) {
+	public Board detailBoard(int bNo) {
 		
-		Board board = boardDao.selectBoardInfo(boardNo);
+		Board board = boardDao.selectBoardInfo(bNo);
 		
 		return board;
 	}
@@ -101,9 +102,9 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override //게시글 조회수를 증가시키는 메소드
-	public void updateHit(int boardNo) {
+	public void updateHit(int bNo) {
 		
-		boardDao.updateHit(boardNo);
+		boardDao.updateHit(bNo);
 	}
 	
 	@Override // 게시글을 작성하는 메소드
@@ -178,7 +179,7 @@ public class BoardServiceImpl implements BoardService {
 					e.printStackTrace();
 				}
 
-				int boardNo = boardDao.lastBoardNo();
+				int bNo = boardDao.lastBoardNo();
 
 
 				//파일 정보 객체 저장
@@ -186,7 +187,7 @@ public class BoardServiceImpl implements BoardService {
 
 				boardImg.setBiOriginFilename(fileList.get(i).getOriginalFilename());
 				boardImg.setBiStoredFilename(filename);
-				boardImg.setbNo(boardNo);
+				boardImg.setbNo(bNo);
 				boardImg.setBiContentType(contentType);
 				boardImg.setBiSize(fileList.get(i).getSize());
 				
@@ -200,10 +201,10 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Override // 게시글을 삭제하는 메소드
 	@Transactional // 
-	public void deleteBoard(int boardNo) {
+	public void deleteBoard(int bNo) {
 		
 		//게시글을 조회 한다.
-		Board board = boardDao.selectBoardInfo(boardNo);
+		Board board = boardDao.selectBoardInfo(bNo);
 		
 		//만약에 게시글이 없으면 리턴
 		if(board == null) {
@@ -211,7 +212,7 @@ public class BoardServiceImpl implements BoardService {
 		}
 		
 		//삭제할 파일 정보를 가져온다.
-		List<BoardImg> list = boardDao.deleteFileInfo(boardNo);
+		List<BoardImg> list = boardDao.deleteFileInfo(bNo);
 		
 		//저장된 파일정보가 null이 아니고 리스트가 비어있지 않으면 실행
 		if(list != null && !list.isEmpty()) {
@@ -228,18 +229,18 @@ public class BoardServiceImpl implements BoardService {
 			}
 			
 			//저장된 파일을 모두 제거한 후 DB 에서도 지운다.
-			boardDao.deleteBoardFile(boardNo);
+			boardDao.deleteBoardFile(bNo);
 		}	
 			
 		//파일 정보가 모두 삭제되면 게시판 정보도 지운다.	
-		boardDao.deleteBoard(boardNo);
+		boardDao.deleteBoard(bNo);
 		
 	}
 	
 	@Override // 게시글 작성유저의 번호를 가져온다.
-	public int getBoardWriterUno(int boardNo) {		
+	public int getBoardWriterUno(int bNo) {		
 		int uNo = 0;	
-		uNo = boardDao.selectBoardUno(boardNo);
+		uNo = boardDao.selectBoardUno(bNo);
 		return uNo;
 	}
 	
@@ -264,16 +265,16 @@ public class BoardServiceImpl implements BoardService {
 		board.setbType(fileRequest.getParameter("category"));
 		board.setuNo(user.getuNo());
 		
-		String param = fileRequest.getParameter("boardNo");
+		String param = fileRequest.getParameter("bNo");
 		
-		int boardNo = 0;
+		int bNo = 0;
 		try { // 형변환 오류 발생 바로 return 해버림
-			boardNo = Integer.parseInt(param);
+			bNo = Integer.parseInt(param);
 		}catch (Exception e) {
 			return;
 		}
 		
-		board.setbNo(boardNo);
+		board.setbNo(bNo);
 
 		
 		// 만약에 내용을 등록하지 않았으면 제목과 동일하게 지정
@@ -297,7 +298,7 @@ public class BoardServiceImpl implements BoardService {
 			logger.info("파일 있음");
 			//파일이 있는 경우
 			//삭제할 파일 정보를 가져온다.
-			List<BoardImg> list = boardDao.deleteFileInfo(boardNo);
+			List<BoardImg> list = boardDao.deleteFileInfo(bNo);
 			
 			//저장된 파일정보가 null이 아니고 리스트가 비어있지 않으면 실행
 			if(list != null && !list.isEmpty()) {
@@ -314,7 +315,7 @@ public class BoardServiceImpl implements BoardService {
 				}
 				
 				//저장된 파일을 모두 제거한 후 DB 에서도 지운다.
-				boardDao.deleteBoardFile(boardNo);
+				boardDao.deleteBoardFile(bNo);
 			}	
 			
 			//-------------- 새로운 파일을 등록 하는 코드
@@ -367,7 +368,7 @@ public class BoardServiceImpl implements BoardService {
 
 				boardImg.setBiOriginFilename(fileList.get(i).getOriginalFilename());
 				boardImg.setBiStoredFilename(filename);
-				boardImg.setbNo(boardNo);
+				boardImg.setbNo(bNo);
 				boardImg.setBiContentType(contentType);
 				boardImg.setBiSize(fileList.get(i).getSize());
 				
@@ -376,5 +377,68 @@ public class BoardServiceImpl implements BoardService {
 			}
 		}	
 	}
+		
+	@Override // 게시글의 댓글을 작성하는 메소드
+	public void writeComment(HttpServletRequest request) {
+		String param1 = request.getParameter("uNo");
+		String param2 = request.getParameter("bNo");
+			
+		int uNo = 0;
+		int bNo = 0;
+		try {// 파라미터 형변환 체크
+			uNo = Integer.parseInt(param1);
+			bNo = Integer.parseInt(param2);
+		} catch (Exception e) {
+			logger.info("-----게시글 댓글 달기 형변환 중 오류 발생");
+			e.printStackTrace();
+			return;
+		}
+		
+		//전달받은 댓글 내용을 체크
+		String content = "";
+		content = request.getParameter("content");
+		
+		if(content == null || content.equals("")) {
+			content = "Default";
+		}
+		
+		// mapper 전달으 위해 hashmap에 담아준다.
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("uNo", uNo);
+		map.put("bNo", bNo);
+		map.put("content", content);
+		
+		// 댓글을 작성한다.
+		boardDao.writeComment(map);
+	}
 	
+	
+	@Override // 댓글의 리스트를 가져오는 메소드
+	public List<HashMap<String, Object>> getComment(HttpServletRequest request) {
+		
+		List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>(); 
+		
+		String param = request.getParameter("bNo");
+		
+		logger.info("댓글의 가져올 게시판 번호" + param);
+		
+		int bNo = 0;
+		
+		try {
+			bNo = Integer.parseInt(param);
+		} catch (Exception e) {
+			logger.info("댓글리스트를 불러오는 도중 형변환 오류 발생");
+			e.printStackTrace();
+		}
+		
+		list = boardDao.selectCommentAll(bNo);
+		
+		return list;
+	}
+	
+	@Override //댓글을 삭제하는 메소드
+	public void deleteComment(int cNo) {
+		boardDao.deleteComment(cNo);
+		
+	}
 }
