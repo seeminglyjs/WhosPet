@@ -40,6 +40,8 @@ public interface HospitalDao {
 
 	public int updateHospitalStatusN(HashMap<String, Object> map);
 
+	public int numOfhospital();
+
 
 	
 
