@@ -239,7 +239,7 @@
       <div class="items--parent">
          <div class="items">
 	        <c:forEach var="t" items="${treatmentList}">
-           		<a href='/whospet/treatdetail?no=${t.TR_NO}'>
+           		<a href='/treatment/treatdetail?no=${t.TR_NO}'>
 	           		<div class="entry">
 		             	<h3 class="name">${t.TR_NAME}</h3>
 		             	<p class="quote">가격 : ${t.TR_PRICE}원</p>

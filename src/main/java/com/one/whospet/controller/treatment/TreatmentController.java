@@ -83,7 +83,7 @@ public class TreatmentController {
 	
 	
 	
-	@RequestMapping(value = "/treatdetail", method = RequestMethod.GET)
+	@RequestMapping(value = "/treatment/treatdetail", method = RequestMethod.GET)
 	public String treatdetailView(Model model, @RequestParam("no") int no) {
 		List<HashMap<String, Object>> treatmentList = treatmentService.selectAllTreatment();
 		for(int i = 0; i < treatmentList.size(); i++) {
