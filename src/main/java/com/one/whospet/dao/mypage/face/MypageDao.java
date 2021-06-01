@@ -146,6 +146,26 @@ public interface MypageDao {
 	 */
 	public List<Booking> selectAllHosBooking(MypageBoardPaging paging);
 
+	/**
+	 * 선택된 병원들 제거
+	 * @param map
+	 * @return
+	 */
+	public int deleteHospitals(HashMap<String, Object> map);
+
+	/**
+	 * 예약상태 Y로 업데이트
+	 * @param booking
+	 * @return
+	 */
+	public void updateBookingStatusY(Booking booking);
+
+	/**
+	 * 예약상태N으로 업데이트
+	 * @param booking
+	 */
+	public void updateBookingStatusN(Booking booking);
+
 
 
 

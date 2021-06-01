@@ -24,10 +24,12 @@ $(document).ready(function(){
 position: relative;
 top: -120px;
 left: 220px;
+font-family: 'InfinitySans-RegularA1';
 }
 #cont2 {
 float: right;
 top: -100px;
+font-family: 'InfinitySans-RegularA1';
 }
 
 td {
