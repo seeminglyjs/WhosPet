@@ -115,5 +115,20 @@ public interface BoardService {
 	 */
 	public void deleteComment(int cNo);
 
+	/**
+	 * 게시글 삭제시 해당 게시글의 댓글도 같이 삭제
+	 * 
+	 * @param bNo
+	 */
+	public void deleteBoardComment(int bNo);
+
+	/**
+	 * 현재 게시글의 총 댓글 수를 가져오는 메소드
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public int getCommentTotalCount(HttpServletRequest request);
+
 
 }

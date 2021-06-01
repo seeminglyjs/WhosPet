@@ -126,10 +126,10 @@ public interface BoardDao {
 	/**
 	 * 댓글 리스트를 가져오는 메소드
 	 * 
-	 * @param bNo
+	 * @param map
 	 * @return
 	 */
-	public List<HashMap<String, Object>> selectCommentAll(int bNo);
+	public List<HashMap<String, Object>> selectCommentAll(HashMap<String, Object> map);
 
 	/**
 	 * 댓글을 삭제하는 메소드
@@ -137,5 +137,28 @@ public interface BoardDao {
 	 * @param cNo
 	 */
 	public void deleteComment(int cNo);
+
+	/**
+	 * 게시글 삭제시 해당 게시글의 댓글을 삭제하는 메소드
+	 * 
+	 * @param bNo
+	 */
+	public void deleteBoardComment(int bNo);
+
+	/**
+	 * 검색된 항목으로 게시글을 조회하는 메소드
+	 * 
+	 * @param map
+	 * @return
+	 */
+	public int selectSearchCntBoard(HashMap<String, Object> map);
+
+	/**
+	 * 현재 게시글의 총 댓글 수를 가져오는 메소드
+	 * 
+	 * @param bNo
+	 * @return
+	 */
+	public int selectCommentTotalCount(int bNo);
 
 }

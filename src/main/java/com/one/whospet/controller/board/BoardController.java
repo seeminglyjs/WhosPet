@@ -46,18 +46,33 @@ public class BoardController {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 
 		map.put("paging", paging);	
-		// 게시판 카테고리 체크
-		String param2 = "";
-		param2 = request.getParameter("bType");
-		logger.info("게시글 카테고리 " + param2);
-		String bType = "F";
+		String search = request.getParameter("search");
+		if(search != null && !search.equals("")) {
+			String searchCategory = request.getParameter("searchCategory");
 
-		if(param2 != null && param2.equals("R")) {
-			bType = param2;
-		}else if(param2 != null && param2.equals("T")) {
-			bType = param2;
-		}		
-		map.put("bType", bType);
+			
+			//카테고리가 없으면
+			if(searchCategory == null || !searchCategory.equals("b_title") && !searchCategory.equals("b_content")) {
+				searchCategory = "b_title";
+			}
+			
+			map.put("search", search);
+			map.put("searchCategory", searchCategory);
+		}else {
+			// 게시판 카테고리 체크
+			String param2 = "";
+			param2 = request.getParameter("bType");
+			logger.info("게시글 카테고리 " + param2);
+			String bType = "F";
+
+			//기본게시판은 자유게시판(F)
+			if(param2 != null && param2.equals("R")) {
+				bType = param2;
+			}else if(param2 != null && param2.equals("T")) {
+				bType = param2;
+			}		
+			map.put("bType", bType);
+		}
 
 		// 페이지의 해당 하는 게시글 목록을 얻어온다.
 		list = boardService.getList(map);
@@ -96,11 +111,14 @@ public class BoardController {
 			//댓글 리스트를 담을 리스트
 			List<HashMap<String, Object>> listC = new ArrayList<HashMap<String, Object>>();
 
-			//댓글 리스트를 가져오는 메
+			//댓글 리스트를 가져오는 메소드
 			listC = boardService.getComment(request);
 
 			//댓글의 총 갯수
 			int listCSize = listC.size();
+			
+			int totalCSize = 0;
+			totalCSize = boardService.getCommentTotalCount(request);
 
 			//게시판에 등록된 이미지 정보를 리스트에 담는
 			imgList = boardService.getBoardImgInfo(board);
@@ -117,9 +135,10 @@ public class BoardController {
 			// 게시글 작성 유저의 정보를 가져오는 메소드
 			User user = boardService.getBoardWriterInfo(board.getuNo());
 
-			// 게시판 정보/ 작성유저 정보 객체 전달/파일 정보 저장
+			// 게시판 정보/ 작성유저 정보 객체 전달/파일 정보/댓글정보 저장
 			model.addAttribute("listC", listC);
 			model.addAttribute("listCSize", listCSize);			
+			model.addAttribute("totalCSize", totalCSize);//총댓글 수		
 			model.addAttribute("fileList", fileList);
 			model.addAttribute("board", board);
 			model.addAttribute("user", user);
@@ -169,7 +188,8 @@ public class BoardController {
 		if(loginUser.getuNo() != uNo) {
 			return "redirect:/board/list";
 		}else {
-			boardService.deleteBoard(bNo);
+			boardService.deleteBoardComment(bNo);// 댓글삭제
+			boardService.deleteBoard(bNo); // 게시글 삭제
 			//삭제 진행후 다시 리스트로 보낸다.
 			return "redirect:/board/list";
 		}
@@ -262,8 +282,13 @@ public class BoardController {
 		if(listC != null) {
 			listCSize = listC.size();
 		}
+		
+		int totalCSize = 0;
+		totalCSize = boardService.getCommentTotalCount(request);
+		
 		model.addAttribute("listC", listC);
 		model.addAttribute("listCSize", listCSize);
+		model.addAttribute("totalCSize", totalCSize);
 	}
 
 	//댓글삭제 컨트롤러
@@ -303,7 +328,35 @@ public class BoardController {
 			listCSize = listC.size();
 		}
 		
+		int totalCSize = 0;
+		totalCSize = boardService.getCommentTotalCount(request);
+		
 		model.addAttribute("listC", listC);
 		model.addAttribute("listCSize", listCSize);
+		model.addAttribute("totalCSize", totalCSize);
 	}
+	
+	//댓글 더보기 컨트롤러
+	@RequestMapping(value = "/board/moreComment", method = RequestMethod.POST)
+	public void moreComment(HttpServletRequest request, Model model) {
+		
+		//댓글 리스트를 담을 리스트
+		List<HashMap<String, Object>> listC = new ArrayList<HashMap<String, Object>>();
+
+		//댓글 리스트를 가져오는 메소드
+		listC = boardService.getComment(request);
+
+		//댓글의 총 갯수
+		int listCSize = listC.size();	
+		
+		int totalCSize = 0;
+		totalCSize = boardService.getCommentTotalCount(request);
+		
+		
+		model.addAttribute("listC", listC);
+		model.addAttribute("listCSize", listCSize);
+		model.addAttribute("totalCSize", totalCSize);
+	}
+	
+	
 }

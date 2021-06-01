@@ -28,7 +28,6 @@ $(document).ready(function(){
 	})
 	
 	$(document).on("click","#commentDel",function(){
-		console.log("click")
 		$.ajax({
 			type: "post"
 			,url: "/board/commentDelete"
@@ -41,6 +40,23 @@ $(document).ready(function(){
 			}
 			,error: function(){
 				console.log("게시판 댓글 삭제 실패")
+			}
+		});	
+	})
+	
+	$(document).on("click","#moreComment",function(){
+		$.ajax({
+			type: "post"
+			,url: "/board/moreComment"
+			,data: { curCommentSize : $("#curCommentSize").val()
+				, bNo : "${board.bNo }"}
+			,dataType: "html"
+			,success: function(res){
+				console.log("게시판 더보기 성공")
+				$("#commentList").html(res)
+			}
+			,error: function(){
+				console.log("게시판 더보기 실패")
 			}
 		});	
 	})
@@ -96,15 +112,13 @@ ${board.bContent }
 
 </div>
 
-<a href="/board/list?bType=${board.bType }"><button class="btn btn-default" type="button">목록으로</button></a>
+<button type="button" class="btn btn-sm btn-default" onclick="history.back()">뒤로</button>
 <c:if test="${sessionScope.user.uNo eq board.uNo }">
-<a href="/board/delete?bNo=${board.bNo }"><button class="btn btn-default" type="button">게시글삭제</button></a>
-<a href="/board/update?bNo=${board.bNo }"><button class="btn btn-default" type="button">게시글수정</button></a>
+<a href="/board/delete?bNo=${board.bNo }"><button class="btn btn-sm btn-default" type="button">게시글삭제</button></a>
+<a href="/board/update?bNo=${board.bNo }"><button class="btn btn-sm btn-default" type="button">게시글수정</button></a>
 </c:if>
 
 <hr>
-
-
 
 	<div id="commentDiv">
     <div class="col-sm-11" style="display: inline">
@@ -129,7 +143,9 @@ ${board.bContent }
 		
 		<div>
 			<c:if test="${listCSize ne -1}">
-			<c:forEach begin="0" end="${listCSize-1 }" var="comm" items="${listC }">
+			<c:set var="start" value="0"></c:set>
+			<c:forEach begin="${start }" end="${listCSize-1 }" var="comm" items="${listC }" varStatus="cnt">
+			
 			<div style="display: none;"><input type="hidden" id="commentNo" value="${comm.C_NO }"/></div>
 			<div style="font-weight: bolder; margin-top: 5px;">${comm.U_NICK }</div>
 			<div style="font-size: 14px;">${comm.C_CONTENT }</div>	
@@ -139,6 +155,14 @@ ${board.bContent }
 			<div style="border-bottom: 1px solid #ccc; margin-top: 5px;">
 			</div>
 			</c:forEach>
+			
+			<c:if test="${listCSize < totalCSize}">
+			<div class="text-center" style="margin-top: 10px;">
+			<input type="hidden" value="${listCSize }" name="curCommentSize" id="curCommentSize">
+			<button class="btn btn-sm btn-default" id="moreComment" name="moreComment" type="button">더보기</button>
+			</div>
+			</c:if>
+			
 			</c:if>
 		</div>	
 			

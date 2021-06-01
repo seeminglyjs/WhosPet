@@ -18,7 +18,9 @@
 		
 		<div>
 			<c:if test="${listCSize ne -1}">
-			<c:forEach begin="0" end="${listCSize-1 }" var="comm" items="${listC }">
+			<c:set var="start" value="0"></c:set>
+			<c:forEach begin="${start }" end="${listCSize-1 }" var="comm" items="${listC }" varStatus="cnt">
+			
 			<div style="display: none;"><input type="hidden" id="commentNo" value="${comm.C_NO }"/></div>
 			<div style="font-weight: bolder; margin-top: 5px;">${comm.U_NICK }</div>
 			<div style="font-size: 14px;">${comm.C_CONTENT }</div>	
@@ -28,6 +30,14 @@
 			<div style="border-bottom: 1px solid #ccc; margin-top: 5px;">
 			</div>
 			</c:forEach>
+			
+			<c:if test="${listCSize < totalCSize}">
+			<div class="text-center" style="margin-top: 10px;">
+			<input type="hidden" value="${listCSize }" name="curCommentSize" id="curCommentSize">
+			<button class="btn btn-sm btn-default" id="moreComment" name="moreComment" type="button">더보기</button>
+			</div>
+			</c:if>
+			
 			</c:if>
 		</div>	
 			
