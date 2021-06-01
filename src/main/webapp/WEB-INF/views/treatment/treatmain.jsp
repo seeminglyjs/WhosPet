@@ -83,7 +83,7 @@
         display: flex;
         align-items: center;
         width: fit-content;
-        animation: carouselAnim 50s infinite alternate linear;
+        animation: carouselAnim 200s infinite linear;
       }
       
       .items a {
@@ -178,7 +178,7 @@
        font-size:20px;
        list-style: none;
        margin-top: 50px;
-       margin-left: 100px;
+       margin-left: 150px;
        
      }
      
@@ -228,7 +228,7 @@
     <center>
        <div class="container">
          <span class="content">진료비: ${numOftreat}건</span>
-         <span class="content">병원 : 100건</span>
+         <span class="content">병원 : ${numOfhospital}건</span>
        </div>
     </center>
     <div class="container">
@@ -239,7 +239,7 @@
       <div class="items--parent">
          <div class="items">
 	        <c:forEach var="t" items="${treatmentList}">
-           		<a href='#'>
+           		<a href='/whospet/treatdetail?no=${t.TR_NO}'>
 	           		<div class="entry">
 		             	<h3 class="name">${t.TR_NAME}</h3>
 		             	<p class="quote">가격 : ${t.TR_PRICE}원</p>
@@ -253,6 +253,7 @@
      <div class="container list">
 	     <ul class="content-list">
 	     <h1>검진</h1>
+	     <hr>
 	     	<c:forEach var="v" items="${VList}">
 	     		<li>
 	     			<a href="#">${v.TR_NAME}</a>
@@ -261,6 +262,7 @@
 	     </ul>
 	     <ul class="content-list">
 	     <h1>수술</h1>
+	     <hr>
 	     	<c:forEach var="s" items="${SList}">
 	     		<li>
 	     			<a href="#">${s.TR_NAME}</a>
@@ -269,6 +271,7 @@
 	     </ul>
 	     <ul class="content-list">
 	     <h1>진료</h1>
+	     <hr>
 	     	<c:forEach var="c" items="${CList}">
 	     		<li>
 	     			<a href="#">${c.TR_NAME}</a>
@@ -277,10 +280,5 @@
 	     </ul>
      </div>
      
-
-    
-  
-    
-    
     
 <%@ include file="/WEB-INF/views/layout/footerUser.jsp" %>
