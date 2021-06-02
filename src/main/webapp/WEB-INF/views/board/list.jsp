@@ -103,6 +103,4 @@ function chageSelect(){
 
 
 <%@ include file="/WEB-INF/views/util/boardPaging.jsp" %>
-
-<div style="padding-bottom: 300px"></div>
 <%@ include file="/WEB-INF/views/layout/footerUser.jsp" %>
