@@ -26,7 +26,7 @@ td:nth-child(2) {
 
 #boardtitle{
 position: relative;
-top: -120px;
+top: -100px;
 left: 220px;
 font-family: 'InfinitySans-RegularA1';
 }
@@ -44,7 +44,7 @@ left: 130px;
 </style>
 
 <div id="boardtitle">
-<h1>예약 현황</h1>
+<h1 style="display:inline;">예약 현황 </h1><h6 style="display:inline; color: gray;">예약 데이터를 확인하는 페이지입니다</h6>
 <hr align="left" width="630">
 </div>
 <div id="cont2" class="container-fluid col-md-9">
@@ -69,7 +69,17 @@ left: 130px;
 		<td><a href="#" onclick="window.open
 ('/mypage/hosBookingDetail?bookno=${booklist.bookNo }','write','width=450,height=600,left=300, top=260, location=no,status=no,scrollbars=yes')">${booklist.bookNo }</a></td>
 		<td><a href="#" onclick="window.open
-('/mypage/hosBookingDetail?bookno=${booklist.bookNo }','write','width=450,height=600,left=300, top=260, location=no,status=no,scrollbars=yes')">${booklist.bookStatus }</a></td>
+('/mypage/hosBookingDetail?bookno=${booklist.bookNo }','write','width=450,height=600,left=300, top=260, location=no,status=no,scrollbars=yes')">
+	
+		<c:if test='${booklist.bookStatus eq "Y" }'>
+		<button type="button" class="btn btn-primary">예약완료</button>
+		</c:if>
+		<c:if test='${booklist.bookStatus eq "N" }'>
+		<button type="button" class="btn btn-danger">예약반려</button>
+		</c:if>
+		<c:if test='${booklist.bookStatus eq "W" }'>
+		<button type="button" class="btn btn-secondary">예약대기</button>
+		</c:if></a></td>
 		<td><a href="#" onclick="window.open
 ('/mypage/hosBookingDetail?bookno=${booklist.bookNo }','write','width=450,height=600,left=300, top=260, location=no,status=no,scrollbars=yes')">${booklist.hospital.hName }</a></td>
 		<td><fmt:formatDate value="${booklist.bookDate }" pattern="yy-MM-dd"/></td>

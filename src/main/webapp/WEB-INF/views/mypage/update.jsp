@@ -13,6 +13,7 @@ $(function(){
 	$("#alert-danger").hide();
 	$("#alert-length").hide();
 	$("#alert-mix").hide();
+	$("#btnConfirm").attr("disabled", "disabled");
 	$("input").keyup(function(){
 		var pwd1=$("#uPw").val();
 		var pwd2=$("#uPwCk").val();
