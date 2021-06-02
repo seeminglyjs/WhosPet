@@ -91,5 +91,11 @@ public interface HospitalService {
 	 * @return
 	 */
 	public int rejectHospital(HashMap<String, Object> map);
+	/** 
+	 * 병원 갯수
+	 * @return
+	 */
+	public int numOfhospital();
+	
 
 }
