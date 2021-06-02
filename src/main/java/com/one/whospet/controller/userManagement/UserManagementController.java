@@ -112,5 +112,25 @@ public class UserManagementController {
 		userMS.deleteUser(uNo);// 유저삭제
 		return "redirect:/admin/user/list";
 	}
+	
+	// 유저를 등록하는 화면을 보여주는 메소드 [get]
+	@RequestMapping(value = "/user/enroll")
+	public void enroll(HttpServletRequest request, Model model) {}
+	
+	// 유저를 등록하는 메소드 [post]
+	@RequestMapping(value = "/user/enroll", method = RequestMethod.POST)
+	public String enrollRes(HttpServletRequest request, Model model) {
+
+		int check = 0;
+		
+		// 등록이 완료되면 1을 리턴
+		check = userMS.enrollUser(request);
+		
+		if(check == 0) {
+			return "redirect:/admin/user/list";
+		}else {
+			return "redirect:/admin/user/list";
+		}
+	}
 
 }

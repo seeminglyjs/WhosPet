@@ -22,4 +22,7 @@ public interface UserManagementService {
 	// 유저를 삭제하는 메소드
 	public void deleteUser(int uNo);
 
+	// 유저를 등록하는 메소드
+	public int enrollUser(HttpServletRequest request);
+
 }

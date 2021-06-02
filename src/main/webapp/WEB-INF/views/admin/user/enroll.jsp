@@ -1,11 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-
-<%@ include file="/WEB-INF/views/layout/headerUser.jsp" %>
-
-
-
+<%@ include file="/WEB-INF/views/layout/headerAdmin.jsp" %>
 <!-- 카카오 맵 API  -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
@@ -461,9 +456,9 @@ function check(){
 </style>
 
 	<div style="width: 500px; height:300px; margin: 0 auto;">
-	<h2>회원가입</h2>
+	<h2>회원등록</h2>
 	<hr>
-	<form class="form-horizontal" action="/join/join" method="post" onsubmit="return check()">
+	<form class="form-horizontal" action="/admin/user/enroll" method="post" onsubmit="return check()">
 	  
 	  <div class="form-group">
 	    <label for="id" class="col-sm-2 control-label">아이디</label>
@@ -498,10 +493,7 @@ function check(){
 	    </div>
 	  </div>
 	  
-	  
-	<!-- 카카오로그인에서 미가입 유저가 회원가입 폼으로 넘어왔을때 체크할 요소  -->
-	<c:choose>
-		<c:when test="${empty kakaoEmail }">
+
 		<div class="form-group">
 			<label for="email" class="col-sm-2 control-label">이메일</label>
 			<div class="col-sm-10">
@@ -509,19 +501,7 @@ function check(){
 				<span id="sp5"></span>
 			</div>
 		</div>
-		</c:when>
-		
-		<c:otherwise >
-		<div class="form-group">
-			<label for="email" class="col-sm-2 control-label">이메일</label>
-			<div class="col-sm-10">
-				<input type="text" class="form-control" name="email" id="email" value="${kakaoEmail }">
-				<span id="sp5"></span>
-			</div>
-		</div>
-		</c:otherwise>
-	</c:choose>
-	
+
 	
 	  <div class="form-group">
 	    <label for="nick" class="col-sm-2 control-label">닉네임</label>
@@ -551,6 +531,7 @@ function check(){
 			<select class="form-control" id= "ugrade" name="ugrade">
 				<option value="U" >일반 사용자</option>
 				<option value="H" >병원 사용자</option>						
+				<option value="M" >관리자</option>						
 			</select>
 	    </div>
 	  </div>
@@ -568,13 +549,12 @@ function check(){
 
 	  <div class="form-group">
 	    <div class="col-sm-offset-2 col-sm-10">
-	      <button type="submit" class="btn btn-sm btn-primary" id="joinBtn">회원가입</button>    
-	      <a href="/"><button type="button" class="btn btn-sm btn-default" >홈으로</button></a>   
+	      <button type="submit" class="btn btn-sm btn-primary" id="joinBtn">회원등록</button>    
+	      <button type="submit" class="btn btn-sm btn-default" onclick="history.back()">뒤로</button>   
 	    </div>
 	  </div>
 	
 	</form>
 	</div>
 
-
-<%@ include file="/WEB-INF/views/layout/footerUser.jsp" %>
+<%@ include file="/WEB-INF/views/layout/footerAdmin.jsp" %>
