@@ -3,6 +3,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.one.whospet.dto.Treatment;
 import com.one.whospet.service.hospital.face.HospitalService;
 import com.one.whospet.service.treatment.face.TreatmentService;
 @Controller
@@ -85,7 +88,9 @@ public class TreatmentController {
 	
 	@RequestMapping(value = "/treatment/treatdetail", method = RequestMethod.GET)
 	public String treatdetailView(Model model, @RequestParam("no") int no) {
+		
 		List<HashMap<String, Object>> treatmentList = treatmentService.selectAllTreatment();
+		
 		for(int i = 0; i < treatmentList.size(); i++) {
 			HashMap<String, Object> treatment = treatmentList.get(i);
 			if(((BigDecimal)treatment.get("TR_NO")).intValue() == no) {
@@ -95,5 +100,35 @@ public class TreatmentController {
 		}
 		return "treatment/treatdetail";
 	}
+	
+	
+	@RequestMapping(value = "treatment/treatdetail", method = RequestMethod.POST)
+	public String treatSearch(@RequestParam HashMap<String, String> map, HttpServletResponse response, HttpServletRequest request)
+	{
+		System.out.println(response);
+		return "treatment/treatdetail";
+	}
+	
+	
+	@RequestMapping(value = "treatment/treatlist", method = RequestMethod.POST)
+	public String treatlist(@RequestParam HashMap<String, String> map, HttpServletResponse response, HttpServletRequest request)
+	{
+		List<HashMap<String, Object>> hospitalList = hospitalService.allHospital();
+		List<HashMap<String, Object>> orderedList = new ArrayList<HashMap<String, Object>>();
+		
+		for(int i = 0; i < hospitalList.size(); i++) {
+			HashMap<String, Object> hospital = hospitalList.get(i);
+			if(((String)hospital.get("H_ROAD_ADDRESS")).contains(map.get("region"))){
+				orderedList.add(hospital);
+			}
+		}
+		
+		System.out.println(map.get("region"));
+		return "treatment/treatdetail";
+	}
+	
+	
+	
+	
 	
 }

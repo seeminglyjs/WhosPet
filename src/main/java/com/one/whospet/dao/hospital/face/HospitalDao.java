@@ -42,6 +42,8 @@ public interface HospitalDao {
 
 	public int numOfhospital();
 
+	public List<HashMap<String, Object>> allHospital();
+
 
 	
 

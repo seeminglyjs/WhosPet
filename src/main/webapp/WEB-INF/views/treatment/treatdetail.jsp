@@ -4,7 +4,8 @@
     
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=84eb5f9e9be040c09fa07972ce6f0e62&libraries=services"></script>
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
@@ -287,10 +288,20 @@
 	  display:flex;
 	}
 	
+	.container--location {
+	  display:flex;
+	}
+	
+	.container--location span {
+	  font-size: 24px;
+	  display: inline-block;
+	  margin-left: 40px;
+	  padding-top: 5px;
+	}
+	
     </style>
-   
-   
-   
+     
+     <% session = request.getSession(); %>
     <script>
       window.console = window.console || function (t) {};
     </script>
@@ -317,15 +328,19 @@
     </div>
     <br>
     <br>
-    <input type="button" class="btn" value="현위치">
+    <div class="container--location">
+	    <input type="button" class="btn" id="btnTest" onClick="isLogin();" value="현위치">
+ 	    <span id="region"></span>
+    </div>
     <br>
     <center>
+    
     <div class="container--chartbox">
 		<h2>${treatment.TR_NAME}</h2>
 	    <div class="container--chart vertical rounded">
 	    
 		<div class="container--city">
-		<h3>000시 평균가</h3>
+		<h3 id="city">평균가</h3>
 		  <div class="progress-bar">
 		    <div class="progress-track">
 		      <div class="progress-fill" style="background-color:#73EEB2">
@@ -352,7 +367,7 @@
 		</div>
 		
 		<div class="container--ward">
-		<h3>000구 평균가</h3>
+		<h3 id="district">평균가</h3>
 		  <div class="progress-bar">
 		    <div class="progress-track">
 		      <div class="progress-fill" style="background-color:#73EEB2">
@@ -405,6 +420,7 @@
 		</div>
 	  </div>
 	</div>
+	
 	</center>
 	
 	<div class="container--hospital">
@@ -466,6 +482,70 @@
     	    'top' : pTop
     	  });
     	});
+    </script>
+    
+    <script>
+      function isLogin() {
+    	  console.log("hello");
+      }
+    </script>
+    
+    <script>
+	    var lat = 0;
+	    var lon = 0;
+	    var district = ' ';
+	    var options = {
+	    	enableHighAccuracy : true,
+	    	timeout : 5000,
+	    	maximumAge : 0
+	    };
+	
+	    function success(pos) {
+	    	var crd = pos.coords;
+	    	console.log('위도 : ' + crd.latitude);
+	    	console.log('경도: ' + crd.longitude);
+	    	lat = crd.latitude;
+	    	lon = crd.longitude;
+	    };
+	
+	    function error(err) {
+	    	console.warn('ERROR(' + err.code + '): ' + err.message);
+	    };
+	
+	    $("#btnTest").click(function() {
+	      navigator.geolocation.getCurrentPosition(success, error, options);
+	      getAddr(lat,lon);
+	      function getAddr(lat,lon){
+	          let geocoder = new kakao.maps.services.Geocoder();
+	
+	          let coord = new kakao.maps.LatLng(lat, lon);
+	          let callback = function(result, status) {
+	              if (status === kakao.maps.services.Status.OK) {
+	                  console.log(result[0]['address']);
+	                  district = result[0]['address']['region_2depth_name'];
+	                  document.getElementById('region').innerText = result[0]['address']['region_1depth_name'] + "시 " + result[0]['address']['region_2depth_name'];
+	                  document.getElementById('city').innerText = result[0]['address']['region_1depth_name'] + "시 평균가";
+	                  document.getElementById('district').innerText = result[0]['address']['region_2depth_name'] + " 평균가";
+	              }
+	          };
+	          geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+	          $.ajax({
+	              type: "post", 
+	              url: "/treatment/treatlist",
+	              data: "region=" + district,
+	              success : function(data){
+	            	  console.log("성공")
+	              },
+	              error : function() {
+	            	  console.log("실패")
+	              }
+	          });
+	      }
+	
+	    })
+
+
+
     </script>
     
     

@@ -213,7 +213,7 @@
     <h1>진료비 검색</h1>
      <hr>
      <br>
-      <form action="" class="Search">
+      <form action="/treatdetail" class="Search">
         <input
           class="Search-box"
           type="search"
@@ -253,34 +253,29 @@
      <div class="container list">
 	     <ul class="content-list">
 	     <h1>검진</h1>
-	     <hr>
 	     	<c:forEach var="v" items="${VList}">
 	     		<li>
-	     			<a href="#">${v.TR_NAME}</a>
+	     			<a href="/treatment/treatdetail?no=${v.TR_NO}">${v.TR_NAME}</a>
 	     		</li>
 	     	</c:forEach>
 	     </ul>
 	     <ul class="content-list">
 	     <h1>수술</h1>
-	     <hr>
 	     	<c:forEach var="s" items="${SList}">
 	     		<li>
-	     			<a href="#">${s.TR_NAME}</a>
+	     			<a href="/treatment/treatdetail?no=${s.TR_NO}">${s.TR_NAME}</a>
 	     		</li>
 	     	</c:forEach>
 	     </ul>
 	     <ul class="content-list">
 	     <h1>진료</h1>
-	     <hr>
 	     	<c:forEach var="c" items="${CList}">
 	     		<li>
-	     			<a href="#">${c.TR_NAME}</a>
+	     			<a href="/treatment/treatdetail?no=${c.TR_NO}">${c.TR_NAME}</a>
 	     		</li>
 	     	</c:forEach>
 	     </ul>
      </div>
-     
-     <div style="padding-bottom: 1000px"></div>
      
     
 <%@ include file="/WEB-INF/views/layout/footerUser.jsp" %>
