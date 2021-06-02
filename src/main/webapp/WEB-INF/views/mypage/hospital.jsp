@@ -22,10 +22,11 @@ td:nth-child(2) {
 	text-align: left;
 }
 
+
 #buttons{
 position: relative;
-top: 10px;
-left: 600px;
+top: -60px;
+left: 580px;
 
 }
 
@@ -136,9 +137,9 @@ $(function(){
 <!-- 페이징 JSP -->
 <jsp:include page="/WEB-INF/views/util/mypagehospitalpaging.jsp" />
 <div id="buttons">
-<button type="button" id="btnResister" style="margin-right: 20px;"
+<button type="button" class="btn btn-warning" id="btnResister" style="margin-right: 20px;"
 onclick = "location.href = '/hospital/register' ">등록</button>
-<button type="button" id="btnDelete" style="margin-right: 20px;">삭제</button>
+<button type="button" class="btn btn-warning" id="btnDelete" style="margin-right: 20px;">삭제</button>
 
 </div>
 </div><!-- .container -->

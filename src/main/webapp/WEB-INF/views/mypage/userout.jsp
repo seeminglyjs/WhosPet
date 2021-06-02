@@ -7,9 +7,9 @@
 <title>회원탈퇴</title>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
 <script type="text/javascript">
-$(function(){
-	$("#alert-success").hide();
-	$("#alert-danger").hide();
+$(document).ready(function(){
+	$("#alert-suc").hide();
+	$("#alert-dan").hide();
 	$("#btnOut").attr("disabled", "disabled");
 	
 	//비밀번호와 확인창 체크
@@ -18,16 +18,16 @@ $(function(){
 		var pwd2=$("#uPwCk").val();
 		if(pwd1 != "" || pwd2 != ""){
 			if(pwd1 == pwd2){
-				$("#alert-success").show();
-				$("#alert-danger").hide();
+				$("#alert-suc").show();
+				$("#alert-dan").hide();
 				$("#btnOut").removeAttr("disabled")
 				return true;
 				
 			} else {
-				$("#alert-danger").show();
-				$("#alert-success").hide();
+				$("#alert-dan").show();
+				$("#alert-suc").hide();
 				$("#btnOut").attr("disabled", "disabled");
-			}
+			} return false;
 	 }
 	})
 	
@@ -37,13 +37,15 @@ $(function(){
 		var pw = ${uinfo.uPw }
 		var putpw = $("#uPw").val()
 		
-		if(pw == putpw){
+		if(pw == putpw) {
 			
 		//<form> submit
 		$("#form").submit();
 		window.opener.location.href="/";
-		} 
 		
+		$("#alert-suc").hide();
+		$("#alert-dan").hide();
+	}
 		else {
 			alert("회원님의 비밀번호와 일치하지 않습니다");
 			return false;
@@ -86,12 +88,12 @@ font-size: inherit;
 padding: .5em .75em;
 cursor:Default;
 }
-#alert-success{
+#alert-suc{
 color: green;
 font-size: small;
 padding-left: 10px;
 }
-#alert-danger{
+#alert-dan{
 color: red;
 font-size: small;
 padding-left: 10px;
@@ -147,10 +149,10 @@ background-color:#f6dcbf;
 <td><input type="password" id="uPwCk"/></td>
 </tr>
 <tr> 
-<td id="alert-success">비밀번호가 일치합니다</td>
+<td id="alert-suc">비밀번호가 일치합니다</td>
 </tr>
 <tr> 
-<td id="alert-danger">비밀번호가 일치하지 않습니다</td>
+<td id="alert-dan">비밀번호가 일치하지 않습니다</td>
 </tr>
 </table>
 </div>

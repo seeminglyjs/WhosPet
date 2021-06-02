@@ -65,6 +65,8 @@ $(function(){
 		//<form> submit
 		$("#form").submit();
 		opener.location.reload();
+		$("#alert-success").hide();
+		$("#alert-danger").hide();
 	});
 	
 	//취소버튼 동작
