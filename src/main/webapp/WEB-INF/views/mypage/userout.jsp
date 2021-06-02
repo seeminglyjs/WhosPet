@@ -23,6 +23,12 @@ $(function(){
 })
 </script>
 <style type="text/css">
+@font-face {
+    font-family: 'InfinitySans-RegularA1';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 h2 {
 color: #e1701a;
 padding: 6px;
@@ -42,6 +48,7 @@ margin-left: auto; margin-right: auto;
 padding: 20px;
 width: 200px;
 border: 20px outset #aaaaaa;
+font-family: 'InfinitySans-RegularA1';
 }
 button{
 margin-right: 10px;
@@ -54,11 +61,18 @@ color: #fff;
 font-size: inherit;
 padding: .5em .75em;
 }
+#warn {
+font-family: 'InfinitySans-RegularA1';
+background-color:#f6dcbf;
+}
 </style>
 </head>
 <body>
+<div id="warn">
 <h2>정말로 탈퇴하시겠습니까?</h2>
-<span>탈퇴 시 회원정보는 개인정보 보호방침에 따라 관리되며 사용되고 있는 모든 회원정보가 삭제됩니다.</span>
+</div>
+<span style="text-decoration: underline gray; text-underline-position:under; font-family: 'InfinitySans-RegularA1';" >탈퇴 시 회원정보는 개인정보 보호방침에 따라 관리되며 사용되고 있는 모든 회원정보가 삭제됩니다.</span>
+
 <form action="/mypage/userout" method="post" id="form">
 <input type="hidden" id="uNo" name="uNo" value="${uinfo.uNo }"/><br>
 <div id="formframe">

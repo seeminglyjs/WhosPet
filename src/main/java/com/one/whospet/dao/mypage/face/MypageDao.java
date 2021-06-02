@@ -5,9 +5,11 @@ import java.util.List;
 
 import com.one.whospet.dto.Board;
 import com.one.whospet.dto.Booking;
+import com.one.whospet.dto.Hospital;
 import com.one.whospet.dto.Point;
 import com.one.whospet.dto.User;
 import com.one.whospet.dto.Userpic;
+import com.one.whospet.util.MypageBoardPaging;
 
 public interface MypageDao {
 	/**
@@ -64,11 +66,19 @@ public interface MypageDao {
 	public List<Board> selectAllBoard(HashMap<String, Object> data);
 
 	/**
-	 * 총 게시글 조회
+	 * 총 게시글 수 조회
 	 * @param data 
 	 * @return
 	 */
-	public int selectCntAll(HashMap<String, Object> data);
+	public int selectBoardCntAll(HashMap<String, Object> data);
+
+	/**
+	 * 총 예약 수 조회
+	 * @param data
+	 * @return
+	 */
+	public int selectBookingCntAll(HashMap<String, Object> data);
+
 
 	/**
 	 * 총 예약 조회
@@ -91,6 +101,12 @@ public interface MypageDao {
 	public void updateBookingCancel(Booking bookno);
 
 	/**
+	 * 포인트 행수 받아오기
+	 * @param data
+	 * @return
+	 */
+	public int selectPointCntAll(HashMap<String, Object> data);
+	/**
 	 * 유저 번호 별 포인트 이력을 받아옴
 	 * @param data
 	 * @return
@@ -103,6 +119,54 @@ public interface MypageDao {
 	 * @return
 	 */
 	public Point selectLastPoint(int uNo);
+
+	/**
+	 * 병원 총게시글 조회
+	 * @return
+	 */
+	public int selectHospitalCntAll();
+
+	/**
+	 * 총 병원목록 조회
+	 * @param paging
+	 * @return
+	 */
+	public List<Hospital> selectAllHospital(MypageBoardPaging paging);
+
+	/**
+	 * 총 예약 수 조회
+	 * @return
+	 */
+	public int selectHosBookingCntAll();
+
+	/**
+	 * 총 예약 목록 조회
+	 * @param paging
+	 * @return
+	 */
+	public List<Booking> selectAllHosBooking(MypageBoardPaging paging);
+
+	/**
+	 * 선택된 병원들 제거
+	 * @param map
+	 * @return
+	 */
+	public int deleteHospitals(HashMap<String, Object> map);
+
+	/**
+	 * 예약상태 Y로 업데이트
+	 * @param booking
+	 * @return
+	 */
+	public void updateBookingStatusY(Booking booking);
+
+	/**
+	 * 예약상태N으로 업데이트
+	 * @param booking
+	 */
+	public void updateBookingStatusN(Booking booking);
+
+
 
 
 

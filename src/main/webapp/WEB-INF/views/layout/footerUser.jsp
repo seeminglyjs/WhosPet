@@ -40,6 +40,7 @@
 
 /* 전체 footer div*/
 #footerDiv{
+	
 	position: absolute;
     left: 0;
     bottom: 0;

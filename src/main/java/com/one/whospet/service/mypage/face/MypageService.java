@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.one.whospet.dto.Board;
 import com.one.whospet.dto.Booking;
+import com.one.whospet.dto.Hospital;
 import com.one.whospet.dto.Point;
 import com.one.whospet.dto.User;
 import com.one.whospet.dto.Userpic;
@@ -58,11 +59,19 @@ public interface MypageService {
 
 
 	/**
-	 * 페이징 계산
+	 * 게시판 페이징 계산
 	 * @param data
 	 * @return
 	 */
-	public MypageBoardPaging getPaging(HashMap<String, Object> data);
+	public MypageBoardPaging getBoardPaging(HashMap<String, Object> data);
+	
+	/**
+	 * 예약 페이징 계산
+	 * @param data
+	 * @return
+	 */
+	public MypageBoardPaging getBookingPaging(HashMap<String, Object> data);
+
 	
 	/**
 	/**
@@ -92,6 +101,13 @@ public interface MypageService {
 	 */
 	public void bookingCancel(Booking booking);
 	
+	/**포인트 이력 행수 구하기
+	 * 
+	 * @param data
+	 * @return
+	 */
+	public MypageBoardPaging getPointPaging(HashMap<String, Object> data);
+	
 	/**
 	 * 데이터 객체 속 유저번호로 포인트 이력 가져오기
 	 * @param data
@@ -106,4 +122,61 @@ public interface MypageService {
 	 */
 	public Point getCurpointByUser(int uNo);
 
+	/**
+	 * 현재페이지로 페이징
+	 * @param curPage
+	 * @return
+	 */
+	public MypageBoardPaging getPaging(int curPage);
+
+	/**
+	 * 병원 목록 조회
+	 * @param paging
+	 * @return
+	 */
+	public List<Hospital> hospitalList(MypageBoardPaging paging);
+
+	/**
+	 * 병원 총 개수 조회
+	 * @param curPage
+	 * @return
+	 */
+	public MypageBoardPaging getHospitalPaging(int curPage);
+
+	/**
+	 * 총 예약 페이징
+	 * @param curPage
+	 * @return
+	 */
+	public MypageBoardPaging getHosBookingaging(int curPage);
+
+	/**
+	 * 예약 목록 조회
+	 * @param paging
+	 * @return
+	 */
+	public List<Booking> bookingList(MypageBoardPaging paging);
+
+	/**
+	 * 선택된 병원 삭제 
+	 * @param map
+	 * @return
+	 */
+	public int deleteHospital(HashMap<String, Object> map);
+
+	/**
+	 * 예약 승인
+	 * @param booking
+	 */
+	public void bookingApprove(Booking booking);
+
+	/**
+	 * 예약 거절
+	 * @param booking
+	 */
+	public void bookingReject(Booking booking);
+
+
+
+	
 }

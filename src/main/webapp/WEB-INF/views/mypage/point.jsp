@@ -28,10 +28,12 @@ td:nth-child(2) {
 position: relative;
 top: -100px;
 left: 220px;
+font-family: 'InfinitySans-RegularA1';
 }
 #cont2 {
 float: right;
 top: -100px;
+font-family: 'InfinitySans-RegularA1';
 }
 
 #page{
@@ -42,7 +44,7 @@ left: 130px;
 </style>
 
 <div id="boardtitle">
-<h1 style="display:inline;">나의 포인트  </h1><h4 style="display:inline; color: gray;">MyBoard</h4>
+<h1 style="display:inline;">나의 포인트  </h1><h4 style="display:inline; color: gray;">MyPoint</h4>
 <hr align="left" width="630">
 </div>
 <div id="cont2" class="container-fluid col-md-9">

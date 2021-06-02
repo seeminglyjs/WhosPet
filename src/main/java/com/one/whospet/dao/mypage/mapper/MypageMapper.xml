@@ -123,12 +123,20 @@
 	<delete id="deleteUser" parameterType="com.one.whospet.dto.User">
 		DELETE FROM w_user WHERE U_No = #{uNo }
 	</delete>
-	
-	<select id="selectCntAll" parameterType="hashmap" resultType="int">
+
+	<select id="selectBoardCntAll" parameterType="hashmap" resultType="int">
 		SELECT COUNT(*) FROM w_board WHERE u_no = #{uNo }
 	</select>
 	
-	<select id="selectAllBoard" parameterType="hashmap" resultMap="Board">
+	<select id="selectBookingCntAll" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*) FROM w_booking WHERE u_no = #{uNo }
+	</select>
+	
+	<select id="selectPointCntAll" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*) FROM w_point WHERE u_no = #{uNo }
+	</select>
+	
+	<select id="selectAllBoard" resultMap="Board">
 			SELECT * FROM (
 				SELECT rownum rnum, B.* FROM (
 					SELECT * FROM w_board 
@@ -180,6 +188,52 @@
 	</select>
 	
 	
+	<select id="selectHospitalCntAll" resultType="int">
+		SELECT COUNT(*) FROM w_hospital
+	</select>
 	
+	<select id="selectAllHospital" resultMap="Hospital">
+			
+		SELECT * FROM (
+			SELECT rownum rnum, B.* FROM (
+					SELECT *FROM w_hospital 
+					ORDER BY h_no DESC
+						) B
+					) BOARD
+				WHERE rnum BETWEEN #{startNo } AND #{endNo }
+
+	</select>
+	
+	<select id="selectHosBookingCntAll" resultType="int">
+		SELECT COUNT(*) FROM w_booking
+	</select>
+	
+	<select id="selectAllHosBooking" resultMap="Booking">
+			
+				SELECT * FROM (
+				SELECT rownum rnum, B.* FROM (
+					SELECT * FROM w_booking
+                    LEFT OUTER JOIN w_hospital ON (w_hospital.h_no = w_booking.h_no)
+					ORDER BY book_No DESC
+					) B
+					) BOARD
+				WHERE rnum BETWEEN #{startNo } AND #{endNo }
+
+	</select>
+	
+	<delete id="deleteHospitals" parameterType="hashmap">
+	  	DELETE FROM w_hospital WHERE h_no IN
+	<foreach collection="hNoArr"  item="hNo" open="(" close=")" separator=" , ">
+	#{hNo}
+	</foreach>
+	</delete>
+	
+	<update id="updateBookingStatusY" parameterType="com.one.whospet.dto.Booking">
+		UPDATE w_booking SET book_status = 'Y' WHERE book_no = #{bookNo }
+	</update>
+	
+	<update id="updateBookingStatusN" parameterType="com.one.whospet.dto.Booking">
+		UPDATE w_booking SET book_status = 'N' WHERE book_no = #{bookNo }
+	</update>
 	
   </mapper>
