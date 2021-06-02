@@ -280,5 +280,7 @@
 	     </ul>
      </div>
      
+     <div style="padding-bottom: 1000px"></div>
+     
     
 <%@ include file="/WEB-INF/views/layout/footerUser.jsp" %>
