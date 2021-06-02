@@ -147,13 +147,15 @@ ${board.bContent }
 			<c:if test="${listCSize ne -1}">
 			<c:set var="start" value="0"></c:set>
 			<c:set var="del" value="0"></c:set>
+			<c:set var="delBtn" value="0"></c:set>
 			<c:forEach begin="${start }" end="${listCSize-1 }" var="comm" items="${listC }" varStatus="cnt">
 			
-			<div style="display: none;"><input type="hidden" id="commentNo${del+1 }" value="${comm.C_NO }"/></div>
+			<div style="display: none;"></div>
 			<div style="font-weight: bolder; margin-top: 5px;">${comm.U_NICK }</div>
 			<div style="font-size: 14px;">${comm.C_CONTENT }</div>	
 			<div style="font-size: 11px; color: #ccc;"><fmt:formatDate value="${comm.C_WRITE_DATE }" pattern="yyyy/MM/dd - hh:mm"/>
-				<c:if test='${sessionScope.user.uGrade eq "M" }'><span id="commentDel" style="color:tomato;  cursor: pointer;">삭제</span>
+				<c:if test='${sessionScope.user.uGrade eq "M" }'>
+				<span id="commentDel${delBtn = delBtn + 1 }" style="color:tomato;  cursor: pointer;" >삭제</span>
 				</c:if></div>
 			<div style="border-bottom: 1px solid #ccc; margin-top: 5px;">
 			</div>
