@@ -77,6 +77,7 @@ $(document).ready(function(){
 #headerDiv{
 	display:flex;
 	margin-bottom: 20px; 
+	justify-content: center;
 }
 
 /* 로고 */
@@ -112,6 +113,7 @@ $(document).ready(function(){
 }
 
 #headerSearchDiv button{
+	width:50px;
     margin: 2px 0 0 0;
     background: none;
     box-shadow: none;
@@ -144,6 +146,10 @@ $(document).ready(function(){
 	font-size: 30px;
 }
 
+
+
+
+ 
 
 /*--------------header 영역 css 끝 ------------------  */
 
