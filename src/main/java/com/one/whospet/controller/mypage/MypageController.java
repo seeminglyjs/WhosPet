@@ -90,6 +90,18 @@ public class MypageController {
 		return "redirect: /mypage/info";
 	}
 	
+	//유저 프로필 사진 삭제 처리
+	@RequestMapping(value = "/mypage/userpicDelete", method=RequestMethod.POST)
+	public String userpicDeleteProc(Userpic userpic, HttpSession session, @RequestParam("file") MultipartFile file) {
+		
+		logger.debug("file정보" + file.toString());
+		User user = (User) session.getAttribute("user");
+		
+		mypageService.deletePic(user);
+		
+		return "redirect: /mypage/info";
+	}
+	
 	//처리 완료 창
 	@RequestMapping(value = "/mypage/info")
 	public void done() {}

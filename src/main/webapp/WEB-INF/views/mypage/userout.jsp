@@ -8,19 +8,57 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
 <script type="text/javascript">
 $(function(){
-
+	$("#alert-success").hide();
+	$("#alert-danger").hide();
+	$("#btnOut").attr("disabled", "disabled");
+	
+	//비밀번호와 확인창 체크
+	$("input").keyup(function(){
+		var pwd1=$("#uPw").val();
+		var pwd2=$("#uPwCk").val();
+		if(pwd1 != "" || pwd2 != ""){
+			if(pwd1 == pwd2){
+				$("#alert-success").show();
+				$("#alert-danger").hide();
+				$("#btnOut").removeAttr("disabled")
+				return true;
+				
+			} else {
+				$("#alert-danger").show();
+				$("#alert-success").hide();
+				$("#btnOut").attr("disabled", "disabled");
+			}
+	 }
+	})
+	
+	
 	//탈퇴버튼 동작
 	$("#btnOut").click(function() {
+		var pw = ${uinfo.uPw }
+		var putpw = $("#uPw").val()
+		
+		if(pw == putpw){
+			
 		//<form> submit
 		$("#form").submit();
 		window.opener.location.href="/";
+		} 
+		
+		else {
+			alert("회원님의 비밀번호와 일치하지 않습니다");
+			return false;
+		}
+		
 	});
 	
 	//취소버튼 동작
 	$("#btnCancel").click(function() {
 		window.close();
 	});
-})
+	
+	
+	})
+
 </script>
 <style type="text/css">
 @font-face {
@@ -39,6 +77,25 @@ margin-left: auto; margin-right: auto;
 
 }
 
+button:disabled {
+border: none;
+background-color: gray;
+border-radius: .25em;
+color: #fff;
+font-size: inherit;
+padding: .5em .75em;
+cursor:Default;
+}
+#alert-success{
+color: green;
+font-size: small;
+padding-left: 10px;
+}
+#alert-danger{
+color: red;
+font-size: small;
+padding-left: 10px;
+}
 #buttons{
 width: 300px; height: 50px;
 margin-left: 130px;
@@ -88,6 +145,12 @@ background-color:#f6dcbf;
 </tr>
 <tr>
 <td><input type="password" id="uPwCk"/></td>
+</tr>
+<tr> 
+<td id="alert-success">비밀번호가 일치합니다</td>
+</tr>
+<tr> 
+<td id="alert-danger">비밀번호가 일치하지 않습니다</td>
 </tr>
 </table>
 </div>
