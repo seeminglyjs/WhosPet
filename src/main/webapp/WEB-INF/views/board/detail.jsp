@@ -14,7 +14,8 @@ $(document).ready(function(){
 			,url: "/board/comment"
 			,data: {bNo : "${board.bNo }"
 				, uNo : "${sessionScope.user.uNo }"
-				, content : $("#commentInput").val()}
+				, content : $("#commentInput").val()
+				}
 			,dataType: "html"
 			,success: function(res){
 				console.log("AJAX성공")
@@ -32,7 +33,8 @@ $(document).ready(function(){
 			type: "post"
 			,url: "/board/commentDelete"
 			,data: { cNo : $("#commentNo").val()
-				, bNo : "${board.bNo }"}
+				, bNo : "${board.bNo }"
+				}
 			,dataType: "html"
 			,success: function(res){
 				console.log("게시판 댓글 삭제 성공")
