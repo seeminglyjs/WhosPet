@@ -86,4 +86,10 @@ public class UserManagementServiceImpl implements UserManagementService{
 		
 		return user;
 	}
+	
+	@Override // 유저를 삭제하는 메소드
+	public void deleteUser(int uNo) {
+		// TODO Auto-generated method stub
+		
+	}
 }

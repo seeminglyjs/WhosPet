@@ -68,7 +68,16 @@ left: 130px;
 <c:forEach items="${booklist }" var="booklist">
 	<tr>
 		<td><a href="/mypage/bookingDetail?bookno=${booklist.bookNo }">${booklist.bookNo }</a></td>
-		<td><a href="/mypage/bookingDetail?bookno=${booklist.bookNo }">${booklist.bookStatus }</a></td>
+		<td><a href="/mypage/bookingDetail?bookno=${booklist.bookNo }">		
+		<c:if test='${booklist.bookStatus eq "Y" }'>
+		<button type="button" class="btn btn-primary">예약완료</button>
+		</c:if>
+		<c:if test='${booklist.bookStatus eq "N" }'>
+		<button type="button" class="btn btn-danger">예약반려</button>
+		</c:if>
+		<c:if test='${booklist.bookStatus eq "W" }'>
+		<button type="button" class="btn btn-secondary">예약대기</button>
+		</c:if></a></td>
 		<td><a href="/mypage/bookingDetail?bookno=${booklist.bookNo }">${booklist.hospital.hName }</a></td>
 		<td><fmt:formatDate value="${booklist.bookDate }" pattern="yy-MM-dd"/></td>
 		<td>${booklist.bookHour }</td>

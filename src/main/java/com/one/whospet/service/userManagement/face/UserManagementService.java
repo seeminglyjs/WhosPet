@@ -19,4 +19,7 @@ public interface UserManagementService {
 	// 유저 상세 정보를 가져 오는 메소드
 	public User detailUser(int uNo);
 
+	// 유저를 삭제하는 메소드
+	public void deleteUser(int uNo);
+
 }

@@ -29,13 +29,16 @@ $(document).ready(function(){
 	<hr>
 	<form class="form-horizontal" action="/admin/user/delete" method="post" onsubmit="return check()">
 	  
+		<!-- 유저번호 -->
+		<input type="hidden" name="uNo" value="${user.uNo }">
+
 	  <div class="form-group">
 	    <label for="id" class="col-sm-2 control-label">아이디</label>
 	    <div class="col-sm-10">
 	      <input type="text" class="form-control" id="id" name="id" placeholder="${user.uId }" readonly="readonly">
 	    </div>
 	  </div>
-	  
+
 	  
    	  <div class="form-group">
 	    <label for="name" class="col-sm-2 control-label">이름</label>

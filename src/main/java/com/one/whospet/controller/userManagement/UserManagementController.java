@@ -12,9 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.one.whospet.dto.Board;
-import com.one.whospet.dto.BoardImg;
 import com.one.whospet.dto.User;
 import com.one.whospet.service.userManagement.face.UserManagementService;
 import com.one.whospet.util.BoardPaging;
@@ -92,4 +91,26 @@ public class UserManagementController {
 		model.addAttribute("user", user);
 		return "/admin/user/detail";
 	}	
+
+	// 유저를 삭제하는 메소드
+	@RequestMapping(value = "/user/delete", method = RequestMethod.POST)
+	public String delete(HttpServletRequest request, Model model) {
+		String param = request.getParameter("uNo");
+
+		//요청 파라미터가 null 이거나 빈문자열이면 돌려보냄
+		if(param == null || param.equals("")) {
+			return "redirect:/admin/user/list";
+		}
+
+		int uNo = 0;
+		try { // 예외 발생시 리스트로 보내버림
+			uNo = Integer.parseInt(param);
+		} catch (Exception e) {
+			return "redirect:/admin/user/list";
+		}
+
+		userMS.deleteUser(uNo);// 유저삭제
+		return "redirect:/admin/user/list";
+	}
+
 }
