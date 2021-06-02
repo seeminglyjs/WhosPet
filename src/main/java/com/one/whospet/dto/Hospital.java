@@ -17,6 +17,9 @@ public class Hospital {
 	private int hHit;
 	
 	
+	public Hospital() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	
 	public Hospital(int hNo, int uNo, String hAdcheck, String hName, String hRoadAddress, String hDetailAddress,
