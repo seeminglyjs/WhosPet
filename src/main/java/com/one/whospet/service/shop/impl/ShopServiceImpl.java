@@ -61,13 +61,30 @@ private static final Logger logger = LoggerFactory.getLogger(ShopServiceImpl.cla
 	@Override
 	public List<ShopImg> getAttachFile(int sNo) {
 		
-		return (List<ShopImg>) shopDao.selectShopImgBySNo( sNo );
+		return shopDao.selectShopImgBySNo( sNo );
 	}
 
+	//상세보기의 섬네일
 	@Override
 	public ShopImg getAttachThumbnailFile(int sNo) {
-
 		return shopDao.selectThumbnailBySNo( sNo );
+	}
+	
+	//사용자 목록의 섬네일
+	@Override
+	public List<ShopImg> getAttachThumbnailFiles(List<Integer> sNo) {
+		
+		List<ShopImg> list = new ArrayList<ShopImg>();
+		
+		for( int i : sNo ) {
+			ShopImg shopImg = shopDao.selectThumbnailsBySNo( i );
+			list.add(shopImg);
+
+		}
+		logger.info("list 전체 확인1 : {}",list);
+		
+		
+		return list;
 	}
 	
 	
@@ -145,6 +162,8 @@ private static final Logger logger = LoggerFactory.getLogger(ShopServiceImpl.cla
 		shopDao.insertFile( shopImg );
 		}
 	}
+
+
 
 
 
