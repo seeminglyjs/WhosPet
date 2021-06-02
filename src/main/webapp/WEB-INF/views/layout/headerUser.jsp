@@ -61,12 +61,12 @@ $(document).ready(function(){
 <style type="text/css">
 /*컨테이너 전체 넓이 지정  */
 .container{
-	width:900px;
+	width:1100px;
 }
 /*전체를 감싸는 div  */
 #all{
 	/* footer의 하단 고정을 위한 조건식  */
-	min-height: 1200px;
+	min-height: 1600px;
 	position: relative;
 	padding-bottom: 330px;
 }
@@ -77,6 +77,7 @@ $(document).ready(function(){
 #headerDiv{
 	display:flex;
 	margin-bottom: 20px; 
+	justify-content: center;
 }
 
 /* 로고 */
@@ -112,6 +113,7 @@ $(document).ready(function(){
 }
 
 #headerSearchDiv button{
+    width:50px;
     margin: 2px 0 0 0;
     background: none;
     box-shadow: none;
@@ -247,13 +249,11 @@ $(document).ready(function(){
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">게시판 <span class="caret"></span></a>
       <ul class="dropdown-menu" role="menu">
-        <li><a href="/board/list">자유게시판</a></li>
+        <li><a href="/board/list?bType=F">자유게시판</a></li>
         <li class="divider"></li>
-        <li><a href="#">메뉴2</a></li>
+        <li><a href="/board/list?bType=T">치료게시판</a></li>
         <li class="divider"></li>
-        <li><a href="#">메뉴3</a></li>
-        <li class="divider"></li>
-        <li><a href="#">메뉴4</a></li>
+        <li><a href="/board/list?bType=R">리뷰게시판</a></li>
       </ul>
     </li>
     
@@ -273,13 +273,8 @@ $(document).ready(function(){
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">진료비조회 <span class="caret"></span></a>
       <ul class="dropdown-menu" role="menu">
-        <li><a href="#">메뉴1</a></li>
-        <li class="divider"></li>
-        <li><a href="#">메뉴2</a></li>
-        <li class="divider"></li>
-        <li><a href="#">메뉴3</a></li>
-        <li class="divider"></li>
-        <li><a href="#">메뉴4</a></li>
+        <li><a href="/treatment/treatmain">진료비 조회</a></li>
+        
       </ul>
     </li>
   

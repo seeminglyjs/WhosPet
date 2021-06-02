@@ -95,5 +95,10 @@ public class HospitalServiceImpl implements HospitalService {
 	public int rejectHospital(HashMap<String, Object> map) {
 		return hospitalDao.updateHospitalStatusN(map);
 	}
+
+	@Override
+	public int numOfhospital() {
+		return hospitalDao.numOfhospital();
+	}
 	
 }

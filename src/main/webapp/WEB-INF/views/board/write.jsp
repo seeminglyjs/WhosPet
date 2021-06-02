@@ -107,9 +107,9 @@ function check(){
 	</div> -->
 	
 
-	<div>
+	<div style="text-align: center">
 		<button class="btn btn-sm btn-primary" id="btnSave">게시글 등록</button>
-		<a href="/board/list"><button type="button" class="btn btn-sm btn-primary" id="btnList">목록</button></a>
+		<button type="button" class="btn btn-sm btn-danger" onclick="history.back()">취소</button>
 	</div>
 </div>	
 	

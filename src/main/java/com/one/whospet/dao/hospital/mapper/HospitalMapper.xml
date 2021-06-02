@@ -147,5 +147,14 @@
 	</foreach>
   	</update>
   	
+  	
+  	
+  	<select id="numOfhospital" resultType="int">
+  	select count(*) from w_hospital
+  	</select>
+  	
+  	
+  	
+  	
   
   </mapper>
