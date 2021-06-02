@@ -75,6 +75,15 @@ border-radius: .25em;
 color: #fff;
 font-size: inherit;
 padding: .5em .75em;
+cursor: pointer;
+}
+
+button:hover {
+  background-color: #f6dcbf;
+}
+
+button:active {
+  background-color: #f6dcbf;
 }
 </style>
 </head>
