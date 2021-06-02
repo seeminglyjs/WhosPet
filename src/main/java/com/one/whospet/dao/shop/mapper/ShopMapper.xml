@@ -62,12 +62,17 @@
 		WHERE s_no = #{sNo} AND si_thumbnail = 'N'
 	</select>
 
-	<!-- 섬네일 상품이미지 조회 -->
-	<select id="selectThumbnailBySNo" parameterType="int" resultMap="ShopImg">
+	<!-- 섬네일 상품이미지 조회 (상세보기) -->
+	<select id="selectThumbnailsBySNo" parameterType="int" resultMap="ShopImg">
 		SELECT * FROM w_shop_img
-		WHERE s_no = #{sNo} AND si_thumbnail = 'Y'
+		WHERE s_no = #{i} AND si_thumbnail = 'Y'
 	</select>
 	
+	<!-- 섬네일 상품이미지 조회 (사용자 목록) -->
+	<select id="selectThumbnailBySNo" parameterType="Integer" resultMap="ShopImg">
+		SELECT * FROM w_shop_img
+		
+	</select>
 
 	<!-- 상품 삽입하기 -->
 	<insert id="insertShop" parameterType="com.one.whospet.dto.Shop">
@@ -88,5 +93,7 @@
 		INSERT INTO w_shop_img (si_no, s_no, si_origin_filename, si_stored_filename, si_thumbnail )
 		VALUES ( #{siNo}, #{sNo}, #{siOriginFilename}, #{siStoredFilename}, #{siThumbnail} )
 	</insert>
+	
+	
 	
 </mapper>

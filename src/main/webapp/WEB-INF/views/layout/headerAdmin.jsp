@@ -204,9 +204,9 @@ $(document).ready(function(){
     <li class="">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">상품관리 <span class="caret"></span></a>
       <ul class="dropdown-menu" role="menu">
-        <li><a href="/shop/list">메뉴1</a></li>
+        <li><a href="/shop/list">상품 목록</a></li>
         <li class="divider"></li>
-        <li><a href="#">메뉴2</a></li>
+        <li><a href="/admin/shopList">상품 목록 관리</a></li>
         <li class="divider"></li>
         <li><a href="#">메뉴3</a></li>
         <li class="divider"></li>

@@ -1,6 +1,7 @@
 package com.one.whospet.controller.shop;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -29,9 +30,9 @@ public class ShopController {
 	@Autowired ShopService shopService;
 	
 	//상품목록 [GET]
-	@RequestMapping(value="/shop/list", method=RequestMethod.GET)
-	public String shopList( ShopPaging inData, Model model ) {
-		logger.info("/shop/list [GET]");
+	@RequestMapping(value="/admin/shopList", method=RequestMethod.GET)
+	public String adminShopList( ShopPaging inData, Model model ) {
+		logger.info("/admin/shopList [GET]");
 		logger.info("indata cccc {}", inData.getCurPage());
 		
 		//페이징 계산
@@ -43,13 +44,13 @@ public class ShopController {
 		model.addAttribute("list", list);
 		model.addAttribute("paging", paging);
 		
-		return "shop/list";
+		return "admin/shopList";
 	}
 	
 	//상품상세보기
-	@RequestMapping(value="/shop/view")
-	public void shopView(Shop viewShop, Model model) {
-		logger.info("/shop/view	[GET]");
+	@RequestMapping(value="admin/shopView")
+	public void adminShopView(Shop viewShop, Model model) {
+		logger.info("/admin/shopView	[GET]");
 		
 		//게시글 번호를 통해 상세페이지 띄우기
 		logger.info("전달파라미터 shop : {}", viewShop);
@@ -73,15 +74,15 @@ public class ShopController {
 	
 	
 	//상품등록 [GET]
-	@RequestMapping(value="/shop/register", method=RequestMethod.GET )
-	public void ShopRegister() {
-		logger.info("/shop/register [GET]");
+	@RequestMapping(value="/admin/shopRegister", method=RequestMethod.GET )
+	public void adminShopRegister() {
+		logger.info("/admin/shopRegister [GET]");
 	}
 	
 	//상품등록 [POST]
-	@RequestMapping(value="/shop/register", method=RequestMethod.POST)
-	public String ShopRegisterProc(Shop shop, MultipartHttpServletRequest mtfRequest,HttpSession session) {
-		logger.info("/shop/register [POST]");
+	@RequestMapping(value="/admin/shopRegister", method=RequestMethod.POST)
+	public String adminShopRegisterProc(Shop shop, MultipartHttpServletRequest mtfRequest,HttpSession session) {
+		logger.info("/admin/shopRegister [POST]");
 		
 		logger.info("전달파라미터 shop : {}", shop);
 		logger.info("받아오는 file 정보 : {}", mtfRequest);
@@ -100,13 +101,13 @@ public class ShopController {
 		logger.info("삽입할 shop : {}", shop);
 		shopService.register(shop,fileList);
 		
-		return "redirect:/shop/list";
+		return "redirect:/admin/shopList";
 	}
 	
 	//수정
-	@RequestMapping(value="/shop/update", method=RequestMethod.GET)
-	public void shopUpdate( Shop shop, Model model) {
-		logger.info("/shop/update [GET]");
+	@RequestMapping(value="/admin/shopUpdate", method=RequestMethod.GET)
+	public void adminShopUpdate( Shop shop, Model model) {
+		logger.info("/admin/shopUpdate [GET]");
 		logger.info("전달 파라미터 shop : {}",shop);
 		
 		//상품 수정 정보
@@ -126,6 +127,87 @@ public class ShopController {
 		model.addAttribute("thumbnail", thumbnail);
 		
 	}
+	
+	//수정
+	@RequestMapping(value="/admin/shopUpdate", method=RequestMethod.POST)
+	public String adminShopUpdateProc( Shop shop,MultipartHttpServletRequest mtfRequest ) {
+		logger.info("/admin/shopUpdate [POST]");
+		logger.info("update.jsp에서 전달받은 shop : {}", shop);
+		logger.info("update.jsp에서 전달받은 mtfRequest : {}", mtfRequest);
+		
+		List<MultipartFile> newFileList = mtfRequest.getFiles("file");
+		List<MultipartFile> deleteFileList = mtfRequest.getFiles("deleteFileList");
+		
+		logger.info("fileList : {}", newFileList);
+		logger.info("fileList : {}", deleteFileList);
+		
+		
+//		List<MultipartFile> fileList = mtfRequest.getFiles("file");
+//		MultipartFile thumbnail = mtfRequest.getFile("thumbnail");
+//		fileList.add(thumbnail);
+//		logger.info("fileList : {}", fileList);
+//		logger.info("thumbnail : {}", thumbnail);
+		
+		return "redirect:/admin/shopList";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//------------------------------------------------------------
+	//------------------------------------------------------------
+	// 사용자
+	
+	//상품목록
+	@RequestMapping(value="/shop/list", method=RequestMethod.GET)
+	public void shopList( ShopPaging inData, Model model ) {
+		logger.info("/shop/list [GET]");
+		
+		//페이징 계산
+		ShopPaging paging = shopService.getPaging(inData);
+		
+		//상품 목록
+		List<Shop> list = shopService.list(paging);
+		logger.info("사용자 list : {}", list);
+		
+		//리스트, 페이징 전달
+		model.addAttribute("list", list);
+		model.addAttribute("paging", paging);
+		
+		//사용자 목록의 섬네일
+		List<Integer> sNo = new ArrayList<Integer>();
+		
+		for( Shop i : list ) {
+			sNo.add(i.getsNo());
+		}
+		logger.info("sNo만 뽑아낸 리스트 : {}", sNo);
+		
+		//사용자 목록의 섬네일 메소드
+		List<ShopImg> userListThumbnail = shopService.getAttachThumbnailFiles( sNo );
+		logger.info("UserListThumbnail만 뽑아낸 리스트 : {}", userListThumbnail);
+		
+		model.addAttribute("userListThumbnail", userListThumbnail);
+		
+	}
+	
+	
+	//상품 상세보기
+	@RequestMapping(value="/shop/view", method=RequestMethod.GET)
+	public void shopView() {
+		logger.info("/shop/view [GET]");
+	}
+	
+	//------------------------------------------------------------
+	//------------------------------------------------------------
+	
+	
 	
 	
 }
