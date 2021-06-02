@@ -50,7 +50,13 @@ public interface ShopDao {
 	 */
 	public ShopImg selectThumbnailBySNo(int sNo);
 
-	
+	/**
+	 * 사용자 상품목록의 
+	 * 
+	 * @param sNo 사용자 상품목록의 상품번호들
+	 */
+	public ShopImg selectThumbnailsBySNo(int i);
+
 	/**
 	 * 상품정보 삽입하기
 	 * 
@@ -65,6 +71,9 @@ public interface ShopDao {
 	 * @param shopImg 첨부파일 정보
 	 */
 	public void insertFile(ShopImg shopImg);
+
+
+	
 
 
 

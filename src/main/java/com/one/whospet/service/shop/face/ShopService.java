@@ -51,6 +51,15 @@ public interface ShopService {
 	 */
 	public ShopImg getAttachThumbnailFile(int sNo);
 
+
+	
+	/**
+	 * 리스트의 상품번호들을 이용해 사용자 목록에 보일 섬네일 얻기
+	 * 
+	 * @param sNo 리스트의 상품번호들
+	 * @return 상품번호들에 해당하는 섬네일
+	 */
+	public List<ShopImg> getAttachThumbnailFiles(List<Integer> sNo);
 	
 	/**
 	 * 상품등록하기

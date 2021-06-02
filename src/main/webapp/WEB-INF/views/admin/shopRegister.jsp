@@ -43,40 +43,41 @@ $(document).ready(function() {
 
 <h1>상품 등록</h1>
 
-<form action="/shop/register" method="post" enctype="multipart/form-data">
+<form action="/admin/shopRegister" method="post" enctype="multipart/form-data">
 <table class="table table-striper table-hover">
 
 <tr>
-	<th>상품명</th><td><input type="text" id="sName" name="sName" required/><br><br><input type="file" name="thumbnail" id="thumbnail"/></td>
+	<th>상품명</th><td><input type="text" id="sName" name="sName" required/></td><td><input type="file" name="thumbnail" id="thumbnail"/></td>
 </tr>
 
-<tr>
-	
-</tr>
 
 <tr>
 	<th>상품종류</th>
-	<td>
+	<td colspan="2">
 		<select name="sProductType" id="sProductType">
 			<option value="사료">사료</option>
 			<option value="간식">간식</option>
-			<option value="영양제">영양제</option>
+			<option value="건강관리">건강관리</option>
+			<option value="위생/배변">위생/배변</option>
+			<option value="미용/목욕">미용/목욕</option>
+			<option value="급식/급수기">급식/급수기</option>
 			<option value="장난감">장난감</option>
+			<option value="패션/의류">패션/의류</option>
 		</select>
 	</td>
 </tr>
 
 <tr>
-	<th>상품금액</th><td><input type="number" id="sAmount" name="sAmount" required="required" /></td>
+	<th>상품금액</th><td colspan="2"><input type="number" id="sAmount" name="sAmount" required="required" /></td>
 </tr>
 
 <tr>
-	<th>상품수량</th><td><input type="number" value="1" id="sQuantity" name="sQuantity"/></td>
+	<th>상품수량</th><td colspan="2"><input type="number" value="1" id="sQuantity" name="sQuantity"/></td>
 </tr>
 
 <tr>
 	<th>상품소개</th>
-	<td>
+	<td colspan="2">
 	<textarea style="width: 98%" id="sContent" name="sContent"></textarea>
 	</td>
 </tr>
