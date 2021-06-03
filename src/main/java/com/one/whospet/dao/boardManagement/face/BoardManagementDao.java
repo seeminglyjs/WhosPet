@@ -87,4 +87,11 @@ public interface BoardManagementDao {
 	 */
 	public void deleteComment(int cNo);
 
+	/**
+	 * 게시글을 삭제하는 메소드
+	 * 
+	 * @param bNo
+	 */
+	public void deleteBoard(int bNo);
+
 }

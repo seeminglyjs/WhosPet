@@ -28,23 +28,6 @@ $(document).ready(function(){
 		});	
 	})
 	
-	$(document).on("click","#commentDel",function(){
-		$.ajax({
-			type: "post"
-			,url: "/board/commentDelete"
-			,data: { cNo : $("#commentNo").val()
-				, bNo : "${board.bNo }"
-				}
-			,dataType: "html"
-			,success: function(res){
-				console.log("게시판 댓글 삭제 성공")
-				$("#commentList").html(res)
-			}
-			,error: function(){
-				console.log("게시판 댓글 삭제 실패")
-			}
-		});	
-	})
 	
 	$(document).on("click","#moreComment",function(){
 		$.ajax({
@@ -63,7 +46,49 @@ $(document).ready(function(){
 		});	
 	})
 	
+	
+	$(document).on("click","#foldComment",function(){
+		$.ajax({
+			type: "post"
+			,url: "/board/foldComment"
+			,data: { curCommentSize : "10"
+				, bNo : "${board.bNo }"
+				, foldCheck : "1"}
+			,dataType: "html"
+			,success: function(res){
+				$("#commentList").html(res)
+			}
+			,error: function(){
+				console.log("게시판 접기 실패")
+			}
+		});	
+	})
+	
 })
+
+
+function forwardCno(param){
+	console.log($(param))
+	console.log($(param).children().val())
+	$.ajax({	
+		type: "post"
+		,url: "/board/commentDelete"
+		,async: false
+		,data: { 
+			curCommentSize : $("#curCommentSize").val()
+			, bNo : "${board.bNo }"
+			, cNo : $(param).children().val()
+			, delCheck : "1"
+			}
+		,dataType: "html"
+		,success: function(res){
+			$("#commentList").html(res)
+		}
+		,error: function(){
+			console.log("댓글 삭제 실패")
+		}
+	});	
+}
 </script>
 
 
@@ -146,24 +171,43 @@ ${board.bContent }
 		<div>
 			<c:if test="${listCSize ne -1}">
 			<c:set var="start" value="0"></c:set>
+			<c:set var="del" value="0"></c:set>
+			<c:set var="delBtn" value="0"></c:set>
 			<c:forEach begin="${start }" end="${listCSize-1 }" var="comm" items="${listC }" varStatus="cnt">
 			
-			<div style="display: none;"><input type="hidden" id="commentNo" value="${comm.C_NO }"/></div>
+			<div style="display: none;"></div>
 			<div style="font-weight: bolder; margin-top: 5px;">${comm.U_NICK }</div>
 			<div style="font-size: 14px;">${comm.C_CONTENT }</div>	
 			<div style="font-size: 11px; color: #ccc;"><fmt:formatDate value="${comm.C_WRITE_DATE }" pattern="yyyy/MM/dd - hh:mm"/>
-				<c:if test="${comm.U_NO eq sessionScope.user.uNo }"><span id="commentDel" style="color:tomato;  cursor: pointer;">삭제</span>
+				<c:if test="${comm.U_NO eq sessionScope.user.uNo }">
+				<span id="commentDel${delBtn = delBtn + 1 }" style="color:tomato;  cursor: pointer;" onclick="forwardCno(this)" >삭제
+				<input type="hidden" id="commentNo${del = del + 1 }" value="${comm.C_NO }">
+				</span>
 				</c:if></div>
 			<div style="border-bottom: 1px solid #ccc; margin-top: 5px;">
 			</div>
 			</c:forEach>
 			
-			<c:if test="${listCSize < totalCSize}">
-			<div class="text-center" style="margin-top: 10px;">
 			<input type="hidden" value="${listCSize }" name="curCommentSize" id="curCommentSize">
+			<c:choose>
+			
+			<c:when test="${listCSize < totalCSize}">
+			<div class="text-center" style="margin-top: 10px;">
 			<button class="btn btn-sm btn-default" id="moreComment" name="moreComment" type="button">더보기</button>
 			</div>
-			</c:if>
+			</c:when>
+			
+			<c:when test="${listCSize >= totalCSize and listCSize > 10}">
+			<div class="text-center" style="margin-top: 10px;">
+			<button class="btn btn-sm btn-default" id="foldComment" name="foldComment" type="button">접기</button>
+			</div>
+			</c:when>
+			
+			<c:otherwise>
+				
+			</c:otherwise>
+			
+			</c:choose>
 			
 			</c:if>
 		</div>	

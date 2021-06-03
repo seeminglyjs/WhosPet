@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/layout/headerUser.jsp" %>
+<%@ include file="/WEB-INF/views/layout/headerAdmin.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
@@ -18,30 +18,11 @@ $(document).ready(function(){
 				}
 			,dataType: "html"
 			,success: function(res){
-				console.log("AJAX성공")
 				$("#commentList").html(res)
 				$("#commentInput").val("")
 			}
 			,error: function(){
-				console.log("AJA실패")
-			}
-		});	
-	})
-	
-	$(document).on("click","#commentDel",function(){
-		$.ajax({
-			type: "post"
-			,url: "/admin/board/commentDelete"
-			,data: { cNo : $("#commentNo").val()
-				, bNo : "${board.bNo }"
-				}
-			,dataType: "html"
-			,success: function(res){
-				console.log("게시판 댓글 삭제 성공")
-				$("#commentList").html(res)
-			}
-			,error: function(){
-				console.log("게시판 댓글 삭제 실패")
+				console.log("댓글 등록 실패")
 			}
 		});	
 	})
@@ -54,7 +35,6 @@ $(document).ready(function(){
 				, bNo : "${board.bNo }"}
 			,dataType: "html"
 			,success: function(res){
-				console.log("게시판 더보기 성공")
 				$("#commentList").html(res)
 			}
 			,error: function(){
@@ -63,7 +43,49 @@ $(document).ready(function(){
 		});	
 	})
 	
+	$(document).on("click","#foldComment",function(){
+		$.ajax({
+			type: "post"
+			,url: "/admin/board/foldComment"
+			,data: { curCommentSize : "10"
+				, bNo : "${board.bNo }"
+				, foldCheck : "1"}
+			,dataType: "html"
+			,success: function(res){
+				$("#commentList").html(res)
+			}
+			,error: function(){
+				console.log("게시판 접기 실패")
+			}
+		});	
+	})
+	
 })
+
+
+function forwardCno(param){
+	console.log($(param))
+	console.log($(param).children().val())
+	$.ajax({	
+		type: "post"
+		,url: "/admin/board/commentDelete"
+		,async: false
+		,data: { 
+			curCommentSize : $("#curCommentSize").val()
+			, bNo : "${board.bNo }"
+			, cNo : $(param).children().val()
+			, delCheck : "1"
+			}
+		,dataType: "html"
+		,success: function(res){
+			$("#commentList").html(res)
+		}
+		,error: function(){
+			console.log("댓글 삭제 실패")
+		}
+	});	
+}
+
 </script>
 
 
@@ -155,18 +177,35 @@ ${board.bContent }
 			<div style="font-size: 14px;">${comm.C_CONTENT }</div>	
 			<div style="font-size: 11px; color: #ccc;"><fmt:formatDate value="${comm.C_WRITE_DATE }" pattern="yyyy/MM/dd - hh:mm"/>
 				<c:if test='${sessionScope.user.uGrade eq "M" }'>
-				<span id="commentDel${delBtn = delBtn + 1 }" style="color:tomato;  cursor: pointer;" >삭제</span>
+				<span id="commentDel${delBtn = delBtn + 1 }" style="color:tomato;  cursor: pointer;" onclick="forwardCno(this)" >삭제
+				<input type="hidden" id="commentNo${del = del + 1 }" value="${comm.C_NO }">
+				</span>
 				</c:if></div>
 			<div style="border-bottom: 1px solid #ccc; margin-top: 5px;">
 			</div>
 			</c:forEach>
 			
-			<c:if test="${listCSize < totalCSize}">
-			<div class="text-center" style="margin-top: 10px;">
 			<input type="hidden" value="${listCSize }" name="curCommentSize" id="curCommentSize">
+			<c:choose>
+			
+			
+			<c:when test="${listCSize < totalCSize}">
+			<div class="text-center" style="margin-top: 10px;">
 			<button class="btn btn-sm btn-default" id="moreComment" name="moreComment" type="button">더보기</button>
 			</div>
-			</c:if>
+			</c:when>
+			
+			<c:when test="${listCSize >= totalCSize and listCSize > 10}">
+			<div class="text-center" style="margin-top: 10px;">
+			<button class="btn btn-sm btn-default" id="foldComment" name="foldComment" type="button">접기</button>
+			</div>
+			</c:when>
+			
+			<c:otherwise>
+				
+			</c:otherwise>
+			
+			</c:choose>
 			
 			</c:if>
 		</div>	
@@ -181,4 +220,4 @@ ${board.bContent }
 </div>
 
 
-<%@ include file="/WEB-INF/views/layout/footerUser.jsp" %>
+<%@ include file="/WEB-INF/views/layout/footerAdmin.jsp" %>

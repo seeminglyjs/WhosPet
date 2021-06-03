@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -245,4 +246,63 @@ public class BoardManagementController {
 		model.addAttribute("listCSize", listCSize);
 		model.addAttribute("totalCSize", totalCSize);
 	}
+	
+	
+	//게시글 삭제하는 메소드
+	@RequestMapping(value = "/board/delete")
+	public String deleteBoard(HttpServletRequest request, HttpSession session) {
+
+		String param = request.getParameter("bNo");
+
+		//요청 파라미터가 null 이거나 빈문자열이면 돌려보냄
+		if(param == null || param.equals("")) {
+			return "redirect:/admin/board/list";
+		}
+
+		int bNo = 0;
+		try { // 예외 발생시 리스트로 보내버림
+			bNo = Integer.parseInt(param);
+		} catch (Exception e) {
+			return "redirect:/admin/board/list";
+		}
+
+		//로그인 유저 정보 가져온다.
+		User loginUser = (User) session.getAttribute("user");
+		
+
+		//로그인 유저가 관리자가 아니면 메인화면으로 으로
+		if(!loginUser.getuGrade().equals("M")) {
+			session.invalidate();
+			return "redirect:/";
+		}else {
+			boardMS.deleteBoard(bNo); // 게시글 삭제
+			//삭제 진행후 다시 리스트로 보낸다.
+			return "redirect:/admin/board/list";
+		}
+	}
+	
+	
+	//댓글 접기 컨트롤러
+	@RequestMapping(value = "/board/foldComment", method = RequestMethod.POST)
+	public void foldComment(HttpServletRequest request, Model model) {
+		
+		//댓글 리스트를 담을 리스트
+		List<HashMap<String, Object>> listC = new ArrayList<HashMap<String, Object>>();
+
+		//댓글 리스트를 가져오는 메소드
+		listC = boardMS.getComment(request);
+
+		//댓글의 총 갯수
+		int listCSize = listC.size();	
+		
+		int totalCSize = 0;
+		totalCSize = boardMS.getCommentTotalCount(request);
+		
+		
+		model.addAttribute("listC", listC);
+		model.addAttribute("listCSize", listCSize);
+		model.addAttribute("totalCSize", totalCSize);
+	}
+	
+	
 }
