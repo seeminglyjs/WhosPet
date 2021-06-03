@@ -13,6 +13,7 @@ $(function(){
 	$("#alert-danger").hide();
 	$("#alert-length").hide();
 	$("#alert-mix").hide();
+	$("#btnConfirm").attr("disabled", "disabled");
 	$("input").keyup(function(){
 		var pwd1=$("#uPw").val();
 		var pwd2=$("#uPwCk").val();
@@ -64,6 +65,8 @@ $(function(){
 		//<form> submit
 		$("#form").submit();
 		opener.location.reload();
+		$("#alert-success").hide();
+		$("#alert-danger").hide();
 	});
 	
 	//취소버튼 동작

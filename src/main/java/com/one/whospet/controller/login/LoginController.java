@@ -67,6 +67,9 @@ public class LoginController {
 			//로그인 유저 객체 전달(유저번호/아이디/유저등급/닉네임만 전달)
 			session.setAttribute("login", true);
 			session.setAttribute("user", user);
+			if(user.getuGrade().equals("M")) { // 관리자 여부 체크 후 세션할당
+				session.setAttribute("gradeCheck", true);
+			}
 
 			//아이디 기억하기가 체크 되었을때 (다음 로그인 부터 기억된다)
 			if(map.get("memoryId")!= null) {
@@ -93,9 +96,9 @@ public class LoginController {
 
 		// 유저인지 관리자 인지 체크
 		if(user.getuGrade().equals("M")) {
-			return "/home/adminMain"; // 관리자 메인으로 보내기
+			return "redirect:/admin"; // 관리자 메인으로 보내기
 		}else {
-			return "/home/main"; // 유저 메인으로 보내기
+			return "redirect:/"; // 유저 메인으로 보내기
 		}
 	}
 
@@ -130,7 +133,7 @@ public class LoginController {
 			//로그인 유저 객체 전달(유저번호/아이디/유저등급/닉네임만 전달)
 			session.setAttribute("login", true);
 			session.setAttribute("user", user);
-			return "/home/main"; // 기존 가입 유저 메인으로 보내기
+			return "redirect:/"; // 기존 가입 유저 메인으로 보내기
 		}
 
 

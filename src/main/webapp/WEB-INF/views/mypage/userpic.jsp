@@ -12,14 +12,22 @@ $(document).ready(function() {
 	//등록버튼 동작
 	$("#btnUp").click(function() {
 		//<form> submit
+		$("#form").attr("action","/mypage/userpic");
 		$("#form").submit();
-		window.opener.location.href = 'redirect:/mypage/user';
+		window.opener.location.reload();
 	});
 	
 	//취소버튼 동작
 	$("#btnCancel").click(function() {
 		window.close();
 	});
+	
+	$("#btnDelete").click(function(){
+		//<form> submit
+		$("#form").attr("action","/mypage/userpicDelete");
+		$("#form").submit();
+		window.opener.location.reload();
+	})
 });
 </script>
 <style>
@@ -59,26 +67,40 @@ $(document).ready(function() {
 }
 button {
 position:relative;
-top: 80px;
-left: 57px;
+top: 0px;
+left: 15px;
 border: none;
 background-color: #f7a440;
 border-radius: .25em;
 color: #fff;
 font-size: inherit;
 padding: .5em .75em;
+cursor: pointer;
+}
+
+button:hover {
+  background-color: #f6dcbf;
+}
+
+button:active {
+  background-color: #f6dcbf;
 }
 </style>
 </head>
 <body>
-<form action="/mypage/userpic" method="post" id="form" enctype="multipart/form-data">
+<form method="post" id="form" enctype="multipart/form-data">
 <div class="filebox" style="width: 200px; height:30px;">
 <br>
-  <label for="ex_file" style="width: 130px; margin-left: 35px;">프로필 사진 변경</label>
+  <label for="ex_file" style="width: 130px; margin-left: 30px;">프로필 사진 변경</label>
   <input type="file" name="file" id="ex_file">
 </div>
+<br>
+<br>
+<hr>
 <button type="button" id="btnUp">등록</button>
+<button type="button" id="btnDelete">삭제</button>
 <button type="button" id="btnCancel">취소</button>
+
 </form>
 
 

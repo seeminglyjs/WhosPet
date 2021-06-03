@@ -52,11 +52,6 @@ public class MypageController {
 	@Autowired 
 	private JavaMailSenderImpl mailSender;
 	
-	@InitBinder     
-	public void initBinder(WebDataBinder binder){
-	     binder.registerCustomEditor(       Date.class,     
-	                         new CustomDateEditor(new SimpleDateFormat("dd/MM/yyyy"), true, 10));   
-	}
 	
 	@RequestMapping(value = "/mypage/main")
 	public void main() {}
@@ -87,6 +82,18 @@ public class MypageController {
 		mypageService.deletePic(user);
 		
 		mypageService.filesave(user, file);
+		return "redirect: /mypage/info";
+	}
+	
+	//유저 프로필 사진 삭제 처리
+	@RequestMapping(value = "/mypage/userpicDelete", method=RequestMethod.POST)
+	public String userpicDeleteProc(Userpic userpic, HttpSession session, @RequestParam("file") MultipartFile file) {
+		
+		logger.debug("file정보" + file.toString());
+		User user = (User) session.getAttribute("user");
+		
+		mypageService.deletePic(user);
+		
 		return "redirect: /mypage/info";
 	}
 	
@@ -220,20 +227,20 @@ public class MypageController {
 		
 
 		
-		// 메일 전송 객체 생성 
-		final MimeMessagePreparator preparator = new MimeMessagePreparator() {
-		@Override public void prepare(MimeMessage mimeMessage) throws Exception { 
-		final MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-						
-						
-			helper.setFrom("WhosPet <kul32137@gmail.com>"); // 보내는 사람 <> 이메일 주소
-			helper.setTo("kul321japan@gmail.com");  // 받는 사람	
-			helper.setSubject( uId + "님의 예약이 취소되었습니다"); // 제목 
-			helper.setText("예약번호"+bookno+"번의 예약이 취소되었습니다", true); //내용
-					} 
-					
-				}; 
-				mailSender.send(preparator); //메일을 보낸다.
+//		// 메일 전송 객체 생성 
+//		final MimeMessagePreparator preparator = new MimeMessagePreparator() {
+//		@Override public void prepare(MimeMessage mimeMessage) throws Exception { 
+//		final MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+//						
+//						
+//			helper.setFrom("WhosPet <kul32137@gmail.com>"); // 보내는 사람 <> 이메일 주소
+//			helper.setTo("kul321japan@gmail.com");  // 받는 사람	
+//			helper.setSubject( uId + "님의 예약이 취소되었습니다"); // 제목 
+//			helper.setText("예약번호"+bookno+"번의 예약이 취소되었습니다", true); //내용
+//					} 
+//					
+//				}; 
+//				mailSender.send(preparator); //메일을 보낸다.
 		
 		//마이페이지 메인으로 리다이렉트
 		return "redirect:/mypage/user";
@@ -344,7 +351,24 @@ public class MypageController {
 	@RequestMapping(value="/mypage/bookingApprove", method=RequestMethod.POST)
 	public String bookingApprove(Booking booking) {
 		final int bookno = booking.getBookNo();
+
 		mypageService.bookingApprove(booking);
+		
+
+//		// 메일 전송 객체 생성 
+//		final MimeMessagePreparator preparator = new MimeMessagePreparator() {
+//		@Override public void prepare(MimeMessage mimeMessage) throws Exception { 
+//		final MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+//						
+//						
+//			helper.setFrom("WhosPet <kul32137@gmail.com>"); // 보내는 사람 <> 이메일 주소
+//			helper.setTo("kul321japan@gmail.com");  // 받는 사람	
+//			helper.setSubject( "새로운 예약이 접수되었습니다."); // 제목 
+//			helper.setText("예약번호"+bookno+"번의 예약이 접수되었습니다.", true); //내용
+//					} 
+//					
+//				}; 
+//				mailSender.send(preparator); //메일을 보낸다.
 		return "redirect: /mypage/info";
 	}
 	
@@ -354,6 +378,20 @@ public class MypageController {
 	public String bookingReject(Booking booking) {
 		final int bookno = booking.getBookNo();
 		mypageService.bookingReject(booking);
+//		// 메일 전송 객체 생성 
+//		final MimeMessagePreparator preparator = new MimeMessagePreparator() {
+//		@Override public void prepare(MimeMessage mimeMessage) throws Exception { 
+//		final MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+//								
+//								
+//			helper.setFrom("WhosPet <kul32137@gmail.com>"); // 보내는 사람 <> 이메일 주소
+//			helper.setTo("kul321japan@gmail.com");  // 받는 사람	
+//			helper.setSubject( "예약이 반려되었습니다."); // 제목 
+//			helper.setText("예약번호"+bookno+"번의 예약이 반려되었습니다.", true); //내용
+//						} 
+//							
+//				}; 
+//			mailSender.send(preparator); //메일을 보낸다.
 		
 		return "redirect: /mypage/info";
 	

@@ -186,13 +186,9 @@ $(document).ready(function(){
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">회원관리 <span class="caret"></span></a>
       <ul class="dropdown-menu" role="menu">
-        <li><a href="/admin/user/list">회원 조회/삭제</a></li>
+        <li><a href="/admin/user/list">회원 조회</a></li>
         <li class="divider"></li>
-        <li><a href="#">메뉴2</a></li>
-        <li class="divider"></li>
-        <li><a href="#">메뉴3</a></li>
-        <li class="divider"></li>
-        <li><a href="#">메뉴4</a></li>
+        <li><a href="/admin/user/enroll">회원 등록</a></li>
       </ul>
     </li>
     
@@ -219,20 +215,18 @@ $(document).ready(function(){
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">게시판관리 <span class="caret"></span></a>
       <ul class="dropdown-menu" role="menu">
-        <li><a href="#">메뉴1</a></li>
+        <li><a href="/admin/board/list?bType=F">자유게시판관리</a></li>
         <li class="divider"></li>
-        <li><a href="#">메뉴2</a></li>
+        <li><a href="/admin/board/list?bType=T">치료게시판관리</a></li>
         <li class="divider"></li>
-        <li><a href="#">메뉴3</a></li>
-        <li class="divider"></li>
-        <li><a href="#">메뉴4</a></li>
+        <li><a href="/admin/board/list?bType=R">리뷰게시판관리</a></li>
       </ul>
     </li>
     
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">포인트관리 <span class="caret"></span></a>
       <ul class="dropdown-menu" role="menu">
-        <li><a href="#">메뉴1</a></li>
+        <li><a href="/admin/pointManage">포인트관리</a></li>
         <li class="divider"></li>
         <li><a href="#">메뉴2</a></li>
         <li class="divider"></li>
@@ -254,7 +248,18 @@ $(document).ready(function(){
         <li><a href="#">메뉴4</a></li>
       </ul>
     </li>
-  
+    
+    <c:if test="${not empty login }">
+    <c:if test="${not empty gradeCheck }">
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">페이지전환 <span class="caret"></span></a>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href="/">유저메인</a></li>
+        <li><a href="/admin">관리자메인</a></li>
+      </ul>
+    </li>
+  	</c:if>
+  	</c:if>
    </ul>
 
    </div>

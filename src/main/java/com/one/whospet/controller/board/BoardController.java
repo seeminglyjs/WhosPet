@@ -358,5 +358,28 @@ public class BoardController {
 		model.addAttribute("totalCSize", totalCSize);
 	}
 	
+	//댓글 접기 컨트롤러
+	@RequestMapping(value = "/board/foldComment", method = RequestMethod.POST)
+	public void foldComment(HttpServletRequest request, Model model) {
+		
+		//댓글 리스트를 담을 리스트
+		List<HashMap<String, Object>> listC = new ArrayList<HashMap<String, Object>>();
+
+		//댓글 리스트를 가져오는 메소드
+		listC = boardService.getComment(request);
+
+		//댓글의 총 갯수
+		int listCSize = listC.size();	
+		
+		int totalCSize = 0;
+		totalCSize = boardService.getCommentTotalCount(request);
+		
+		
+		model.addAttribute("listC", listC);
+		model.addAttribute("listCSize", listCSize);
+		model.addAttribute("totalCSize", totalCSize);
+	}
+	
+	
 	
 }

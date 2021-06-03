@@ -568,8 +568,8 @@ function check(){
 
 	  <div class="form-group">
 	    <div class="col-sm-offset-2 col-sm-10">
-	      <button type="submit" class="btn btn-primary" id="joinBtn">회원가입</button>    
-	      <button type="submit" class="btn btn-danger" onclick="history.back()">뒤로가기</button>   
+	      <button type="submit" class="btn btn-sm btn-primary" id="joinBtn">회원가입</button>    
+	      <a href="/"><button type="button" class="btn btn-sm btn-default" >홈으로</button></a>   
 	    </div>
 	  </div>
 	

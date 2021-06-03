@@ -14,7 +14,7 @@
                         <ul class="footerlist">
                             <li><a href="/">메인 화면</a></li>
                             <li><a href="#">증상 / 질병 확인</a></li>
-                            <li><a href="#">WhosPet 게시판</a></li>
+                            <li><a href="/board/list">WhosPet 게시판</a></li>
                         </ul>
                     </div>
                     <div class="col-md-6 item text">

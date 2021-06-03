@@ -49,8 +49,8 @@ td {
 
 <!-- 예약취소에 전달할 매개변수 -->
 <input type="hidden" id="bookNo" name="bookNo" value="${view.bookNo }"/>
-<input type="hidden" id="bookDate" name="bookDate" value="${view.bookDate }"/>
-<input type="hidden" id="bookHour" name="bookNo" value="${view.bookHour }"/>
+<%-- <input type="hidden" id="bookDate" name="bookDate" value="${view.bookDate }"/> --%>
+<%-- <input type="hidden" id="bookHour" name="bookNo" value="${view.bookHour }"/> --%>
 
 <!-- 테이블 시작 -->
 <table class="table table-bordered">

@@ -22,16 +22,17 @@ td:nth-child(2) {
 	text-align: left;
 }
 
+
 #buttons{
 position: relative;
-top: 10px;
-left: 600px;
+top: -60px;
+left: 580px;
 
 }
 
 #boardtitle{
 position: relative;
-top: -120px;
+top: -100px;
 left: 220px;
 font-family: 'InfinitySans-RegularA1';
 }
@@ -81,7 +82,7 @@ $(function(){
 </script>
 
 <div id="boardtitle">
-<h1>병원 등록/삭제/조회</h1>
+<h1 style="display:inline;">병원 등록/삭제/조회 </h1><h6 style="display:inline; color: gray;">병원 데이터를 확인하는 페이지입니다</h6>
 <hr align="left" width="630">
 </div>
 <div id="cont2" class="container-fluid col-md-9">
@@ -106,7 +107,17 @@ $(function(){
 	<tr>
 		<td><label><input type="checkbox" name="hNoArr" value="${hoslist.hNo}"></label></td>
 		<td>${hoslist.hNo }</td>
-		<td>${hoslist.hAdcheck }</td>
+		<td>
+		<c:if test='${hoslist.hAdcheck eq "Y" }'>
+		완료
+		</c:if>
+		<c:if test='${hoslist.hAdcheck eq "N" }'>
+		반려
+		</c:if>
+		<c:if test='${hoslist.hAdcheck eq "W" }'>
+		대기
+		</c:if>
+		</td>
 		<td>${hoslist.hName }</td>
 		<td>${hoslist.hTel }</td>
 		<td><fmt:formatDate value="${hoslist.hRequestDate}" pattern="yy-MM-dd"/></td>
@@ -126,9 +137,9 @@ $(function(){
 <!-- 페이징 JSP -->
 <jsp:include page="/WEB-INF/views/util/mypagehospitalpaging.jsp" />
 <div id="buttons">
-<button type="button" id="btnResister" style="margin-right: 20px;"
+<button type="button" class="btn btn-warning" id="btnResister" style="margin-right: 20px;"
 onclick = "location.href = '/hospital/register' ">등록</button>
-<button type="button" id="btnDelete" style="margin-right: 20px;">삭제</button>
+<button type="button" class="btn btn-warning" id="btnDelete" style="margin-right: 20px;">삭제</button>
 
 </div>
 </div><!-- .container -->

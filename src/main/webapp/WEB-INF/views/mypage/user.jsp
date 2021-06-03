@@ -23,6 +23,9 @@ $(document).ready(function(){
     	
 //    			 });
 //     	})
+	$("#alert-success").hide();
+	$("#alert-danger").hide();
+})
 </script>
 <style>
 @font-face {
@@ -197,7 +200,7 @@ padding: 10px;
 <button type="button" id="btnPic" 
 style="margin-left: 45px; width: 100px;"
 onclick="window.open
-('/mypage/userpic','write','width=250,height=200,left=300, top=300, location=no,status=no,scrollbars=yes')">
+('/mypage/userpic','write','width=280,height=220,left=300, top=300, location=no,status=no,scrollbars=yes')">
 사진 변경</button>
 
  

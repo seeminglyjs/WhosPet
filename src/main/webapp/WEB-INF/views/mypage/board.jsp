@@ -64,9 +64,19 @@ left: 130px;
 <tbody>
 <c:forEach items="${ublist }" var="ublist">
 	<tr>
-		<td>${ublist.bNo }</td>
-		<td>${ublist.bType }</td>
-		<td>${ublist.bTitle }</td>
+		<td><a href="/board/detail?bNo=${ublist.bNo }">${ublist.bNo }</a></td>
+		<td>
+		<c:if test='${ublist.bType eq "T" }'>
+		[치료]
+		</c:if>
+		<c:if test='${ublist.bType eq "F" }'>
+		[자유]
+		</c:if>
+		<c:if test='${ublist.bType eq "R" }'>
+		[리뷰]
+		</c:if>
+		</td>
+		<td><a href="/board/detail?bNo=${ublist.bNo }">${ublist.bTitle }</a></td>
 		<td>${ublist.bHit }</td>
 		<td><fmt:formatDate value="${ublist.bWriteDate }" pattern="yy-MM-dd HH:mm:ss" /></td>
 	</tr>

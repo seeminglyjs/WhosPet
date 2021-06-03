@@ -45,6 +45,8 @@
 			<mapping path ="/board/detail/**"/>
 			<mapping path ="/board/write/**"/>
 			<mapping path ="/board/delete/**"/>
+			<!-- <mapping path ="/admin/**"/> -->
+			<mapping path ="home/adminMain"/>
 			<!-- 인터셉터 클래스 지정 -->
 			<beans:bean class="com.one.whospet.interceptor.UserLoginCheckInterceptor"/>	
 		</interceptor>
