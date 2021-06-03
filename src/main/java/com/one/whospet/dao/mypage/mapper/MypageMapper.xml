@@ -5,7 +5,7 @@
   
   <mapper namespace="com.one.whospet.dao.mypage.face.MypageDao">
   
-	<!-- 유저 DTO 제정의  -->
+	<!-- 유저 DTO 재정의  -->
 	<resultMap type="com.one.whospet.dto.User" id="User">
 		<id column="U_No" property="uNo"/>
 		
@@ -23,7 +23,7 @@
 		<result column="U_JOIN_DATE" property="uJoinDate"/>
 	</resultMap>
 	
-	<!-- 유저픽 DTO 제정의  -->
+	<!-- 유저픽 DTO 재정의  -->
 	<resultMap type="com.one.whospet.dto.Userpic" id="Userpic">
 		<id column="UPIC_NO" property="upicNo"/>
 		<result column="U_NO" property="uNo"/>
@@ -31,7 +31,7 @@
 		<result column="UPIC_STONAME" property="upicStoname"/>
 	</resultMap>
 	
-	<!-- 보드 DTO 제정의  -->
+	<!-- 보드 DTO 재정의  -->
 	<resultMap type="com.one.whospet.dto.Board" id="Board">
 		<id column="b_no" property="bNo"/>
 		
@@ -44,7 +44,7 @@
 		<result column="u_no" property="uNo"/>
 	</resultMap>
 	
-	<!-- 예약  DTO 제정의  -->
+	<!-- 예약  DTO 재정의  -->
 	<resultMap type="com.one.whospet.dto.Booking" id="Booking">
 		<id column="book_no" property="bookNo"/>
 		
@@ -58,7 +58,7 @@
 		<collection property="hospital" resultMap="Hospital"/>
 	</resultMap>
 	
-	<!-- 병원 DTO 제정의  -->
+	<!-- 병원 DTO 재정의  -->
   	<resultMap type="com.one.whospet.dto.Hospital" id="Hospital">
   		<id column="h_no" property="hNo" />
   		<result column="u_no" property="uNo" />
@@ -74,7 +74,7 @@
   		<result column="h_hit" property="hHit" />
   	</resultMap>
   	
-  	<!-- 포인트 DTO 제정의  -->
+  	<!-- 포인트 DTO 재정의  -->
   	<resultMap type="com.one.whospet.dto.Point" id="Point">
   		<id column="po_no" property="poNo" />
   		<result column="u_no" property="uNo" />
@@ -86,7 +86,32 @@
   		<result column="po_date" property="poDate" />
   		<result column="po_sum" property="poSum" />
   	</resultMap>
+  	
+	<!-- 샵 DTO 재정의 -->
+	<resultMap type="com.one.whospet.dto.Shop" id="Shop">
+		<id column="s_no" property="sNo"/>
+		
+		<result column="u_no" property="uNo"/>
+		<result column="s_name" property="sName"/>
+		<result column="s_productType" property="sProductType"/>
+		<result column="s_amount" property="sAmount"/>
+		<result column="s_quantity" property="sQuantity"/>
+		<result column="s_date" property="sDate"/>
+		<result column="s_content" property="sContent"/>
+		
+	</resultMap>
 	
+	<!-- 샵바스켓DTO 재정의 -->
+		<resultMap type="com.one.whospet.dto.ShopBasket" id="ShopBasket">
+		<id column="sb_no" property="sbNo"/>
+		
+		<result column="u_no" property="uNo"/>
+		<result column="s_no" property="sNo"/>
+		<result column="si_no" property="siNo"/>
+		<result column="sb_amount" property="sbAmount"/>
+		<result column="sb_quantity" property="sbQuantity"/>
+		<collection property="shop" resultMap="Shop"/>
+	</resultMap>
 
   
   	<select id="selectUserinfo" parameterType="com.one.whospet.dto.User" resultMap="User">
@@ -235,5 +260,33 @@
 	<update id="updateBookingStatusN" parameterType="com.one.whospet.dto.Booking">
 		UPDATE w_booking SET book_status = 'N' WHERE book_no = #{bookNo }
 	</update>
+	
+	<select id="selectBasketCntAll" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*) FROM w_shop_basket WHERE u_no = #{uNo }
+	</select>
+	
+	<select id="selectAllBasket" parameterType="hashmap" resultMap="ShopBasket">
+			
+		SELECT * FROM (
+			SELECT rownum rnum, B.* FROM (
+					SELECT *FROM w_shop_basket 
+				    FULL OUTER JOIN w_shop ON (w_shop.s_no = w_shop_basket.s_no)
+					WHERE w_shop_basket.u_no = #{uNo }
+					ORDER BY sb_no DESC
+						) B
+					) BOARD
+				WHERE rnum BETWEEN #{paging.startNo } AND #{paging.endNo }
+
+	</select>
+	
+	<select id="selectSumBasket" parameterType="hashmap" resultType="int">
+		SELECT SUM((sb_amount * sb_quantity)) FROM w_shop_basket GROUP BY u_no HAVING u_no = #{uNo }
+	</select>
+	
+	<delete id="deleteBasket" parameterType="int">
+		DELETE FROM w_shop_basket
+		WHERE sb_No = #{sbNo }
+	</delete>
+	
 	
   </mapper>
