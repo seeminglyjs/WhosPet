@@ -11,6 +11,7 @@ import com.one.whospet.dto.Board;
 import com.one.whospet.dto.Booking;
 import com.one.whospet.dto.Hospital;
 import com.one.whospet.dto.Point;
+import com.one.whospet.dto.ShopBasket;
 import com.one.whospet.dto.User;
 import com.one.whospet.dto.Userpic;
 import com.one.whospet.util.MypageBoardPaging;
@@ -175,6 +176,34 @@ public interface MypageService {
 	 * @param booking
 	 */
 	public void bookingReject(Booking booking);
+
+	/**
+	 * 장바구니 페이징
+	 * @param data
+	 * @return
+	 */
+	public MypageBoardPaging getBasketPaging(HashMap<String, Object> data);
+
+	/**
+	 * 장바구니 목록 조회
+	 * @param data
+	 * @return
+	 */
+	public List<ShopBasket> basketList(HashMap<String, Object> data);
+
+	/**
+	 * 장바구니 합계 계산
+	 * @param data
+	 * @return
+	 */
+	public int basketSum(HashMap<String, Object> data);
+
+	/**
+	 * 장바구니 아이템 삭제
+	 * @param sbNo
+	 * @return
+	 */
+	public int deleteBasket(int sbNo);
 
 
 

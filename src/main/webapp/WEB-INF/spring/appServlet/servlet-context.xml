@@ -93,7 +93,7 @@
 	<beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"> 
 		<beans:property name="host" value="smtp.gmail.com" /> 
 		<beans:property name="port" value="587" /> 
-		<beans:property name="username" value="" /> <!-- 보낼 이메일 주소  --> 
+		<beans:property name="username" value="kul32137@gmail.com" /> <!-- 보낼 이메일 주소  --> 
 		<beans:property name="password" value="" /> <!-- 보낼 이메일 비밀번호  -->
 		<beans:property name="javaMailProperties"> 
 			<beans:props> 
