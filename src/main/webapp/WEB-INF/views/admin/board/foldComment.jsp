@@ -38,7 +38,7 @@
 			
 			<input type="hidden" value="${listCSize }" name="curCommentSize" id="curCommentSize">
 			<c:choose>
-			
+				
 			<c:when test="${listCSize < totalCSize}">
 			<div class="text-center" style="margin-top: 10px;">
 			<button class="btn btn-sm btn-default" id="moreComment" name="moreComment" type="button">더보기</button>
@@ -56,6 +56,7 @@
 			</c:otherwise>
 			
 			</c:choose>
+			
 			</c:if>
 		</div>	
 			

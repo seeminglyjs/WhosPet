@@ -133,5 +133,9 @@
 		delete w_comment where c_no = #{cNo}
 	</delete>
 	
+	<delete id="deleteBoard" parameterType="int">
+		delete w_board where b_no = #{boardNo}
+	</delete>
+	
 	
 </mapper>

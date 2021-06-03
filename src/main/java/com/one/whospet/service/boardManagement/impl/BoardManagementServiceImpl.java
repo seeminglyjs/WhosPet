@@ -105,17 +105,29 @@ public class BoardManagementServiceImpl implements BoardManagementService{
 		List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>(); 
 		
 		String param = request.getParameter("bNo");
-		String param2 = request.getParameter("curCommentSize");
+		String param2 = request.getParameter("curCommentSize"); // 현재 댓글 리스트 사이즈
+		String param3 = request.getParameter("foldCheck"); // 접기 버튼 클릭여부 체크
+		String param4 = request.getParameter("delCheck"); // 삭제 버튼 클릭여부 체크
 		
+
 		//기본 댓글 값 최대 10개 까지
 		int curCommentSize = 10;
 		
-		//더보기 버튼 눌렀는지 체크 눌렀으며 10개 더해줌
-		if(param2 != null && !param2.equals("")) {
-			curCommentSize = Integer.parseInt(param2);
-			curCommentSize += 10;
-		}
+		// 파라미터3 이 1이면 접기 버튼이 눌린거임 리스트 10개까지
+		// 파라미터4 가 1이면 삭제 버튼 눌린거임 현재 리스트 유지
 		
+		//더보기 버튼 눌렀는지 체크 눌렀으며 10개 더해줌
+		if(param3 != null && param3.equals("1")) {
+			curCommentSize = 10;
+		}else if(param4 != null && param4.equals("1")) {
+			curCommentSize = Integer.parseInt(param2);
+		}else {
+			if(param2 != null && !param2.equals("")) {
+				curCommentSize = Integer.parseInt(param2);
+				curCommentSize += 10;
+			}
+		}
+
 		logger.info("댓글의 가져올 게시판 번호" + param);
 		
 		int bNo = 0;
@@ -213,6 +225,11 @@ public class BoardManagementServiceImpl implements BoardManagementService{
 	@Override //댓글을 삭제하는 메소드
 	public void deleteComment(int cNo) {
 		boardMD.deleteComment(cNo);
+	}
+	
+	@Override // 게시글을 삭제하는 메소드
+	public void deleteBoard(int bNo) {
+		boardMD.deleteBoard(bNo);
 	}
 		
 }
