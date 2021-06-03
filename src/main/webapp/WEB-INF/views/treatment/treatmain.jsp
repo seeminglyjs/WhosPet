@@ -253,6 +253,7 @@
      <div class="container list">
 	     <ul class="content-list">
 	     <h1>검진</h1>
+	     <hr>
 	     	<c:forEach var="v" items="${VList}">
 	     		<li>
 	     			<a href="/treatment/treatdetail?no=${v.TR_NO}">${v.TR_NAME}</a>
@@ -261,6 +262,7 @@
 	     </ul>
 	     <ul class="content-list">
 	     <h1>수술</h1>
+	     <hr>
 	     	<c:forEach var="s" items="${SList}">
 	     		<li>
 	     			<a href="/treatment/treatdetail?no=${s.TR_NO}">${s.TR_NAME}</a>
@@ -269,6 +271,7 @@
 	     </ul>
 	     <ul class="content-list">
 	     <h1>진료</h1>
+	     <hr>
 	     	<c:forEach var="c" items="${CList}">
 	     		<li>
 	     			<a href="/treatment/treatdetail?no=${c.TR_NO}">${c.TR_NAME}</a>
