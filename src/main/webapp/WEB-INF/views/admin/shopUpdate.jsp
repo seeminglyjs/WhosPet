@@ -14,8 +14,10 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	
+	//상품타입 변경
 	$("#sProductType").val('${updateView.sProductType }')
 	
+	//이름속성 작성안하면 false 리턴
 	$("form").submit(function() {
 		if( $("#sName").val() == '' ) {
 			return false;
@@ -30,6 +32,7 @@ $(document).ready(function() {
 		$("form").submit();	
 	})
 	
+	//클릭시 뒤로가기
 	$("#cancel").click(function() {
 		history.go(-1);
 	})
@@ -39,6 +42,10 @@ $(document).ready(function() {
 <!-- 섬네일 첨부파일 자바스크립트 -->
 <script type="text/javascript">
 $(document).ready(function(){
+
+  if( ${empty thumbnail} ) {
+	  	$("#newThumbnail").show();
+  }
 	
   $('#delFile').click(function(){
 	  	$(this).parent(".fileWrap").remove();
@@ -55,6 +62,7 @@ $(document).ready(function(){
 	
   $('.btnDelete').click(function(){
 	  	$(this).parent(".fileWrap").remove();
+	  	$("input[type='checkbox'][value='"+$(this).attr("data-sino")+"']").prop("checked",true);
 	})
 })
 </script>
@@ -78,10 +86,13 @@ $(document).ready(function(){
 <input type="hidden" id="sNo" name="sNo" value="${updateView.sNo }"/>
 <input type="hidden" id="uNo" name="uNo" value="${updateView.uNo }"/>
 
+<c:if test="${not empty thumbnail }">
+<input type="checkbox" style="display: none" name="delFileList" value="${thumbnail.siNo }"/>
 <div id="originThumbnail" class="fileWrap">
 <img alt="섬네일" src="/resources/shopimgupload/${thumbnail.siStoredFilename }" style="width: 100px;">
-<span id="delFile" >x</span>
+<span id="delFile" class="btnDelete" data-sino="${thumbnail.siNo }" >x</span>
 </div>
+</c:if>
 
 <table class="table table-striper table-hover">
 
@@ -91,7 +102,6 @@ $(document).ready(function(){
 		<div id="newThumbnail">	
 			<input type="file" name="thumbnail" id="thumbnail"/>
 		</div>
-	
 	</td>
 </tr>
 
@@ -101,8 +111,12 @@ $(document).ready(function(){
 		<select name="sProductType" id="sProductType">
 			<option value="사료">사료</option>
 			<option value="간식">간식</option>
-			<option value="영양제">영양제</option>
+			<option value="건강관리">건강관리</option>
+			<option value="위생/배변">위생/배변</option>
+			<option value="미용/목욕">미용/목욕</option>
+			<option value="급식/급수기">급식/급수기</option>
 			<option value="장난감">장난감</option>
+			<option value="패션/의류">패션/의류</option>
 		</select>
 	</td>
 </tr>
@@ -127,9 +141,10 @@ $(document).ready(function(){
 <div id="fileBox">
 	<!-- 기존의 file -->
 	<c:forEach var="originFile" items="${shopImg }" varStatus="status">
+	<input type="checkbox" style="display:none;" name="delFileList" value="${originFile.siNo }"> 
 	<div id="originFile${status.count }"  class="fileWrap">
 		<img alt="기존 이미지" src="/resources/shopimgupload/${originFile.siStoredFilename }" style="width: 100px;" />
-		<span id="delFile${status.count }" class="btnDelete">x</span>		
+		<span id="delFile${status.count }" class="btnDelete" data-sino="${originFile.siNo }">x</span>
 	</div>
 	</c:forEach>
 	

@@ -1,5 +1,6 @@
 package com.one.whospet.dao.shop.face;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.one.whospet.dto.Shop;
@@ -73,9 +74,41 @@ public interface ShopDao {
 	public void insertFile(ShopImg shopImg);
 
 
+	/**
+	 * 상품의 수정정보를 DB에 업데이트하기
+	 * 
+	 * @param shop 상품 수정정보
+	 */
+	public void updateShopInfo(Shop shop);
+
+
+	/**
+	 * delFileList안의 siNo로 DB에서 파일 삭제하기
+	 * 
+	 * @param delFileList siNo 데이터 내포
+	 */
+	public void deleteFileBySiNo(int delFileList);
+
+	
+	/**
+	 * shop안에 sNo로 DB에서 상품이미지 삭제하기
+	 * 
+	 * @param shop sNo 데이터 내포
+	 */
+	public void deleteShopImgBySNo(Shop shop);
+
+	
+	/**
+	 * shop안의 sNo로 DB에서 상품 삭제하기
+	 * 
+	 * @param shop sNo 데이터 내포
+	 */
+	public void deleteShopBySNo(Shop shop);
+
+
 	
 
-
+	
 
 
 

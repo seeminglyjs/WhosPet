@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -48,7 +49,7 @@ public class ShopController {
 	}
 	
 	//상품상세보기
-	@RequestMapping(value="admin/shopView")
+	@RequestMapping(value="/admin/shopView")
 	public void adminShopView(Shop viewShop, Model model) {
 		logger.info("/admin/shopView	[GET]");
 		
@@ -66,8 +67,8 @@ public class ShopController {
 		//썸네일 첨부파일 조회하기 ( siThumbnail = "Y" 인 부분)
 		ShopImg thumbnail = (ShopImg) shopService.getAttachThumbnailFile(sNo);
 		
-		logger.info("shopImg 정보 : {}", shopImg.toString());
-		logger.info("thumbnail 정보 : {}", thumbnail.toString());
+		logger.info("shopImg 정보 : {}", shopImg);
+		logger.info("thumbnail 정보 : {}", thumbnail);
 		model.addAttribute("shopImg",  shopImg);
 		model.addAttribute("thumbnail", thumbnail);
 	}
@@ -128,30 +129,54 @@ public class ShopController {
 		
 	}
 	
-	//수정
+	//상품 수정  
 	@RequestMapping(value="/admin/shopUpdate", method=RequestMethod.POST)
-	public String adminShopUpdateProc( Shop shop,MultipartHttpServletRequest mtfRequest ) {
+	public String adminShopUpdateProc( Shop shop, MultipartHttpServletRequest mtfRequest, @RequestParam(required=false) ArrayList<String> delFileList ) {
 		logger.info("/admin/shopUpdate [POST]");
 		logger.info("update.jsp에서 전달받은 shop : {}", shop);
 		logger.info("update.jsp에서 전달받은 mtfRequest : {}", mtfRequest);
 		
+		//리스트타입으로 siNo 받아옴 (삭제할 이미지 데이터의 siNo값)
+		logger.info("update.jsp에서 전달받은 delFileList {}", delFileList);
+		
+		//shopUpdate.jsp 에서 받은 파일들
 		List<MultipartFile> newFileList = mtfRequest.getFiles("file");
-		List<MultipartFile> deleteFileList = mtfRequest.getFiles("deleteFileList");
+		MultipartFile newThumbnail = mtfRequest.getFile("thumbnail");
+		logger.info("newThumbnail : {}", newThumbnail);
 		
-		logger.info("fileList : {}", newFileList);
-		logger.info("fileList : {}", deleteFileList);
+		//새로운 섬네일 파일이 있으면 추가, 없으면 다중첨부파일만
+		if( newThumbnail.getSize() != 0) {
+			logger.info("if안 newThumbnail : {}", newThumbnail);
+			
+			newFileList.add(newThumbnail);
+		}
 		
+		logger.info("추가할 fileList : {}", newFileList);
+		logger.info("삭제할 fileList : {}", delFileList);
 		
-//		List<MultipartFile> fileList = mtfRequest.getFiles("file");
-//		MultipartFile thumbnail = mtfRequest.getFile("thumbnail");
-//		fileList.add(thumbnail);
-//		logger.info("fileList : {}", fileList);
-//		logger.info("thumbnail : {}", thumbnail);
+		//상품 수정
+		shopService.updateShop( shop );
+		shopService.updateNewFileList( shop , newFileList );
+		if(delFileList != null) {
+			shopService.updateDelFileList( delFileList );
+		}
 		
 		return "redirect:/admin/shopList";
 	}
 	
-	
+	//상품 삭제 (선 파일 삭제 후, 상품정보 삭제)
+	@RequestMapping(value="/admin/shopDelete", method=RequestMethod.GET)
+	public String deleteShop(Shop shop) {
+		logger.info("/admin/shopDelete [GET]");
+		logger.info("shopDelete, shop : {}", shop);
+		
+		//sNo을 매개변수로 한 상품을 삭제하는 메소드
+		shopService.deleteShop(shop);
+		
+//		shopService.delete
+		
+		return "redirect:/admin/shopList";
+	}
 	
 	
 	
@@ -200,8 +225,20 @@ public class ShopController {
 	
 	//상품 상세보기
 	@RequestMapping(value="/shop/view", method=RequestMethod.GET)
-	public void shopView() {
+	public void shopView( Shop shop, Model model ) {
 		logger.info("/shop/view [GET]");
+		logger.info("/shop/view 에서 shop : {}", shop);
+
+		Shop view = shopService.view(shop);
+		logger.info("/shop/view 에서 view : {}", view	);
+		
+		model.addAttribute("view", view);
+	}
+	
+	@RequestMapping(value="/shop/view", method=RequestMethod.POST)
+	public void shopViewProc() {
+		logger.info("/shop/view [POST]");
+		
 	}
 	
 	//------------------------------------------------------------
