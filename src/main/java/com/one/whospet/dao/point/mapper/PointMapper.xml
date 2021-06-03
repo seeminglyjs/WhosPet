@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.one.whospet.dao.point.face.PointDao">
+  
+	<!-- 유저 DTO 제정의  -->
+	<resultMap type="com.one.whospet.dto.User" id="User">
+		<id column="U_No" property="uNo"/>
+		
+		<result column="U_GRADE" property="uGrade"/>
+		<result column="U_ID" property="uId"/>
+		<result column="U_PW" property="uPw"/>
+		<result column="U_NAME" property="uName"/>
+		<result column="U_PHONE" property="uPhone"/>
+		<result column="U_NICK" property="uNick"/>
+		<result column="U_EMAIL" property="uEmail"/>
+		<result column="U_ADDRESS" property="uAddress"/>
+		<result column="U_POST" property="uPost"/>
+		<result column="U_DETAIL_ADDRESS" property="uDetailAddress"/>
+		<result column="U_PET" property="uPet"/>
+		<result column="U_JOIN_DATE" property="uJoinDate"/>
+	</resultMap>
+	
+  	<!-- 포인트 DTO 제정의  -->
+  	<resultMap type="com.one.whospet.dto.Point" id="Point">
+  		<id column="po_no" property="poNo" />
+  		<result column="u_no" property="uNo" />
+  		<result column="s_no" property="sNo" />
+  		<result column="po_plus" property="poPlus" />
+  		<result column="po_minus" property="poMinus" />
+  		<result column="po_plus_y" property="poPlusY" />
+  		<result column="po_minus_y" property="poMinusY" />
+  		<result column="po_date" property="poDate" />
+  		<result column="po_sum" property="poSum" />
+  	</resultMap>
+	
+
+  
+
+	<select id="getPointList" parameterType="int" resultMap="Point">
+					SELECT * FROM w_point 
+					WHERE u_no = #{uNo }
+					ORDER BY po_no ASC
+	</select>
+	
+	<select id="selectLPoint" parameterType="int" resultMap="Point">
+		SELECT * FROM (SELECT * FROM w_point WHERE u_no = #{uNo } ORDER BY po_no DESC) WHERE ROWNUM = 1
+	</select>
+	
+	<insert id="insertPoint" parameterType="hashmap">
+	INSERT INTO W_POINT(po_no, u_no, s_no, po_plus, po_minus, po_plus_y, po_minus_y,po_sum) 
+	VALUES(W_POINT_SEQ.nextval,#{uNo },0,#{poPlus },0, #{poPlusY },'',0)
+	
+	</insert>
+	
+	<insert id="insertSum" parameterType="hashmap">
+		INSERT INTO W_POINT(po_no, u_no, s_no, po_plus, po_minus, po_plus_y, po_minus_y,po_sum)
+    VALUES(W_POINT_SEQ.nextval,#{uNo },0,0,0,'','',(SELECT SUM(po_plus+po_minus) FROM W_POINT GROUP BY u_no having u_no = #{uNo }))
+	</insert>
+	
+  </mapper>

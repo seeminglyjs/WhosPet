@@ -73,7 +73,7 @@ left: 130px;
 		<button type="button" class="btn btn-primary">예약완료</button>
 		</c:if>
 		<c:if test='${booklist.bookStatus eq "N" }'>
-		<button type="button" class="btn btn-danger">예약반려</button>
+		<button type="button" class="btn btn-danger">예약취소</button>
 		</c:if>
 		<c:if test='${booklist.bookStatus eq "W" }'>
 		<button type="button" class="btn btn-secondary">예약대기</button>

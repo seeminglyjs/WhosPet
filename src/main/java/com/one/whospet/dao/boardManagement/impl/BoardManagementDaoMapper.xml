@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 마이바티스 3 Mapper DOCTYPE -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  
+<mapper namespace="com.one.whospet.dao.boardManagement.face.BoardManagementDao">
+
+	<!-- 보드 DTO 제정의  -->
+	<resultMap type="com.one.whospet.dto.Board" id="Board">
+		<id column="b_no" property="bNo"/>
+		
+		<result column="b_title" property="bTitle"/>
+		<result column="b_content" property="bContent"/>
+		<result column="b_write_date" property="bWriteDate"/>
+		<result column="b_update_date" property="bUpdateDate"/>
+		<result column="b_hit" property="bHit"/>
+		<result column="b_type" property="bType"/>
+		<result column="u_no" property="uNo"/>
+	</resultMap>
+	
+	<!-- 유저 DTO 제정의  -->
+	<resultMap type="com.one.whospet.dto.User" id="User">
+		<id column="U_No" property="uNo"/>
+		
+		<result column="U_GRADE" property="uGrade"/>
+		<result column="U_ID" property="uId"/>
+		<result column="U_PW" property="uPw"/>
+		<result column="U_NAME" property="uName"/>
+		<result column="U_PHONE" property="uPhone"/>
+		<result column="U_NICK" property="uNick"/>
+		<result column="U_EMAIL" property="uEmail"/>
+		<result column="U_ADDRESS" property="uAddress"/>
+		<result column="U_POST" property="uPost"/>
+		<result column="U_DETAIL_ADDRESS" property="uDetailAddress"/>
+		<result column="U_PET" property="uPet"/>
+		<result column="U_JOIN_DATE" property="uJoinDate"/>
+	</resultMap>
+	
+	<!-- 게시판 이미지 DTO 제정의  -->
+	<resultMap type="com.one.whospet.dto.BoardImg" id="BoardImg">
+		<id column="BI_NO" property="biNo"/>
+		
+		<result column="B_NO" property="bNo"/>
+		<result column="BI_ORIGIN_FILENAME" property="biOriginFilename"/>
+		<result column="BI_STORED_FILENAME" property="biStoredFilename"/>
+		<result column="BI_SIZE" property="biSize"/>
+		<result column="BI_CONTENT_TYPE" property="biContentType"/>
+	</resultMap>
+	
+	<!-- 게시판 댓글 DTO 제정의  -->
+	<resultMap type="com.one.whospet.dto.Comment" id="Comment">
+		<id column="C_NO" property="cNo"/>
+		
+		<result column="C_CONTENT" property="cContent"/>
+		<result column="C_WRITE_DATE" property="cWriteDate"/>
+		<result column="B_NO" property="bNo"/>
+		<result column="U_NO" property="uNo"/>
+	</resultMap>
+
+
+	<select id="selectCntBoard" resultType="int" parameterType="String">
+		select count(*) from w_board b , w_user u
+        where b.u_no = u.u_no and b.b_type = #{bType}
+	</select>
+
+
+	<select id="selectSearchCntBoard" resultType="int" parameterType="hashmap">
+		select count(*) from w_board WHERE ${searchCategory} LIKE '%' || #{search} || '%'
+	</select>
+	
+		<select id="selectAll" parameterType="hashmap" resultType="hashmap">
+		select * from
+		    (select rownum rnum, bjoin.* from 
+		    
+		        <choose>
+		        
+		        <when test='search != null and !search.equals("")'>
+		        (select b.b_no, b.b_title, b.b_type, b.b_hit, b.b_write_date, u.u_nick from w_board b , w_user u
+		             where b.u_no = u.u_no and b.${searchCategory} LIKE '%' || #{search} || '%' order by b_no desc) bjoin
+		        
+		        </when>
+		        
+		        <otherwise>
+		        (select b.b_no, b.b_title, b.b_type, b.b_hit, b.b_write_date, u.u_nick from w_board b , w_user u
+		             where b.u_no = u.u_no and b.b_type = #{bType} order by b_no desc) bjoin
+				</otherwise>
+				
+				
+				</choose>
+		) board
+	    where rnum between #{paging.startNo} and #{paging.endNo}
+	</select>
+
+	<select id="selectBoardInfo" parameterType="int" resultMap="Board">
+		select * from w_board where b_no = #{boardNo}
+	</select>
+
+	
+	<select id="selectCommentAll" parameterType="hashmap" resultType="hashmap">
+		select * from        
+			(select rownum rnum,  c.* from(
+    			select c.c_no, c.c_content, c.c_write_date, c.b_no, c.u_no, u.u_nick from w_comment c, w_user u 
+    			where c.u_no = u.u_no and b_no = #{bNo} order by c.c_write_date DESC) c) comm
+    	where rnum between 1 and #{curCommentSize}
+	</select>
+
+	
+	<select id="selectCommentTotalCount" parameterType="int" resultType="int">
+		select count(*) from w_comment where b_no = #{bNo}
+	</select>
+	
+	
+	<select id="selectBoardImgInfo" parameterType="int" resultMap="BoardImg">
+		select * from w_board_img where b_no = #{bNo}
+	</select>
+	
+	
+	<select id="selectBoardWriterInfo" parameterType="int" resultMap="User">
+		select * from w_user where u_no = #{uNo}
+	</select>
+	
+	
+	<insert id="writeComment" parameterType="hashmap">
+		insert into w_comment(c_no, c_content, b_no, u_no) 
+		values(w_comment_seq.nextval, #{content}, #{bNo}, #{uNo})
+	</insert>
+	
+	
+	<delete id="deleteComment" parameterType="int">
+		delete w_comment where c_no = #{cNo}
+	</delete>
+	
+	<delete id="deleteBoard" parameterType="int">
+		delete w_board where b_no = #{boardNo}
+	</delete>
+	
+	
+</mapper>

@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.one.whospet.dao.userManagement.face.UserManagementDao;
 import com.one.whospet.dto.User;
@@ -89,7 +90,33 @@ public class UserManagementServiceImpl implements UserManagementService{
 	
 	@Override // 유저를 삭제하는 메소드
 	public void deleteUser(int uNo) {
-		// TODO Auto-generated method stub
+		userMD.deleteUser(uNo);
+	}
+	
+	@Override // 유저를 등록하는 메소드
+	public int enrollUser(HttpServletRequest request) {
+		int check = 0;
 		
+		User user = new User();
+		
+		user.setuId(request.getParameter("id"));
+		user.setuPw(request.getParameter("pw"));
+		user.setuName(request.getParameter("name"));
+		user.setuPhone(request.getParameter("phone"));
+		user.setuEmail(request.getParameter("email"));
+		user.setuNick(request.getParameter("nick"));
+		user.setuPost(Integer.parseInt(request.getParameter("postcode")));
+		user.setuAddress(request.getParameter("address"));
+		user.setuDetailAddress(request.getParameter("detailAddress"));
+		user.setuGrade(request.getParameter("ugrade"));
+		user.setuPet(request.getParameter("pet"));
+		
+		// 유저 등록 진행
+		userMD.insertUser(user);
+
+		// 유저 등록 여부 체크;
+		check = userMD.selectEnrollId(user.getuId());
+		
+		return check;
 	}
 }

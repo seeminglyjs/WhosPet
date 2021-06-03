@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/layout/headerUser.jsp" %>
+<%@ include file="/WEB-INF/views/layout/headerAdmin.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
@@ -11,33 +11,30 @@ $(document).ready(function(){
 	$("#commentBtn").click(function(){
 		$.ajax({
 			type: "post"
-			,url: "/board/comment"
+			,url: "/admin/board/comment"
 			,data: {bNo : "${board.bNo }"
 				, uNo : "${sessionScope.user.uNo }"
 				, content : $("#commentInput").val()
 				}
 			,dataType: "html"
 			,success: function(res){
-				console.log("AJAX성공")
 				$("#commentList").html(res)
 				$("#commentInput").val("")
 			}
 			,error: function(){
-				console.log("AJA실패")
+				console.log("댓글 등록 실패")
 			}
 		});	
 	})
 	
-	
 	$(document).on("click","#moreComment",function(){
 		$.ajax({
 			type: "post"
-			,url: "/board/moreComment"
+			,url: "/admin/board/moreComment"
 			,data: { curCommentSize : $("#curCommentSize").val()
 				, bNo : "${board.bNo }"}
 			,dataType: "html"
 			,success: function(res){
-				console.log("게시판 더보기 성공")
 				$("#commentList").html(res)
 			}
 			,error: function(){
@@ -46,11 +43,10 @@ $(document).ready(function(){
 		});	
 	})
 	
-	
 	$(document).on("click","#foldComment",function(){
 		$.ajax({
 			type: "post"
-			,url: "/board/foldComment"
+			,url: "/admin/board/foldComment"
 			,data: { curCommentSize : "10"
 				, bNo : "${board.bNo }"
 				, foldCheck : "1"}
@@ -72,7 +68,7 @@ function forwardCno(param){
 	console.log($(param).children().val())
 	$.ajax({	
 		type: "post"
-		,url: "/board/commentDelete"
+		,url: "/admin/board/commentDelete"
 		,async: false
 		,data: { 
 			curCommentSize : $("#curCommentSize").val()
@@ -89,6 +85,7 @@ function forwardCno(param){
 		}
 	});	
 }
+
 </script>
 
 
@@ -140,9 +137,9 @@ ${board.bContent }
 </div>
 
 <button type="button" class="btn btn-sm btn-default" onclick="history.back()">뒤로</button>
-<c:if test="${sessionScope.user.uNo eq board.uNo }">
-<a href="/board/delete?bNo=${board.bNo }"><button class="btn btn-sm btn-default" type="button">게시글삭제</button></a>
-<a href="/board/update?bNo=${board.bNo }"><button class="btn btn-sm btn-default" type="button">게시글수정</button></a>
+<c:if test='${sessionScope.user.uGrade eq "M" }'>
+<a href="/admin/board/delete?bNo=${board.bNo }"><button class="btn btn-sm btn-default" type="button">게시글삭제</button></a>
+<%-- <a href="/admin/board/update?bNo=${board.bNo }"><button class="btn btn-sm btn-default" type="button">게시글수정</button></a> --%>
 </c:if>
 
 <hr>
@@ -179,7 +176,7 @@ ${board.bContent }
 			<div style="font-weight: bolder; margin-top: 5px;">${comm.U_NICK }</div>
 			<div style="font-size: 14px;">${comm.C_CONTENT }</div>	
 			<div style="font-size: 11px; color: #ccc;"><fmt:formatDate value="${comm.C_WRITE_DATE }" pattern="yyyy/MM/dd - hh:mm"/>
-				<c:if test="${comm.U_NO eq sessionScope.user.uNo }">
+				<c:if test='${sessionScope.user.uGrade eq "M" }'>
 				<span id="commentDel${delBtn = delBtn + 1 }" style="color:tomato;  cursor: pointer;" onclick="forwardCno(this)" >삭제
 				<input type="hidden" id="commentNo${del = del + 1 }" value="${comm.C_NO }">
 				</span>
@@ -190,6 +187,7 @@ ${board.bContent }
 			
 			<input type="hidden" value="${listCSize }" name="curCommentSize" id="curCommentSize">
 			<c:choose>
+			
 			
 			<c:when test="${listCSize < totalCSize}">
 			<div class="text-center" style="margin-top: 10px;">
@@ -222,4 +220,4 @@ ${board.bContent }
 </div>
 
 
-<%@ include file="/WEB-INF/views/layout/footerUser.jsp" %>
+<%@ include file="/WEB-INF/views/layout/footerAdmin.jsp" %>

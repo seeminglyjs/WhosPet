@@ -27,7 +27,7 @@
 			<div style="font-weight: bolder; margin-top: 5px;">${comm.U_NICK }</div>
 			<div style="font-size: 14px;">${comm.C_CONTENT }</div>	
 			<div style="font-size: 11px; color: #ccc;"><fmt:formatDate value="${comm.C_WRITE_DATE }" pattern="yyyy/MM/dd - hh:mm"/>
-				<c:if test="${comm.U_NO eq sessionScope.user.uNo }">
+				<c:if test='${sessionScope.user.uGrade eq "M" }'>
 				<span id="commentDel${delBtn = delBtn + 1 }" style="color:tomato;  cursor: pointer;" onclick="forwardCno(this)" >삭제
 				<input type="hidden" id="commentNo${del = del + 1 }" value="${comm.C_NO }">
 				</span>
@@ -38,7 +38,7 @@
 			
 			<input type="hidden" value="${listCSize }" name="curCommentSize" id="curCommentSize">
 			<c:choose>
-			
+					
 			<c:when test="${listCSize < totalCSize}">
 			<div class="text-center" style="margin-top: 10px;">
 			<button class="btn btn-sm btn-default" id="moreComment" name="moreComment" type="button">더보기</button>

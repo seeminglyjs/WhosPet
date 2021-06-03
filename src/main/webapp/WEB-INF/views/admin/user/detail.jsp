@@ -27,7 +27,7 @@ $(document).ready(function(){
 
 	<div style="margin: 0 auto; width: 600px;">
 	<hr>
-	<form class="form-horizontal" action="/admin/user/delete" method="post" onsubmit="return check()">
+	<form class="form-horizontal" action="/admin/user/delete" method="post">
 	  
 		<!-- 유저번호 -->
 		<input type="hidden" name="uNo" value="${user.uNo }">
@@ -114,7 +114,7 @@ $(document).ready(function(){
 	    <div class="col-sm-offset-2 col-sm-10">    
 	      <button type="button" class="btn btn-sm btn-danger" onclick="history.back()">뒤로</button>   
 	      <c:if test='${sessionScope.user.uGrade eq "M" }'>
-		 <button class="btn btn-sm btn-default" type="button">회원삭제</button>
+		 <button class="btn btn-sm btn-default" type="submit">회원삭제</button>
 		  </c:if>
 	    </div>
 	  </div>

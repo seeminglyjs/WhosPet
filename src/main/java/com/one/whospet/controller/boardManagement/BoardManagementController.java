@@ -1,4 +1,4 @@
-package com.one.whospet.controller.board;
+package com.one.whospet.controller.boardManagement;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,32 +14,32 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.one.whospet.dto.Board;
 import com.one.whospet.dto.BoardImg;
-import com.one.whospet.dto.Comment;
 import com.one.whospet.dto.User;
-import com.one.whospet.service.board.face.BoardService;
+import com.one.whospet.service.boardManagement.face.BoardManagementService;
 import com.one.whospet.util.BoardPaging;
 
+
 @Controller
-public class BoardController {
+@RequestMapping(value = "/admin")
+public class BoardManagementController {
 
 	// 로거 객체
-	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
+	private static final Logger logger = LoggerFactory.getLogger(BoardManagementController.class);
 
-	// board Service 의존성주입
+	// BoardManagementService Service 의존성주입
 	@Autowired
-	BoardService boardService;
-
+	BoardManagementService boardMS;
+	
 	// 게시판 리스트 뷰 컨트롤러
 	@RequestMapping(value = "/board/list")
 	public void list(HttpServletRequest request, Model model) {
 		logger.info("board/view");
 
 		// 페이징을 얻어온다.
-		BoardPaging paging = boardService.getPaging(request);
+		BoardPaging paging = boardMS.getPaging(request);
 
 		List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 
@@ -75,15 +75,14 @@ public class BoardController {
 		}
 
 		// 페이지의 해당 하는 게시글 목록을 얻어온다.
-		list = boardService.getList(map);
+		list = boardMS.getList(map);
 
 		//페이징/ 게시글과 게시글갯수를 넘긴다.
 		model.addAttribute("paging", paging);
 		model.addAttribute("list", list);		
 		model.addAttribute("listSize", list.size());
 	}
-
-
+	
 	// 게시판 상세 화면을 보여주는 컨트롤러
 	@RequestMapping(value = "/board/detail")
 	public String detail(HttpServletRequest request, Model model) {
@@ -94,12 +93,10 @@ public class BoardController {
 			try { // 숫자가 아닌 문자열 이나 공백문자를 받을 경우 리스트로 보내버림
 				bNo = Integer.parseInt(param);
 			} catch (NumberFormatException e) {
-				return "redirect:/board/list";
+				return "redirect:/admin/board/list";
 			}	
 		}
-		//게시글 정보를 가져오는 메소드
-		boardService.updateHit(bNo);
-		Board board = boardService.detailBoard(bNo);
+		Board board = boardMS.detailBoard(bNo);
 
 		//조회된 게시글 존재 여부 체크
 		if(board == null) {
@@ -112,16 +109,16 @@ public class BoardController {
 			List<HashMap<String, Object>> listC = new ArrayList<HashMap<String, Object>>();
 
 			//댓글 리스트를 가져오는 메소드
-			listC = boardService.getComment(request);
+			listC = boardMS.getComment(request);
 
 			//댓글의 총 갯수
 			int listCSize = listC.size();
 			
 			int totalCSize = 0;
-			totalCSize = boardService.getCommentTotalCount(request);
+			totalCSize = boardMS.getCommentTotalCount(request);
 
 			//게시판에 등록된 이미지 정보를 리스트에 담는
-			imgList = boardService.getBoardImgInfo(board);
+			imgList = boardMS.getBoardImgInfo(board);
 
 			//게시판의 등록된 이미지 정보가 있으면
 			List<String> fileList = new ArrayList<String>();
@@ -133,7 +130,7 @@ public class BoardController {
 				}
 			}
 			// 게시글 작성 유저의 정보를 가져오는 메소드
-			User user = boardService.getBoardWriterInfo(board.getuNo());
+			User user = boardMS.getBoardWriterInfo(board.getuNo());
 
 			// 게시판 정보/ 작성유저 정보 객체 전달/파일 정보/댓글정보 저장
 			model.addAttribute("listC", listC);
@@ -142,131 +139,23 @@ public class BoardController {
 			model.addAttribute("fileList", fileList);
 			model.addAttribute("board", board);
 			model.addAttribute("user", user);
-			return "/board/detail";
+			return "/admin/board/detail";
 		}	
 	}
-
-	//게시판 글쓰기 뷰 컨트롤러
-	@RequestMapping(value = "/board/write")
-	public void write(HttpSession session) {}
-
-	//게시판 글쓰기 구현 컨트롤러
-	@RequestMapping(value = "/board/write", method = RequestMethod.POST)
-	public String writeRes(HttpSession session, MultipartHttpServletRequest fileRequest) {	
-		User user = (User) session.getAttribute("user");
-
-		boardService.writeBoard(fileRequest, user);
-
-		return "redirect:/board/list";	
-	}
-
-	//게시판 삭제 구현
-	@RequestMapping(value = "/board/delete")
-	public String deleteBoard(HttpServletRequest request, HttpSession session) {
-
-		String param = request.getParameter("bNo");
-
-		//요청 파라미터가 null 이거나 빈문자열이면 돌려보냄
-		if(param == null || param.equals("")) {
-			return "redirect:/board/list";
-		}
-
-		int bNo = 0;
-		try { // 예외 발생시 리스트로 보내버림
-			bNo = Integer.parseInt(param);
-		} catch (Exception e) {
-			return "redirect:/board/list";
-		}
-
-		// 게시글 작성 유저의 정보를 가져오는 메소드
-		int uNo = boardService.getBoardWriterUno(bNo);
-
-		//로그인 유저 정보 가져온다.
-		User loginUser = (User) session.getAttribute("user");
-
-		//로그인 유저와 삭제유저가 같지 않으면 리스트로 돌려보낸다.
-		if(loginUser.getuNo() != uNo) {
-			return "redirect:/board/list";
-		}else {
-			boardService.deleteBoardComment(bNo);// 댓글삭제
-			boardService.deleteBoard(bNo); // 게시글 삭제
-			//삭제 진행후 다시 리스트로 보낸다.
-			return "redirect:/board/list";
-		}
-	}
-
-	// 게시글 수정 화면을 보여주는 view [Get] 
-	@RequestMapping(value="/board/update")
-	public String updateBoard(HttpServletRequest request, HttpSession session, Model model) {
-		String param = request.getParameter("bNo");
-
-		//요청 파라미터가 null 이거나 빈문자열이면 돌려보냄
-		if(param == null || param.equals("")) {
-			return "redirect:/board/list";
-		}
-
-		int bNo = 0;
-		try { // 예외 발생시 리스트로 보내버림
-			bNo = Integer.parseInt(param);
-		} catch (Exception e) {
-			return "redirect:/board/list";
-		}
-
-		//게시글 정보를 가져오는 메소드
-		Board board = boardService.detailBoard(bNo);
-
-		//조회된 게시글 존재 여부 체크
-		if(board == null) {
-			return "redirect:/board/list";
-		}else {
-			List<BoardImg> imgList = new ArrayList<BoardImg>();
-
-			//게시판에 등록된 이미지 정보를 리스트에 담는
-			imgList = boardService.getBoardImgInfo(board);
-
-			//게시판의 등록된 이미지 정보가 있으면
-			List<String> fileList = new ArrayList<String>();
-			if(imgList != null && !imgList.isEmpty()) {
-				//등록된 이미지 만큼 반복한다.
-				for(int i = 0; i < imgList.size(); i++) {
-					//파일 경로 지정
-					fileList.add(imgList.get(i).getBiStoredFilename());
-				}
-			}
-			// 게시글 작성 유저의 정보를 가져오는 메소드
-			User user = boardService.getBoardWriterInfo(board.getuNo());
-
-			// 게시판 정보/ 작성유저 정보 객체 전달/파일 정보 저장
-			model.addAttribute("fileList", fileList);
-			model.addAttribute("board", board);
-			model.addAttribute("user", user);
-			return "/board/update";
-		}	
-	}
-
-	// 게시글 수정이 이루어지는 메소드
-	@RequestMapping(value="/board/update", method = RequestMethod.POST)
-	public String updateBoardRes(HttpSession session, MultipartHttpServletRequest fileRequest) {
-		User user = (User) session.getAttribute("user");
-
-		boardService.updateBoard(fileRequest, user);
-
-		return "redirect:/board/list";	
-	}
-
-
+	
+	
 	// 댓글쓰기 컨트롤러
 	@RequestMapping(value = "/board/comment", method = RequestMethod.POST)
 	public void writeComment(HttpServletRequest request, Model model) {
 
 		//게시글의 댓글을 작성하는 메소드
-		boardService.writeComment(request);
+		boardMS.writeComment(request);
 
 		//댓글 리스트를 담을 리스트
 		List<HashMap<String, Object>> listC = new ArrayList<HashMap<String, Object>>();
 
 		//댓글 작성 후 댓글 리스트를 가져오는 메
-		listC = boardService.getComment(request);
+		listC = boardMS.getComment(request);
 
 		// 댓글리스트가 null이거나 비어있으면 null 할당
 		if(listC == null || listC.isEmpty()) {
@@ -284,7 +173,7 @@ public class BoardController {
 		}
 		
 		int totalCSize = 0;
-		totalCSize = boardService.getCommentTotalCount(request);
+		totalCSize = boardMS.getCommentTotalCount(request);
 		
 		model.addAttribute("listC", listC);
 		model.addAttribute("listCSize", listCSize);
@@ -305,13 +194,13 @@ public class BoardController {
 		}
 
 		//댓글을 삭제한다. 
-		boardService.deleteComment(cNo);
+		boardMS.deleteComment(cNo);
 
 		//댓글 리스트를 담을 리스트
 		List<HashMap<String, Object>> listC = new ArrayList<HashMap<String, Object>>();
 
 		//댓글 작성 후 댓글 리스트를 가져오는 메
-		listC = boardService.getComment(request);
+		listC = boardMS.getComment(request);
 
 		// 댓글리스트가 null이거나 비어있으면 null 할당
 		if(listC == null || listC.isEmpty()) {
@@ -329,7 +218,7 @@ public class BoardController {
 		}
 		
 		int totalCSize = 0;
-		totalCSize = boardService.getCommentTotalCount(request);
+		totalCSize = boardMS.getCommentTotalCount(request);
 		
 		model.addAttribute("listC", listC);
 		model.addAttribute("listCSize", listCSize);
@@ -344,19 +233,54 @@ public class BoardController {
 		List<HashMap<String, Object>> listC = new ArrayList<HashMap<String, Object>>();
 
 		//댓글 리스트를 가져오는 메소드
-		listC = boardService.getComment(request);
+		listC = boardMS.getComment(request);
 
 		//댓글의 총 갯수
 		int listCSize = listC.size();	
 		
 		int totalCSize = 0;
-		totalCSize = boardService.getCommentTotalCount(request);
+		totalCSize = boardMS.getCommentTotalCount(request);
 		
 		
 		model.addAttribute("listC", listC);
 		model.addAttribute("listCSize", listCSize);
 		model.addAttribute("totalCSize", totalCSize);
 	}
+	
+	
+	//게시글 삭제하는 메소드
+	@RequestMapping(value = "/board/delete")
+	public String deleteBoard(HttpServletRequest request, HttpSession session) {
+
+		String param = request.getParameter("bNo");
+
+		//요청 파라미터가 null 이거나 빈문자열이면 돌려보냄
+		if(param == null || param.equals("")) {
+			return "redirect:/admin/board/list";
+		}
+
+		int bNo = 0;
+		try { // 예외 발생시 리스트로 보내버림
+			bNo = Integer.parseInt(param);
+		} catch (Exception e) {
+			return "redirect:/admin/board/list";
+		}
+
+		//로그인 유저 정보 가져온다.
+		User loginUser = (User) session.getAttribute("user");
+		
+
+		//로그인 유저가 관리자가 아니면 메인화면으로 으로
+		if(!loginUser.getuGrade().equals("M")) {
+			session.invalidate();
+			return "redirect:/";
+		}else {
+			boardMS.deleteBoard(bNo); // 게시글 삭제
+			//삭제 진행후 다시 리스트로 보낸다.
+			return "redirect:/admin/board/list";
+		}
+	}
+	
 	
 	//댓글 접기 컨트롤러
 	@RequestMapping(value = "/board/foldComment", method = RequestMethod.POST)
@@ -366,20 +290,19 @@ public class BoardController {
 		List<HashMap<String, Object>> listC = new ArrayList<HashMap<String, Object>>();
 
 		//댓글 리스트를 가져오는 메소드
-		listC = boardService.getComment(request);
+		listC = boardMS.getComment(request);
 
 		//댓글의 총 갯수
 		int listCSize = listC.size();	
 		
 		int totalCSize = 0;
-		totalCSize = boardService.getCommentTotalCount(request);
+		totalCSize = boardMS.getCommentTotalCount(request);
 		
 		
 		model.addAttribute("listC", listC);
 		model.addAttribute("listCSize", listCSize);
 		model.addAttribute("totalCSize", totalCSize);
 	}
-	
 	
 	
 }
