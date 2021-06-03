@@ -102,7 +102,7 @@ public class TreatmentController {
 	}
 	
 	
-	@RequestMapping(value = "treatment/treatdetail", method = RequestMethod.POST)
+	@RequestMapping(value = "/treatment/treatdetail", method = RequestMethod.POST)
 	public String treatSearch(@RequestParam HashMap<String, String> map, HttpServletResponse response, HttpServletRequest request)
 	{
 		System.out.println(response);
@@ -110,7 +110,7 @@ public class TreatmentController {
 	}
 	
 	
-	@RequestMapping(value = "treatment/treatlist", method = RequestMethod.POST)
+	@RequestMapping(value = "/treatment/treatlist", method = RequestMethod.POST)
 	public String treatlist(@RequestParam HashMap<String, String> map, HttpServletResponse response, HttpServletRequest request)
 	{
 		List<HashMap<String, Object>> hospitalList = hospitalService.allHospital();

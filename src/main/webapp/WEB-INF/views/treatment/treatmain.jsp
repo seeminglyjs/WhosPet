@@ -213,7 +213,7 @@
     <h1>진료비 검색</h1>
      <hr>
      <br>
-      <form action="/treatdetail" class="Search">
+      <form action="treatment/treatdetail" class="Search">
         <input
           class="Search-box"
           type="search"
@@ -277,5 +277,6 @@
 	     </ul>
      </div>
      
+     <div style="padding-bottom: 800px"></div>
     
 <%@ include file="/WEB-INF/views/layout/footerUser.jsp" %>
