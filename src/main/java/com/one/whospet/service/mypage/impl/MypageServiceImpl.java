@@ -227,7 +227,7 @@ public class MypageServiceImpl implements MypageService {
 		return mypageDao.selectAllBasket(data);
 	}
 	@Override
-	public int basketSum(HashMap<String, Object> data) {
+	public Integer basketSum(HashMap<String, Object> data) {
 		return mypageDao.selectSumBasket(data);
 	}
 	@Override

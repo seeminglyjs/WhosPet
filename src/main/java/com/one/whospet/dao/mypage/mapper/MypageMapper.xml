@@ -298,7 +298,7 @@
 
 	</select>
 	
-	<select id="selectSumBasket" parameterType="hashmap" resultType="int">
+	<select id="selectSumBasket" parameterType="hashmap" resultType="Integer">
 		SELECT SUM((sb_amount * sb_quantity)) FROM w_shop_basket GROUP BY u_no HAVING u_no = #{uNo }
 	</select>
 	

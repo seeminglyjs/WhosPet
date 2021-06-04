@@ -1,5 +1,7 @@
 package com.one.whospet.controller.point;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,9 +56,9 @@ public class PointController {
 			model.addAttribute("curpoint", curpoint);
 		}
 		
-		//포인트 리스트
+		//포인트 부여하기
 		@RequestMapping(value = "/admin/pointAdd", method=RequestMethod.POST)
-		public String pointAdd(@RequestBody Map<String, Object> param, Model model) {
+		public void pointAdd(@RequestBody Map<String, Object> param, Model model, Writer out) {
 		 logger.info("포인트" + param.toString());
 		 int uNo = Integer.parseInt((String)param.get("uNo"));
 		 int poPlus = Integer.parseInt((String)param.get("poPlus"));
@@ -67,10 +69,14 @@ public class PointController {
 		 map.put("poPlusY", poPlusY);
 		 pointService.addPoint(map);
 		 pointService.addSum(map);
-
-			
-
-			return "redirect: /admin/pointManage";
+		 
+		 try {
+			out.write("{\"result\":true}");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+//			return "redirect: /admin/pointManage";
 		}
 
 

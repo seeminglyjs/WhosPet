@@ -197,7 +197,7 @@ public interface MypageService {
 	 * @param data
 	 * @return
 	 */
-	public int basketSum(HashMap<String, Object> data);
+	public Integer basketSum(HashMap<String, Object> data);
 
 	/**
 	 * 장바구니 아이템 삭제
