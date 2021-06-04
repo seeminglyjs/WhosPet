@@ -234,10 +234,13 @@ public class ShopController {
 		
 		int i = shop.getsNo();
 		ShopImg thumbnail = shopService.getAttachThumbnailFile(i);
+		List<ShopImg> shopImg = shopService.getAttachFile(i);
 		
 		model.addAttribute("shop", view);
 		model.addAttribute("thumbnail", thumbnail);
+		model.addAttribute("shopImg", shopImg);
 	}
+	
 	
 	//------------------------------------------------------------
 	//------------------------------------------------------------

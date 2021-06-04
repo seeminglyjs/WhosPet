@@ -302,7 +302,7 @@ cursor:pointer;
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">상품구매 <span class="caret"></span></a>
       <ul class="dropdown-menu" role="menu">
-        <li><a href="#">메뉴1</a></li>
+        <li><a href="/shop/list">전체보기</a></li>
         <li class="divider"></li>
         <li><a href="#">메뉴2</a></li>
         <li class="divider"></li>
