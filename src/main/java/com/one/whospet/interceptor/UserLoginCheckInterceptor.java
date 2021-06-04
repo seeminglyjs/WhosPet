@@ -45,17 +45,20 @@ public class UserLoginCheckInterceptor implements HandlerInterceptor{
 
 			return false;// 컨트롤러 접근 금지
 		}else {
-			// 유저 객체를 가지고 온다.
-			User user = (User)session.getAttribute("user");
-
-			// 관리자 계정인 경우 -> 관리자 메인이로 보내준다.
-			if(user.getuGrade().equals("M")) {
-				response.sendRedirect("/home/adminMain");
-				return false;
-			}else { // 관리자 외에는 일반 유저
-				logger.info("--- 일반 유저 로그인 상태 ---");
-				return true; // 컨트롤러로 요청정보를 보내줌( 요청 허가)
-			}	
+			logger.info("--- 일반 유저 로그인 상태 ---");
+			return true; // 컨트롤러로 요청정보를 보내줌( 요청 허가)
+			
+//			// 유저 객체를 가지고 온다.
+//			User user = (User)session.getAttribute("user");
+//
+//			// 관리자 계정인 경우 -> 관리자 메인이로 보내준다.
+//			if(user.getuGrade().equals("M")) {
+//				response.sendRedirect("/home/adminMain");
+//				return false;
+//			}else { // 관리자 외에는 일반 유저
+//				logger.info("--- 일반 유저 로그인 상태 ---");
+//				return true; // 컨트롤러로 요청정보를 보내줌( 요청 허가)
+//			}	
 		}
 
 	}

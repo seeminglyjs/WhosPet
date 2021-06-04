@@ -67,9 +67,15 @@ function check(){
   padding-top: 30px;
   padding-bottom: 30px;
   border: 1px solid #ccc;
+  border-radius: 15px;
 }
 </style>
 
+
+<div>
+<strong style="font-size: 18px;">Whospet </strong><span>Write</span>
+</div>
+<hr>
 <div class="container" id="writeDiv">
 	<form action="/board/write" method="post" id="writeForm" enctype="multipart/form-data" onsubmit="return check()">
 		
@@ -94,7 +100,7 @@ function check(){
 			</textarea>
 		</div>
 		
-		
+		<br>
 		<input multiple="multiple" type="file" name="file"  accept="image/*"/>
 		
 	</form>
@@ -108,11 +114,11 @@ function check(){
 	
 
 	<div style="text-align: center">
-		<button class="btn btn-sm btn-primary" id="btnSave">게시글 등록</button>
-		<button type="button" class="btn btn-sm btn-danger" onclick="history.back()">취소</button>
+		<button class="btn btn-sm btn-primary" id="btnSave">등록</button>
+		<button type="button" class="btn btn-sm btn-default" onclick="history.back()">취소</button>
 	</div>
 </div>	
-	
+<hr>
 
 
 <!-- 스마트 에디터 스크립트 코드  -->

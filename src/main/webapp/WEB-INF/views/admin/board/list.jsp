@@ -24,11 +24,22 @@ function chageSelect(){
 
 </script>
 
+<style type="text/css">
+
+#fullBoardList{
+	font-size: 13px;
+}
 
 
-<h1>유저 게시판관리 리스트</h1>
+</style>
+
+
+
+<div>
+<strong style="font-size: 18px;">Whospet </strong><span>Management_Board</span>
+</div>
 <hr>
-
+<div id="fullBoardList">
 <div class="pull-left">
 	<select  id= "category" name="category" onchange="chageSelect()" class="form-control">
 		<option value="X" selected="selected" style="background-color: #ccc">카테고리</option>
@@ -90,14 +101,15 @@ function chageSelect(){
 </div>
 
 <div class="pull-right">
-<a href="/admin"><button class="btn btn-default">홈으로</button></a>
+<a href="/admin"><button class="btn btn-sm btn-default">홈으로</button></a>
 </div>
 <div class=”clearfix“></div>
 <br>
 <br>
-
+</div>
 
 
 
 <%@ include file="/WEB-INF/views/util/adminBoardPaging.jsp" %>
+<hr>
 <%@ include file="/WEB-INF/views/layout/footerAdmin.jsp" %>

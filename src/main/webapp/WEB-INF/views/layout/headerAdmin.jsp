@@ -255,6 +255,7 @@ $(document).ready(function(){
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">페이지전환 <span class="caret"></span></a>
       <ul class="dropdown-menu" role="menu">
         <li><a href="/">유저메인</a></li>
+        <li class="divider"></li>
         <li><a href="/admin">관리자메인</a></li>
       </ul>
     </li>
