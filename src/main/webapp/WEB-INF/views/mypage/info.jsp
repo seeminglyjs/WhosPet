@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <script>
 $(document).ready(function() {
+		window.opener.location.href="/mypage/user";
 		window.open('', '_self', '');
 		window.close();
 		

@@ -77,7 +77,7 @@ private static final Logger logger = LoggerFactory.getLogger(ShopServiceImpl.cla
 		List<ShopImg> list = new ArrayList<ShopImg>();
 		
 		for( int i : sNo ) {
-			ShopImg shopImg = shopDao.selectThumbnailsBySNo( i );
+			ShopImg shopImg = shopDao.selectThumbnailBySNo( i );
 			list.add(shopImg);
 
 		}
@@ -163,6 +163,98 @@ private static final Logger logger = LoggerFactory.getLogger(ShopServiceImpl.cla
 		}
 	}
 
+//------------------- 상품 수정 / 삭제 -----------------------------------------
+	
+	//상품정보 수정
+	@Override
+	public void updateShop(Shop shop) {
+		logger.info("updateShop, Shop : {}", shop );
+		shopDao.updateShopInfo( shop );
+	}
+
+	//수정시 추가될 첨부파일 추가하기
+	@Override
+	public void updateNewFileList( Shop shop, List<MultipartFile> newFileList) {
+		logger.info("updateNewFileList, newFileList : {}", newFileList);
+		//반복문으로 파일정보 리스트 형식으로 넣기
+		for( MultipartFile file : newFileList) {
+			if(file.getSize() == 0) {
+				continue;
+			}
+			
+			//파일이 저장될 경로(real path)
+			String storedPath = context.getRealPath("/resources/shopimgupload");
+			
+			//파일이 존재하지 않으면 생성하기
+			File stored = new File(storedPath);
+			if( !stored.exists() ) {
+				stored.mkdir();
+			}
+			
+			//저장될 파일의 이름 생성하기
+			String fileFullName = file.getOriginalFilename(); //원본파일
+			logger.info("fileFullName : {}",fileFullName);
+			int idx = fileFullName.indexOf(".");
+			logger.info("인덱스 알려주세요 :{}", idx);
+			
+			String originName = fileFullName.substring(0, idx);
+			String extension = FilenameUtils.getExtension(fileFullName);
+			
+			//원본파일이름에 UUID 추가하기(파일명이 중복되지않도록 설정)
+			String storedName = originName + UUID.randomUUID().toString().split("-")[4]	+ "." + extension;
+			
+			//저장될 파일 정보 객체
+			File dest = new File(stored, storedName);
+			
+			try {
+				//업로드된 파일 저장하기
+				file.transferTo(dest);
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			//------------------------------
+			
+			logger.info("MultipartFile file : {}", (String) file.toString());
+			
+			ShopImg shopImg = new ShopImg();
+			shopImg.setsNo(shop.getsNo());
+			shopImg.setSiOriginFilename(fileFullName);
+			shopImg.setSiStoredFilename(storedName);
+			if( "thumbnail".equals( file.getName() ) ) {
+				logger.info("getName() : {}",file.getName());
+				
+				shopImg.setSiThumbnail("Y");
+			} else {
+				shopImg.setSiThumbnail("N");
+			}
+			
+			shopDao.insertFile( shopImg );
+		}
+	}
+
+	//수정시 삭제될 첨부파일 삭제하기
+	@Override
+	public void updateDelFileList(ArrayList<String> delFileList) {
+		logger.info("deleteFile, delFileList 객체 : {} ", delFileList);
+		for( String i : delFileList) {
+			logger.info("i입니다 : {}",i);
+			shopDao.deleteFileBySiNo( Integer.parseInt(i) );
+		}
+	}
+
+	//상세보기에서 삭제 버튼 누르면 상품 삭제하기
+	@Override
+	public void deleteShop(Shop shop) {
+		logger.info("delete, sNo : {}", shop.getsNo());
+		
+		shopDao.deleteShopImgBySNo(shop);
+		shopDao.deleteShopBySNo(shop);
+	}
+
+	
 
 
 

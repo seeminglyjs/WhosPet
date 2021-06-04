@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 마이바티스 3 Mapper DOCTYPE -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  
+<mapper namespace="com.one.whospet.dao.main.face.MainDao">
+	
+	<!-- 유저 DTO 제정의  -->
+	<resultMap type="com.one.whospet.dto.User" id="User">
+		<id column="U_No" property="uNo"/>
+		
+		<result column="U_GRADE" property="uGrade"/>
+		<result column="U_ID" property="uId"/>
+		<result column="U_PW" property="uPw"/>
+		<result column="U_NAME" property="uName"/>
+		<result column="U_PHONE" property="uPhone"/>
+		<result column="U_NICK" property="uNick"/>
+		<result column="U_EMAIL" property="uEmail"/>
+		<result column="U_ADDRESS" property="uAddress"/>
+		<result column="U_POST" property="uPost"/>
+		<result column="U_DETAIL_ADDRESS" property="uDetailAddress"/>
+		<result column="U_PET" property="uPet"/>
+		<result column="U_JOIN_DATE" property="uJoinDate"/>
+	</resultMap>
+	
+	<!-- 병원 DTO 정의  -->
+  	<resultMap type="com.one.whospet.dto.Hospital" id="Hospital">
+  		<id column="h_no" property="hNo" />
+  		<result column="u_no" property="uNo" />
+  		<result column="h_adcheck" property="hAdcheck" />
+  		<result column="h_name" property="hName" />
+  		<result column="h_road_address" property="hRoadAddress" />
+  		<result column="h_detail_address" property="hDetailAddress" />
+  		<result column="h_hour" property="hHour" />
+  		<result column="h_tel" property="hTel" />
+  		<result column="h_info" property="hInfo" />
+  		<result column="h_request_date" property="hRequestDate" />
+  		<result column="h_enroll_date" property="hEnrollDate" />
+  		<result column="h_hit" property="hHit" />
+  	</resultMap>
+  	
+  	<!-- 병원 리뷰 DTO 정의  -->
+ 	<resultMap type="com.one.whospet.dto.Review" id="Review">
+   		<id column="r_no" property="rNo" />
+ 		<result column="u_no" property="uNo" /> 
+   		<result column="h_no" property="hNo" /> 
+   		<result column="r_date" property="rDate" /> 
+   		<result column="r_content" property="rContent" /> 
+  		<result column="r_star" property="rStar" /> 
+   	</resultMap>
+	
+	
+
+	<select id="selectNewList" resultMap="Hospital">
+		select * from(
+    		select rownum rnum, h.* from(
+    			select * from w_hospital order by h_enroll_date desc) h
+		)hospital
+		where rnum BETWEEN 1 and 10
+	</select>
+
+
+	<select id="selectBestList" resultMap="Hospital">
+		select * from(
+    		select rownum rnum, h.* from(
+    			select * from w_hospital order by h_hit desc) h
+		)hospital
+		where rnum BETWEEN 1 and 10
+	
+	</select>
+
+
+	<select id="selectBestReviewList" resultType="hashmap">
+		select * from(
+		    select rownum rnum, r.* from(
+		    select h.h_no, h.h_name, h.h_tel, h.h_road_address, r.r_content, r.r_star from w_review r, w_hospital h where h.h_no = r.h_no order by r.r_star desc) r
+		)review
+		where rnum BETWEEN 1 and 10
+	</select>
+
+</mapper>

@@ -63,17 +63,12 @@
 	</select>
 
 	<!-- 섬네일 상품이미지 조회 (상세보기) -->
-	<select id="selectThumbnailsBySNo" parameterType="int" resultMap="ShopImg">
+	<select id="selectThumbnailBySNo" parameterType="int" resultMap="ShopImg">
 		SELECT * FROM w_shop_img
 		WHERE s_no = #{i} AND si_thumbnail = 'Y'
 	</select>
 	
-	<!-- 섬네일 상품이미지 조회 (사용자 목록) -->
-	<select id="selectThumbnailBySNo" parameterType="Integer" resultMap="ShopImg">
-		SELECT * FROM w_shop_img
-		
-	</select>
-
+	
 	<!-- 상품 삽입하기 -->
 	<insert id="insertShop" parameterType="com.one.whospet.dto.Shop">
 		<selectKey order="BEFORE" resultType="int" keyProperty="sNo">
@@ -94,6 +89,31 @@
 		VALUES ( #{siNo}, #{sNo}, #{siOriginFilename}, #{siStoredFilename}, #{siThumbnail} )
 	</insert>
 	
+	<!-- 업데이트 시 상품정보 수정하기 -->
+	<update id="updateShopInfo" parameterType="com.one.whospet.dto.Shop">
+		UPDATE w_shop SET
+		 s_name = #{sName},
+		 s_productType = #{sProductType},
+		 s_amount = #{sAmount},
+		 s_quantity = #{sQuantity},
+		 s_content = #{sContent} WHERE s_no = #{sNo}
+	</update>
 	
+	<!-- 업데이트 시 x표시 누른 첨부파일 삭제하기 -->
+	<delete id="deleteFileBySiNo" parameterType="int">
+		DELETE FROM w_shop_img
+		WHERE si_no = #{siNo}
+	</delete>
+	
+	
+	<delete id="deleteShopImgBySNo" parameterType="com.one.whospet.dto.Shop">
+		DELETE FROM w_shop_img
+		WHERE s_no = #{sNo}
+	</delete>
+	
+	<delete id="deleteShopBySNo" parameterType="com.one.whospet.dto.Shop">
+		DELETE FROM w_shop
+		WHERE s_no = #{sNo}
+	</delete>
 	
 </mapper>

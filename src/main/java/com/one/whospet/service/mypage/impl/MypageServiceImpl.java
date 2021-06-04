@@ -19,7 +19,9 @@ import com.one.whospet.dao.mypage.face.MypageDao;
 import com.one.whospet.dto.Board;
 import com.one.whospet.dto.Booking;
 import com.one.whospet.dto.Hospital;
+import com.one.whospet.dto.Payment;
 import com.one.whospet.dto.Point;
+import com.one.whospet.dto.ShopBasket;
 import com.one.whospet.dto.User;
 import com.one.whospet.dto.Userpic;
 import com.one.whospet.service.mypage.face.MypageService;
@@ -211,6 +213,47 @@ public class MypageServiceImpl implements MypageService {
 	public void bookingReject(Booking booking) {
 		mypageDao.updateBookingStatusN(booking);
 		
+	}
+	@Override
+	public MypageBoardPaging getBasketPaging(HashMap<String, Object> data) {
+		// 총 장바구니 수 조회
+		int totalCount = mypageDao.selectBasketCntAll(data);
+		logger.info("totalCount는 : {}", totalCount);
+		MypageBoardPaging paging = new MypageBoardPaging(totalCount, (Integer) data.get("curPage"));
+		return paging;
+	}
+	@Override
+	public List<ShopBasket> basketList(HashMap<String, Object> data) {
+		return mypageDao.selectAllBasket(data);
+	}
+	@Override
+	public int basketSum(HashMap<String, Object> data) {
+		return mypageDao.selectSumBasket(data);
+	}
+	@Override
+	public int deleteBasket(int sbNo) {
+		return mypageDao.deleteBasket(sbNo);
+	}
+	@Override
+	public MypageBoardPaging getPayPaging(HashMap<String, Object> data) {
+		// 총 장바구니 수 조회
+		int totalCount = mypageDao.selectPayCntAll(data);
+		logger.info("totalCount는 : {}", totalCount);
+		MypageBoardPaging paging = new MypageBoardPaging(totalCount, (Integer) data.get("curPage"));
+		return paging;
+	}
+	@Override
+	public List<Payment> paymentList(HashMap<String, Object> data) {
+		return mypageDao.selectAllPay(data);
+	}
+	
+	@Override
+	public int plusItemBasket(int sbNo) {
+		return mypageDao.updatePlusBasket(sbNo);
+	}
+	@Override
+	public int minusItemBasket(int sbNo) {
+		return mypageDao.updateMinusBasket(sbNo);
 	}
 
 

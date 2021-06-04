@@ -1,5 +1,6 @@
 package com.one.whospet.service.shop.face;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -68,6 +69,36 @@ public interface ShopService {
 	 */
 	public void register(Shop shop, List<MultipartFile> fileList);
 
+	
+	/**
+	 * 수정페이지에서 전달받은 정보들 DB에 저장하기
+	 * 
+	 * @param shop 수정될 상품정보
+	 */
+	public void updateShop(Shop shop);
+
+	/**
+	 * 수정페이지에서 전달받은 정보들 DB에 저장하기
+	 * 
+	 * @param newFileList 수정시 추가될 첨부파일 정보
+	 */
+	public void updateNewFileList( Shop shop , List<MultipartFile> newFileList);
+
+	/**
+	 * 수정페이지에서 전달받은 정보들 DB에 저장하기
+	 * 
+	 * @param delFileList 수정시 삭제될 첨부파일 siNo
+	 */
+	public void updateDelFileList(ArrayList<String> delFileList);
+
+	/**
+	 * 상품을 삭제하는메소
+	 * 
+	 * @param shop sNo 상품의 상품번호
+	 */
+	public void deleteShop(Shop shop);
+
+	
 
 
 }

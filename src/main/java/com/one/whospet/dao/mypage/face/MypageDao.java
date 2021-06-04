@@ -6,7 +6,9 @@ import java.util.List;
 import com.one.whospet.dto.Board;
 import com.one.whospet.dto.Booking;
 import com.one.whospet.dto.Hospital;
+import com.one.whospet.dto.Payment;
 import com.one.whospet.dto.Point;
+import com.one.whospet.dto.ShopBasket;
 import com.one.whospet.dto.User;
 import com.one.whospet.dto.Userpic;
 import com.one.whospet.util.MypageBoardPaging;
@@ -165,6 +167,62 @@ public interface MypageDao {
 	 * @param booking
 	 */
 	public void updateBookingStatusN(Booking booking);
+
+	/**
+	 * 장바구니 수
+	 * @param data 
+	 * @return
+	 */
+	public int selectBasketCntAll(HashMap<String, Object> data);
+
+	/**
+	 * 장바구니 목록 조회
+	 * @param data
+	 * @return
+	 */
+	public List<ShopBasket> selectAllBasket(HashMap<String, Object> data);
+
+	/**
+	 * 장바구니 합계 계산
+	 * @param data
+	 * @return
+	 */
+	public int selectSumBasket(HashMap<String, Object> data);
+
+	/**
+	 * 장바구니 항목 삭제
+	 * @param sbNo
+	 * @return
+	 */
+	public int deleteBasket(int sbNo);
+
+	/**
+	 * 구매이력 수
+	 * @param data
+	 * @return
+	 */
+	public int selectPayCntAll(HashMap<String, Object> data);
+
+	/**
+	 * 구매이력 조회
+	 * @param data
+	 * @return
+	 */
+	public List<Payment> selectAllPay(HashMap<String, Object> data);
+
+	/**
+	 * 장바구니 수량 업데이트
+	 * @param sbNo
+	 * @return
+	 */
+	public int updatePlusBasket(int sbNo);
+
+	/**
+	 * 장바구니 수량 업데이트
+	 * @param sbNo
+	 * @return
+	 */
+	public int updateMinusBasket(int sbNo);
 
 
 

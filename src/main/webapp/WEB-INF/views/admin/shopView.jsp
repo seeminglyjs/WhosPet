@@ -11,7 +11,13 @@
 <h1>상품 상세 정보</h1>
 
 <div align="center">
+<c:if test="${not empty thumbnail }">
 <img alt="섬네일" src="/resources/shopimgupload/${thumbnail.siStoredFilename }" style="width: 150px;">
+</c:if>
+
+<c:if test="${empty thumbnail }">
+<img alt="섬네일" src="/resources/shopimgupload/default.png" style="width: 150px;">
+</c:if>
 </div>
 
 <table class="table table-striper table-hover">

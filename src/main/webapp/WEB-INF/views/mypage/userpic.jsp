@@ -22,6 +22,7 @@ $(document).ready(function() {
 		window.close();
 	});
 	
+	//삭제버튼 동작
 	$("#btnDelete").click(function(){
 		//<form> submit
 		$("#form").attr("action","/mypage/userpicDelete");
