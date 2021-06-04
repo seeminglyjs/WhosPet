@@ -97,6 +97,7 @@ function forwardCno(param){
 #boardDetailDiv{
 	margin: 30px;
 	border: 1px solid #ccc;
+	border-radius: 15px;
 	padding: 25px;
 
 }
@@ -109,10 +110,29 @@ function forwardCno(param){
 
 </style>
 
+
+<div>
+<strong style="font-size: 18px;">Whospet </strong><span>Detail</span>
+</div>
+<hr>
 <div id="boardDetailDiv">
 
-	<div class="text-left">
-	<h5>${board.bType } 게시판 <span>></span></h5>
+	<div class="text-left" style="color:#e1701a;">
+	<c:choose>
+		<c:when test='${board.bType eq "F"}'>
+			<h5><strong>자유 게시판</strong> <span>></span></h5>
+		</c:when>
+
+		<c:when test='${board.bType eq "T"}'>
+			<h5><strong>치료 게시판</strong> <span>></span></h5>
+		</c:when>
+			
+		<c:otherwise>
+			<h5><strong>리뷰 게시판</strong> <span>></span></h5>
+		</c:otherwise>
+	
+	</c:choose>
+	
 	</div>
 	<div  class="text-center">
 	<h2>${board.bTitle }</h2>
@@ -124,6 +144,13 @@ function forwardCno(param){
 	<hr>
 	</div>
 
+	<div class="text-right">
+	<a href="/board/list"><button type="button" class="btn btn-sm btn-primary">글목록</button></a>
+	<button type="button" class="btn btn-sm btn-default" onclick="history.back()">뒤로</button>
+	</div>
+	
+	<div style="padding-bottom: 70px"></div>
+	
 <div id="boardDetailText"  class="text-center" style="min-height: 500px; ">
 
 
@@ -139,11 +166,17 @@ ${board.bContent }
 
 </div>
 
-<button type="button" class="btn btn-sm btn-default" onclick="history.back()">뒤로</button>
+<div style="padding-bottom: 70px;"></div>
+
+
+
+<div class="text-right">
 <c:if test="${sessionScope.user.uNo eq board.uNo }">
 <a href="/board/delete?bNo=${board.bNo }"><button class="btn btn-sm btn-default" type="button">게시글삭제</button></a>
 <a href="/board/update?bNo=${board.bNo }"><button class="btn btn-sm btn-default" type="button">게시글수정</button></a>
 </c:if>
+</div>
+
 
 <hr>
 
@@ -220,6 +253,6 @@ ${board.bContent }
 	</div>
 
 </div>
-
+<hr>
 
 <%@ include file="/WEB-INF/views/layout/footerUser.jsp" %>

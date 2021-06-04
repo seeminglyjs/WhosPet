@@ -25,10 +25,22 @@ function chageSelect(){
 </script>
 
 
+<style type="text/css">
 
-<h1>유저 게시판 리스트</h1>
+#fullBoardList{
+	font-size: 13px;
+}
+
+
+</style>
+
+
+
+<div>
+<strong style="font-size: 18px;">Whospet </strong><span>Board</span>
+</div>
 <hr>
-
+<div id="fullBoardList">
 <div class="pull-left">
 	<select  id= "category" name="category" onchange="chageSelect()" class="form-control">
 		<option value="X" selected="selected" style="background-color: #ccc">카테고리</option>
@@ -88,19 +100,17 @@ function chageSelect(){
 	</c:choose>
 </table>
 </div>
-
+</div>
 <div class="pull-right">
 <c:if test="${login }">
-	<a href="/board/write"><button class="btn btn-default">글쓰기</button></a>
+	<a href="/board/write"><button class="btn btn-sm btn-default">글쓰기</button></a>
 </c:if>
-<a href="/"><button class="btn btn-default">홈으로</button></a>
+<a href="/"><button class="btn btn-sm btn-default">홈으로</button></a>
 </div>
 <div class=”clearfix“></div>
 <br>
 <br>
 
-
-
-
 <%@ include file="/WEB-INF/views/util/boardPaging.jsp" %>
+<hr>
 <%@ include file="/WEB-INF/views/layout/footerUser.jsp" %>

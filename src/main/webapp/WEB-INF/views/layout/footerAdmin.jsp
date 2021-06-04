@@ -13,7 +13,7 @@
                         <h3>Services</h3>
                         <ul class="footerlist">
                             <li><a href="/admin">메인 화면</a></li>
-                            <li><a href="#">유저 관리</a></li>
+                            <li><a href="/admin/user/list">유저 관리</a></li>
                             <li><a href="/admin/board/list">게시판 관리</a></li>
                         </ul>
                     </div>

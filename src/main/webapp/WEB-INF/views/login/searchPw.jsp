@@ -111,11 +111,6 @@ function check(){
 
 <style type="text/css">
 
-.breadcrumb{
-	background-color: white;
-	
-}
-
 /*  이메일 수평 유지위한 css */
 #email{
 	display: inline !important;
@@ -134,14 +129,37 @@ function check(){
 	color: green;
 }
 
+#searchPwFullDiv{
+	width: 700px;
+	height: 600px;
+	margin: 0 auto;
+	border: 1px solid #ccc;
+	border-radius: 15px;
+	padding-top: 90px;
+}
+
+
+#loginImg{
+	display: flex;
+	justify-content: center;
+}
+
+
 </style>
-
 <div>
-<h3>비밀번호 찾기 페이지</h3>
-<hr>
+<strong style="font-size: 18px;">Whospet </strong><span>SearchPw</span>
 </div>
-
+<hr>
+<div id="searchPwFullDiv">
+		
 	<div style="width: 500px; height:300px; margin: 0 auto;">
+	
+	<div id="loginImg">
+		<div style="padding: 40px;">
+			<a href="/"><img alt="" src="/resources/img/logo2.png" style="width: 100%"></a>
+		</div>
+	</div>
+	
 	<form class="form-horizontal" action="/login/searchPw" method="post" onsubmit="return check()">
 	    
 	  <div class="form-group">
@@ -156,7 +174,7 @@ function check(){
 	    <label for="email" class="col-sm-2 control-label">이메일</label>
 	    <div class="col-sm-10">
 	      <input type="text" class="form-control" id="email" name ="email" placeholder="avc@abvd.com" autocomplete="off">
-	      <button class="btn btn-default" id="emailSend" type="button" disabled="disabled">이메일 전송</button>
+	      <button class="btn btn-sm btn-default" id="emailSend" type="button" disabled="disabled">이메일 전송</button>
     	 <span id="sp5"></span>
 	    </div>
 	  </div>
@@ -173,19 +191,21 @@ function check(){
 	  
 	  <div class="form-group">
 	    <div class="col-sm-offset-2 col-sm-10">
-	       <button type="submit" class="btn btn-primary">비밀번호 찾기</button>      
-	       <button type="button" class="btn btn-danger" onclick="history.back()">뒤로가기</button>      
+	       <button type="submit" class="btn btn-sm btn-primary">비밀번호 찾기</button>      
+	       <button type="button" class="btn btn-sm btn-default" onclick="history.back()">취소</button>      
 	    </div> 
 	  </div>
+	
+		<div class="form-group"> 
+		   	<div class="col-sm-offset-2 col-sm-10">
+				<span><a href="/login/login">로그인</a> / 
+				<a href="/join/join">회원가입</a></span>
+			</div>
+		</div>
 	  
 	</form>
 	
-	<div class="col-sm-offset-4 col-sm-10">
-		<ol class="breadcrumb">
-		  <li><a href="/login/login">로그인</a></li>
-		  <li><a href="/join/join">회원가입</a></li>
-		</ol>
 	</div>
-	
-	</div>
+</div>
+<hr>
 <%@ include file="/WEB-INF/views/layout/footerUser.jsp" %>

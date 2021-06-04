@@ -31,7 +31,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.one.whospet.dto.Board;
 import com.one.whospet.dto.Booking;
 import com.one.whospet.dto.Hospital;
+import com.one.whospet.dto.Payment;
 import com.one.whospet.dto.Point;
+import com.one.whospet.dto.ShopBasket;
 import com.one.whospet.dto.User;
 import com.one.whospet.dto.Userpic;
 import com.one.whospet.service.mypage.face.MypageService;
@@ -99,7 +101,10 @@ public class MypageController {
 	
 	//처리 완료 창
 	@RequestMapping(value = "/mypage/info")
-	public void done() {}
+	public void done() {
+		
+		 
+	}
 	
 	//회원 정보 수정전 확인 창
 	@RequestMapping(value = "/mypage/updateCk", method=RequestMethod.GET)
@@ -287,11 +292,110 @@ public class MypageController {
 		
 	}
 	
+	//구매이력 페이지
 	@RequestMapping(value = "/mypage/pay")
-	public void payinfo() {}
+	public void payinfo(@RequestParam(defaultValue = "0") int curPage, HttpSession session, Model model) {
+		//해쉬맵 생성
+		HashMap<String, Object> data = new HashMap<String, Object>();
+		
+		//유저 번호 가져오기
+		User user = (User) session.getAttribute("user");
+		int uNo = user.getuNo();
+		
+		//해쉬맵에 집어넣기
+		data.put("uNo", uNo);
+		data.put("curPage", curPage);
+		
+		//페이징 계산
+		MypageBoardPaging paging = mypageService.getPayPaging(data);
+		//페이징 객체 집어넣기
+		data.put("paging", paging);
+		
+		//구매이력 조회
+		List<Payment> list = mypageService.paymentList(data);
+			for( int i=0; i<list.size(); i++) {
+				logger.debug(list.get(i).toString());
+				}
+				
+		//모델값 전달
+		model.addAttribute("paylist",list);
+		model.addAttribute("paging", paging);
+
+		
+		
+	}
 	
+	//장바구니 페이지
 	@RequestMapping(value = "/mypage/basket")
-	public void basketinfo() {}
+	public void basketinfo(@RequestParam(defaultValue = "0") int curPage, HttpSession session, Model model) {
+		
+		//해쉬맵 생성
+		HashMap<String, Object> data = new HashMap<String, Object>();
+		
+		//유저 번호 가져오기
+		User user = (User) session.getAttribute("user");
+		int uNo = user.getuNo();
+		
+		//해쉬맵에 집어넣기
+		data.put("uNo", uNo);
+		data.put("curPage", curPage);
+		
+		//페이징 계산
+		MypageBoardPaging paging = mypageService.getBasketPaging(data);
+		//페이징 객체 집어넣기
+		data.put("paging", paging);
+		//장바구니 목록 조회
+		List<ShopBasket> list = mypageService.basketList(data);
+		for( int i=0; i<list.size(); i++) {
+		logger.debug(list.get(i).toString());
+		}
+		
+
+		Integer sumbasket = mypageService.basketSum(data);
+		model.addAttribute("sum", sumbasket);
+		
+		
+		//모델값 전달
+		model.addAttribute("basketlist",list);
+		model.addAttribute("paging", paging);
+		
+		
+		
+	}
+	
+	//장바구니 삭제
+	@RequestMapping(value = "/mypage/basket/remove")
+	public String basketinfo(@RequestParam("sbNo") int sbNo) {
+		logger.info("장바구니번호 : {}", sbNo);
+		int res = mypageService.deleteBasket(sbNo);
+		if(res>0) {
+			return "redirect:/mypage/basket";
+		}
+		return null;
+	}
+	
+	//장바구니 수량 추가
+		@RequestMapping(value = "/mypage/basket/plus")
+		public String basketPlus(@RequestParam("sbNo") int sbNo) {
+			logger.info("장바구니번호 : {}", sbNo);
+			int res = mypageService.plusItemBasket(sbNo);
+			if(res>0) {
+				return "redirect:/mypage/basket";
+			}
+			return null;
+		}
+		
+		//장바구니 수량 감소
+		@RequestMapping(value = "/mypage/basket/minus")
+		public String basketMinus(@RequestParam("sbNo") int sbNo) {
+			logger.info("장바구니번호 : {}", sbNo);
+			int res = mypageService.minusItemBasket(sbNo);
+			if(res>0) {
+				return "redirect:/mypage/basket";
+			}
+			return null;
+		}
+	
 	
 	//병원관계자 병원관리페이지
 	@RequestMapping(value="/mypage/hospital")
