@@ -6,34 +6,51 @@
 
 <c:import url="/WEB-INF/views/layout/headerAdmin.jsp" /> 
 
+<style>
+
+div.left {
+	float: left;
+	width: 50%;	
+}
+
+div.right {
+	float: right;
+	width: 50%;
+}
+
+</style>
+
+
+
 <div class="container">
 
 <h1>상품 상세 정보</h1>
 
-<div align="center">
-<img alt="섬네일" src="/resources/shopimgupload/${thumbnail.siStoredFilename }" style="width: 150px;">
+<div class="left">
+<img alt="섬네일" src="/resources/shopimgupload/${thumbnail.siStoredFilename }" style="width: 400px; height: 350px;">
 </div>
 
+<div class="right">
 <table class="table table-striper table-hover">
 
 <tr hidden="">
 	<th>상품번호</th><td>${shop.sNo }</td>
 </tr>
-
-<tr>
-	<th>상품명</th><td>${shop.sName }</td>
-</tr>
-
-<tr>
+<tr hidden="">
 	<th>상품종류</th><td>${shop.sProductType }</td>
 </tr>
 
 <tr>
-	<th>상품금액</th><td>${shop.sAmount }원</td>
+	<td>${shop.sName }</td>
+</tr>
+
+
+<tr>
+	<td>${shop.sAmount } 원</td>
 </tr>
 
 <tr>
-	<th>상품수량</th><td>${shop.sQuantity }개</td>
+	<td>${shop.sQuantity } 개</td>
 </tr>
 
 <tr>
@@ -46,6 +63,7 @@
 
 
 </table>
+</div><!-- .right -->
 </div>
 
 <c:forEach var="contentImg" items="${shopImg }">
