@@ -3,6 +3,7 @@
 <%@ include file="/WEB-INF/views/layout/headerMypageUser.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+
 <script type="text/javascript">
 // //등록버튼 동작
 // $("#btnRemove").click(function() {
@@ -59,6 +60,8 @@ position: relative;
 top: 100px;
 left: 620px;
 }
+
+
 </style>
 
 <div id="boardtitle">
@@ -84,9 +87,14 @@ left: 620px;
 <tbody>
 <c:forEach items="${basketlist }" var="basketlist">
 	<tr>
-		<td><img src="../resources/img/defaultitem.gif" style="width:50px; height: 50px;"/></td>
+		<td><img src="../resources/img/itemtest1.jpg" style="width:50px; height: 50px;"/></td>
 		<td>${basketlist.shop.sName}</td>
-		<td>${basketlist.sbQuantity}</td>
+		<td>${basketlist.sbQuantity}
+		<button id="btnPlus" onclick="location.href='/mypage/basket/plus?sbNo=${basketlist.sbNo}'" class= "btn btn-outline-secondary btn-xs"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+		<c:if test="${basketlist.sbQuantity > 1}">
+		<button id="btnMinus" onclick="location.href='/mypage/basket/minus?sbNo=${basketlist.sbNo}'" class= "btn btn-outline-secondary btn-xs"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
+		</c:if>
+        </td>
 		<td>${basketlist.sbAmount}</td>
 <%-- 		<td><input type="hidden" id="sbNo" name="sbNo" value="${sbNo }"><button id="btnRemove">삭제</button></td> --%>
 		<td><button id="btnRemove" onclick="location.href='/mypage/basket/remove?sbNo=${basketlist.sbNo}'">삭제</button></td>

@@ -112,6 +112,25 @@
 		<result column="sb_quantity" property="sbQuantity"/>
 		<collection property="shop" resultMap="Shop"/>
 	</resultMap>
+	
+	<!-- 구매이력DTO 재정의 -->
+		<resultMap type="com.one.whospet.dto.Payment" id="Payment">
+		<id column="py_no" property="pyNo"/>
+		
+		<result column="u_no" property="uNo"/>
+		<result column="s_no" property="sNo"/>
+		<result column="si_no" property="siNo"/>
+		<result column="po_no" property="poNo"/>
+		<result column="py_date" property="pyDate"/>
+		<result column="py_address" property="pyAddress"/>
+		<result column="py_status" property="pyStatus"/>
+		<result column="py_amount" property="pyAmount"/>
+		<result column="py_card" property="pyCard"/>
+		<result column="py_apply_num" property="pyApplyNum"/>
+		<result column="imp_uid" property="impUid"/>
+		<result column="merchant_uid" property="merchantUid"/>
+		<collection property="shop" resultMap="Shop"/>
+		</resultMap>
 
   
   	<select id="selectUserinfo" parameterType="com.one.whospet.dto.User" resultMap="User">
@@ -288,5 +307,33 @@
 		WHERE sb_No = #{sbNo }
 	</delete>
 	
+	<select id="selectPayCntAll" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*) FROM w_payment WHERE u_no = #{uNo }
+	</select>
+	
+	<select id="selectAllPay" parameterType="hashmap" resultMap="Payment">
+			
+		SELECT * FROM (
+			SELECT rownum rnum, B.* FROM (
+					SELECT *FROM w_payment 
+				    FULL OUTER JOIN w_shop ON (w_shop.s_no = w_payment.s_no)
+					WHERE w_payment.u_no = #{uNo }
+					ORDER BY py_no DESC
+						) B
+					) BOARD
+				WHERE rnum BETWEEN #{paging.startNo } AND #{paging.endNo }
+
+	</select>
+	
+	<update id="updatePlusBasket" parameterType="int">
+		UPDATE w_shop_basket SET sb_quantity = sb_quantity + 1
+		WHERE sb_No = #{sbNo }
+	</update>
+
+	<update id="updateMinusBasket" parameterType="int">
+		UPDATE w_shop_basket SET sb_quantity = sb_quantity - 1
+		WHERE sb_No = #{sbNo }
+	</update>
+
 	
   </mapper>

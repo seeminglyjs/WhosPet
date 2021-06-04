@@ -8,7 +8,7 @@ $(document).ready(function(){
  
 	$("#btnUser").click(function(){
 			$("#pointadd").show();
-		 
+		 	
 		        var go = {
 		        		"uNo" : $('#uNo').val(),
 // 		        		"poPlus" :$('#poPlus').val()
@@ -26,6 +26,7 @@ $(document).ready(function(){
 		            	$('#list').html(data);
 		            },
 		        });
+		 	
 		})
 		
 		$("#btnPoint").click(function(){
@@ -41,10 +42,10 @@ $(document).ready(function(){
 	            contentType: 'application/json; charset=UTF-8',
 	            dataType : 'json',
 	            error: function(xhr, status, error){
-//		                alert(error);
+// 		                alert(error);
 	            },
 	            success : function(data){
-
+	            	location.reload(true);
 	            },
 	        });
 		})
