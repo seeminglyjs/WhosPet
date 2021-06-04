@@ -41,19 +41,42 @@
 
 <style type="text/css">
 
+#logingFullDiv{
+	width: 700px;
+	height: 600px;
+	margin: 0 auto;
+	border: 1px solid #ccc;
+	border-radius: 15px;
+	padding-top: 90px;
+}
+
 .breadcrumb{
 	background-color: white;
 	
 }
 
+#loginImg{
+	display: flex;
+	justify-content: center;
+}
+
 </style>
 
 <div>
-<h3>로그인 페이지</h3>
-<hr>
+<strong style="font-size: 18px;">Whospet </strong><span>Account</span>
 </div>
-
+<hr>
+<div id="logingFullDiv" style="border: 1px solid #ccc;">
 	<div style="width: 500px; height:300px; margin: 0 auto;">
+	
+	<div id="loginImg">
+		<div style="padding: 40px;">
+			<a href="/"><img alt="" src="/resources/img/logo2.png" style="width: 100%"></a>
+		</div>
+	
+	</div>
+	
+	
 	<form class="form-horizontal" action="/login/login" method="post">
 	  
 	  <div class="form-group">
@@ -93,26 +116,25 @@
 	          <input type="checkbox" id="memoryId" name="memoryId" checked="checked"> 아이디 기억하기
 	        </label>
 	      </c:otherwise>	
-	      </c:choose>
-	       <button type="submit" class="btn btn-primary" style="margin-left: 20px">로그인</button>
-	      <!-- 카카오톡 로그인  -->
-	      <a id="custom-login-btn" href="javascript:loginWithKakao()"><button type="button" class="btn btn-warning">Kakao 로그인</button></a>      
+	      </c:choose>  
+			<span style="padding-left: 50px;"><a href="/login/searchId">아이디 찾기</a> / 
+			<a href="/login/searchPw">비밀번호 찾기</a></span>
 	      </div>
 	    </div> 
 	  </div>
 	  
+	  <div class="form-group">
+	    <div class="col-sm-offset-2 col-sm-10">
+	       <button type="submit" class="btn btn-sm btn-primary">로그인</button>
+	      <!-- 카카오톡 로그인  -->
+	      <a id="custom-login-btn" href="javascript:loginWithKakao()"><button type="button" class="btn btn-sm btn-warning">Kakao 로그인</button></a>      
+	    </div> 
+	  </div>
+	  
 	</form>
-	
-	<!-- 아이디 찾기 비멀번호 찾기 테스트 -->
-	<div class="col-sm-offset-4 col-sm-10">
-		<ol class="breadcrumb">
-		  <li><a href="/login/searchId">아이디 찾기</a></li>
-		  <li><a href="/login/searchPw">비밀번호 찾기</a></li>
-		</ol>
 	</div>
-	
-	</div>
-	
+</div>
+<hr>	
 <p id="token-result"></p>
 	
 <%@ include file="/WEB-INF/views/layout/footerUser.jsp" %>
