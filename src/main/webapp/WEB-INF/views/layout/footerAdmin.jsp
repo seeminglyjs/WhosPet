@@ -5,7 +5,7 @@
   <div class="footerInfo">
         <footer>
             <div class="container">
-                <div style="display: flex; justify-content: center; border-bottom: 1px solid white; padding-left: 70px;">
+                <div style="display: flex; justify-content: center; border-bottom: 1px solid white; padding-left: 50px;">
                     <div>
 						<a href="/admin"><img alt="로고" src="/resources/img/footerlogo.png" id="footerLogo"></a>
                     </div>
