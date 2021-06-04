@@ -6,50 +6,231 @@
 
 <c:import url="/WEB-INF/views/layout/headerAdmin.jsp" /> 
 
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	//수량 업버튼
+	$(".prod-quantity-plus").click(function() {
+		console.log(".prod-quantity-plus clicked")
+		var quantity = $("#quantity").val();//document.getElementById("quantity").value;
+		quantity++;
+		$("#quantity").val(quantity);
+		var sAmount = '${shop.sAmount }';
+		var totalAmount = quantity * sAmount;
+		$("#totalAmount").val(totalAmount);
+		$("#printTotalAmount").html(totalAmount);
+
+		
+	/* 	$.ajax({
+			type: "get" //요청 메소드
+			, url: "/shop/updownbutton" //요청 URL
+			, data: {
+				sAmount:${shop.sAmount},
+				quantity:quantity
+			} //요청 파라미터
+			, dataType: "" //응답받은 데이터의 형식
+			, success: function( res ) { //AJAX 성공 시 콜백함수
+				console.log("성공")
+				
+				console.log( res ) //응답 데이터 확인
+				
+				console.log( res.result )
+				
+				// 화면에 출력(변경)될 값을 적용해줘야한다
+				$("#upbutton").html(res); //응답데이터 html 반영 코드
+				$("#quantity").val(quantity);
+				//사용 예시
+// 				if( res.result ) {
+// 				} else {
+// 				}
+				
+			}
+			, error: function() { //AJAX 실패 시 콜백함수
+				console.log("실패")
+				
+			}
+		}) */
+		
+	})
+	
+	//수량 다운버튼
+	$(".prod-quantity-minus").click(function() {
+		console.log(".prod-quantity-minus clicked")
+		var quantity = $("#quantity").val();//document.getElementById("quantity").value;
+		if(quantity <= 1){
+			alert('수량이 1보다 작을 수 없습니다.');
+			return false;
+		}
+		quantity--;
+		$("#quantity").val(quantity);
+		var sAmount = '${shop.sAmount }';
+		var totalAmount = quantity * sAmount;
+		$("#totalAmount").val(totalAmount);
+		$("#printTotalAmount").html(totalAmount);
+		
+		/* if( quantity > 0 ){
+			
+			$.ajax({
+				type: "get" //요청 메소드
+				, url: "/shop/updownbutton" //요청 URL
+				, data: {
+					sAmount:${shop.sAmount},
+					quantity:quantity
+				} //요청 파라미터
+				, dataType: "" //응답받은 데이터의 형식
+				, success: function( res ) { //AJAX 성공 시 콜백함수
+					console.log("성공")
+					
+					console.log( res ) //응답 데이터 확인
+					
+					console.log( res.result )
+					
+					// 화면에 출력(변경)될 값을 적용해줘야한다
+					$("#upbutton").html(res); //응답데이터 html 반영 코드
+					$("#quantity").val(quantity);
+					//사용 예시
+	// 				if( res.result ) {
+	// 				} else {
+	// 				}
+					
+				}
+				, error: function() { //AJAX 실패 시 콜백함수
+					console.log("실패")
+					
+				}
+			})
+		} */
+		
+	})
+	
+	//수량이 숫자입력시 변경
+	$(".btnQuantity").keyup(function() {
+		console.log("숫자입력 clicked")
+		var quantity = $("#quantity").val();//document.getElementById("quantity").value;
+		if(quantity < 1 && quantity != ''){
+			alert('수량이 1보다 작을 수 없습니다.');
+			$("#quantity").val(1);
+			return false;
+		}else if(quantity == ''){
+			$("#printTotalAmount").html('${shop.sAmount}');
+			return false;
+		}
+		$("#quantity").val(quantity);
+		var sAmount = '${shop.sAmount }';
+		var totalAmount = quantity * sAmount;
+		$("#totalAmount").val(totalAmount);
+		$("#printTotalAmount").html(totalAmount);
+		
+		
+		
+	})
+
+	
+	
+})
+
+
+</script>
+
+<style>
+
+div.left {
+	float: left;
+	width: 50%;	
+}
+
+div.right {
+	float: right;
+	width: 50%;
+}
+
+
+.btnQuantity {
+	font-size: 20px;
+	width: 50px;
+	height: 20px;
+}
+
+/* 수량변경 화살표 제거 */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.btn {
+	width: 150px;
+}
+
+#upbutton {
+	font-size: 50px;
+}
+</style>
+
+
+
 <div class="container">
 
 <h1>상품 상세 정보</h1>
 
-<div align="center">
-<img alt="섬네일" src="/resources/shopimgupload/${thumbnail.siStoredFilename }" style="width: 150px;">
+<div class="left">
+<img alt="섬네일" src="/resources/shopimgupload/${thumbnail.siStoredFilename }" style="width: 400px; height: 350px;">
 </div>
+
+<div class="right">
+
+<input type="hidden" id="sNo" name="sNo" value="${shop.sNo }" >
+<input type="hidden" id="sProductType" name="sProductType" value="${shop.sProductType }" />
+<input type="hidden" id="sDate" name="sDate" value="${shop.sDate }" />
+<input type="hidden" id="sQuantity" name="sQuantity" value="${shop.sQuantity }" />
+<input type="hidden" id="totalAmount" name="totalAmount" value=""/>
 
 <table class="table table-striper table-hover">
 
-<tr hidden="">
-	<th>상품번호</th><td>${shop.sNo }</td>
+<tr>
+	<td>${shop.sName }</td>
 </tr>
 
 <tr>
-	<th>상품명</th><td>${shop.sName }</td>
+	<td>${shop.sAmount } 원</td>
 </tr>
+
 
 <tr>
-	<th>상품종류</th><td>${shop.sProductType }</td>
+	<th>상품소개</th>
 </tr>
-
-<tr>
-	<th>상품금액</th><td>${shop.sAmount }원</td>
-</tr>
-
-<tr>
-	<th>상품수량</th><td>${shop.sQuantity }개</td>
-</tr>
-
-<tr>
-	<th>등록날짜</th><td><fmt:formatDate value="${shop.sDate }" pattern="yy년MM월dd일 HH시mm분"/></td>
-</tr>
-
-<tr>
-	<th>상품소개</th><td>${shop.sContent }</td>
-</tr>
-
-
 </table>
+
+<div style="height: 200px;">
+${shop.sContent }
 </div>
 
+<div class="prod-buy-quantity">
+	<input type="number" id="quantity" name="quantity" class="btnQuantity" value="1" autocomplete="off" min="1">
+		<div style="display:table-cell; vertical-align: top;" >
+			<button class="prod-quantity-plus" >⬆</button>
+			<button class="prod-quantity-minus">⬇</button>
+		</div>
+</div>
+
+<a href="/"><button class="btn btn-default">장바구니</button></a>
+<a href=""><button class="btn btn-warning">구매하기</button></a>
+
+<div id="printTotalAmount">
+${shop.sAmount }
+</div>
+
+</div><!-- .right -->
+</div>
+
+
+<br><hr><br><br>
+
+
+
+
 <c:forEach var="contentImg" items="${shopImg }">
-<div>
+<div align="center">
 <img alt="이미지" src="/resources/shopimgupload/${contentImg.siStoredFilename }" style="width: 900px;">
 </div>
 </c:forEach>
