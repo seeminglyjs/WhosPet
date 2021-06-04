@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.one.whospet.dto.Board;
 import com.one.whospet.dto.Booking;
 import com.one.whospet.dto.Hospital;
+import com.one.whospet.dto.Payment;
 import com.one.whospet.dto.Point;
 import com.one.whospet.dto.ShopBasket;
 import com.one.whospet.dto.User;
@@ -204,6 +205,34 @@ public interface MypageService {
 	 * @return
 	 */
 	public int deleteBasket(int sbNo);
+
+	/**
+	 * 구매이력 페이징
+	 * @param data
+	 * @return
+	 */
+	public MypageBoardPaging getPayPaging(HashMap<String, Object> data);
+
+	/**
+	 * 구매이력 목록
+	 * @param data
+	 * @return
+	 */
+	public List<Payment> paymentList(HashMap<String, Object> data);
+
+	/**
+	 * 장바구니 아이템 추가
+	 * @param sbNo
+	 * @return
+	 */
+	public int plusItemBasket(int sbNo);
+
+	/**
+	 * 장바구니 아이템 감소
+	 * @param sbNo
+	 * @return
+	 */
+	public int minusItemBasket(int sbNo);
 
 
 
