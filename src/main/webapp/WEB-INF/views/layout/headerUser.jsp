@@ -62,6 +62,8 @@ $(document).ready(function(){
 /*컨테이너 전체 넓이 지정  */
 .container{
 	width:1100px;
+	min-width:1100px;
+	max-width:none!important;
 }
 /*전체를 감싸는 div  */
 #all{
@@ -150,6 +152,8 @@ $(document).ready(function(){
 /*--------------header 영역 css 끝 ------------------  */
 
 
+@grid-float-breakpoint : 0;
+@screen-xs-max  : 0;
 
 
 
@@ -163,7 +167,7 @@ $(document).ready(function(){
 <div id="headerDiv" class="container">
 
 	<!-- 이미지 로고 -->
-	<div class="inlineHeader" style="padding-top:">
+	<div class="inlineHeader">
 		<a href="/"><img alt="로고" src="/resources/img/logo2.png" id="headerLogo"></a>
 	</div>
 	
