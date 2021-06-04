@@ -42,6 +42,10 @@ position: relative;
 top: -100px;
 left: 130px;
 }
+
+a{
+color:black;}
+
 </style>
 
 <div id="boardtitle">
@@ -70,13 +74,13 @@ left: 130px;
 		<td><a href="/mypage/bookingDetail?bookno=${booklist.bookNo }">${booklist.bookNo }</a></td>
 		<td><a href="/mypage/bookingDetail?bookno=${booklist.bookNo }">		
 		<c:if test='${booklist.bookStatus eq "Y" }'>
-		<button type="button" class="btn btn-primary">예약완료</button>
+		<button type="button" class="btn btn-warning">예약완료</button>
 		</c:if>
 		<c:if test='${booklist.bookStatus eq "N" }'>
-		<button type="button" class="btn btn-danger">예약취소</button>
+		<button type="button" class="btn btn-secondary">예약취소</button>
 		</c:if>
 		<c:if test='${booklist.bookStatus eq "W" }'>
-		<button type="button" class="btn btn-secondary">예약대기</button>
+		<button type="button" class="btn btn-default">예약대기</button>
 		</c:if></a></td>
 		<td><a href="/mypage/bookingDetail?bookno=${booklist.bookNo }">${booklist.hospital.hName }</a></td>
 		<td><fmt:formatDate value="${booklist.bookDate }" pattern="yy-MM-dd"/></td>

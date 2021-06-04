@@ -41,6 +41,10 @@ position: relative;
 top: -100px;
 left: 130px;
 }
+
+a{
+color: black;
+}
 </style>
 
 <div id="boardtitle">
@@ -72,13 +76,13 @@ left: 130px;
 ('/mypage/hosBookingDetail?bookno=${booklist.bookNo }','write','width=450,height=600,left=300, top=260, location=no,status=no,scrollbars=yes')">
 	
 		<c:if test='${booklist.bookStatus eq "Y" }'>
-		<button type="button" class="btn btn-primary">예약완료</button>
+		<button type="button" class="btn btn-warning">예약완료</button>
 		</c:if>
 		<c:if test='${booklist.bookStatus eq "N" }'>
-		<button type="button" class="btn btn-danger">예약반려</button>
+		<button type="button" class="btn btn-secondary">예약반려</button>
 		</c:if>
 		<c:if test='${booklist.bookStatus eq "W" }'>
-		<button type="button" class="btn btn-secondary">예약대기</button>
+		<button type="button" class="btn btn-default">예약대기</button>
 		</c:if></a></td>
 		<td><a href="#" onclick="window.open
 ('/mypage/hosBookingDetail?bookno=${booklist.bookNo }','write','width=450,height=600,left=300, top=260, location=no,status=no,scrollbars=yes')">${booklist.hospital.hName }</a></td>

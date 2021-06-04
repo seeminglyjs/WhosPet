@@ -44,6 +44,13 @@ $(function(){
 
 
 </script>
+<style type="text/css">
+#btnBox{
+position: relative;
+top: 5px;
+left: 120px;
+}
+</style>
 </head>
 <body>
 <form method="post" id="form" >
@@ -56,53 +63,53 @@ $(function(){
 <!-- 테이블 시작 -->
 <table class="table table-bordered">
 <tr>
-<td class="info" style="width: 30%;">
+<td class="active" style="width: 30%;">
 예약번호</td><td colspan="3">${view.bookNo }</td>
 </tr>
 <tr>
-<td class="info">
+<td class="active">
 예약상태</td><td colspan="3">${view.bookStatus }</td>
 <tr>
-<td class="info">
+<td class="active">
 예약날짜</td><td colspan="3">${view.bookDate }</td>
 </tr>
 <tr>
-<td class="info">
+<td class="active">
 예약시간</td><td>${view.bookHour }</td>
 </tr>
 <tr>
-<td class="info">
+<td class="active">
 예약정보</td><td>${view.bookPetInfo }</td>
 </tr>
 <tr>
-<td class="info">
+<td class="active">
 예약내용</td><td>${view.bookText }</td>
 </tr>
 <tr>
-<td class="info">
+<td class="active">
 병원이름</td><td>${view.hospital.hName }</td>
 </tr>
 <tr>
-<td class="info">
+<td class="active">
 병원주소</td><td>${view.hospital.hRoadAddress } ${view.hospital.hDetailAddress }</td>
 </tr>
 <tr>
-<td class="info">
+<td class="active">
 병원시간</td><td>${view.hospital.hHour }</td>
 </tr>
 <tr>
-<td class="info">
+<td class="active">
 병원연락처</td><td>${view.hospital.hTel }</td>
 </tr>
 <tr>
-<td class="info">
+<td class="active">
 병원정보</td><td>${view.hospital.hInfo }</td>
 </tr>
 </table>
 <!-- .테이블   -->
 <div id="btnBox">
-	<button id="btnApprove" class="btn btn-primary">예약 승인</button>
-	<button id="btnReject" class="btn btn-primary">예약 반려</button>
+	<button id="btnApprove" class="btn btn-warning">예약 승인</button>
+	<button id="btnReject" class="btn btn-default">예약 반려</button>
 </div>
 </form>
 </body>
