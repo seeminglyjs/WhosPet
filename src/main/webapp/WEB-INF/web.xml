@@ -48,5 +48,18 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
+	  <error-page>
+	    <error-code>404</error-code>
+	    <location>/error/404errorPage</location>
+	  </error-page>
+	  <error-page>
+	    <error-code>500</error-code>
+	    <location>/error/500errorPage</location>
+	  </error-page>
+	  <error-page>
+	    <error-code>405</error-code>
+	    <location>/error/405errorPage</location>
+	  </error-page>
+
 
 </web-app>

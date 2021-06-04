@@ -151,7 +151,7 @@ function forwardCno(param){
 	
 	<div style="padding-bottom: 70px"></div>
 	
-<div id="boardDetailText"  class="text-center" style="min-height: 500px; ">
+<div id="boardDetailText"  class="text-center" style="min-height: 300px; ">
 
 
 <c:if test="${not empty fileList }">

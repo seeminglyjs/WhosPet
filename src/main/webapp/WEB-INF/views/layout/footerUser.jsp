@@ -5,11 +5,11 @@
   <div class="footerInfo">
         <footer>
             <div class="container">
-                <div class="row">
-                    <div class="col-sm-6 col-md-3 item">
+                <div style="display: flex; justify-content: center; border-bottom: 1px solid white; padding-left: 70px;">
+                    <div>
 						<a href="/"><img alt="로고" src="/resources/img/footerlogo.png" id="footerLogo"></a>
                     </div>
-                    <div class="col-sm-6 col-md-3 item" style="padding-left: 50px">
+                    <div style="padding-left: 70px">
                         <h3>Services</h3>
                         <ul class="footerlist">
                             <li><a href="/">메인 화면</a></li>
@@ -17,12 +17,11 @@
                             <li><a href="/board/list">WhosPet 게시판</a></li>
                         </ul>
                     </div>
-                    <div class="col-md-6 item text">
+                    <div style="padding-left: 70px;">
                         <h3>WhosPet</h3>
                         <p>Kh정보 교육원 파이널 프로젝트 1조 [ 프로젝트: WhosPet ]</p>
                         <p>Groups: 강민서, 고이삭, 기보람, 손홍백, 유상우, 장성우</p>
                     </div>
-                    <div class="col item social"><a href="#"><i class="icon ion-social-facebook"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-instagram"></i></a></div>
                 </div>
                 <div class="text-center" style="padding-top: 12px;">
                 <p class="copyright">Copyright © WhosPet 2021. All Rights reserved</p>
@@ -40,11 +39,11 @@
 
 /* 전체 footer div*/
 #footerDiv{
-	
 	position: absolute;
     left: 0;
     bottom: 0;
-    width: 100%;
+   	width:100%;
+	min-width: 1120px;
 	background-color: #fff;
 }
 

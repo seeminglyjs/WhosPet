@@ -31,6 +31,7 @@ $(document).ready(function(){
 /*컨테이너 전체 넓이 지정  */
 .container{
 	width:1100px;
+	max-width:none!important;
 }
 /*전체를 감싸는 div  */
 #all{
