@@ -172,7 +172,7 @@ $(document).ready(function(){
 	padding-bottom: 20px;	
 }
 
-nav {
+#hNav {
 	background-color: #f8f8f8;
     border-color: #e7e7e7;
 	border-bottom: 1px solid #ccc;
@@ -180,23 +180,23 @@ nav {
 	box-shadow: inset 0 1px 0 rgb(255 255 255 / 15%), 0 1px 5px rgb(0 0 0 / 8%);
 }
 
-nav ul {
+#hNav ul {
 	font-size: 0;
 	margin: 0;
 	padding: 0;
 }
 
-nav ul li {
+#hNav ul li {
 	display: inline-block;
 	position: relative;
 }
 
-nav ul li a {
+#hNav ul li a {
 	font-weight:bold;
 	color: #777;
 	display: block;
 	font-size: 14px;
-	padding: 15px 20px;
+	padding: 15px 15px;
 	transition: 0.3s linear;
 }
 
@@ -204,45 +204,45 @@ a{
  	text-decoration:none !important;
 }
 
-nav a:visited {
+#hNav a:visited {
 	color:#777;
 }
 
-nav ul li:hover a {
+#hNav ul li:hover a {
 	color:#333;	
 }
 
-nav ul li ul {
+#hNav ul li ul {
 	display: none;
 	position: absolute;
 	width: 150px;
 	border: 0.5px solid #aaaaaa;
 	background: #fff;
 	border-radius:0px 0px 10px 10px;
-	padding-bottom: 10px;
+	padding: 6px 3px;
 }
 
-nav ul li ul li {
+#hNav ul li ul li {
 	border-collapse: collapse !important;
 	display: block;
 }
 
-nav ul li ul li:first-child {
+#hNav ul li ul li:first-child {
 	border-top: none;
 }
 
-nav ul li ul li a {
+#hNav ul li ul li a {
 	color: #777 !important;
 	display: block;
-	padding: 10px 14px;
+	padding: 0px 14px;
 	line-height: 1.6em;
 }
 
-nav ul li ul li a:hover {
+#hNav ul li ul li a:hover {
 	text-decoration:underline !important;
 }
 
-nav .fa.fa-angle-down {
+#hNav .fa.fa-angle-down {
 	margin-left: 6px;
 }
 
@@ -309,31 +309,78 @@ nav .fa.fa-angle-down {
 <!-- 네비게이션바 영역  -->
 
 	<div id="navDiv">
-	<nav>
+	<nav id="hNav">
 		<div class="container">
 
 		<ul>
-			<li><a href="#">증상/질병검색 <span class="caret"></span></a>
+			<li><a href="#">회원관리 <span class="caret"></span></a>
+		      <ul class="dropdown-menu" role="menu">
+		        <li><a href="/admin/user/list">회원 조회</a></li>
+		        <li class="divider"></li>
+		        <li><a href="/admin/user/enroll">회원 등록</a></li>
+		      </ul>
+			</li>
 			
+			<li><a href="#">병원관리 <span class="caret"></span></a>
+		      <ul class="dropdown-menu" role="menu">
+		        <li><a href="/admin/hospitalList">병원 조회/승인</a></li>
+		      </ul>
 			</li>
-			<li><a href="#">병원예약 <span class="caret"></span></a></li>
+			
+			<li><a href="#">상품관리 <span class="caret"></span></a>
+		      <ul class="dropdown-menu" role="menu">
+		        <li><a href="/shop/list">상품 목록</a></li>
+		        <li class="divider"></li>
+		        <li><a href="/admin/shopList">상품 목록 관리</a></li>
+		        <li class="divider"></li>
+		        <li><a href="#">메뉴3</a></li>
+		        <li class="divider"></li>
+		        <li><a href="#">메뉴4</a></li>
+		      </ul>
+			</li>
+			
 			<li>
-				<a href="#">게시판<span class="caret"></span></a>
-				<ul>
-					<li><a href="#">자유게시판</a></li>
-					<li><a href="#">Category Two</a></li>
-					<li><a href="#">Category Three</a></li>
-				</ul>
+			  <a href="#">게시판 <span class="caret"></span></a>
+		      <ul class="dropdown-menu" role="menu">
+		        <li><a href="/admin/board/list?bType=F">자유게시판관리</a></li>
+		        <li class="divider"></li>
+		        <li><a href="/admin/board/list?bType=T">치료게시판관리</a></li>
+		        <li class="divider"></li>
+		        <li><a href="/admin/board/list?bType=R">리뷰게시판관리</a></li>
+		      </ul>
 			</li>
+			
 			<li>
-				<a href="#">상품구매 <span class="caret"></span></a>
-				<ul>
-					<li><a href="#">Service One</a></li>
-					<li><a href="#">Service Two</a></li>
-					<li><a href="#">Service Three</a></li>
-				</ul>
+				<a href="#">포인트관리 <span class="caret"></span></a>
+			    <ul class="dropdown-menu" role="menu">
+			      <li><a href="/admin/pointManage">포인트관리</a></li>
+			    </ul>
 			</li>
-			<li><a href="#">진료비조회 <span class="caret"></span></a></li>
+			
+			<li><a href="#">진료비관리 <span class="caret"></span></a>
+		      <ul class="dropdown-menu" role="menu">
+		        <li><a href="#">메뉴1</a></li>
+		        <li class="divider"></li>
+		        <li><a href="#">메뉴2</a></li>
+		        <li class="divider"></li>
+		        <li><a href="#">메뉴3</a></li>
+		        <li class="divider"></li>
+		        <li><a href="#">메뉴4</a></li>
+		      </ul>
+			</li>
+			
+		    <c:if test="${not empty login }">
+    		<c:if test="${not empty gradeCheck }">	
+			<li><a href="#">페이지전환 <span class="caret"></span></a>
+      			<ul class="dropdown-menu" role="menu">
+	        		<li><a href="/">유저메인</a></li>
+	        		<li class="divider"></li>
+	        		<li><a href="/admin">관리자메인</a></li>
+     			</ul>
+			</li>
+		  	</c:if>
+  			</c:if>
+			
 		</ul>
 	</div>
 </nav>
