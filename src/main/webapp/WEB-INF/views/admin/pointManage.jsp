@@ -19,8 +19,8 @@ $(document).ready(function(){
 		            data : JSON.stringify(go),
 		            contentType: 'application/json; charset=UTF-8',
 		            dataType : 'html',
-		            error: function(xhr, status, error){
-// 		                alert(error);
+		            error: function(){
+		                alert("회원번호가 없거나 잘못 입력하셨습니다");
 		            },
 		            success : function(data){
 		            	$('#list').html(data);
@@ -35,6 +35,10 @@ $(document).ready(function(){
 		        	"poPlus" :$('#poPlus').val(),
 		        	"poPlusY" : $('#poPlusY').val()
 	        }
+	        if($('#poPlus').val() =="" ){
+	        	alert("부여할 포인트를 입력해주세요!'");
+	        	return
+	        } else{
 	        $.ajax({
 	            type : 'post',
 	            url : "/admin/pointAdd",
@@ -53,6 +57,7 @@ $(document).ready(function(){
 // 	            	location.reload(true);
 	            },
 	        });
+	        }
 		})
 		
 	})
