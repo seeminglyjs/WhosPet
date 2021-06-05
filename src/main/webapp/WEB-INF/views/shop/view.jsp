@@ -100,8 +100,12 @@ $(document).ready(function(){
 				}
 			})
 		} */
-		
 	})
+	
+	
+	
+	
+	
 	
 	//수량이 숫자입력시 변경
 	$(".btnQuantity").keyup(function() {
@@ -126,6 +130,38 @@ $(document).ready(function(){
 	})
 
 	
+	// 장바구니 버튼 눌렀을 때 상품번호, 
+	$("#basket").click(function(){
+		console.log("basket 버튼 클릭");
+		var quantity = $("#quantity").val();
+		
+		$.ajax({
+			type: "POST" //요청 메소드
+			, url: "/shop/basket" //요청 URL
+			, data: {
+				sNo: ${shop.sNo},
+				quantity: quantity,
+				uNo: ${shop.uNo}
+			} //요청 파라미터
+			, dataType: "" //응답받은 데이터의 형식
+			, success: function( res ) { //AJAX 성공 시 콜백함수
+				alert('장바구니 성공햇습니다.');
+				console.log("성공")
+				
+				
+				// 화면에 출력(변경)될 값을 적용해줘야한다
+				$("#upbutton").html(res); //응답데이터 html 반영 코드
+				$("#quantity").val(quantity);
+			
+				
+			}
+			, error: function() { //AJAX 실패 시 콜백함수
+				alert('장바구니 실패햇습니다.');
+				console.log("실패")
+			}
+		})
+		
+	})
 	
 })
 
@@ -178,12 +214,7 @@ input[type="number"]::-webkit-inner-spin-button {
 </div>
 
 <div class="right">
-
 <input type="hidden" id="sNo" name="sNo" value="${shop.sNo }" >
-<input type="hidden" id="sProductType" name="sProductType" value="${shop.sProductType }" />
-<input type="hidden" id="sDate" name="sDate" value="${shop.sDate }" />
-<input type="hidden" id="sQuantity" name="sQuantity" value="${shop.sQuantity }" />
-<input type="hidden" id="totalAmount" name="totalAmount" value=""/>
 
 <table class="table table-striper table-hover">
 
@@ -208,13 +239,13 @@ ${shop.sContent }
 <div class="prod-buy-quantity">
 	<input type="number" id="quantity" name="quantity" class="btnQuantity" value="1" autocomplete="off" min="1">
 		<div style="display:table-cell; vertical-align: top;" >
-			<button class="prod-quantity-plus" >⬆</button>
-			<button class="prod-quantity-minus">⬇</button>
+			<button type="button" class="prod-quantity-plus" >⬆</button>
+			<button type="button" class="prod-quantity-minus">⬇</button>
 		</div>
 </div>
 
-<a href="/"><button class="btn btn-default">장바구니</button></a>
-<a href=""><button class="btn btn-warning">구매하기</button></a>
+<a href="/"><button id="basket" class="btn btn-default">장바구니</button></a>
+<a href=""><button id="buy" class="btn btn-warning">구매하기</button></a>
 
 <div id="printTotalAmount">
 ${shop.sAmount }
@@ -237,11 +268,6 @@ ${shop.sAmount }
 
 <br><br><br>
 
-<div align="center">
-	<a href="/admin/shopUpdate?sNo=${shop.sNo }"><button class="btn btn-primary">수정</button></a>
-	<a href="/admin/shopDelete?sNo=${shop.sNo }"><button class="btn btn-danger">삭제</button></a>
-</div>
-	
 
 <!-- 페이징 임포트 -->
 

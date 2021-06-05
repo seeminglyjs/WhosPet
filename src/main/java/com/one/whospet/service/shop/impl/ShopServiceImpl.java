@@ -254,6 +254,14 @@ private static final Logger logger = LoggerFactory.getLogger(ShopServiceImpl.cla
 		shopDao.deleteShopBySNo(shop);
 	}
 
+	//장바구니 버튼 클릭시 장바구니 추가
+	@Override
+	public int basketAdd(Shop basketInfo) {
+		logger.info("BasketAdd, basketInfo : {}", basketInfo);
+		
+		return shopDao.insertBasket(basketInfo);
+	}
+
 	
 
 

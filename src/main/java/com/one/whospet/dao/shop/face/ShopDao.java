@@ -106,6 +106,14 @@ public interface ShopDao {
 	public void deleteShopBySNo(Shop shop);
 
 
+	/**
+	 * 장바구니에 넣고자 하는 수량 + 상품정보 를 장바구니 DB에 삽입하기
+	 * 
+	 * @param basketInfo 장바구니 정보
+	 */
+	public int insertBasket(Shop basketInfo);
+
+
 	
 
 	

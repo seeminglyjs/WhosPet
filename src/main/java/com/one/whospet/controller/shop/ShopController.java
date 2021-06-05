@@ -1,7 +1,6 @@
 package com.one.whospet.controller.shop;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -14,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -244,8 +244,48 @@ public class ShopController {
 	
 	//------------------------------------------------------------
 	//------------------------------------------------------------
+	//장바구니
 	
+	@RequestMapping(value="/shop/basket", method=RequestMethod.POST)
+	@ResponseBody
+	public String basketAdd( Shop shop, HttpSession session ) {
+		logger.info("/shop/basket [POST]");
+		logger.info("/shop/basket, shop : {} ", shop);
+		logger.info("/shop/basket, shop.getQuantity() : {} ", shop.getQuantity());
+		logger.info("/shop/basket, session.getAttribute : {}", session.getAttribute("user"));
+		User user = (User) session.getAttribute("user");
+		int uNo = user.getuNo();
+		
+		//상품번호에 맞는 상품정보 받아오기
+		Shop basketInfo = shopService.view(shop);
+		//세션의 uNo을 장바구니에 담기
+		basketInfo.setuNo(uNo);
+		//장바구니에 담고자하는 수량을 장바구니 정보에 입력하기
+		basketInfo.setQuantity(shop.getQuantity());
+		logger.info("/shop/basket, basketInfo : {} ", basketInfo);
+		
+		int res = shopService.basketAdd(basketInfo);
+		logger.info("res : {}",res);
+
+		if( res > 0) {
+			return "success";
+		} 
+		return "sss";
+	}
 	
 	
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
