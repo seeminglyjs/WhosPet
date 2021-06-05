@@ -232,7 +232,7 @@ public class MypageController {
 		
 
 		
-//		// 메일 전송 객체 생성 
+		// 메일 전송 객체 생성 
 //		final MimeMessagePreparator preparator = new MimeMessagePreparator() {
 //		@Override public void prepare(MimeMessage mimeMessage) throws Exception { 
 //		final MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
@@ -246,7 +246,7 @@ public class MypageController {
 //					
 //				}; 
 //				mailSender.send(preparator); //메일을 보낸다.
-		
+//		
 		//마이페이지 메인으로 리다이렉트
 		return "redirect:/mypage/user";
 		
@@ -499,5 +499,11 @@ public class MypageController {
 		
 		return "redirect: /mypage/info";
 	
+	}
+	
+	//결제
+	@RequestMapping(value="/pay/complete", method=RequestMethod.POST)
+	public String paytest() {
+		return "redirect:/";
 	}
 }
