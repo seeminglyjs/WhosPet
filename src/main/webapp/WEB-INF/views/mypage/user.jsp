@@ -28,18 +28,13 @@ $(document).ready(function(){
 })
 </script>
 <style>
-@font-face {
-    font-family: 'IBMPlexSansKR-Regular';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
+
 
 table {
 margin-left: 520px; 
 margin-right: 0px;
 border-left: 20px double #f6dcbf;
-font-family: 'InfinitySans-RegularA1';
+font-family: 'NEXON Lv1 Gothic OTF';
 text-align: center;
 }
 
@@ -65,7 +60,7 @@ color: #fff;
 font-size: inherit;
 padding: 10px 20px;
 box-shadow: inset 0 0 3px white; 
-font-family: 'IBMPlexSansKR-Regular';
+font-family: 'NEXON Lv1 Gothic OTF';
 -webkit-transition: background-color 0.2s;
 transition: background-color 0.2s;
 
@@ -93,7 +88,7 @@ left: 280px;
 #buttons{
 position: relative;
 top: 80px;
-left: 400px;
+left: 640px;
 
 }
 
@@ -141,9 +136,10 @@ button:active {
 }
 
 #menubar {
-width: 200px;
+width: 230px;
 height: 100px;
 background-color: #f6dcbf;
+font-family: 'NEXON Lv1 Gothic OTF';
 position: relative; left:0;
 padding-top: 10px;
 border-right: 15px solid black;
@@ -151,10 +147,11 @@ float: left;
 }
 
 #menubar2 {
-width: 200px;
+width: 230px;
 height: 500px;
 background-color: white;
 position: relative; left:0; top:0;
+font-family: 'NEXON Lv1 Gothic OTF';
 border-right: 15px solid gray;
 }
 #barlist {
@@ -171,8 +168,9 @@ right:-250px; top:-100px;
 
 #boardtitle{
 position: relative;
-left: 20px;
-font-family: 'InfinitySans-RegularA1';
+top: 15px;
+left: 30px;
+font-family: 'NEXON Lv1 Gothic OTF';
 }
 
 li {
@@ -186,7 +184,7 @@ padding: 10px;
 </style>
 <div id="boardtitle">
 <h1 style="display:inline;">내 정보 </h1><h4 style="display:inline; color: gray;">MyInfo</h4>
-<hr>
+<hr align="left" width="830">
 </div>
 <div id="picture" style="width: 100px; height:80px;">
 <c:if test="${empty upic}"> 
