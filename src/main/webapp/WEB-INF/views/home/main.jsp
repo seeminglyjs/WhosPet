@@ -16,7 +16,7 @@
 }
 
 .listCom table{
-	font-size: 20px;
+	font-size: 17px;
 }
 
 .listCom table a{
