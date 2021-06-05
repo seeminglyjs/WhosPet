@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 
-선택하신 회원의 번호는 ${uNo }입니다
+<span style="font-size: 24px; text-decoration: underline; text-underline-position:under; font-weight: bold;">선택하신 회원의 번호는 No.${uNo }번입니다</span>
 
 
 <table id="boardtable" class="table table-striped table-hover table-condensed">

@@ -42,10 +42,15 @@ $(document).ready(function(){
 	            contentType: 'application/json; charset=UTF-8',
 	            dataType : 'json',
 	            error: function(xhr, status, error){
+	            	console.log("error")
 // 		                alert(error);
 	            },
 	            success : function(data){
-	            	location.reload(true);
+	            	console.log("success")
+// 	            	$('#list').html(data);
+					$("#btnUser").click();
+
+// 	            	location.reload(true);
 	            },
 	        });
 		})
@@ -80,7 +85,8 @@ $(document).ready(function(){
 	
 </div>
 
+<!-- -------------------포인트 테이블이 출력되는 영역-------------------- -->
 <div id="list" style="width:500; height: 500px;">
-<%-- 회원의 아이디는 ${uId} --%>
+
 </div>
 <%@ include file="/WEB-INF/views/layout/footerAdmin.jsp" %>

@@ -15,66 +15,28 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-
 <meta charset="UTF-8">
 <title>WhosPet</title>
 
-<!-- 카카오 api 초기화 -->
-<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-<script type="text/javascript">
-// SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
-Kakao.init('65923a6755abd0443f692b424c69707c');
-// SDK 초기화 여부를 판단합니다. 성공시 true
-console.log(Kakao.isInitialized());
-</script>
-
-<!-- 카카오 api 연결 끊기 로그아웃  -->
-<script type="text/javascript">
-$(document).ready(function(){
-	$("#logout").click(function(){	
-		Kakao.API.request({
-			  url: '/v1/user/unlink',
-			  success: function(response) {
-			    console.log(response);
-			    $(location).attr("href","/login/logout") // 로그아웃 링크 연결
-			  },
-			  fail: function(error) {  
-			    console.log(error);
-			    $(location).attr("href","/login/logout") // 로그아웃 링크 연결
-			  },
-			});		
-	})	
-})
-</script>
-
-
-<script type="text/javascript">
 <!-- 메인 검색기능 자바스크립트  -->
+<script type="text/javascript">
 $(document).ready(function(){
 	$("#searchBtn").click(function(){
 		$(location).attr("href", "/searchList?" + $("#searchContent").val())
 	})
-	
-
 })
 </script>
 
 <style type="text/css">
-@font-face {
-    font-family: 'InfinitySans-RegularA1';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
 /*컨테이너 전체 넓이 지정  */
 .container{
-	width:900px;
+	width:1100px;
+	max-width:none!important;
 }
 /*전체를 감싸는 div  */
 #all{
 	/* footer의 하단 고정을 위한 조건식  */
-	min-height: 1200px;
+	min-height: 1600px;
 	position: relative;
 	padding-bottom: 330px;
 }
@@ -84,7 +46,8 @@ $(document).ready(function(){
 /* 헤더 전체 div */
 #headerDiv{
 	display:flex;
-	margin-bottom: 20px; 
+	margin-bottom: 20px;
+	justify-content: center; 
 }
 
 /* 로고 */
@@ -120,6 +83,7 @@ $(document).ready(function(){
 }
 
 #headerSearchDiv button{
+	width:50px;
     margin: 2px 0 0 0;
     background: none;
     box-shadow: none;
@@ -153,43 +117,7 @@ $(document).ready(function(){
 }
 
 
-#menubar {
-width: 200px;
-height: 100px;
-background-color: #f6dcbf;
-position: relative; left:0;
-padding-top: 10px;
-box-shadow: inset 0 0 8px #EFAE4C;
-border-right: 15px solid black;
-font-family: 'InfinitySans-RegularA1';
-text-align: center;
-}
-
-#menubar2 {
-width: 200px;
-height: 500px;
-background-color: white;
-position: relative; left:0; top:0;
-border-right: 15px solid gray;
-}
-#barlist {
-padding: 30px;
-list-style: none;
-}
-
-#div1{
-width: 700px;
-height: 500px;
-position: relative;
-right:-250px; top:-100px;
-}
-
-li {
-cursor:pointer;
-}
-
-
-
+/*--------------header 영역 css 끝 ------------------  */
 
 
 
@@ -206,7 +134,7 @@ cursor:pointer;
 
 	<!-- 이미지 로고 -->
 	<div class="inlineHeader" style="padding-top:">
-		<a href="/"><img alt="로고" src="/resources/img/logo2.png" id="headerLogo"></a>
+		<a href="/admin"><img alt="로고" src="/resources/img/logo2.png" id="headerLogo"></a>
 	</div>
 	
 
@@ -229,23 +157,17 @@ cursor:pointer;
 	    <ul class="nav navbar-nav">
 	    <li class="dropdown">
 	      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="color:#666666"><i class="glyphicon glyphicon-user"></i></a>      
-	      
-	      <c:if test="${login }">
+ 		  <c:if test="${login }">
 	      <ul class="dropdown-menu" role="menu">
-	        <li><a href="/mypage/user" id="mypage">마이페이지</a></li>
-	        <li class="divider"></li>
-	        <li><a href="#" id="logout">로그아웃</a></li>
+	        <li><a href="/login/logout">로그아웃</a></li>
 	      </ul>
 	      </c:if>
 	      
     	  <c:if test="${empty login }">
 	      <ul class="dropdown-menu" role="menu">
 	        <li><a href="/login/login">로그인</a></li>
-	        <li class="divider"></li>
-	        <li><a href="/join/join">회원가입</a></li>
 	      </ul>
 	      </c:if>
-	      
 	    </li>
 	    </ul>
 	</div>
@@ -263,7 +185,54 @@ cursor:pointer;
         
     <!-- 드롭다운 바 영역  -->
     <li class="dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">증상/질병검색 <span class="caret"></span></a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">회원관리 <span class="caret"></span></a>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href="/admin/user/list">회원 조회</a></li>
+        <li class="divider"></li>
+        <li><a href="/admin/user/enroll">회원 등록</a></li>
+      </ul>
+    </li>
+    
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">병원관리 <span class="caret"></span></a>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href="/admin/hospitalList">병원 조회/승인</a></li>
+      </ul>
+    </li>
+   
+    <li class="">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">상품관리 <span class="caret"></span></a>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href="/shop/list">상품 목록</a></li>
+        <li class="divider"></li>
+        <li><a href="/admin/shopList">상품 목록 관리</a></li>
+        <li class="divider"></li>
+        <li><a href="#">메뉴3</a></li>
+        <li class="divider"></li>
+        <li><a href="#">메뉴4</a></li>
+      </ul>
+    </li>
+    
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">게시판관리 <span class="caret"></span></a>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href="/admin/board/list?bType=F">자유게시판관리</a></li>
+        <li class="divider"></li>
+        <li><a href="/admin/board/list?bType=T">치료게시판관리</a></li>
+        <li class="divider"></li>
+        <li><a href="/admin/board/list?bType=R">리뷰게시판관리</a></li>
+      </ul>
+    </li>
+    
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">포인트관리 <span class="caret"></span></a>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href="/admin/pointManage">포인트관리</a></li>
+      </ul>
+    </li>
+    
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">진료비관리 <span class="caret"></span></a>
       <ul class="dropdown-menu" role="menu">
         <li><a href="#">메뉴1</a></li>
         <li class="divider"></li>
@@ -275,80 +244,21 @@ cursor:pointer;
       </ul>
     </li>
     
+    <c:if test="${not empty login }">
+    <c:if test="${not empty gradeCheck }">
     <li class="dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">병원예약 <span class="caret"></span></a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">페이지전환 <span class="caret"></span></a>
       <ul class="dropdown-menu" role="menu">
-        <li><a href="/hospital/list">병원찾기</a></li>
-                
-        <c:if test="${user.uGrade eq 'H'}">
-	        <li class="divider"></li>
-	        <li><a href="/hospital/register">병원등록</a></li>
-        </c:if>
-        
+        <li><a href="/">유저메인</a></li>
+        <li class="divider"></li>
+        <li><a href="/admin">관리자메인</a></li>
       </ul>
     </li>
-   
-   <li class="dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">게시판 <span class="caret"></span></a>
-      <ul class="dropdown-menu" role="menu">
-        <li><a href="/board/list?bType=F">자유게시판</a></li>
-        <li class="divider"></li>
-        <li><a href="/board/list?bType=T">치료게시판</a></li>
-        <li class="divider"></li>
-        <li><a href="/board/list?bType=R">리뷰게시판</a></li>
-      </ul>
-    </li>
-    
-    <li class="dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">상품구매 <span class="caret"></span></a>
-      <ul class="dropdown-menu" role="menu">
-        <li><a href="/shop/list">전체보기</a></li>
-        <li class="divider"></li>
-        <li><a href="#">메뉴2</a></li>
-        <li class="divider"></li>
-        <li><a href="#">메뉴3</a></li>
-        <li class="divider"></li>
-        <li><a href="#">메뉴4</a></li>
-      </ul>
-    </li>
-    
-    <li class="dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">진료비조회 <span class="caret"></span></a>
-      <ul class="dropdown-menu" role="menu">
-        <li><a href="/treatment/treatmain">진료비 검색</a></li>
-        
-      </ul>
-    </li>
-  
+  	</c:if>
+  	</c:if>
    </ul>
 
    </div>
 </nav>     
 </div><!-- 네비게이션 영역 끝  -->
 <div id="containerAll" class="container"><!-- 콘텐츠 영역 시작  -->
-
-<div id="menubar">
-<h3 style="padding-bottom:15px;">마이페이지</h3>
-<div id="menubar2">
-<ul id="barlist">
-<li id="userinfo"><a href="/mypage/user" style="color:gray;">내 정보</a></li>
-<hr>
-<li id="boardinfo"><a href="/mypage/board" style="color:gray;">작성글 조회</a></li>
-<hr>
-<li id="bookinginfo"><a href="/mypage/booking" style="color:gray;">예약 정보</a></li>
-<hr>
-<li id="pointinfo"><a href="/mypage/point" style="color:gray;">포인트 조회</a></li>
-<hr>
-<li id="payinfo"><a href="/mypage/pay" style="color:gray;">구매내역</a></li>
-<hr>
-<li id="basketinfo"><a href="/mypage/basket" style="color:gray;">장바구니</a></li>
-<!-- 병원 관계자 시에만 보이는 메뉴 -->
-<c:if test="${user.uGrade eq 'H'}"> 
-<hr>
-<li style="color:#e1701a;"><a href="/mypage/hospital" style="color:#e1701a;">병원 등록/조회/삭제</a></li>
-<hr>
-<li style="color:#e1701a;"><a href="/mypage/hosBooking" style="color:#e1701a;">예약현황</a></li>
-</c:if>
-</ul>
-</div>
-</div>

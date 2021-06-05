@@ -15,18 +15,42 @@ $(document).ready(function(){
 <style type="text/css">
 
 
+#detailFullDiv{
+	width: 700px;
+	height: 980px;
+	margin: 0 auto;
+	border: 1px solid #ccc;
+	border-radius: 15px;
+	padding-top: 90px;
+}
+
+
+#loginImg{
+	display: flex;
+	justify-content: center;
+}
+
 </style>
 
-<div id="boardDetailDiv" style="margin: 0 auto; border: 1px solid #ccc;">
-
-	<div  class="text-center" >
-	<h2>${user.uId }님의 정보</h2>
+<div>
+<strong style="font-size: 18px;">Whospet </strong><span>User_Detail</span>
+</div>
+<hr>
+<div id="detailFullDiv">
+	<div style="width: 500px; height:300px; margin: 0 auto;">
+	
+	<div id="loginImg">
+		<div style="padding: 40px;">
+			<a href="/"><img alt="" src="/resources/img/logo2.png" style="width: 100%"></a>
+		</div>
 	</div>
 	
-	<div class="text-left">
-
-	<div style="margin: 0 auto; width: 600px;">
-	<hr>
+	<br>
+	<div  class="text-center" >
+	<h3><strong>${user.uId }님의 정보</strong></h3>
+	</div>
+	<br>
+	
 	<form class="form-horizontal" action="/admin/user/delete" method="post">
 	  
 		<!-- 유저번호 -->
@@ -112,9 +136,9 @@ $(document).ready(function(){
 
 	  <div class="form-group">
 	    <div class="col-sm-offset-2 col-sm-10">    
-	      <button type="button" class="btn btn-sm btn-danger" onclick="history.back()">뒤로</button>   
+	      <button type="button" class="btn btn-sm btn-default" onclick="history.back()">뒤로</button>   
 	      <c:if test='${sessionScope.user.uGrade eq "M" }'>
-		 <button class="btn btn-sm btn-default" type="submit">회원삭제</button>
+		 <button class="btn btn-sm btn-danger" type="submit">회원삭제</button>
 		  </c:if>
 	    </div>
 	  </div>
@@ -123,8 +147,7 @@ $(document).ready(function(){
 	</div>
 	
 	</div>
-	
-</div>
+<hr>
 
 
 <%@ include file="/WEB-INF/views/layout/footerAdmin.jsp" %>

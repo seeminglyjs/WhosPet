@@ -22,6 +22,9 @@ td:nth-child(2) {
 	text-align: left;
 }
 
+a{
+color:black;
+}
 
 
 #boardtitle{

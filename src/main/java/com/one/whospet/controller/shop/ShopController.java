@@ -232,14 +232,15 @@ public class ShopController {
 		Shop view = shopService.view(shop);
 		logger.info("/shop/view 에서 view : {}", view	);
 		
-		model.addAttribute("view", view);
+		int i = shop.getsNo();
+		ShopImg thumbnail = shopService.getAttachThumbnailFile(i);
+		List<ShopImg> shopImg = shopService.getAttachFile(i);
+		
+		model.addAttribute("shop", view);
+		model.addAttribute("thumbnail", thumbnail);
+		model.addAttribute("shopImg", shopImg);
 	}
 	
-	@RequestMapping(value="/shop/view", method=RequestMethod.POST)
-	public void shopViewProc() {
-		logger.info("/shop/view [POST]");
-		
-	}
 	
 	//------------------------------------------------------------
 	//------------------------------------------------------------

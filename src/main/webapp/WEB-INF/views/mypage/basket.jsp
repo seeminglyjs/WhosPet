@@ -97,7 +97,7 @@ left: 620px;
         </td>
 		<td>${basketlist.sbAmount}</td>
 <%-- 		<td><input type="hidden" id="sbNo" name="sbNo" value="${sbNo }"><button id="btnRemove">삭제</button></td> --%>
-		<td><button id="btnRemove" onclick="location.href='/mypage/basket/remove?sbNo=${basketlist.sbNo}'">삭제</button></td>
+		<td><button id="btnRemove" class="btn btn-default" onclick="location.href='/mypage/basket/remove?sbNo=${basketlist.sbNo}'">삭제</button></td>
 	</tr>
 </c:forEach>
 </tbody>
@@ -113,10 +113,10 @@ left: 620px;
 <!-- 페이징 JSP -->
 <%-- <jsp:include page="/WEB-INF/views/util/mypageboardpaging.jsp" /> --%>
 <div id="sum">
-<span style="display:inline; font-size: 32px;">총계 ${sum}원</span>
+<span style="display:inline; font-size: 32px; font-family: 'InfinitySans-RegularA1';">총계 ${sum}원</span>
 </div>
 <div id="button">
-<button style="display:inline;">결제하기</button>
+<button class="btn btn-warning" style="display:inline; ">결제하기</button>
 </div>
 </div><!-- .container -->
 

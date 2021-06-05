@@ -67,9 +67,15 @@ function check(){
   padding-top: 30px;
   padding-bottom: 30px;
   border: 1px solid #ccc;
+  border-radius: 15px;
 }
 </style>
 
+
+<div>
+<strong style="font-size: 18px;">Whospet </strong><span>Update</span>
+</div>
+<hr>
 <div class="container" id="writeDiv">
 	<form action="/board/update" method="post" id="writeForm" enctype="multipart/form-data" onsubmit="return check()">
 		
@@ -94,7 +100,7 @@ function check(){
 			${board.bContent }
 			</textarea>
 		</div>
-		
+		<br>
 		<div style="color: red; font-size: 12px;">※신규 등록시 기존 파일 삭제</div>
 		<input multiple="multiple" type="file" name="file"  accept="image/*"/>
 		
@@ -114,13 +120,13 @@ function check(){
 		</div>
 	</c:if>
 	
-
+	<br>
 	<div style="text-align: center">
-		<button class="btn btn-sm btn-primary" id="btnSave">게시글 수정</button>
-		<button type="button" class="btn btn-sm btn-danger" onclick="history.back()">취소</button>
+		<button class="btn btn-sm btn-primary" id="btnSave">수정</button>
+		<button type="button" class="btn btn-sm btn-default" onclick="history.back()">취소</button>
 	</div>
 </div>	
-	
+<hr>	
 
 
 <!-- 스마트 에디터 스크립트 코드  -->

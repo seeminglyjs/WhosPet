@@ -50,10 +50,6 @@
 	padding-top: 90px;
 }
 
-.breadcrumb{
-	background-color: white;
-	
-}
 
 #loginImg{
 	display: flex;
@@ -66,14 +62,13 @@
 <strong style="font-size: 18px;">Whospet </strong><span>Account</span>
 </div>
 <hr>
-<div id="logingFullDiv" style="border: 1px solid #ccc;">
+<div id="logingFullDiv">
 	<div style="width: 500px; height:300px; margin: 0 auto;">
 	
 	<div id="loginImg">
 		<div style="padding: 40px;">
 			<a href="/"><img alt="" src="/resources/img/logo2.png" style="width: 100%"></a>
 		</div>
-	
 	</div>
 	
 	

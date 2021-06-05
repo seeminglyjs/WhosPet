@@ -350,13 +350,15 @@ public class MypageController {
 		logger.debug(list.get(i).toString());
 		}
 		
-		//총합 계산
-		int sumbasket = mypageService.basketSum(data);
+
+		Integer sumbasket = mypageService.basketSum(data);
+		model.addAttribute("sum", sumbasket);
+		
 		
 		//모델값 전달
 		model.addAttribute("basketlist",list);
 		model.addAttribute("paging", paging);
-		model.addAttribute("sum", sumbasket);
+		
 		
 		
 	}

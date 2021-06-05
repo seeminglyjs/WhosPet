@@ -452,12 +452,35 @@ function check(){
 	font-size: 0.8em;
 	color: green;
 }
+#enrollFullDiv{
+	width: 700px;
+	height: 980px;
+	margin: 0 auto;
+	border: 1px solid #ccc;
+	border-radius: 15px;
+	padding-top: 90px;
+}
+
+
+#loginImg{
+	display: flex;
+	justify-content: center;
+}
 
 </style>
 
+<div>
+<strong style="font-size: 18px;">Whospet </strong><span>Enroll</span>
+</div>
+<hr>
+<div id="enrollFullDiv">
 	<div style="width: 500px; height:300px; margin: 0 auto;">
-	<h2>회원등록</h2>
-	<hr>
+	
+	<div id="loginImg">
+		<div style="padding: 40px;">
+			<a href="/"><img alt="" src="/resources/img/logo2.png" style="width: 100%"></a>
+		</div>
+	</div>
 	<form class="form-horizontal" action="/admin/user/enroll" method="post" onsubmit="return check()">
 	  
 	  <div class="form-group">
@@ -515,7 +538,7 @@ function check(){
 	    <label for="postcode" class="col-sm-2 control-label">주소</label>
 	    <div class="col-sm-10">
 	    <input type="text" class="form-control" id="sample6_postcode" name="postcode" placeholder="우편번호" readonly="readonly">
-	    <input type="button" class="btn btn-default" onclick="sample6_execDaumPostcode()" id="postBtn" value="우편번호 찾기"><br>
+	    <input type="button" class="btn btn-sm btn-default" onclick="sample6_execDaumPostcode()" id="postBtn" value="우편번호 찾기"><br>
 	    <span id="sp7"></span>
 	    <input type="text" class="form-control" id="sample6_address" name="address" placeholder="주소" readonly="readonly" style="margin-top: 10px;" >
 		<span id="sp8"></span>
@@ -556,5 +579,6 @@ function check(){
 	
 	</form>
 	</div>
-
+</div>
+<hr>
 <%@ include file="/WEB-INF/views/layout/footerAdmin.jsp" %>

@@ -8,11 +8,22 @@ $(document).ready(function(){
 })
 </script>
 
+<style type="text/css">
+
+#fullBoardList{
+	font-size: 13px;
+}
 
 
-<h1>유저 관리 리스트</h1>
+</style>
+
+
+
+<div>
+<strong style="font-size: 18px;">Whospet </strong><span>User_Board</span>
+</div>
 <hr>
-
+<div id="fullBoardList">
 <div class="pull-right">
 <form action="/admin/user/list" class="form-inline">
 	<select  id= "searchCategory" name="searchCategory" class="form-control">	
@@ -54,12 +65,13 @@ $(document).ready(function(){
 	</c:choose>
 </table>
 </div>
+</div>
 
 <div class="pull-right">
 <c:if test="${login }">
-	<a href="/admin/user/enroll"><button class="btn btn-default">유저등록</button></a>
+	<a href="/admin/user/enroll"><button class="btn btn-sm btn-default">유저등록</button></a>
 </c:if>
-<a href="/admin"><button class="btn btn-default">홈으로</button></a>
+<a href="/admin"><button class="btn btn-sm btn-default">홈으로</button></a>
 </div>
 <div class=”clearfix“></div>
 <br>
@@ -68,4 +80,5 @@ $(document).ready(function(){
 
 
 <%@ include file="/WEB-INF/views/util/adminUserPaging.jsp" %>
+<hr>
 <%@ include file="/WEB-INF/views/layout/footerAdmin.jsp" %>

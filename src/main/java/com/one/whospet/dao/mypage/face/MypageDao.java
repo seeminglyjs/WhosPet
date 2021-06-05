@@ -187,7 +187,7 @@ public interface MypageDao {
 	 * @param data
 	 * @return
 	 */
-	public int selectSumBasket(HashMap<String, Object> data);
+	public Integer selectSumBasket(HashMap<String, Object> data);
 
 	/**
 	 * 장바구니 항목 삭제
