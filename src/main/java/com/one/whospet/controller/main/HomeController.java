@@ -39,7 +39,16 @@ public class HomeController {
 		List<Hospital> bestHospitalList = new ArrayList<Hospital>();
 		List<HashMap<String,Object>> bestReviewList = new ArrayList<HashMap<String,Object>>();
 		List<HashMap<String, Object>> treatmentList = treatmentService.selectAllTreatment();
-		
+		List<HashMap<String, Object>> newList = new ArrayList<HashMap<String, Object>>();
+		List<String> as = new ArrayList<String>();
+
+		for(HashMap<String,Object> m : treatmentList) {
+			String a = (String)m.get("TR_NAME");
+			if(!as.contains(a)) {
+				as.add(a);
+				newList.add(m);
+			}
+		}
 			
 		//최근 등록 병원 목록을 가져오는 메소드 10개
 		newHospitalList = mainService.getNewList();
@@ -60,7 +69,7 @@ public class HomeController {
 		model.addAttribute("bestReviewList", bestReviewList);
 		
 		//치료 리스트 저장
-		model.addAttribute("treatmentList", treatmentList);
+		model.addAttribute("treatmentList", newList);
 		
 		return "/home/main";
 	}
