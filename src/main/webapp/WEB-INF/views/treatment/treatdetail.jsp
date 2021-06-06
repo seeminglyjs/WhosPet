@@ -1,10 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  <%@ include file="/WEB-INF/views/layout/headerUser.jsp" %>
+ <%@ page import="java.util.*"%>
+ <%
+ 	List<HashMap<String, Object>> orderedList = (List<HashMap<String, Object>>)session.getAttribute("orderedList");
+ %>
     
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="//code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+	<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+	<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=84eb5f9e9be040c09fa07972ce6f0e62&libraries=services"></script>
     <link
       rel="stylesheet"
@@ -149,8 +156,7 @@
       color:
       
      }
-     
-     
+
      .content-list {
        font-size:20px;
        list-style: none;
@@ -172,11 +178,6 @@
        color: #000;
      }
      
-    #container--chart {
-	    margin-top: 50px;
-	    height: 420px;
-	}
-	
 	.btn {
 	    width: 130px;
 	    height: 40px;
@@ -193,52 +194,8 @@
 	}
 	
 	.btn:hover{
-	    background-color: #e1701a;
+	    background-color: #333;
 	    color:#fff;
-	}
-	
-	.container--chart {
-	    margin: 20px;
-	    padding: 20px;
-	    margin-bottom: -15px;
-	    overflow: hidden;
-	    display: flex;
-    }
-    
-	.vertical .progress-bar {
-	  height: 300px;
-	  width: 40px;
-	  margin-right: 25px;
-	}
-
-	.vertical .progress-track {
-	  position: relative;
-	  width: 40px;
-	  height: 100%;
-	  background: #fff;
-	}
-
-	.vertical .progress-fill {
-	  position: relative;
-	  background: #825;
-	  height: 50%;
-	  width: 10px;
-	  color: #fff;
-	  text-align: center;
-	  font-family: "Lato","Verdana",sans-serif;
-	  font-size: 12px;
-	  line-height: 20px;
-	}
-
-	.rounded .progress-fill {
-	  box-shadow: inset 0 0 5px rgba(0,0,0,.2);
-	  border-radius: 3px;
-	}
-	
-	.container--city,
-	.container--ward,
-	.container--country {
-	  margin-left: 120px;
 	}
 	
 	h2 {
@@ -263,11 +220,12 @@
 	.h--list {
 	  list-style: none;
 	  font-size: 20px;
+	  margin:0;
 	}
 	
 	.h--info{
 	  display:flex;
-	  justify-content: center;
+	  width: 1400px;
 	}
 	
 	.h--name{
@@ -299,6 +257,11 @@
 	  padding-top: 5px;
 	}
 	
+	#chartdiv {
+	  width: 100%;
+	  height: 500px;
+	}
+	
     </style>
      
      <% session = request.getSession(); %>
@@ -314,11 +277,12 @@
     <h1>진료비 상세</h1>
      <hr>
      <br>
-      <form action="" class="Search">
+      <form action="/treatSearchDetail" class="Search" method="post">
         <input
           class="Search-box"
           type="search"
           id="Search-box"
+          name="Search-box"
           autocomplete="off"
         />
         <label class="Search-label" for="Search-box"
@@ -329,170 +293,110 @@
     <br>
     <br>
     <div class="container--location">
-	    <input type="button" class="btn" id="btnTest" onClick="isLogin();" value="현위치">
+    
+	    <input type="button" class="btn" id="btnTest" onclick="isClicked()" value="현위치">
  	    <span id="region"></span>
     </div>
     <br>
     <center>
     
-    <div class="container--chartbox">
+    <div class="container--chartbox" id="container--chartbox">
 		<h2>${treatment.TR_NAME}</h2>
-	    <div class="container--chart vertical rounded">
-	    
-		<div class="container--city">
-		<h3 id="city">평균가</h3>
-		  <div class="progress-bar">
-		    <div class="progress-track">
-		      <div class="progress-fill" style="background-color:#73EEB2">
-		        <span style="display:none">30%</span>
-		      </div>
-		    </div>
-		  </div>
-		
-		  <div class="progress-bar">
-		    <div class="progress-track">
-		      <div class="progress-fill" style="background-color:#5F9EA0">
-		        <span style="display:none">60%</span>
-		      </div>
-		    </div>
-		  </div>
-		
-		  <div class="progress-bar">
-		    <div class="progress-track">
-		      <div class="progress-fill" style="background-color:#00BFFF">
-		        <span style="display:none">90%</span>
-		      </div>
-		    </div>
-		  </div>
-		</div>
-		
-		<div class="container--ward">
-		<h3 id="district">평균가</h3>
-		  <div class="progress-bar">
-		    <div class="progress-track">
-		      <div class="progress-fill" style="background-color:#73EEB2">
-		        <span style="display:none">30%</span>
-		      </div>
-		    </div>
-		  </div>
-		  <div class="progress-bar">
-		    <div class="progress-track">
-		      <div class="progress-fill" style="background-color:#5F9EA0">
-		        <span style="display:none">60%</span>
-		      </div>
-		    </div>
-		  </div>
-		  
-		  <div class="progress-bar">
-		    <div class="progress-track">
-		      <div class="progress-fill" style="background-color:#00BFFF">
-		        <span style="display:none">90%</span>
-		      </div>
-		    </div>
-		  </div>
-		  
-		</div>
-		<div class="container--country">
-		<h3>전국 평균가</h3>
-		  <div class="progress-bar">
-		    <div class="progress-track">
-		      <div class="progress-fill" style="background-color:#73EEB2">
-		        <span style="display:none">30%</span>
-		      </div>
-		    </div>
-		  </div>
-		
-		  <div class="progress-bar">
-		    <div class="progress-track">
-		      <div class="progress-fill" style="background-color:#5F9EA0">
-		        <span style="display:none">60%</span>
-		      </div>
-		    </div>
-		  </div>
-		  
-		  <div class="progress-bar">
-		    <div class="progress-track">
-		      <div class="progress-fill" style="background-color:#00BFFF">
-		        <span style="display:none">90%</span>
-		      </div>
-		    </div>
-		  </div>
-		</div>
-	  </div>
+		<% if(session.getAttribute("login") == null) { %>
+		  <h3>현위치 및 특정 지역 평균가는 로그인 하시면 보실 수 있습니다.</h3>
+		<% } %>
+	    <div id="chartdiv"></div>
+	</div>
+	
+	<div class="container--hospital">
+	  <ul class="h--list" id="parentul">
+	  </ul>
 	</div>
 	
 	</center>
 	
-	<div class="container--hospital">
-	  <ul class="h--list">
-	  <li>
-	    <div class="h--info">
-		  	<div class="h--name">병원1</div>
-		  	<div class="h--region">지역1</div>
-		  	<div class="h--time">진료시간1</div>
-		  	<div class="h--tel">전화번호1</div>
-		  	<input type="button" class="btn" value="자세히">
-	  	</div>
-	  </li>
-	  <li>
-	    <div class="h--info">
-		  	<div class="h--name">병원2</div>
-		  	<div class="h--region">지역2</div>
-		  	<div class="h--time">진료시간2</div>
-		  	<div class="h--tel">전화번호2</div>
-		  	<input type="button" class="btn" value="자세히">
-	  	</div>
-	  </li>
-	  <li>
-	    <div class="h--info">
-		  	<div class="h--name">병원3</div>
-		  	<div class="h--region">지역3</div>
-		  	<div class="h--time">진료시간3</div>
-		  	<div class="h--tel">전화번호3</div>
-		  	<input type="button" class="btn" value="자세히">
-	  	</div>
-	  </li>
-	  <li>
-	    <div class="h--info">
-		  	<div class="h--name">병원4</div>
-		  	<div class="h--region">지역4</div>
-		  	<div class="h--time">진료시간4</div>
-		  	<div class="h--tel">전화번호4</div>
-		  	<input type="button" class="btn" value="자세히">
-	  	</div>
-	  </li>
-	  <li>
-	    <div class="h--info">
-		  	<div class="h--name">병원5</div>
-		  	<div class="h--region">지역5</div>
-		  	<div class="h--time">진료시간5</div>
-		  	<div class="h--tel">전화번호5</div>
-		  	<input type="button" class="btn" value="자세히">
-	  	</div>
-	  </li>
-	  </ul>
-	</div>
 	
 	<script>
-    	$('.vertical .progress-fill span').each(function(){
-    	  var percent = $(this).html();
-    	  var pTop = 100 - ( percent.slice(0, percent.length - 1) ) + "%";
-    	  $(this).parent().css({
-    	    'height' : percent,
-    	    'top' : pTop
-    	  });
-    	});
+		am4core.ready(function() {
+		
+		// Themes begin
+		// Themes end
+		
+		var chart = am4core.create('chartdiv', am4charts.XYChart)
+		chart.colors.step = 2;
+		var login = <%session.getAttribute("login");%>
+		console.log(login);
+		chart.legend = new am4charts.Legend()
+		chart.legend.position = 'top'
+		chart.legend.paddingBottom = 20
+		chart.legend.labels.template.maxWidth = 95
+		chart.legend.itemContainers.template.togglable = false;
+		
+		var xAxis = chart.xAxes.push(new am4charts.CategoryAxis())
+		xAxis.dataFields.category = 'category'
+		xAxis.renderer.cellStartLocation = 0.1
+		xAxis.renderer.cellEndLocation = 0.9
+		xAxis.renderer.grid.template.location = 0;
+		
+		var yAxis = chart.yAxes.push(new am4charts.ValueAxis());
+		yAxis.min = 0;
+		console.log(login);
+		
+		
+		function createSeries(value, name) {
+		    var series = chart.series.push(new am4charts.ColumnSeries())
+		    series.dataFields.valueY = value
+		    series.dataFields.categoryX = 'category'
+		    series.name = name
+		
+		
+		    var bullet = series.bullets.push(new am4charts.LabelBullet())
+		    bullet.interactionsEnabled = false
+		    bullet.dy = 20;
+		    bullet.label.text = '{valueY}' + '원'
+		    bullet.label.fill = am4core.color('#ffffff')
+		
+		    return series;
+		}
+		chart.data = [
+		    {
+		        category: '최저가ㅤㅤㅤ평균가ㅤㅤㅤ최고가',
+		        first: 0,
+		        second: 0,
+		        third: 0
+		    },
+		    {
+		        category: '최저가ㅤㅤㅤ평균가ㅤㅤㅤ최고가 ',
+		        first: 0,
+		        second: 0,
+		        third: 0
+		    },
+		    {
+		        category: '최저가ㅤㅤㅤ평균가ㅤㅤㅤ최고가  ',
+		        first: 0,
+		        second: 0,
+		        third: 0
+		    }
+		]
+			
+		
+		createSeries('first', '현위치 평균가ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ');
+		createSeries('second', '지역 평균가ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ');
+		createSeries('third', '전국 평균가');
+
+		}); // end am4core.ready()
+	</script>
+    
+    <script>
+	    function isClicked(){
+	    }
     </script>
     
     <script>
-      function isLogin() {
-    	  console.log("hello");
-      }
-    </script>
-    
-    <script>
+    	var count = 0;
 	    var lat = 0;
 	    var lon = 0;
+	    var region = ' ';
 	    var district = ' ';
 	    var options = {
 	    	enableHighAccuracy : true,
@@ -502,50 +406,172 @@
 	
 	    function success(pos) {
 	    	var crd = pos.coords;
-	    	console.log('위도 : ' + crd.latitude);
-	    	console.log('경도: ' + crd.longitude);
 	    	lat = crd.latitude;
 	    	lon = crd.longitude;
 	    };
+	    
+	    function sleep(ms) {
+	    	  return new Promise(resolve => setTimeout(resolve, ms));
+	    }
 	
 	    function error(err) {
 	    	console.warn('ERROR(' + err.code + '): ' + err.message);
 	    };
-	
+	    
+
+	    navigator.geolocation.getCurrentPosition(success, error, options);
+        
 	    $("#btnTest").click(function() {
-	      navigator.geolocation.getCurrentPosition(success, error, options);
-	      getAddr(lat,lon);
-	      function getAddr(lat,lon){
-	          let geocoder = new kakao.maps.services.Geocoder();
-	
-	          let coord = new kakao.maps.LatLng(lat, lon);
-	          let callback = function(result, status) {
-	              if (status === kakao.maps.services.Status.OK) {
-	                  console.log(result[0]['address']);
-	                  district = result[0]['address']['region_2depth_name'];
-	                  document.getElementById('region').innerText = result[0]['address']['region_1depth_name'] + "시 " + result[0]['address']['region_2depth_name'];
-	                  document.getElementById('city').innerText = result[0]['address']['region_1depth_name'] + "시 평균가";
-	                  document.getElementById('district').innerText = result[0]['address']['region_2depth_name'] + " 평균가";
-	              }
-	          };
-	          geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
-	          $.ajax({
-	              type: "post", 
-	              url: "/treatment/treatlist",
-	              data: "region=" + district,
-	              success : function(data){
-	            	  console.log("성공")
-	              },
-	              error : function() {
-	            	  console.log("실패")
-	              }
-	          });
-	      }
-	
+		    let geocoder = new kakao.maps.services.Geocoder();
+		    let coord = new kakao.maps.LatLng(lat, lon);
+			let callback = function(result, status) {
+			    if (status === kakao.maps.services.Status.OK) {
+			        region = result[0]['address']['region_1depth_name'];
+			        district = result[0]['address']['region_2depth_name'];
+			    }
+			};
+			geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+			$.ajax({
+			    type: "post", 
+			    url: " /treatment/treatdetail",
+			    data: {"city": region, "district": district},
+			    success : function(data){
+			  	  console.log("성공")
+			  	  am4core.ready(function() {
+		
+				var chart = am4core.create('chartdiv', am4charts.XYChart)
+				chart.colors.step = 2;
+				var login = ${login}
+				chart.legend = new am4charts.Legend()
+				chart.legend.position = 'top'
+				chart.legend.paddingBottom = 20
+				chart.legend.labels.template.maxWidth = 95
+				chart.legend.itemContainers.template.togglable = false;
+				
+				var xAxis = chart.xAxes.push(new am4charts.CategoryAxis())
+				xAxis.dataFields.category = 'category'
+				xAxis.renderer.cellStartLocation = 0.1
+				xAxis.renderer.cellEndLocation = 0.9
+				xAxis.renderer.grid.template.location = 0;
+				
+				var yAxis = chart.yAxes.push(new am4charts.ValueAxis());
+				yAxis.min = 0;
+				
+				
+				function createSeries(value, name) {
+				    var series = chart.series.push(new am4charts.ColumnSeries())
+				    series.dataFields.valueY = value
+				    series.dataFields.categoryX = 'category'
+				    series.name = name
+				
+				
+				    var bullet = series.bullets.push(new am4charts.LabelBullet())
+				    bullet.interactionsEnabled = false
+				    bullet.dy = 20;
+				    bullet.label.text = '{valueY}' + '원'
+				    bullet.label.fill = am4core.color('#ffffff')
+				
+				    return series;
+				}
+				
+				if(login){
+					chart.data = [
+					    {
+					        category: '최저가ㅤㅤㅤ평균가ㅤㅤㅤ최고가',
+					        first: ${cityMin} + 0,
+					        second: ${cityPrice} + 0,
+					        third: ${cityMax} + 0
+					    },
+					    {
+					        category: '최저가ㅤㅤㅤ평균가ㅤㅤㅤ최고가 ',
+					        first: ${districtMin} + 0,
+					        second: ${districtPrice} + 0,
+					        third:${districtMax} + 0
+					    },
+					    {
+					        category: '최저가ㅤㅤㅤ평균가ㅤㅤㅤ최고가  ',
+					        first: ${totalMin} + 0,
+					        second:${totalPrice} + 0,
+					        third: ${totalMax} + 0
+					    }
+					]
+				}
+				
+				else{
+					chart.data = [
+					    {
+					        category: '최저가ㅤㅤㅤ평균가ㅤㅤㅤ최고가',
+					        first: 0,
+					        second: 0,
+					        third: 0
+					    },
+					    {
+					        category: '최저가ㅤㅤㅤ평균가ㅤㅤㅤ최고가 ',
+					        first: 0,
+					        second: 0,
+					        third: 0
+					    },
+					    {
+					        category: '최저가ㅤㅤㅤ평균가ㅤㅤㅤ최고가  ',
+					        first: 0,
+					        second: 0,
+					        third:  0
+					    }
+					]
+				}
+				console.log();
+				createSeries('first', data[0]['H_ROAD_ADDRESS'].split(' ')[0] + ' 평균가ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ');
+				createSeries('second', data[0]['H_ROAD_ADDRESS'].split(' ')[1] + ' 평균가ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ');
+				createSeries('third', '전국 평균가');
+
+				}); // end am4core.ready()
+			    
+			  	  console.log(data[0]);
+			  	  document.getElementById('region').innerHTML = data[0]['H_ROAD_ADDRESS'].split(' ')[0] + ' ' + data[0]['H_ROAD_ADDRESS'].split(' ')[1];
+			  	  const parent = document.getElementById('parentul');
+			  	  console.log(parent);
+
+			  	  if(count == 0){
+				      <% for(int i = 0; i < 5; i++) { %>
+					  	  var newli = document.createElement('li');
+					  	  var infoDiv = document.createElement('div');
+					  	  var newDiv = document.createElement('div');
+					  	  var newDiv2 = document.createElement('div');
+					  	  var newDiv3 = document.createElement('div');
+					  	  var newDiv4 = document.createElement('div');
+					  	  var btn = document.createElement('button');
+					  	  
+					  	  infoDiv.classList.add('h--info');
+					  	  newDiv.classList.add('h--name');
+					  	  newDiv2.classList.add('h--region');
+					  	  newDiv3.classList.add('h--time');
+					  	  newDiv4.classList.add('h--tel');
+					  	  btn.classList.add('btn');
+					  	  btn.appendChild(document.createTextNode("자세히"));
+					  	  <% int h_no = Integer.parseInt(orderedList.get(i).get("H_NO").toString()); %>
+					  	  btn.setAttribute('onClick', "location.href='/hospital/view?hNo=<%=h_no%>'");
+					  	  					  	  
+					  	  newDiv.appendChild(document.createTextNode(data[<%=i%>]['H_NAME']));
+					  	  newDiv2.appendChild(document.createTextNode(data[<%=i%>]['H_ROAD_ADDRESS']));
+					  	  newDiv3.appendChild(document.createTextNode(data[<%=i%>]['H_HOUR']));
+					  	  newDiv4.appendChild(document.createTextNode(data[<%=i%>]['H_TEL']));
+					  	  
+					  	  parent.appendChild(newli);
+					  	  newli.appendChild(infoDiv);
+					  	  infoDiv.appendChild(newDiv);
+					  	  infoDiv.appendChild(newDiv2);
+					  	  infoDiv.appendChild(newDiv3);
+					  	  infoDiv.appendChild(newDiv4);
+					  	  infoDiv.appendChild(btn);
+				  	 <% } %>
+			  	  }
+			  	  
+			    },
+			    error : function() {
+			  	  console.log("실패")
+			    }
+			});
 	    })
-
-
-
     </script>
     
     
