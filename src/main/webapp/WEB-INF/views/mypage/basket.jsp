@@ -156,7 +156,7 @@ left: 800px;
 <tbody>
 <c:forEach items="${basketlist }" var="basketlist">
 	<tr>
-		<td><img src="../resources/img/itemtest1.jpg" style="width:50px; height: 50px;"/></td>
+		<td><img src="/resources/shopimgupload/${basketlist.shopImg.siStoredFilename  }" style="width:50px; height: 50px;"/></td>
 		<td>${basketlist.shop.sName}</td>
 		<td>${basketlist.sbQuantity}
 		<button id="btnPlus" onclick="location.href='/mypage/basket/plus?sbNo=${basketlist.sbNo}'" class= "btn btn-outline-secondary btn-xs"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
