@@ -13,6 +13,7 @@
 	<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
 	<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=84eb5f9e9be040c09fa07972ce6f0e62&libraries=services"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
@@ -264,6 +265,11 @@
 	  height: 500px;
 	}
 	
+	#deleteBtn {
+	  text-decoration: none;
+	  margin-top: 7px;
+	}
+	
     </style>
      
      <% session = request.getSession(); %>
@@ -294,13 +300,14 @@
     </div>
     <br>
     <br>
-    <div class="container--location">
+    <div class="container--location" id="container--location">
     
 	    <input type="button" class="btn" id="btnTest" onclick="isClicked()" value="현위치">
 	    <input type="button" class="btn" id="btnSelect" value="주소선택">
 	    <select name="sido1" id="sido1"></select>
 		<select name="gugun1" id="gugun1"></select>
  	    <span id="region"></span>
+ 	    <a class="material-icons" id="deleteBtn"></a>
     </div>
     <br>
     <center>
@@ -310,6 +317,7 @@
 		<% if(session.getAttribute("login") == null) { %>
 		  <h3>현위치 및 특정 지역 평균가는 로그인 하시면 보실 수 있습니다.</h3>
 		<% } %>
+		<h3 id="message"></h3>
 	    <div id="chartdiv"></div>
 	</div>
 	
@@ -497,9 +505,9 @@
 					    },
 					    {
 					        category: '최저가ㅤㅤㅤ평균가ㅤㅤㅤ최고가  ',
-					        first: 0,
-					        second: 0,
-					        third:  0
+					        first: data[5]['totalMin'],
+					        second: data[5]['totalPrice'],
+					        third: data[5]['totalMax']
 					    }
 					]
 					
@@ -526,15 +534,16 @@
 					]
 					
 				<% } %>
-				console.log();
 				createSeries('first', data[0]['H_ROAD_ADDRESS'].split(' ')[0] + ' 평균가ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ');
 				createSeries('second', data[0]['H_ROAD_ADDRESS'].split(' ')[1] + ' 평균가ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ');
 				createSeries('third', '전국 평균가');
 
 				}); // end am4core.ready()
 			    
-			  	  console.log(data[0]);
 			  	  document.getElementById('region').innerHTML = data[0]['H_ROAD_ADDRESS'].split(' ')[0] + ' ' + data[0]['H_ROAD_ADDRESS'].split(' ')[1];
+			  	  const deleteBtn = document.getElementById('deleteBtn');
+			  	  deleteBtn.innerHTML = 'clear';
+			  	  deleteBtn.setAttribute('href', '/treatment/treatdetail?no=' + ${TR_NO});
 			  	  const parent = document.getElementById('parentul');
 			  	  console.log(parent);
 
@@ -656,6 +665,9 @@
 			    data: {"city": sido, "district": gugun},
 			    success : function(data){
 			  	console.log("성공")
+			  	
+			  	if(data.length == 0)
+				  window.alert("해당 위치에 등록된 병원이 없습니다.");
 			  	am4core.ready(function() {
 		
 				var chart = am4core.create('chartdiv', am4charts.XYChart)
@@ -709,9 +721,9 @@
 				    },
 				    {
 				        category: '최저가ㅤㅤㅤ평균가ㅤㅤㅤ최고가  ',
-				        first: 0,
-				        second: 0,
-				        third:  0
+				        first: data[5]['totalMin'],
+				        second: data[5]['totalPrice'],
+				        third: data[5]['totalMax']
 				    }
 				]
 				
@@ -738,21 +750,20 @@
 				]
 				
 			<% } %>
-				console.log();
 				createSeries('first', data[0]['H_ROAD_ADDRESS'].split(' ')[0] + ' 평균가ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ');
 				createSeries('second', data[0]['H_ROAD_ADDRESS'].split(' ')[1] + ' 평균가ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ');
 				createSeries('third', '전국 평균가');
 
 				}); // end am4core.ready()
 			    
-			  	  console.log(data[0]);
 			  	  document.getElementById('region').innerHTML = data[0]['H_ROAD_ADDRESS'].split(' ')[0] + ' ' + data[0]['H_ROAD_ADDRESS'].split(' ')[1];
-			  	  const parent = document.getElementById('parentul');
-			  	  console.log(data[5]['cityPrice']);
-			  	console.log(data[5]['districtPrice']);
-			  	console.log(data[5]['totalPrice']);
+			  	const deleteBtn = document.getElementById('deleteBtn');
+			  	  deleteBtn.innerHTML = 'clear';
+			  	  deleteBtn.setAttribute('href', '/treatment/treatdetail?no=' + ${TR_NO});
 			  	  
-			  	  console.log(parent);
+			  	  
+			  	  const parent = document.getElementById('parentul');
+			  	  
 				  	document.querySelectorAll('.h--info').forEach(function(a){
 				  		a.remove()
 			  		})

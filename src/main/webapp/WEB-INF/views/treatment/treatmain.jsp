@@ -214,7 +214,7 @@
     <h1>진료비 검색</h1>
      <hr>
      <br>
-      <form action="/treatment/treatSearch" class="Search" method="post">
+      <form action="/treatment/treatSearchDetail" class="Search" method="post">
         <input
           class="Search-box"
           type="search"

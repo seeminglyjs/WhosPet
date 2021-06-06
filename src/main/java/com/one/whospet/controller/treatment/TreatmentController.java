@@ -1,4 +1,6 @@
 package com.one.whospet.controller.treatment;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -123,8 +125,6 @@ public class TreatmentController {
 		List<HashMap<String, Object>> treatmentList = treatmentService.selectAllTreatment();
 		List<HashMap<String, Object>> cityList = new ArrayList<HashMap<String, Object>>();
 		List<HashMap<String, Object>> districtList = new ArrayList<HashMap<String, Object>>();
-		System.out.println("hello world");
-		System.out.println(map);
 		String tr_name = new String();
 		int tr_no = Integer.parseInt(session.getAttribute("TR_NO").toString());
 		int totalPrice = 0;
@@ -264,7 +264,7 @@ public class TreatmentController {
 		mapSender.put("districtPrice", districtPrice);
 		mapSender.put("totalPrice", totalPrice);
 		mapSender.put("cityMin", cityMin);
-		mapSender.put("cityMin", cityMin);
+		mapSender.put("cityMax", cityMax);
 		mapSender.put("totalMin", totalMin);
 		mapSender.put("totalMax", totalMax);
 		mapSender.put("districtMin", districtMin);
@@ -292,15 +292,31 @@ public class TreatmentController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "treatment/treatdetailSelect", method = RequestMethod.POST)
-	public List<HashMap<String, Object>> treatdetailSelect(Model model, @RequestParam Map<String, Object> map, HttpSession session, HttpServletResponse response, HttpServletRequest request)
+	@RequestMapping(value = "/treatment/treatdetailSelect", method = RequestMethod.POST)
+	public List<HashMap<String, Object>> treatdetailSelect(Model model, @RequestParam Map<String, Object> map, HttpSession session, HttpServletResponse response, HttpServletRequest request) throws IOException
 	{
 		List<HashMap<String, Object>> hospitalList = hospitalService.allHospital();
 		List<HashMap<String, Object>> treatmentList = treatmentService.selectAllTreatment();
 		List<HashMap<String, Object>> cityList = new ArrayList<HashMap<String, Object>>();
 		List<HashMap<String, Object>> districtList = new ArrayList<HashMap<String, Object>>();
+		List<HashMap<String, Object>> orderedList = new ArrayList<HashMap<String, Object>>();
 		System.out.println("hello world");
-		System.out.println(map);
+		
+		int count = 0 ;
+		System.out.println("hello world");
+		for(int i = 0; i < hospitalList.size(); i++) {
+			HashMap<String, Object> hospital = hospitalList.get(i);
+			if(hospital.get("H_ROAD_ADDRESS").toString().contains(map.get("district").toString())) {
+				break;
+			}
+			else count++;
+		}
+		if(count == hospitalList.size()) {
+			
+			return orderedList;
+		}
+
+		
 		String tr_name = new String();
 		int tr_no = Integer.parseInt(session.getAttribute("TR_NO").toString());
 		int totalPrice = 0;
@@ -337,7 +353,6 @@ public class TreatmentController {
 		totalPrice = (int)(totalPrice / curTreatmentList.size());
 		
 		
-		List<HashMap<String, Object>> orderedList = new ArrayList<HashMap<String, Object>>();
 		String[] temp = map.get("district").toString().split(" ");
 		
 		if(temp.length == 1) {
@@ -440,7 +455,7 @@ public class TreatmentController {
 		mapSender.put("districtPrice", districtPrice);
 		mapSender.put("totalPrice", totalPrice);
 		mapSender.put("cityMin", cityMin);
-		mapSender.put("cityMin", cityMin);
+		mapSender.put("cityMax", cityMax);
 		mapSender.put("totalMin", totalMin);
 		mapSender.put("totalMax", totalMax);
 		mapSender.put("districtMin", districtMin);
@@ -448,13 +463,11 @@ public class TreatmentController {
 		
 		orderedList.add(mapSender);
 		
-		
 		session.setAttribute("orderedList", orderedList);
 		
 		return orderedList;
 	}
-	
-	
+
 	@RequestMapping(value = "/treatment/treatSearch", method = RequestMethod.POST)
 	public String treatSearch(Model model, @RequestParam("Search-box") String content, HttpServletResponse response, HttpServletRequest request)
 	{
@@ -471,15 +484,16 @@ public class TreatmentController {
 	}
 	
 	@RequestMapping(value = "/treatment/treatSearchDetail", method = RequestMethod.POST)
-	public String treatSearchDetail(Model model, @RequestParam("Search-box") String content, HttpServletResponse response, HttpServletRequest request)
+	public String treatSearchDetail(Model model, @RequestParam("Search-box") String content, HttpServletResponse response, HttpServletRequest request, HttpSession session)
 	{
 		
-		System.out.println(model.getAttribute("treatment"));
 		List<HashMap<String, Object>> treatmentList = treatmentService.selectAllTreatment();
+
 		for(int i = 0; i < treatmentList.size(); i++) {
 			HashMap<String, Object> treatment = treatmentList.get(i);
 			if((treatment.get("TR_NAME")).equals(content)) {
 				model.addAttribute("treatment", treatment);
+				session.setAttribute("TR_NO", treatment.get("TR_NO"));
 			}
 		}
 		
