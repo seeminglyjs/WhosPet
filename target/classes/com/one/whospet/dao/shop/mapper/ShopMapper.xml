@@ -116,4 +116,9 @@
 		WHERE s_no = #{sNo}
 	</delete>
 	
+	<insert id="insertBasket" parameterType="com.one.whospet.dto.Shop">
+		INSERT INTO w_shop_basket (sb_no, u_no, s_no, sb_amount, sb_quantity)
+		VALUES ( w_shop_basket_seq.nextval, #{uNo}, #{sNo}, #{sAmount}, #{quantity} )
+	</insert>
+	
 </mapper>

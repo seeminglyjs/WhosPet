@@ -26,14 +26,14 @@ td:nth-child(2) {
 
 #boardtitle{
 position: relative;
-top: -100px;
-left: 220px;
-font-family: 'InfinitySans-RegularA1';
+top: -80px;
+left: 260px;
+font-family: 'NEXON Lv1 Gothic OTF';
 }
 #cont2 {
 float: right;
 top: -100px;
-font-family: 'InfinitySans-RegularA1';
+font-family: 'NEXON Lv1 Gothic OTF';
 }
 
 #page{
@@ -49,7 +49,7 @@ color: black;
 
 <div id="boardtitle">
 <h1 style="display:inline;">예약 현황 </h1><h6 style="display:inline; color: gray;">예약 데이터를 확인하는 페이지입니다</h6>
-<hr align="left" width="630">
+<hr align="left" width="830">
 </div>
 <div id="cont2" class="container-fluid col-md-9">
 <div class="w-50"> 

@@ -1,6 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/layout/headerAdmin.jsp" %>
+<style type="text/css">
+@font-face {
+    font-family: 'NEXON Lv1 Gothic OTF';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+div {
+font-family: 'NEXON Lv1 Gothic OTF';
+}
+
+</style>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -19,8 +31,8 @@ $(document).ready(function(){
 		            data : JSON.stringify(go),
 		            contentType: 'application/json; charset=UTF-8',
 		            dataType : 'html',
-		            error: function(xhr, status, error){
-// 		                alert(error);
+		            error: function(){
+		                alert("회원번호가 없거나 잘못 입력하셨습니다");
 		            },
 		            success : function(data){
 		            	$('#list').html(data);
@@ -35,6 +47,10 @@ $(document).ready(function(){
 		        	"poPlus" :$('#poPlus').val(),
 		        	"poPlusY" : $('#poPlusY').val()
 	        }
+	        if($('#poPlus').val() =="" ){
+	        	alert("부여할 포인트 수치를 입력해주세요!");
+	        	return
+	        } else{
 	        $.ajax({
 	            type : 'post',
 	            url : "/admin/pointAdd",
@@ -53,6 +69,7 @@ $(document).ready(function(){
 // 	            	location.reload(true);
 	            },
 	        });
+	        }
 		})
 		
 	})

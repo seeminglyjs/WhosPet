@@ -69,6 +69,25 @@ $(document).ready(function(){
 </script>
 
 <style type="text/css">
+
+
+/* 폰트 지정 영역 */
+@font-face {
+    font-family: 'NEXON Lv1 Gothic OTF';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body{
+	font-family: 'NEXON Lv1 Gothic OTF';
+}
+
+
+
+
+
+
 /*컨테이너 전체 넓이 지정  */
 .container{
 	width:1100px;

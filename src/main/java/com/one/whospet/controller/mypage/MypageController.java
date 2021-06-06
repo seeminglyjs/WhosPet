@@ -1,28 +1,16 @@
 package com.one.whospet.controller.mypage;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,7 +21,9 @@ import com.one.whospet.dto.Booking;
 import com.one.whospet.dto.Hospital;
 import com.one.whospet.dto.Payment;
 import com.one.whospet.dto.Point;
+import com.one.whospet.dto.Shop;
 import com.one.whospet.dto.ShopBasket;
+import com.one.whospet.dto.ShopImg;
 import com.one.whospet.dto.User;
 import com.one.whospet.dto.Userpic;
 import com.one.whospet.service.mypage.face.MypageService;
@@ -232,7 +222,7 @@ public class MypageController {
 		
 
 		
-//		// 메일 전송 객체 생성 
+		// 메일 전송 객체 생성 
 //		final MimeMessagePreparator preparator = new MimeMessagePreparator() {
 //		@Override public void prepare(MimeMessage mimeMessage) throws Exception { 
 //		final MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
@@ -246,7 +236,7 @@ public class MypageController {
 //					
 //				}; 
 //				mailSender.send(preparator); //메일을 보낸다.
-		
+//		
 		//마이페이지 메인으로 리다이렉트
 		return "redirect:/mypage/user";
 		
@@ -358,10 +348,9 @@ public class MypageController {
 		//모델값 전달
 		model.addAttribute("basketlist",list);
 		model.addAttribute("paging", paging);
-		
-		
-		
 	}
+	
+	
 	
 	//장바구니 삭제
 	@RequestMapping(value = "/mypage/basket/remove")
@@ -499,5 +488,11 @@ public class MypageController {
 		
 		return "redirect: /mypage/info";
 	
+	}
+	
+	//결제
+	@RequestMapping(value="/pay/complete", method=RequestMethod.POST)
+	public String paytest() {
+		return "redirect:/";
 	}
 }

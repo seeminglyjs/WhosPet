@@ -99,6 +99,14 @@ public interface ShopService {
 	public void deleteShop(Shop shop);
 
 	
+	/**
+	 * 변경된 수량 + 상품정보가 담긴 장바구니 정보 DB에 삽입하기
+	 * 
+	 * @param basketInfo 장바구니 정보
+	 */
+	public int basketAdd(Shop basketInfo);
+
+	
 
 
 }
