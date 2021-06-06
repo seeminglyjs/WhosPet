@@ -100,6 +100,15 @@
 		<result column="s_content" property="sContent"/>
 		
 	</resultMap>
+		<!-- 샵이미지 재정의 -->
+	<resultMap type="com.one.whospet.dto.ShopImg" id="ShopImg">
+		<id column="si_no" property="siNo"/>
+		
+		<result column="s_no" property="sNo"/>
+		<result column="si_origin_filename" property="siOriginFilename"/>
+		<result column="si_stored_filename" property="siStoredFilename"/>
+		<result column="si_thumbnail" property="siThumbnail"/>
+	</resultMap>
 	
 	<!-- 샵바스켓DTO 재정의 -->
 		<resultMap type="com.one.whospet.dto.ShopBasket" id="ShopBasket">
@@ -111,6 +120,7 @@
 		<result column="sb_amount" property="sbAmount"/>
 		<result column="sb_quantity" property="sbQuantity"/>
 		<collection property="shop" resultMap="Shop"/>
+		<collection property="shopImg" resultMap="ShopImg"/>
 	</resultMap>
 	
 	<!-- 구매이력DTO 재정의 -->
@@ -131,7 +141,9 @@
 		<result column="merchant_uid" property="merchantUid"/>
 		<collection property="shop" resultMap="Shop"/>
 		</resultMap>
+		
 
+	
   
   	<select id="selectUserinfo" parameterType="com.one.whospet.dto.User" resultMap="User">
 	SELECT * FROM W_USER WHERE U_No = #{uNo }
@@ -290,6 +302,7 @@
 			SELECT rownum rnum, B.* FROM (
 					SELECT *FROM w_shop_basket 
 				    FULL OUTER JOIN w_shop ON (w_shop.s_no = w_shop_basket.s_no)
+				    FULL OUTER JOIN w_shop_img On (w_shop_img.s_no = w_shop_basket.s_no)
 					WHERE w_shop_basket.u_no = #{uNo }
 					ORDER BY sb_no DESC
 						) B
