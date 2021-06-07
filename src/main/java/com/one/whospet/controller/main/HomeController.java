@@ -66,6 +66,13 @@ public class HomeController {
 	}
 
 	
+	// 메인 검색 컨트롤러
+	@RequestMapping(value = "/mainSearch" )
+	public void mainSearch(Model model) {
+		
+	}
+	
+	
 	
 	/////////////// 관리자 홈 컨트롤러  //////////////////////////////
 	
