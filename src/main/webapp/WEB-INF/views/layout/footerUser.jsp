@@ -34,54 +34,5 @@
 </div><!-- 전체컨테이너 끝  -->
 </body>
 
-<!-- footer css  -->
-<style type="text/css">
 
-/* 전체 footer div*/
-#footerDiv{
-	position: absolute;
-    left: 0;
-    bottom: 0;
-   	width:100%;
-	min-width: 1120px;
-	background-color: #fff;
-}
-
-/* footer 링크  */
-.footerlist li a{
-	color:white;
-}
-
-/* footer 이미지 */
-#footerLogo{
-	width: 200px;
-	height: 60px;
-}
-
-
-.container .row {
-	border-bottom: 0.5px solid white;
-}
-
-.footerInfo {
-  padding: 20px 0px;
-  color:white;
-  background-color:#aaaaaa;
-}
-
-.footerInfo h3 {
-  margin-top:0;
-  margin-bottom:12px;
-  font-weight:bold;
-  font-size:16px;
-}
-
-.footerInfo ul {
-  padding:0;
-  list-style:none;
-  line-height:1.6;
-  font-size:14px;
-}
- 
-</style>
 </html>
