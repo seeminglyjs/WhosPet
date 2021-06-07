@@ -23,9 +23,7 @@
                     </div>
                 </div>
                 <div class="text-center" style="padding-top: 12px;">
-                	    <h3>WhosPet</h3>
-                        <p>Kh정보 교육원 파이널 프로젝트 1조 [ 프로젝트: WhosPet ]</p>
-                        <p>Groups: 강민서, 고이삭, 기보람, 손홍백, 유상우, 장성우</p>
+                	   
                 <p class="copyright">Copyright © WhosPet 2021. All Rights reserved</p>
            		</div>
             </div>
