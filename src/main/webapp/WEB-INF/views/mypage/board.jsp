@@ -4,6 +4,14 @@
 <%@ include file="/WEB-INF/views/layout/headerMypageUser.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script type="text/javascript">
+
+	//검색 버튼 클릭
+	$("#btnSearch").click(function() {
+		location.href="/mypage/board?search="+$("#search").val();
+	});
+})
+</script>
 
 <style type="text/css">
 
@@ -90,7 +98,10 @@ left: 130px;
 </table>
 
 <span class="pull-left">total : ${paging.totalCount }</span>
-
+<div class="form-inline text-center">
+	<input class="form-control" type="text" id="search" value="${param.search }" />
+	<button id="btnSearch" class="btn">검색</button>
+</div>
 
 </div>
 </div>

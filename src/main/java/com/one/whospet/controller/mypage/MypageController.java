@@ -3,12 +3,15 @@ package com.one.whospet.controller.mypage;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -223,19 +226,19 @@ public class MypageController {
 
 		
 		// 메일 전송 객체 생성 
-//		final MimeMessagePreparator preparator = new MimeMessagePreparator() {
-//		@Override public void prepare(MimeMessage mimeMessage) throws Exception { 
-//		final MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-//						
-//						
-//			helper.setFrom("WhosPet <kul32137@gmail.com>"); // 보내는 사람 <> 이메일 주소
-//			helper.setTo("kul321japan@gmail.com");  // 받는 사람	
-//			helper.setSubject( uId + "님의 예약이 취소되었습니다"); // 제목 
-//			helper.setText("예약번호"+bookno+"번의 예약이 취소되었습니다", true); //내용
-//					} 
-//					
-//				}; 
-//				mailSender.send(preparator); //메일을 보낸다.
+		final MimeMessagePreparator preparator = new MimeMessagePreparator() {
+		@Override public void prepare(MimeMessage mimeMessage) throws Exception { 
+		final MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+						
+						
+			helper.setFrom("WhosPet <kul32137@gmail.com>"); // 보내는 사람 <> 이메일 주소
+			helper.setTo("kul321japan@gmail.com");  // 받는 사람	
+			helper.setSubject( uId + "님의 예약이 취소되었습니다"); // 제목 
+			helper.setText("예약번호"+bookno+"번의 예약이 취소되었습니다", true); //내용
+					} 
+					
+				}; 
+				mailSender.send(preparator); //메일을 보낸다.
 //		
 		//마이페이지 메인으로 리다이렉트
 		return "redirect:/mypage/user";
@@ -448,20 +451,20 @@ public class MypageController {
 		mypageService.bookingApprove(booking);
 		
 
-//		// 메일 전송 객체 생성 
-//		final MimeMessagePreparator preparator = new MimeMessagePreparator() {
-//		@Override public void prepare(MimeMessage mimeMessage) throws Exception { 
-//		final MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-//						
-//						
-//			helper.setFrom("WhosPet <kul32137@gmail.com>"); // 보내는 사람 <> 이메일 주소
-//			helper.setTo("kul321japan@gmail.com");  // 받는 사람	
-//			helper.setSubject( "새로운 예약이 접수되었습니다."); // 제목 
-//			helper.setText("예약번호"+bookno+"번의 예약이 접수되었습니다.", true); //내용
-//					} 
-//					
-//				}; 
-//				mailSender.send(preparator); //메일을 보낸다.
+		// 메일 전송 객체 생성 
+		final MimeMessagePreparator preparator = new MimeMessagePreparator() {
+		@Override public void prepare(MimeMessage mimeMessage) throws Exception { 
+		final MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+						
+						
+			helper.setFrom("WhosPet <kul32137@gmail.com>"); // 보내는 사람 <> 이메일 주소
+			helper.setTo("kul321japan@gmail.com");  // 받는 사람	
+			helper.setSubject( "새로운 예약이 접수되었습니다."); // 제목 
+			helper.setText("예약번호"+bookno+"번의 예약이 접수되었습니다.", true); //내용
+					} 
+					
+				}; 
+				mailSender.send(preparator); //메일을 보낸다.
 		return "redirect: /mypage/info";
 	}
 	
@@ -471,20 +474,20 @@ public class MypageController {
 	public String bookingReject(Booking booking) {
 		final int bookno = booking.getBookNo();
 		mypageService.bookingReject(booking);
-//		// 메일 전송 객체 생성 
-//		final MimeMessagePreparator preparator = new MimeMessagePreparator() {
-//		@Override public void prepare(MimeMessage mimeMessage) throws Exception { 
-//		final MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-//								
-//								
-//			helper.setFrom("WhosPet <kul32137@gmail.com>"); // 보내는 사람 <> 이메일 주소
-//			helper.setTo("kul321japan@gmail.com");  // 받는 사람	
-//			helper.setSubject( "예약이 반려되었습니다."); // 제목 
-//			helper.setText("예약번호"+bookno+"번의 예약이 반려되었습니다.", true); //내용
-//						} 
-//							
-//				}; 
-//			mailSender.send(preparator); //메일을 보낸다.
+		// 메일 전송 객체 생성 
+		final MimeMessagePreparator preparator = new MimeMessagePreparator() {
+		@Override public void prepare(MimeMessage mimeMessage) throws Exception { 
+		final MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+								
+								
+			helper.setFrom("WhosPet <kul32137@gmail.com>"); // 보내는 사람 <> 이메일 주소
+			helper.setTo("kul321japan@gmail.com");  // 받는 사람	
+			helper.setSubject( "예약이 반려되었습니다."); // 제목 
+			helper.setText("예약번호"+bookno+"번의 예약이 반려되었습니다.", true); //내용
+						} 
+							
+				}; 
+			mailSender.send(preparator); //메일을 보낸다.
 		
 		return "redirect: /mypage/info";
 	

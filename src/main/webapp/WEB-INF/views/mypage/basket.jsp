@@ -164,7 +164,7 @@ left: 800px;
 		<button id="btnMinus" onclick="location.href='/mypage/basket/minus?sbNo=${basketlist.sbNo}'" class= "btn btn-outline-secondary btn-xs"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
 		</c:if>
         </td>
-		<td>${basketlist.sbAmount}</td>
+		<td>${basketlist.sbAmount * basketlist.sbQuantity}</td>
 <%-- 		<td><input type="hidden" id="sbNo" name="sbNo" value="${sbNo }"><button id="btnRemove">삭제</button></td> --%>
 		<td><button id="btnRemove" class="btn btn-default" onclick="location.href='/mypage/basket/remove?sbNo=${basketlist.sbNo}'">삭제</button></td>
 	</tr>

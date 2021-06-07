@@ -4,7 +4,7 @@
 <link href="/resources/css/hospital.css" rel="stylesheet"> 
 	<h3>동물병원 찾기</h3>
 	
-	<form class="form-inline text-center mb15" action="/hospital/search" method="get">
+	<form class="form-inline text-center mb40" action="/hospital/search" method="get">
 	  <div class="form-group">
 	  	<select class="form-control" name="category">
 			<option value="hName">병원이름</option>

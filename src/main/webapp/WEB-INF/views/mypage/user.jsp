@@ -159,12 +159,6 @@ padding: 30px;
 list-style: none;
 }
 
-#div1{
-width: 700px;
-height: 500px;
-position: relative;
-right:-250px; top:-100px;
-}
 
 #boardtitle{
 position: relative;
@@ -182,6 +176,7 @@ border: 1px solid #f6dcbf;
 padding: 10px;
 }
 </style>
+
 <div id="boardtitle">
 <h1 style="display:inline;">내 정보 </h1><h4 style="display:inline; color: gray;">MyInfo</h4>
 <hr align="left" width="830">

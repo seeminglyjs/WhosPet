@@ -52,4 +52,12 @@ public class MainServiceImpl implements MainService {
 		
 		return bestReviewList;
 	}
+	
+	@Override // 검색 결과를 받아 치료번호를 가져온다.
+	public String getTreatNo(String data) {
+		
+		String no = mainDao.selecTreatNo(data);
+		
+		return no;
+	}
 }

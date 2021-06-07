@@ -28,4 +28,12 @@ public interface MainService {
 	 */
 	public List<HashMap<String, Object>> getBestReviewList();
 
+	/**
+	 * 검색데이터를 받아 치료번호를 받아온다.
+	 * 
+	 * @param data
+	 * @return
+	 */
+	public String getTreatNo(String data);
+
 }

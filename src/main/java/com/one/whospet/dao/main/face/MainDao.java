@@ -28,4 +28,12 @@ public interface MainDao {
 	 */
 	public List<HashMap<String, Object>> selectBestReviewList();
 
+	/**
+	 * 검색결과에 따른 치료번호를 가져온다.
+	 * 
+	 * @param data
+	 * @return
+	 */
+	public String selecTreatNo(String data);
+
 }

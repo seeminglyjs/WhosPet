@@ -52,7 +52,15 @@
   		<result column="r_star" property="rStar" /> 
    	</resultMap>
 	
-	
+	<!-- 치료 DTO 정의 -->
+   <resultMap type="com.one.whospet.dto.Treatment" id="Treatment">
+      <result column="TR_NO" property="trNo"/>
+      <result column="H_NO" property="hNo"/>
+      <result column="TR_NAME" property="trName"/>
+      <result column="TR_DESC" property="trDesc"/>
+      <result column="TR_PRICE" property="trPrice"/>
+      <result column="TR_TYPE" property="trType"/>
+   </resultMap>
 
 	<select id="selectNewList" resultMap="Hospital">
 		select * from(
@@ -76,9 +84,16 @@
 	<select id="selectBestReviewList" resultType="hashmap">
 		select * from(
 		    select rownum rnum, r.* from(
-		    select h.h_no, h.h_name, h.h_tel, h.h_road_address, r.r_content, r.r_star from w_review r, w_hospital h where h.h_no = r.h_no order by r.r_star desc) r
+		    select h.h_no, h.h_name, h.h_road_address, h.h_tel, avg(r.r_star) av from w_review r, w_hospital h 
+            where h.h_no = r.h_no
+            group by h.h_no, h.h_name, h.h_road_address, h.h_tel
+            order by av desc) r
 		)review
 		where rnum BETWEEN 1 and 10
+	</select>
+	
+	<select id="selecTreatNo" parameterType="String" resultType="String">
+		select min(tr_no) from w_treatment where tr_name like '%' || #{data} || '%'
 	</select>
 
 </mapper>
