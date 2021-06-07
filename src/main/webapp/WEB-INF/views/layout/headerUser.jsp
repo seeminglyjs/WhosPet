@@ -304,8 +304,8 @@ a{
     cursor: default;
     background-color: #f6dcbf;
     border-color: #f6dcbf;
-}
 
+}
 /* 푸터 */
 .f_row{
 	border-bottom: 1px solid white;
