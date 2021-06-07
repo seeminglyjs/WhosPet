@@ -17,7 +17,7 @@
 }
 
 .listCom table{
-	font-size: 17px;
+	font-size: 15px;
 }
 
 .listCom table a{
@@ -32,7 +32,7 @@
 }
 
 .listCom span{
-	font-size: 13px;
+	font-size: 11px;
 	color: #ccc;
 }
 

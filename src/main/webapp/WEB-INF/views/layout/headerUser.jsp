@@ -301,7 +301,7 @@ a{
     color: #f7a440;
     cursor: default;
     background-color: #f6dcbf;
-    border-color: white;
+    border-color: #f6dcbf;
 }
 
 
