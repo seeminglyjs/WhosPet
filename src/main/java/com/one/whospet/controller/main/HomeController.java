@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,11 +78,30 @@ public class HomeController {
 
 	
 	// 메인 검색 컨트롤러
-	@RequestMapping(value = "/mainSearch" )
-	public void mainSearch(Model model) {
+	@RequestMapping(value = "/mainSerch" )
+	public String mainSearch(Model model,HttpServletRequest request) {
+		String data = request.getParameter("data");
 		
+		if(data == null || data.equals("")) {
+			return "redirect:/home/searchNone";
+		}else {
+			
+			//치료번호 기본키를 가져온다.
+			String no = mainService.getTreatNo(data);	
+			
+			//검색 결과 존재여부 체크
+			if(no == null || no.equals("")) {
+				return "redirect:/home/searchNone"; // 검색결과 없음
+			}else {
+				model.addAttribute("no", no);
+				return "redirect:/treatment/treatdetail"; // 검색결과 있음
+			}
+		}
 	}
 	
+	// 메인 검색 결과없는 페이지 리턴 컨트롤러
+	@RequestMapping(value = "/home/searchNone" )
+	public void searchNone() {}
 	
 	
 	/////////////// 관리자 홈 컨트롤러  //////////////////////////////

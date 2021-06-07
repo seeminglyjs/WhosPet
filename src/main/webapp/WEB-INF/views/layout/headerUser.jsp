@@ -51,7 +51,7 @@ $(document).ready(function(){
 <!-- 메인 검색기능 자바스크립트  -->
 $(document).ready(function(){
 	$("#searchBtn").click(function(){
-		$(location).attr("href", "/searchList?" + $("#searchContent").val())
+		$(location).attr("href", "/mainSerch" + "?data=" + $("#searchContent").val())
 	})
 	
 	$('nav li').hover(
@@ -289,7 +289,7 @@ a{
 	<div id="headerSearchDivParent">
      <div id="headerSearchDiv" class="inlineHeader" >
          <div class="input-group">
-             <input type="text" class="form-control input-lg" placeholder="검색..." name="searchContent" id="searchContent"/>
+             <input type="text" class="form-control input-lg" placeholder="진료항목검색" name="searchContent" id="searchContent"/>
              <span class="input-group-btn">
                  <button class="btn btn-info btn-lg" type="button" id="searchBtn">
                      <i class="glyphicon glyphicon-search"></i>
