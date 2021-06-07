@@ -308,7 +308,7 @@ a{
 
 	<!-- 이미지 로고 -->
 	<div class="inlineHeader">
-		<a href="/"><img alt="로고" src="/resources/img/logo2.png" id="headerLogo"></a>
+		<a href="/admin"><img alt="로고" src="/resources/img/logo2.png" id="headerLogo"></a>
 	</div>
 	
 
