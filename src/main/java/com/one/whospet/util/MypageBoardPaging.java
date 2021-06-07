@@ -14,6 +14,7 @@ public class MypageBoardPaging {
 	private int startNo; //화면에 보이는 게시글의 시작 번호	
 	private int endNo; //화면에 보이는 게시글의 끝 번호
 
+	
 	//디폴트 생성자
 	public MypageBoardPaging() {}
 	
@@ -145,5 +146,7 @@ public class MypageBoardPaging {
 	public void setEndNo(int endNo) {
 		this.endNo = endNo;
 	}
+	
+
 
 }
