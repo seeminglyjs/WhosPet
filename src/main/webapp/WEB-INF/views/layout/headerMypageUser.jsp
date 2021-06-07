@@ -9,6 +9,7 @@
 <!-- 부트스트랩 3.2.2 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="/resources/css/common.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 <!--JSTL라이브러리 영역  -->
@@ -84,10 +85,12 @@ $(document).ready(function(){
 /*전체를 감싸는 div  */
 #all{
 	/* footer의 하단 고정을 위한 조건식  */
-	min-height: 600px;
+	min-height: 1200px;
 	position: relative;
 	padding-bottom: 330px;
 }
+
+
 
 /*--------------header 영역 css ------------------  */
 
