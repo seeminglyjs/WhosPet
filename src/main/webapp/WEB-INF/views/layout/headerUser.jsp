@@ -51,7 +51,7 @@ $(document).ready(function(){
 <!-- 메인 검색기능 자바스크립트  -->
 $(document).ready(function(){
 	$("#searchBtn").click(function(){
-		$(location).attr("href", "/searchList?" + $("#searchContent").val())
+		$(location).attr("href", "/mainSerch" + "?data=" + $("#searchContent").val())
 	})
 	
 	$('nav li').hover(
@@ -270,6 +270,42 @@ a{
 	margin-left: 6px;
 }
 
+
+/* 통합 css */
+
+/* input창 강조 색   */
+.form-control:focus {
+	border: 1px solid #f7a440 !important;
+}
+
+/* 페이지네이션 색상 */
+.pagination li a{
+	color: #f7a440;
+}
+
+.pagination li a:hover{
+	color: #f7a440;
+}
+
+.pagination li a:visited{
+	color: #f7a440;
+}
+
+.pagination>.active>a, 
+.pagination>.active>a:focus, 
+.pagination>.active>a:hover, 
+.pagination>.active>span, 
+.pagination>.active>span:focus, 
+.pagination>.active>span:hover {
+    z-index: 2;
+    color: #f7a440;
+    cursor: default;
+    background-color: #f6dcbf;
+    border-color: white;
+}
+
+
+
 </style>
 
 </head>
@@ -289,7 +325,7 @@ a{
 	<div id="headerSearchDivParent">
      <div id="headerSearchDiv" class="inlineHeader" >
          <div class="input-group">
-             <input type="text" class="form-control input-lg" placeholder="검색..." name="searchContent" id="searchContent"/>
+             <input type="text" class="form-control input-lg" placeholder="진료항목검색" name="searchContent" id="searchContent"/>
              <span class="input-group-btn">
                  <button class="btn btn-info btn-lg" type="button" id="searchBtn">
                      <i class="glyphicon glyphicon-search"></i>

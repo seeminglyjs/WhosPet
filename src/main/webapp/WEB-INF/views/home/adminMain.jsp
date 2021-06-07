@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/layout/headerAdmin.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <style type="text/css">
 
@@ -191,8 +192,28 @@
 			
 			<c:otherwise>
 				<tr>
-					<td style="color:#e1701a">${start1 = start1 + 1 }. 
-					<a href="/hospital/view?hNo=${newH.hNo }">${newH.hName } <span> Tel: ${newH.hTel } </span></a></td>
+					<td style="color:#e1701a; padding: 9px;">${start1 = start1 + 1 }.
+					
+					<c:if test="${fn:length(newH.hName) > 7}">
+						<a href="/hospital/view?hNo=${newH.hNo }">${fn:substring(newH.hName,0,6) }..</a>
+					</c:if>
+					
+					<c:if test="${fn:length(newH.hName) <= 7}">
+						<a href="/hospital/view?hNo=${newH.hNo }">${newH.hName }</a>
+					</c:if>
+										 					 
+					
+					<c:if test="${fn:length(newH.hRoadAddress) > 14}">
+						<span>${fn:substring(newH.hRoadAddress,0,14) }.. </span>
+					</c:if>
+					
+					<c:if test="${fn:length(newH.hRoadAddress) <= 14}">
+						<span>${newH.hRoadAddress} </span>
+					</c:if>
+
+					
+					</td>
+					
 				</tr>
 			</c:otherwise>		
 		</c:choose>
@@ -217,8 +238,25 @@
 			
 			<c:otherwise>
 				<tr>
-					<td style="color:#e1701a">${start2 = start2 + 1 }. 
-					<a href="/hospital/view?hNo=${newH.hNo }">${newH.hName } <span> Tel: ${newH.hTel } </span></a></td>
+					<td style="color:#e1701a; padding: 9px;">${start2 = start2 + 1 }.
+					
+					<c:if test="${fn:length(newH.hName) > 7}">
+						<a href="/hospital/view?hNo=${newH.hNo }">${fn:substring(newH.hName,0,6) }..</a>
+					</c:if>
+					
+					<c:if test="${fn:length(newH.hName) <= 7}">
+						<a href="/hospital/view?hNo=${newH.hNo }">${newH.hName }</a>
+					</c:if>
+										 					 
+					
+					<c:if test="${fn:length(newH.hRoadAddress) > 14}">
+						<span>${fn:substring(newH.hRoadAddress,0,14) }.. </span>
+					</c:if>
+					
+					<c:if test="${fn:length(newH.hRoadAddress) <= 14}">
+						<span>${newH.hRoadAddress} </span>
+					</c:if>
+					</td>	
 				</tr>
 			</c:otherwise>		
 		</c:choose>
@@ -243,8 +281,26 @@
 				
 				<c:otherwise>
 					<tr>
-						<td style="color:#e1701a">${start3 = start3 + 1 }. 
-						<a href="/hospital/view?hNo=${newH.H_NO }">${newH.H_NAME } <span> Tel: ${newH.H_TEL } </span></a></td>
+						<td style="color:#e1701a; padding: 9px;">${start3 = start3 + 1 }.
+						
+					<c:if test="${fn:length(newH.H_NAME) > 7}">
+						<a href="/hospital/view?hNo=${newH.hNo }">${fn:substring(newH.H_NAME,0,6) }..</a>
+					</c:if>
+					
+					<c:if test="${fn:length(newH.H_NAME) <= 7}">
+						<a href="/hospital/view?hNo=${newH.hNo }">${newH.H_NAME }</a>
+					</c:if>
+										 					 
+					
+					<c:if test="${fn:length(newH.H_ROAD_ADDRESS) > 14}">
+						<span>${fn:substring(newH.H_ROAD_ADDRESS,0,14) }.. </span>
+					</c:if>
+					
+					<c:if test="${fn:length(newH.H_ROAD_ADDRESS) <= 14}">
+						<span>${newH.H_ROAD_ADDRESS} </span>
+					</c:if>
+						
+					</td>	
 					</tr>
 				</c:otherwise>		
 			</c:choose>

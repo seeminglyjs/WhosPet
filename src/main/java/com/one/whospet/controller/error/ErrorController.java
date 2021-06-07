@@ -14,6 +14,9 @@ public class ErrorController {
 	
 	@RequestMapping(value = "/error/500errorPage")
 	public void error500() {}
+	
+	@RequestMapping(value = "/error/400errorPage")
+	public void error400() {}
 
 
 }
