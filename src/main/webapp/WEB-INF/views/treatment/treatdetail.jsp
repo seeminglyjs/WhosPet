@@ -456,6 +456,10 @@
 		
 				var chart = am4core.create('chartdiv', am4charts.XYChart)
 				chart.colors.step = 2;
+				var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+				valueAxis.min = 500;
+				valueAxis.max = data[data.length - 1]['totalMax'] + 50000;
+				valueAxis.strictMinMax = true; 
 				var login = ${login}
 				chart.legend = new am4charts.Legend()
 				chart.legend.position = 'top'
@@ -482,9 +486,9 @@
 				
 				    var bullet = series.bullets.push(new am4charts.LabelBullet())
 				    bullet.interactionsEnabled = false
-				    bullet.dy = 20;
+				    bullet.dy = -10;
 				    bullet.label.text = '{valueY}' + '원'
-				    bullet.label.fill = am4core.color('#ffffff')
+				    bullet.label.fill = am4core.color('#000')
 				
 				    return series;
 				}
@@ -505,9 +509,9 @@
 					    },
 					    {
 					        category: '최저가ㅤㅤㅤ평균가ㅤㅤㅤ최고가  ',
-					        first: data[5]['totalMin'],
-					        second: data[5]['totalPrice'],
-					        third: data[5]['totalMax']
+					        first: data[data.length - 1]['totalMin'],
+					        second: data[data.length - 1]['totalPrice'],
+					        third: data[data.length - 1]['totalMax']
 					    }
 					]
 					
@@ -515,21 +519,21 @@
 					chart.data = [
 					    {
 					        category: '최저가ㅤㅤㅤ평균가ㅤㅤㅤ최고가',
-					        first: data[5]['cityMin'],
-					        second: data[5]['cityPrice'],
-					        third: data[5]['cityMax']
+					        first: data[data.length - 1]['cityMin'],
+					        second: data[data.length - 1]['cityPrice'],
+					        third: data[data.length - 1]['cityMax']
 					    },
 					    {
 					        category: '최저가ㅤㅤㅤ평균가ㅤㅤㅤ최고가 ',
-					        first: data[5]['districtMin'],
-					        second: data[5]['districtPrice'],
-					        third: data[5]['districtMax']
+					        first: data[data.length - 1]['districtMin'],
+					        second: data[data.length - 1]['districtPrice'],
+					        third: data[data.length - 1]['districtMax']
 					    },
 					    {
 					        category: '최저가ㅤㅤㅤ평균가ㅤㅤㅤ최고가  ',
-					        first: data[5]['totalMin'],
-					        second: data[5]['totalPrice'],
-					        third: data[5]['totalMax']
+					        first: data[data.length - 1]['totalMin'],
+					        second: data[data.length - 1]['totalPrice'],
+					        third: data[data.length - 1]['totalMax']
 					    }
 					]
 					
@@ -566,7 +570,7 @@
 			  		a.remove()
 		  		})
 
-			      for(var i = 0; i < 5; i++) {
+			      for(var i = 0; i < data.length - 1; i++) {
 				  	  var newli = document.createElement('li');
 				  	  var infoDiv = document.createElement('div');
 				  	  var newDiv = document.createElement('div');
@@ -665,12 +669,16 @@
 			    data: {"city": sido, "district": gugun},
 			    success : function(data){
 			  	console.log("성공")
-			  	
+			  	console.log(data);
 			  	if(data.length == 0)
 				  window.alert("해당 위치에 등록된 병원이 없습니다.");
 			  	am4core.ready(function() {
 		
 				var chart = am4core.create('chartdiv', am4charts.XYChart)
+				var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+				valueAxis.min = 500;
+				valueAxis.max = data[data.length - 1]['totalMax'] + 100000;
+				valueAxis.strictMinMax = true; 
 				chart.colors.step = 2;
 				var login = ${login}
 				chart.legend = new am4charts.Legend()
@@ -698,9 +706,9 @@
 				
 				    var bullet = series.bullets.push(new am4charts.LabelBullet())
 				    bullet.interactionsEnabled = false
-				    bullet.dy = 20;
+				    bullet.dy = -10;
 				    bullet.label.text = '{valueY}' + '원'
-				    bullet.label.fill = am4core.color('#ffffff')
+				    bullet.label.fill = am4core.color('#000')
 				
 				    return series;
 				}
@@ -721,9 +729,9 @@
 				    },
 				    {
 				        category: '최저가ㅤㅤㅤ평균가ㅤㅤㅤ최고가  ',
-				        first: data[5]['totalMin'],
-				        second: data[5]['totalPrice'],
-				        third: data[5]['totalMax']
+				        first: data[data.length - 1]['totalMin'],
+				        second: data[data.length - 1]['totalPrice'],
+				        third: data[data.length - 1]['totalMax']
 				    }
 				]
 				
@@ -731,21 +739,21 @@
 				chart.data = [
 				    {
 				        category: '최저가ㅤㅤㅤ평균가ㅤㅤㅤ최고가',
-				        first: data[5]['cityMin'],
-				        second: data[5]['cityPrice'],
-				        third: data[5]['cityMax']
+				        first: data[data.length - 1]['cityMin'],
+				        second: data[data.length - 1]['cityPrice'],
+				        third: data[data.length - 1]['cityMax']
 				    },
 				    {
 				        category: '최저가ㅤㅤㅤ평균가ㅤㅤㅤ최고가 ',
-				        first: data[5]['districtMin'],
-				        second: data[5]['districtPrice'],
-				        third: data[5]['districtMax']
+				        first: data[data.length - 1]['districtMin'],
+				        second: data[data.length - 1]['districtPrice'],
+				        third: data[data.length - 1]['districtMax']
 				    },
 				    {
 				        category: '최저가ㅤㅤㅤ평균가ㅤㅤㅤ최고가  ',
-				        first: data[5]['totalMin'],
-				        second: data[5]['totalPrice'],
-				        third: data[5]['totalMax']
+				        first: data[data.length - 1]['totalMin'],
+				        second: data[data.length - 1]['totalPrice'],
+				        third: data[data.length - 1]['totalMax']
 				    }
 				]
 				
@@ -785,7 +793,7 @@
 			  		
 			  	  
 
-			      for(var i = 0; i < 5; i++) {
+			      for(var i = 0; i < data.length - 1; i++) {
 				  	  var newli = document.createElement('li');
 				  	  var infoDiv = document.createElement('div');
 				  	  var newDiv = document.createElement('div');
