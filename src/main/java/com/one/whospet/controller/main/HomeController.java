@@ -82,6 +82,11 @@ public class HomeController {
 	public String mainSearch(Model model,HttpServletRequest request) {
 		String data = request.getParameter("data");
 		
+		//한글 엑스레이
+		if(data.equals("엑스레이") || data.equals("액스레이")) {
+			data = "x-ray";
+		}
+		
 		if(data == null || data.equals("")) {
 			return "redirect:/home/searchNone";
 		}else {
