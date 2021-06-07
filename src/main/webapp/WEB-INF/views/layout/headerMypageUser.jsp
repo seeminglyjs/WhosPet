@@ -52,7 +52,7 @@ $(document).ready(function(){
 <!-- 메인 검색기능 자바스크립트  -->
 $(document).ready(function(){
 	$("#searchBtn").click(function(){
-		$(location).attr("href", "/searchList?" + $("#searchContent").val())
+		$(location).attr("href", "/mainSerch" + "?data=" + $("#searchContent").val())
 	})
 	
 	$('nav li').hover(
@@ -68,28 +68,6 @@ $(document).ready(function(){
 
 
 </script>
-
-<style type="text/css">
-@font-face {
-    font-family: 'NEXON Lv1 Gothic OTF';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-/*컨테이너 전체 넓이 지정  */
-.container{
-	width:1100px;
-	min-width:1100px;
-	max-width:none!important;
-}
-/*전체를 감싸는 div  */
-#all{
-	/* footer의 하단 고정을 위한 조건식  */
-	min-height: 1200px;
-	position: relative;
-	padding-bottom: 330px;
-}
-
 
 
 /*--------------header 영역 css ------------------  */
@@ -320,9 +298,9 @@ font-family: 'NEXON Lv1 Gothic OTF';
 
 	<!-- 검색창 영역  -->	
 	<div id="headerSearchDivParent">
-     <div id="headerSearchDiv" class="inlineHeader" >
+     <div id="headerSearchDiv">
          <div class="input-group">
-             <input type="text" class="form-control input-lg" placeholder="검색..." name="searchContent" id="searchContent"/>
+             <input type="text" class="form-control input-lg" placeholder="진료항목검색" name="searchContent" id="searchContent"/>
              <span class="input-group-btn">
                  <button class="btn btn-info btn-lg" type="button" id="searchBtn">
                      <i class="glyphicon glyphicon-search"></i>
@@ -333,7 +311,7 @@ font-family: 'NEXON Lv1 Gothic OTF';
 	</div>
 
    	<!-- 로그인 -->
-	<div class="loginHeader text-center" id="loginDiv">
+	<div class="loginHeader text-center clearfix" id="loginDiv">
 	    <ul class="nav navbar-nav">
 	    <li class="dropdown">
 	      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="color:#666666"><i class="glyphicon glyphicon-user"></i></a>      
@@ -436,6 +414,8 @@ font-family: 'NEXON Lv1 Gothic OTF';
 	</div>
 </nav>
 </div>
+
+
 <div id="containerAll" class="container"><!-- 콘텐츠 영역 시작  -->
 
 <div id="menubar">
