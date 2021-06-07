@@ -106,9 +106,8 @@ body{
 
 /* 헤더 전체 div */
 #headerDiv{
-	display:flex;
-	margin-bottom: 20px; 
-	justify-content: center;
+	display: table !important;
+	height: 90px;
 }
 
 /* 로고 */
@@ -119,8 +118,7 @@ body{
 
 /* 헤더 각 div 영역 */
 .inlineHeader{
-	width:280px;
-	margin-top: 20px;
+    width: 190px;
 }
 
 .dropdown a{
@@ -129,13 +127,15 @@ body{
 
 /* 검색버튼 css  */
 #headerSearchDivParent{
-	padding-bottom: 15px;
+	width:calc(100% - 190px - 60px);
 }
 
 #headerSearchDiv{
     border: solid 1px #E4E4E4;
     border-radius: 6px;
     background-color: #fff;
+    width:40%;
+    margin:0 auto;
 }
 
 #headerSearchDiv input{
@@ -169,8 +169,7 @@ body{
 
 /* 로그인 영역 */
 .loginHeader{
-	margin-top: 10px;
-	padding-left: 150px;
+    width: 60px;
 }
 
 
@@ -178,7 +177,10 @@ body{
 	font-size: 30px;
 }
 
-
+.inlineHeader,.loginHeader, #headerSearchDivParent{
+	vertical-align: middle;
+	display: table-cell;
+}
 
 
  
@@ -302,9 +304,36 @@ a{
     cursor: default;
     background-color: #f6dcbf;
     border-color: #f6dcbf;
+
+}
+/* 푸터 */
+.f_row{
+	border-bottom: 1px solid white;
+}
+.f_row:after{
+	content:"";
+	display:block;
+	clear:both;
+}
+.f_row .col{
+	float:left;
+	padding: 18px 0;
 }
 
+.f_row .col:nth-of-type(1){
+	width:40%;
+}
+.f_row .col:nth-of-type(2){
+	width:22%;
+}
+.f_row .col:last-child{
+	float:right;
+	width:35%;
+}
 
+#mainContainer{
+	overflow:hidden;
+}
 
 </style>
 
@@ -323,7 +352,7 @@ a{
 
 	<!-- 검색창 영역  -->	
 	<div id="headerSearchDivParent">
-     <div id="headerSearchDiv" class="inlineHeader" >
+     <div id="headerSearchDiv">
          <div class="input-group">
              <input type="text" class="form-control input-lg" placeholder="진료항목검색" name="searchContent" id="searchContent"/>
              <span class="input-group-btn">
@@ -336,7 +365,7 @@ a{
 	</div>
 
    	<!-- 로그인 -->
-	<div class="loginHeader text-center" id="loginDiv">
+	<div class="loginHeader text-center clearfix" id="loginDiv">
 	    <ul class="nav navbar-nav">
 	    <li class="dropdown">
 	      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="color:#666666"><i class="glyphicon glyphicon-user"></i></a>      
