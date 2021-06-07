@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.one.whospet.dto.Hospital;
-import com.one.whospet.dto.Review;
 import com.one.whospet.service.main.face.MainService;
 import com.one.whospet.service.treatment.face.TreatmentService;
 

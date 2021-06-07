@@ -8,24 +8,26 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	
-	$("#commentBtn").click(function(){
-		$.ajax({
-			type: "post"
-			,url: "/board/comment"
-			,data: {bNo : "${board.bNo }"
-				, uNo : "${sessionScope.user.uNo }"
-				, content : $("#commentInput").val()
+	$("#commentBtn").click(function(){	
+		if(check()){
+			$.ajax({
+				type: "post"
+				,url: "/board/comment"
+				,data: {bNo : "${board.bNo }"
+					, uNo : "${sessionScope.user.uNo }"
+					, content : $("#commentInput").val()
+					}
+				,dataType: "html"
+				,success: function(res){
+					console.log("AJAX성공")
+					$("#commentList").html(res)
+					$("#commentInput").val("")
 				}
-			,dataType: "html"
-			,success: function(res){
-				console.log("AJAX성공")
-				$("#commentList").html(res)
-				$("#commentInput").val("")
-			}
-			,error: function(){
-				console.log("AJA실패")
-			}
-		});	
+				,error: function(){
+					console.log("AJA실패")
+				}
+			});	
+		}
 	})
 	
 	
@@ -88,6 +90,24 @@ function forwardCno(param){
 			console.log("댓글 삭제 실패")
 		}
 	});	
+}
+
+
+
+function check(){
+	// 댓글창 등록 정규식 함수		
+		var commentInput = /^[0-9a-zA-Z가-힣ㄱ-ㅎ!@#$%^&*()<>?/\+-\s]{2,500}$/i
+		var space =/^s{0,}/
+		if(!commentInput.test($("#commentInput").val())){
+				alert("댓글을 입력해주세요!")
+				return false;		
+		}else{
+			if(space.test($("#commentInput").val())){
+				alert("댓글을 입력해주세요!")
+				return false;
+			}
+			return true;
+		}
 }
 </script>
 
