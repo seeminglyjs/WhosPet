@@ -99,6 +99,7 @@ $(document).ready(function(){
 	display:flex;
 	margin-bottom: 20px; 
 	justify-content: center;
+
 }
 
 /* 로고 */
