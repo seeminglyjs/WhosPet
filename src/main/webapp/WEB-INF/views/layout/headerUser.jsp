@@ -144,6 +144,7 @@ body{
 }
 
 #headerSearchDiv button{
+
     width:50px;
     margin: 2px 0 0 0;
     background: none;
@@ -177,6 +178,10 @@ body{
 	font-size: 30px;
 }
 
+
+
+
+ 
 
 /*--------------header 영역 css 끝 ------------------  */
 

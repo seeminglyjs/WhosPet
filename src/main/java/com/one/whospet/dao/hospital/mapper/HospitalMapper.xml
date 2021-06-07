@@ -153,6 +153,10 @@
   	select count(*) from w_hospital
   	</select>
   	
+  	<select id="allHospital" resultType="hashmap">
+  	select * from w_hospital
+  	</select>
+  	
   	
   	
   	

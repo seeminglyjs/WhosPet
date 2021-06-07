@@ -14,4 +14,6 @@ public interface TreatmentService {
     * @return
     */
    public List<HashMap<String, Object>> selectAllTreatment();
+
+   public List<HashMap<String, Object>> selectAllByName(String tr_name);
 }
