@@ -1,0 +1,318 @@
+@charset "UTF-8";
+
+
+/* 폰트 지정 영역 */
+@font-face {
+    font-family: 'NEXON Lv1 Gothic OTF';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body{
+	font-family: 'NEXON Lv1 Gothic OTF';
+}
+
+
+
+
+
+
+/*컨테이너 전체 넓이 지정  */
+.container{
+	width:1100px;
+	min-width:1100px;
+	max-width:none!important;
+}
+/*전체를 감싸는 div  */
+#all{
+	/* footer의 하단 고정을 위한 조건식  */
+	min-height: 1600px;
+	position: relative;
+	padding-bottom: 330px;
+}
+
+/*--------------header 영역 css ------------------  */
+
+/* 헤더 전체 div */
+#headerDiv{
+	display: table !important;
+	height: 90px;
+}
+
+/* 로고 */
+#headerLogo{
+	width:190px;
+	height: 45px;
+}
+
+/* 헤더 각 div 영역 */
+.inlineHeader{
+    width: 190px;
+}
+
+.dropdown a{
+	font-weight: bolder;
+}
+
+/* 검색버튼 css  */
+#headerSearchDivParent{
+	width:calc(100% - 190px - 60px);
+}
+
+#headerSearchDiv{
+    border: solid 1px #E4E4E4;
+    border-radius: 6px;
+    background-color: #fff;
+    width:40%;
+    margin:0 auto;
+}
+
+#headerSearchDiv input{
+    border: 0;
+    box-shadow: none;
+}
+
+#headerSearchDiv button{
+
+    width:50px;
+    margin: 2px 0 0 0;
+    background: none;
+    box-shadow: none;
+    border: 0;
+    color: #666666;
+    padding: 0 6px 0 10px;
+    border-left: solid 1px #ccc;
+}
+
+#headerSearchDiv button:hover{
+    border: 0;
+    box-shadow: none;
+    border-left: solid 1px #ccc;
+}
+
+#headerSearchDiv .glyphicon-search{
+    font-size: 23px;
+}
+
+
+
+/* 로그인 영역 */
+.loginHeader{
+    width: 60px;
+}
+
+
+.loginHeader ul li a i{
+	font-size: 30px;
+}
+
+.inlineHeader,.loginHeader, #headerSearchDivParent{
+	vertical-align: middle;
+	display: table-cell;
+}
+
+
+ 
+
+/*--------------header 영역 css 끝 ------------------  */
+
+
+@grid-float-breakpoint : 0;
+@screen-xs-max  : 0;
+
+/* Navigation Styles */
+
+#navDiv{
+	min-width: 1120px;
+	padding-bottom: 20px;	
+}
+
+#hNav {
+	background-color: #f8f8f8;
+    border-color: #e7e7e7;
+	border-bottom: 1px solid #ccc;
+	border-top: 1px solid #ccc;
+	box-shadow: inset 0 1px 0 rgb(255 255 255 / 15%), 0 1px 5px rgb(0 0 0 / 8%);
+}
+
+#hNav ul {
+	font-size: 0;
+	margin: 0;
+	padding: 0;
+}
+
+#hNav ul li {
+	display: inline-block;
+	position: relative;
+}
+
+#hNav ul li a {
+	font-weight:bold;
+	color: #777;
+	display: block;
+	font-size: 14px;
+	padding: 15px 15px;
+	transition: 0.3s linear;
+}
+
+a{
+ 	text-decoration:none !important;
+}
+
+#hNav a:visited {
+	color:#777;
+}
+
+#hNav ul li:hover a {
+	color:#333;	
+}
+
+#hNav ul li ul {
+	display: none;
+	position: absolute;
+	width: 150px;
+	border: 0.5px solid #aaaaaa;
+	background: #fff;
+	border-radius:0px 0px 10px 10px;
+	padding: 6px 3px;
+}
+
+#hNav ul li ul li {
+	border-collapse: collapse !important;
+	display: block;
+}
+
+#hNav ul li ul li:first-child {
+	border-top: none;
+}
+
+#hNav ul li ul li a {
+	color: #777 !important;
+	display: block;
+	padding: 0px 14px;
+	line-height: 1.6em;
+}
+
+#hNav ul li ul li a:hover {
+	text-decoration:underline !important;
+}
+
+#hNav .fa.fa-angle-down {
+	margin-left: 6px;
+}
+
+
+/* 통합 css */
+
+/* input창 강조 색   */
+.form-control:focus {
+	border: 1px solid #f7a440 !important;
+}
+
+/* 페이지네이션 색상 */
+.pagination li a{
+	color: #f7a440;
+}
+
+.pagination li a:hover{
+	color: #f7a440;
+}
+
+.pagination li a:visited{
+	color: #f7a440;
+}
+
+.pagination>.active>a, 
+.pagination>.active>a:focus, 
+.pagination>.active>a:hover, 
+.pagination>.active>span, 
+.pagination>.active>span:focus, 
+.pagination>.active>span:hover {
+    z-index: 2;
+    color: #f7a440;
+    cursor: default;
+    background-color: #f6dcbf;
+    border-color: #f6dcbf;
+}
+
+/* 푸터 */
+#footerDiv{
+	position: absolute;
+    left: 0;
+    bottom: 0;
+   	width:100%;
+	min-width: 1120px;
+	background-color: #fff;
+}
+
+/* footer 링크  */
+.footerlist li a{
+	color:white;
+}
+
+/* footer 이미지 */
+#footerLogo{
+	width: 200px;
+	height: 60px;
+}
+
+
+.container .row {
+	border-bottom: 0.5px solid white;
+}
+
+.footerInfo {
+  padding: 20px 0px;
+  color:white;
+  background-color:#aaaaaa;
+}
+
+.footerInfo h3 {
+  margin-top:0;
+  margin-bottom:12px;
+  font-weight:bold;
+  font-size:16px;
+}
+
+.footerInfo ul {
+  padding:0;
+  list-style:none;
+  line-height:1.6;
+  font-size:14px;
+}
+
+
+
+.f_row{
+	border-bottom: 1px solid white;
+}
+.f_row:after{
+	content:"";
+	display:block;
+	clear:both;
+}
+.f_row .col{
+	float:left;
+	padding: 18px 0;
+}
+
+.f_row .col:nth-of-type(1){
+	width:40%;
+}
+.f_row .col:nth-of-type(2){
+	width:22%;
+}
+.f_row .col:last-child{
+	float:right;
+	width:35%;
+}
+
+#mainContainer{
+	overflow:hidden;
+}
+
+.dropdown-menu{
+	right:0;
+	left:auto;
+}
