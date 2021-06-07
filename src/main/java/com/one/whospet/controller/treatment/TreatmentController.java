@@ -68,7 +68,7 @@ public class TreatmentController {
 					}
 				}
 				if(isIn == false) {
-					VList.add((treatmentList.get(i)));
+					VList.add((treatmentList.get(i))); 
 				}
 				isIn = false;
 			}
