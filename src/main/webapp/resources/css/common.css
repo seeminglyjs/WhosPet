@@ -312,7 +312,7 @@ a{
 	overflow:hidden;
 }
 
-.dropdown-menu{
+.loginHeader .dropdown-menu{
 	right:0;
 	left:auto;
 }
