@@ -42,7 +42,7 @@
 
 
 /* 홍백님 슬라이드 영역 */   
-      .name {
+     .name {
         font-weight: bold;
       }
       
@@ -59,7 +59,7 @@
         display: flex;
         align-items: center;
         width: fit-content;
-        animation: carouselAnim 200s infinite linear;
+        animation: carouselAnim 100s infinite linear;
       }
       
       .items a {
@@ -149,7 +149,7 @@
 
 
 <!--홍백님 슬라이드 영역  -->
-    <div class="container">
+   <div class="container">
       <div class="faders">
         <div class="left"></div>
         <div class="right"></div>
@@ -157,7 +157,7 @@
       <div class="items--parent">
          <div class="items">
 	        <c:forEach var="t" items="${treatmentList}">
-           		<a href='/treatment/treatdetail?no=${t.TR_NO}'>
+           		<a href='/treatment/treatdetail?no=${t.TR_NO}' id="location">
 	           		<div class="entry">
 		             	<h3 class="name">${t.TR_NAME}</h3>
 		             	<p class="quote">가격 : ${t.TR_PRICE}원</p>

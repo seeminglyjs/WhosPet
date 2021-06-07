@@ -20,4 +20,11 @@
    <select id="selectAllTreatment" resultType="hashmap">
    SELECT * from w_treatment
    </select>
+   
+   
+   <select id="selectAllByName" resultType="hashmap" parameterType="String">
+   SELECT * from w_treatment where TR_NAME=#{tr_name}
+   </select>
+   
+   
 </mapper>

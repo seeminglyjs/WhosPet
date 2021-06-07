@@ -16,4 +16,6 @@ public interface TreatmentDao {
     */
    public List<HashMap<String, Object>> selectAllTreatment();
 
+   public List<HashMap<String, Object>> selectAllByName(String tr_name);
+
 }

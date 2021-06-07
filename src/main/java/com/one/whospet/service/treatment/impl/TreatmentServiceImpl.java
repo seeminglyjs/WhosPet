@@ -27,4 +27,11 @@ public class TreatmentServiceImpl implements TreatmentService {
             
       return treatments;
    }
+
+   @Override
+   public List<HashMap<String, Object>> selectAllByName(String tr_name){
+	   return treatmentdao.selectAllByName(tr_name);
+   }
+
+
 }
