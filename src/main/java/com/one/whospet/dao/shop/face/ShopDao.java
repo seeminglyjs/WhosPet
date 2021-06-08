@@ -3,8 +3,10 @@ package com.one.whospet.dao.shop.face;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.one.whospet.dto.Payment;
 import com.one.whospet.dto.Shop;
 import com.one.whospet.dto.ShopImg;
+import com.one.whospet.dto.User;
 import com.one.whospet.util.ShopPaging;
 
 public interface ShopDao {
@@ -112,6 +114,23 @@ public interface ShopDao {
 	 * @param basketInfo 장바구니 정보
 	 */
 	public int insertBasket(Shop basketInfo);
+
+
+	/**
+	 * 유저정보에 맞는 유저정보 조회하기
+	 * 
+	 * @param uNo 유저정보
+	 * @return 유저번호에 맞는 유저정보
+	 */
+	public User selectUserInfo(int uNo);
+
+
+	/**
+	 * 추가할 결제정보 삽입하기
+	 * 
+	 * @param payment 추가할 결제정보
+	 */
+	public void insertPayment(Payment payment);
 
 
 	

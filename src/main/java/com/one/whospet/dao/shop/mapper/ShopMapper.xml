@@ -5,6 +5,23 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.one.whospet.dao.shop.face.ShopDao">
+	
+	<resultMap type="com.one.whospet.dto.User" id="User">
+		<id column="U_No" property="uNo"/>
+		
+		<result column="U_GRADE" property="uGrade"/>
+		<result column="U_ID" property="uId"/>
+		<result column="U_PW" property="uPw"/>
+		<result column="U_NAME" property="uName"/>
+		<result column="U_PHONE" property="uPhone"/>
+		<result column="U_NICK" property="uNick"/>
+		<result column="U_EMAIL" property="uEmail"/>
+		<result column="U_ADDRESS" property="uAddress"/>
+		<result column="U_POST" property="uPost"/>
+		<result column="U_DETAIL_ADDRESS" property="uDetailAddress"/>
+		<result column="U_PET" property="uPet"/>
+		<result column="U_JOIN_DATE" property="uJoinDate"/>
+	</resultMap>
 
 	<resultMap type="com.one.whospet.dto.Shop" id="Shop">
 		<id column="s_no" property="sNo"/>
@@ -29,6 +46,38 @@
 		<result column="si_stored_filename" property="siStoredFilename"/>
 		<result column="si_thumbnail" property="siThumbnail"/>
 	</resultMap>
+	
+	
+	
+	<!-- 샵바스켓DTO 재정의 -->
+		<resultMap type="com.one.whospet.dto.ShopBasket" id="ShopBasket">
+		<id column="sb_no" property="sbNo"/>
+		
+		<result column="u_no" property="uNo"/>
+		<result column="s_no" property="sNo"/>
+		<result column="si_no" property="siNo"/>
+		<result column="sb_amount" property="sbAmount"/>
+		<result column="sb_quantity" property="sbQuantity"/>
+		<collection property="shop" resultMap="Shop"/>
+	</resultMap>
+	
+	
+	
+	<!-- 구매이력DTO 재정의 -->
+		<resultMap type="com.one.whospet.dto.Payment" id="Payment">
+		<id column="py_no" property="pyNo"/>
+		
+		<result column="u_no" property="uNo"/>
+		<result column="po_no" property="poNo"/>
+		<result column="py_date" property="pyDate"/>
+		<result column="py_status" property="pyStatus"/>
+		<result column="py_amount" property="pyAmount"/>
+		<result column="py_method" property="pyMethod"/>
+		<result column="py_apply_num" property="pyApplyNum"/>
+		<result column="imp_uid" property="impUid"/>
+		<result column="merchant_uid" property="merchantUid"/>
+		<collection property="shop" resultMap="Shop"/>
+		</resultMap>
 
 
 
@@ -120,5 +169,15 @@
 		INSERT INTO w_shop_basket (sb_no, u_no, s_no, sb_amount, sb_quantity)
 		VALUES ( w_shop_basket_seq.nextval, #{uNo}, #{sNo}, #{sAmount}, #{quantity} )
 	</insert>
+	
+	<select id="selectUserInfo" parameterType="com.one.whospet.dto.User" resultMap="User">
+		SELECT * FROM w_user
+		WHERE u_no = #{uNo}	
+	</select>
+	
+	<insert id="insertPayment" parameterType="com.one.whospet.dto.Payment">
+		INSERT INTO w_payment (py_no, u_no, py_amount, py_method, py_apply_num, imp_uid, merchant_uid)
+		VALUES ( w_payment_seq.nextval, #{uNo}, #{pyAmount}, #{pyMethod}, #{pyApplyNum}, #{impUid}, #{merchantUid} )
+  	</insert>
 	
 </mapper>
