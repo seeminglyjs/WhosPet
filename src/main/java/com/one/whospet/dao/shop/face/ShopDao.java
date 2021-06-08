@@ -3,6 +3,7 @@ package com.one.whospet.dao.shop.face;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.one.whospet.dto.Order;
 import com.one.whospet.dto.Payment;
 import com.one.whospet.dto.Shop;
 import com.one.whospet.dto.ShopImg;
@@ -131,6 +132,14 @@ public interface ShopDao {
 	 * @param payment 추가할 결제정보
 	 */
 	public void insertPayment(Payment payment);
+
+
+	/**
+	 * 추가할 주문정보 삽입하기
+	 * 
+	 * @param orderdata 추가할 주문정보
+	 */
+	public void insertOrder(Order orderdata);
 
 
 	

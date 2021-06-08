@@ -31,6 +31,7 @@ $(document).ready(function(){
 		console.log("total : " + total);
 		
 		var oRecipient = $("#oRecipient").val();
+		var oPostNo = $("[name='oPostNo']").val();
 		var oAddress = $("[name='oAddress']").val();
 		var oDetailAddress = $("[name='oDetailAddress']").val();
 	
@@ -76,6 +77,7 @@ $(document).ready(function(){
 						oTotalAmount : '${basketInfo.totalAmount}', //결제할 총 가격
 						oSender : '${userOrder.uName}',	//주문한 사람
 						oRecipient : oRecipient,		//받는 사람
+						oPostNo : oPostNo,				//우편 번호
 						oAddress : oAddress,			//주소
 						oDetailAddress : oDetailAddress //상세 주소
 						
@@ -157,7 +159,7 @@ $(document).ready(function(){
 		<tr>
 			<th>배송주소</th>
 			<td>
-			<input type="text" id="sample3_postcode" name="postNo"  placeholder="우편번호"><br><br>
+			<input type="text" id="sample3_postcode" name="oPostNo"  placeholder="우편번호"><br><br>
 			<input type="text" id="sample3_address" name="oAddress" value="${userOrder.uAddress }" placeholder="주소" style="width: 250px;">
 			<input type="text" id="sample3_detailAddress" name="oDetailAddress" value="${userOrder.uDetailAddress }" placeholder="상세주소" style="width: 250px;">
  			<input type="text" id="sample3_extraAddress" placeholder="참고항목">

@@ -328,6 +328,7 @@ public class ShopController {
 		logger.info("/payments/complete [POST]");
 		logger.info("payment : {}", payment);
 		
+		//세션에서 유저번호 찾기
 		User user = (User) session.getAttribute("user");
 		logger.info("/shop/order, user : {}", user);
 		int uNo = user.getuNo();
@@ -337,9 +338,16 @@ public class ShopController {
 		
 		//결제정보 추가
 		shopService.addPayment(payment);
+		logger.info("payment, pyNo : {}", payment.getPyNo());
 		
+		//주문정보에 pyNo(결제번호) 저장
+		orderdata.setPyNo(payment.getPyNo());
+		//주문정보에 유저번호 저장
+		orderdata.setuNo(uNo);
+		//주문정보
 		logger.info("payment, orderData : {}",orderdata );
-		
+		//주문정보 주문테이블에 추가
+		shopService.addOrder(orderdata);
 		
 	}
 

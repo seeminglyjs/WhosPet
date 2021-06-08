@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.one.whospet.dao.shop.face.ShopDao;
+import com.one.whospet.dto.Order;
 import com.one.whospet.dto.Payment;
 import com.one.whospet.dto.Shop;
 import com.one.whospet.dto.ShopImg;
@@ -278,6 +279,14 @@ private static final Logger logger = LoggerFactory.getLogger(ShopServiceImpl.cla
 		logger.info("addPayment",payment);
 		
 		shopDao.insertPayment(payment);
+	}
+
+	//주문한 정보 추가하기
+	@Override
+	public void addOrder(Order orderdata) {
+		logger.info("addOrder : {}", orderdata);
+		
+		shopDao.insertOrder(orderdata);
 	}
 
 	

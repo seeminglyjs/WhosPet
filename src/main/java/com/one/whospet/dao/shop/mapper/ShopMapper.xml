@@ -176,8 +176,29 @@
 	</select>
 	
 	<insert id="insertPayment" parameterType="com.one.whospet.dto.Payment">
+		<selectKey order="BEFORE" resultType="int" keyProperty="pyNo">
+			SELECT w_payment_seq.nextval FROM dual
+		</selectKey>
+		
 		INSERT INTO w_payment (py_no, u_no, py_amount, py_method, py_apply_num, imp_uid, merchant_uid)
-		VALUES ( w_payment_seq.nextval, #{uNo}, #{pyAmount}, #{pyMethod}, #{pyApplyNum}, #{impUid}, #{merchantUid} )
+		VALUES ( #{pyNo}, #{uNo}, #{pyAmount}, #{pyMethod}, #{pyApplyNum}, #{impUid}, #{merchantUid} )
   	</insert>
 	
+	<insert id="insertOrder" parameterType="com.one.whospet.dto.Order">
+		INSERT INTO w_order (o_no, u_no, s_no, py_no, o_name, o_quantity, o_amount, o_totalAmount, o_sender, o_recipient, o_postNo, o_address, o_detailAddress)
+		VALUES ( w_order_seq.nextval, #{uNo}, #{sNo}, #{pyNo}, #{oName}, #{oQuantity}, #{oAmount}, #{oTotalAmount}, #{oSender}, #{oRecipient}, #{oPostNo}, #{oAddress}, #{oDetailAddress})
+	</insert>
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
