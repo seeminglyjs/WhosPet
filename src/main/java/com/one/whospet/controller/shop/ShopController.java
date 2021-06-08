@@ -315,16 +315,12 @@ public class ShopController {
 		//주문정보 전달
 		model.addAttribute("basketInfo", basketInfo);
 		
-		
-		//-------- 결제 -------------
-		
-		
 	}
 	
 	
 	//결제 후 로직
 	@RequestMapping(value="/payments/complete", method=RequestMethod.POST)
-	public void payment( Payment payment, Order orderdata, HttpSession session ) {
+	public String payment( Payment payment, Order orderdata, HttpSession session ) {
 		logger.info("/payments/complete [POST]");
 		logger.info("payment : {}", payment);
 		
@@ -349,6 +345,15 @@ public class ShopController {
 		//주문정보 주문테이블에 추가
 		shopService.addOrder(orderdata);
 		
+		
+		return "redirect:/shop/paymentCompleted";
+	}
+	
+	@RequestMapping(value="/shop/paymentCompleted", method=RequestMethod.GET)
+	public String paymentCompleted() {
+		logger.info("/shop/paymentCompleted [GET]");
+		
+		return "shop/paymentCompleted2";
 	}
 
 	

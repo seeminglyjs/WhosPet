@@ -116,6 +116,12 @@ $(document).ready(function(){
 })	
 </script>
 
+<!-- 뒤로가기 -->
+<script type="text/javascript">
+	function goBack(){
+		window.history.back();
+	}
+</script>
 
 
 
@@ -269,6 +275,7 @@ $(document).ready(function(){
 
 <br><br><br><br><br><br><br><br><br>
 <button id="payment">결제</button>
+<a href="#" onclick="goBack();"><button>취소</button></a><!-- 장바구니로 가기 -->
 
 
 <!-- 페이징 임포트 -->

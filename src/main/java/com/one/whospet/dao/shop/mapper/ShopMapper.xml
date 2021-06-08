@@ -63,7 +63,7 @@
 	
 	
 	
-	<!-- 구매이력DTO 재정의 -->
+	<!-- 결제 DTO 재정의 -->
 		<resultMap type="com.one.whospet.dto.Payment" id="Payment">
 		<id column="py_no" property="pyNo"/>
 		
