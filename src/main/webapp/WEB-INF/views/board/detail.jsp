@@ -97,12 +97,13 @@ function forwardCno(param){
 function check(){
 	// 댓글창 등록 정규식 함수		
 		var commentInput = /^[0-9a-zA-Z가-힣ㄱ-ㅎ!@#$%^&*()<>?/\+-\s]{2,500}$/i
-		var space =/^s{0,}/
+		var space =/^\s{0,}$/i
 		if(!commentInput.test($("#commentInput").val())){
 				alert("댓글을 입력해주세요!")
 				return false;		
 		}else{
 			if(space.test($("#commentInput").val())){
+				console.log("sdsd")
 				alert("댓글을 입력해주세요!")
 				return false;
 			}
