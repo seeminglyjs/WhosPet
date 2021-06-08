@@ -6,6 +6,8 @@
 
 <c:import url="/WEB-INF/views/layout/headerAdmin.jsp" /> 
 
+<!-- jQuery 2.2.4 라이브러리 추가 -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	
@@ -205,6 +207,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 
 
+<form action="/shop/order" method="get">
 <div class="container">
 
 <h1>상품 상세 정보</h1>
@@ -212,7 +215,6 @@ input[type="number"]::-webkit-inner-spin-button {
 <div class="left">
 <img alt="섬네일" src="/resources/shopimgupload/${thumbnail.siStoredFilename }" style="width: 400px; height: 350px;">
 </div>
-
 <div class="right">
 <input type="hidden" id="sNo" name="sNo" value="${shop.sNo }" >
 
@@ -244,8 +246,8 @@ ${shop.sContent }
 		</div>
 </div>
 
-<a href="/"><button id="basket" class="btn btn-default">장바구니</button></a>
-<a href=""><button id="buy" class="btn btn-warning">구매하기</button></a>
+<button id="basket" class="btn btn-default" type="button">장바구니</button>
+<button id="payment" class="btn btn-warning">구매하기</button>
 
 <div id="printTotalAmount">
 ${shop.sAmount }
@@ -253,6 +255,7 @@ ${shop.sAmount }
 
 </div><!-- .right -->
 </div>
+</form><!-- 구매하기 버튼에 보낼 데이터 form --> 
 
 
 <br><hr><br><br>

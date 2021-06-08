@@ -4,25 +4,21 @@ import java.util.Date;
 
 public class Payment {
     private int pyNo;                       
-    private int uNo;                       
-    private int sNo;                      
-    private int siNo;                   
+    private int uNo;                                            
     private int poNo;                  
     private Date pyDate;                 
-    private String pyAddress;               
     private String pyStatus;              
     private int pyAmount;                   
-    private int pyCard;                     
+    private String pyMethod;                     
     private String pyApplyNum;               
     private String impUid;                    
     private String merchantUid;     
     private Shop shop;
 	@Override
 	public String toString() {
-		return "Payment [pyNo=" + pyNo + ", uNo=" + uNo + ", sNo=" + sNo + ", siNo=" + siNo + ", poNo=" + poNo
-				+ ", pyDate=" + pyDate + ", pyAddress=" + pyAddress + ", pyStatus=" + pyStatus + ", pyAmount="
-				+ pyAmount + ", pyCard=" + pyCard + ", pyApplyNum=" + pyApplyNum + ", impUid=" + impUid
-				+ ", merchantUid=" + merchantUid + ", shop=" + shop + "]";
+		return "Payment [pyNo=" + pyNo + ", uNo=" + uNo + ", poNo=" + poNo + ", pyDate=" + pyDate
+				+ ", pyStatus=" + pyStatus + ", pyAmount=" + pyAmount + ", pyMethod=" + pyMethod + ", pyApplyNum="
+				+ pyApplyNum + ", impUid=" + impUid + ", merchantUid=" + merchantUid + ", shop=" + shop + "]";
 	}
 	public int getPyNo() {
 		return pyNo;
@@ -36,18 +32,6 @@ public class Payment {
 	public void setuNo(int uNo) {
 		this.uNo = uNo;
 	}
-	public int getsNo() {
-		return sNo;
-	}
-	public void setsNo(int sNo) {
-		this.sNo = sNo;
-	}
-	public int getSiNo() {
-		return siNo;
-	}
-	public void setSiNo(int siNo) {
-		this.siNo = siNo;
-	}
 	public int getPoNo() {
 		return poNo;
 	}
@@ -59,12 +43,6 @@ public class Payment {
 	}
 	public void setPyDate(Date pyDate) {
 		this.pyDate = pyDate;
-	}
-	public String getPyAddress() {
-		return pyAddress;
-	}
-	public void setPyAddress(String pyAddress) {
-		this.pyAddress = pyAddress;
 	}
 	public String getPyStatus() {
 		return pyStatus;
@@ -78,11 +56,11 @@ public class Payment {
 	public void setPyAmount(int pyAmount) {
 		this.pyAmount = pyAmount;
 	}
-	public int getPyCard() {
-		return pyCard;
+	public String getPyMethod() {
+		return pyMethod;
 	}
-	public void setPyCard(int pyCard) {
-		this.pyCard = pyCard;
+	public void setPyMethod(String pyMethod) {
+		this.pyMethod = pyMethod;
 	}
 	public String getPyApplyNum() {
 		return pyApplyNum;
@@ -108,6 +86,7 @@ public class Payment {
 	public void setShop(Shop shop) {
 		this.shop = shop;
 	}
-	
+    
+    
     
 }

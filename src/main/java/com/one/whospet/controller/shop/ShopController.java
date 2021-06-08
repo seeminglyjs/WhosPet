@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.one.whospet.dto.Order;
+import com.one.whospet.dto.Payment;
 import com.one.whospet.dto.Shop;
 import com.one.whospet.dto.ShopImg;
 import com.one.whospet.dto.User;
@@ -272,6 +274,91 @@ public class ShopController {
 		} 
 		return "sss";
 	}
+	
+	
+	//------------------------------------------------------------
+	//------------------------------------------------------------
+	//주문하기 (상세페이지에서 구매하기 버튼 클릭시 해당 상품의 주문페이지로 이동)
+	@RequestMapping(value="/shop/order", method=RequestMethod.GET)
+	public void order( Shop shop, HttpSession session, Model model ) {
+		logger.info("/shop/order [GET]");
+		logger.info("/shop/order, shop : {}", shop);
+		
+		User user = (User) session.getAttribute("user");
+		logger.info("/shop/order, user : {}", user);
+		int uNo = user.getuNo();
+		
+		//주문시 자동으로 주문자정보에 사용자정보 얻어오기
+		User userOrder = shopService.selectUserInfo(uNo); //주문자 정보
+		logger.info("userOrder : {}", userOrder);
+		
+		//주문자 정보 전달
+		model.addAttribute("userOrder", userOrder);
+		
+		
+		logger.info("/shop/order, user : {}", user);
+		//------- 구매하기 버튼 클릭시 장바구니에 자동으로 담기 -------------------------------------
+		//
+		//상품번호에 맞는 상품정보 받아오기
+		Shop basketInfo = shopService.view(shop);	//주문 정보
+		//세션의 uNo을 장바구니에 담기
+		basketInfo.setuNo(uNo);
+		//장바구니에 담고자하는 수량을 장바구니 정보에 입력하기
+		basketInfo.setQuantity(shop.getQuantity());
+		
+		int totalAmount = basketInfo.getsAmount() * Integer.parseInt(basketInfo.getQuantity());
+		basketInfo.setTotalAmount(Integer.toString(totalAmount));
+		logger.info("/shop/basket, basketInfo : {} ", basketInfo);
+		
+		shopService.basketAdd(basketInfo);
+		
+		//주문정보 전달
+		model.addAttribute("basketInfo", basketInfo);
+		
+	}
+	
+	
+	//결제 후 로직
+	@RequestMapping(value="/payments/complete", method=RequestMethod.POST)
+	public String payment( Payment payment, Order orderdata, HttpSession session ) {
+		logger.info("/payments/complete [POST]");
+		logger.info("payment : {}", payment);
+		
+		//세션에서 유저번호 찾기
+		User user = (User) session.getAttribute("user");
+		logger.info("/shop/order, user : {}", user);
+		int uNo = user.getuNo();
+		
+		//결제정보에 유저번호 저장
+		payment.setuNo(uNo);
+		
+		//결제정보 추가
+		shopService.addPayment(payment);
+		logger.info("payment, pyNo : {}", payment.getPyNo());
+		
+		//주문정보에 pyNo(결제번호) 저장
+		orderdata.setPyNo(payment.getPyNo());
+		//주문정보에 유저번호 저장
+		orderdata.setuNo(uNo);
+		//주문정보
+		logger.info("payment, orderData : {}",orderdata );
+		//주문정보 주문테이블에 추가
+		shopService.addOrder(orderdata);
+		
+		
+		return "redirect:/shop/paymentCompleted";
+	}
+	
+	@RequestMapping(value="/shop/paymentCompleted", method=RequestMethod.GET)
+	public String paymentCompleted() {
+		logger.info("/shop/paymentCompleted [GET]");
+		
+		return "shop/paymentCompleted2";
+	}
+
+	
+	
+	
 	
 	
 	
