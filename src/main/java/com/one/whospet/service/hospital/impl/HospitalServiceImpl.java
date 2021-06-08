@@ -100,5 +100,10 @@ public class HospitalServiceImpl implements HospitalService {
 	public int numOfhospital() {
 		return hospitalDao.numOfhospital();
 	}
+
+	@Override
+	public List<HashMap<String, Object>> allHospital(){
+		return hospitalDao.allHospital();
+	}
 	
 }

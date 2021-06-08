@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.one.whospet.dto.Hospital;
-import com.one.whospet.dto.Review;
 import com.one.whospet.service.main.face.MainService;
 import com.one.whospet.service.treatment.face.TreatmentService;
 
@@ -39,7 +40,16 @@ public class HomeController {
 		List<Hospital> bestHospitalList = new ArrayList<Hospital>();
 		List<HashMap<String,Object>> bestReviewList = new ArrayList<HashMap<String,Object>>();
 		List<HashMap<String, Object>> treatmentList = treatmentService.selectAllTreatment();
-		
+		List<HashMap<String, Object>> newList = new ArrayList<HashMap<String, Object>>();
+		List<String> as = new ArrayList<String>();
+
+		for(HashMap<String,Object> m : treatmentList) {
+			String a = (String)m.get("TR_NAME");
+			if(!as.contains(a)) {
+				as.add(a);
+				newList.add(m);
+			}
+		}
 			
 		//최근 등록 병원 목록을 가져오는 메소드 10개
 		newHospitalList = mainService.getNewList();
@@ -60,11 +70,42 @@ public class HomeController {
 		model.addAttribute("bestReviewList", bestReviewList);
 		
 		//치료 리스트 저장
-		model.addAttribute("treatmentList", treatmentList);
+		model.addAttribute("treatmentList", newList);
 		
 		return "/home/main";
 	}
 
+	
+	// 메인 검색 컨트롤러
+	@RequestMapping(value = "/mainSerch" )
+	public String mainSearch(Model model,HttpServletRequest request) {
+		String data = request.getParameter("data");
+		
+		//한글 엑스레이
+		if(data.equals("엑스레이") || data.equals("액스레이")) {
+			data = "x-ray";
+		}
+		
+		if(data == null || data.equals("")) {
+			return "redirect:/home/searchNone";
+		}else {
+			
+			//치료번호 기본키를 가져온다.
+			String no = mainService.getTreatNo(data);	
+			
+			//검색 결과 존재여부 체크
+			if(no == null || no.equals("")) {
+				return "redirect:/home/searchNone"; // 검색결과 없음
+			}else {
+				model.addAttribute("no", no);
+				return "redirect:/treatment/treatdetail"; // 검색결과 있음
+			}
+		}
+	}
+	
+	// 메인 검색 결과없는 페이지 리턴 컨트롤러
+	@RequestMapping(value = "/home/searchNone" )
+	public void searchNone() {}
 	
 	
 	/////////////// 관리자 홈 컨트롤러  //////////////////////////////
@@ -77,8 +118,18 @@ public class HomeController {
 		List<Hospital> newHospitalList = new ArrayList<Hospital>();
 		List<Hospital> bestHospitalList = new ArrayList<Hospital>();
 		List<HashMap<String,Object>> bestReviewList = new ArrayList<HashMap<String,Object>>();
-		List<HashMap<String, Object>> treatmentList = treatmentService.selectAllTreatment();	
-		
+		List<HashMap<String, Object>> treatmentList = treatmentService.selectAllTreatment();
+		List<HashMap<String, Object>> newList = new ArrayList<HashMap<String, Object>>();
+		List<String> as = new ArrayList<String>();
+
+		for(HashMap<String,Object> m : treatmentList) {
+			String a = (String)m.get("TR_NAME");
+			if(!as.contains(a)) {
+				as.add(a);
+				newList.add(m);
+			}
+		}
+					
 		//최근 등록 병원 목록을 가져오는 메소드 10개
 		newHospitalList = mainService.getNewList();
 		
@@ -98,7 +149,7 @@ public class HomeController {
 		model.addAttribute("bestReviewList", bestReviewList);
 		
 		//치료 리스트 저장
-		model.addAttribute("treatmentList", treatmentList);
+		model.addAttribute("treatmentList", newList);
 
 		return "home/adminMain";
 	}

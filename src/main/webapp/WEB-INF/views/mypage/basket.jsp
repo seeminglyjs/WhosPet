@@ -103,14 +103,14 @@ td:nth-child(2) {
 
 #boardtitle{
 position: relative;
-top: -100px;
-left: 220px;
-font-family: 'InfinitySans-RegularA1';
+top: -80px;
+left: 260px;
+font-family: 'NEXON Lv1 Gothic OTF';
 }
 #cont2 {
 float: right;
 top: -100px;
-font-family: 'InfinitySans-RegularA1';
+font-family: 'NEXON Lv1 Gothic OTF';
 }
 
 #page{
@@ -121,13 +121,13 @@ left: 130px;
 
 #sum{
 position: relative;
-top: 80px;
-left: 540px;
+top: 60px;
+left: 740px;
 }
 #button{
 position: relative;
-top: 100px;
-left: 620px;
+top: 80px;
+left: 800px;
 }
 
 
@@ -135,7 +135,7 @@ left: 620px;
 
 <div id="boardtitle">
 <h1 style="display:inline;">장바구니  </h1><h4 style="display:inline; color: gray;">MyBasket</h4>
-<hr align="left" width="630">
+<hr align="left" width="830">
 </div>
 <div id="cont2" class="container-fluid col-md-9">
 <div class="w-50"> 
@@ -156,7 +156,7 @@ left: 620px;
 <tbody>
 <c:forEach items="${basketlist }" var="basketlist">
 	<tr>
-		<td><img src="../resources/img/itemtest1.jpg" style="width:50px; height: 50px;"/></td>
+		<td><img src="/resources/shopimgupload/${basketlist.shopImg.siStoredFilename  }" style="width:50px; height: 50px;"/></td>
 		<td>${basketlist.shop.sName}</td>
 		<td>${basketlist.sbQuantity}
 		<button id="btnPlus" onclick="location.href='/mypage/basket/plus?sbNo=${basketlist.sbNo}'" class= "btn btn-outline-secondary btn-xs"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
@@ -164,7 +164,7 @@ left: 620px;
 		<button id="btnMinus" onclick="location.href='/mypage/basket/minus?sbNo=${basketlist.sbNo}'" class= "btn btn-outline-secondary btn-xs"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
 		</c:if>
         </td>
-		<td>${basketlist.sbAmount}</td>
+		<td>${basketlist.sbAmount * basketlist.sbQuantity}</td>
 <%-- 		<td><input type="hidden" id="sbNo" name="sbNo" value="${sbNo }"><button id="btnRemove">삭제</button></td> --%>
 		<td><button id="btnRemove" class="btn btn-default" onclick="location.href='/mypage/basket/remove?sbNo=${basketlist.sbNo}'">삭제</button></td>
 	</tr>

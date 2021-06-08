@@ -26,10 +26,9 @@ td:nth-child(2) {
 
 #boardtitle{
 position: relative;
-top: -100px;
-left: 220px;
-font-family: 'InfinitySans-RegularA1';
-
+top: -80px;
+left: 260px;
+font-family: 'NEXON Lv1 Gothic OTF';
 }
 #cont2 {
 float: right;
@@ -50,7 +49,7 @@ color:black;}
 
 <div id="boardtitle">
 <h1 style="display:inline;">내 예약 정보 </h1><h4 style="display:inline; color: gray;">MyBooking</h4>
-<hr align="left" width="630">
+<hr align="left" width="830">
 </div>
 <div id="cont2" class="container-fluid col-md-9">
 <div class="w-50"> 

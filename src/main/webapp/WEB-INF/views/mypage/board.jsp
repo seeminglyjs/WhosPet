@@ -4,6 +4,14 @@
 <%@ include file="/WEB-INF/views/layout/headerMypageUser.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script type="text/javascript">
+
+	//검색 버튼 클릭
+	$("#btnSearch").click(function() {
+		location.href="/mypage/board?search="+$("#search").val();
+	});
+})
+</script>
 
 <style type="text/css">
 
@@ -11,6 +19,7 @@ boardtable{
 position: relative;
 top: 100px;
 left: 600px;
+font-family: 'NEXON Lv1 Gothic OTF';
 }
 
 table, th {
@@ -27,16 +36,17 @@ color:black;
 }
 
 
+
 #boardtitle{
 position: relative;
-top: -100px;
-left: 220px;
-font-family: 'InfinitySans-RegularA1';
+top: -80px;
+left: 260px;
+font-family: 'NEXON Lv1 Gothic OTF';
 }
 #cont2 {
 float: right;
 top: -100px;
-font-family: 'InfinitySans-RegularA1';
+font-family: 'NEXON Lv1 Gothic OTF';
 }
 
 #page{
@@ -48,7 +58,7 @@ left: 130px;
 
 <div id="boardtitle">
 <h1 style="display:inline;">나의 게시글  </h1><h4 style="display:inline; color: gray;">MyBoard</h4>
-<hr align="left" width="630">
+<hr align="left" width="830">
 </div>
 <div id="cont2" class="container-fluid col-md-9">
 <div class="w-50"> 
@@ -88,7 +98,10 @@ left: 130px;
 </table>
 
 <span class="pull-left">total : ${paging.totalCount }</span>
-
+<div class="form-inline text-center">
+	<input class="form-control" type="text" id="search" value="${param.search }" />
+	<button id="btnSearch" class="btn">검색</button>
+</div>
 
 </div>
 </div>

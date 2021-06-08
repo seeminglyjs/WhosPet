@@ -9,10 +9,11 @@ public class ShopBasket {
 	private int sbAmount;
 	private int sbQuantity;
 	private Shop shop;
+	private ShopImg shopImg;
 	@Override
 	public String toString() {
 		return "ShopBasket [sbNo=" + sbNo + ", uNo=" + uNo + ", sNo=" + sNo + ", siNo=" + siNo + ", sbAmount="
-				+ sbAmount + ", sbQuantity=" + sbQuantity + ", shop=" + shop + "]";
+				+ sbAmount + ", sbQuantity=" + sbQuantity + ", shop=" + shop + ", shopImg=" + shopImg + "]";
 	}
 	public int getSbNo() {
 		return sbNo;
@@ -55,7 +56,14 @@ public class ShopBasket {
 	}
 	public void setShop(Shop shop) {
 		this.shop = shop;
-	}	
+	}
+	public ShopImg getShopImg() {
+		return shopImg;
+	}
+	public void setShopImg(ShopImg shopImg) {
+		this.shopImg = shopImg;
+	}
+	
 	
 	
 }
