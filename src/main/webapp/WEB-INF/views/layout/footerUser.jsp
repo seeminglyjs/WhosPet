@@ -3,32 +3,6 @@
 </div><!-- 본문컨테이너 끝  -->
 <div id="footerDiv">
   <div class="footerInfo">
-        <footer>
-            <div class="container">
-                <div style="display: flex; justify-content: center; border-bottom: 1px solid white; padding-left: 50px;">
-                    <div>
-						<a href="/"><img alt="로고" src="/resources/img/footerlogo.png" id="footerLogo"></a>
-                    </div>
-                    <div style="padding-left: 70px">
-                        <h3>Services</h3>
-                        <ul class="footerlist">
-                            <li><a href="/">메인 화면</a></li>
-                            <li><a href="#">증상 / 질병 확인</a></li>
-                            <li><a href="/board/list">WhosPet 게시판</a></li>
-                        </ul>
-                    </div>
-                    <div style="padding-left: 70px;">
-                        
-                        
-                    </div>
-                </div>
-                <div class="text-center" style="padding-top: 12px;">
-                	   
-                <p class="copyright">Copyright © WhosPet 2021. All Rights reserved</p>
-           		</div>
-            </div>
-        </footer>
-        
       <div class="container">
           <div class="f_row">
               <div class="col">
