@@ -311,6 +311,28 @@ public class BoardServiceImpl implements BoardService {
 		
 		logger.info("{}",fileList.isEmpty());
 		
+		//유저가 삭제선택한 이미지 정보가 있는지 체크
+		int count = 1;
+		while(true) {
+			String fileInfo = fileRequest.getParameter("fileInfo" + count);
+			if(fileInfo != null && !fileInfo.equals("")) {
+				boardDao.deleteCheckFile(fileInfo); // db에서 선택된파일지움			
+				String path = context.getRealPath("upload");	
+				//현재 게시판에 존재하는 파일객체를 만듬
+				File file = new File(path + "\\" + fileInfo);		
+				if(file.exists()) { // 파일이 존재하면
+					file.delete(); // 파일 삭제	
+				}
+				
+				count++; //다음체크파일 확인하기 위해 카운트 변수 더해줌
+			}else {
+				break; // 없으면 루프 종료
+			}
+		}
+		
+		
+		
+		
 		//첨부파일이 null이거나 없으면 게시글 파일이 없으면 작성 끝
 		if(fileList == null || fileList.isEmpty() || fileList.get(0).getSize() == 0) {
 			logger.info("파일 없음");
