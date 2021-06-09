@@ -100,20 +100,29 @@
 		<result column="o_status" property="oStatus" />
 	</resultMap>
 
+	<sql id="selectShop">
+		SELECT
+			s_no, u_no, s_name, s_productType, s_amount, s_quantity, s_date, s_content
+		FROM w_shop
+	</sql>
 
+	<sql id="whereTitleSearch">
+		WHERE s_name LIKE '%' || #{search} || '%'
+	</sql>
 
-
-
-	<select id="selectCntAll" resultType="int">
-		SELECT count(*) FROM w_shop
+	<select id="selectCntAll" parameterType="com.one.whospet.util.ShopPaging" resultType="int">
+		SELECT count(*) FROM (
+			<include refid="selectShop" />
+			<include refid="whereTitleSearch" />
+		)
 	</select>
 
 	<!-- 상품리스트 -->
 	<select id="selectPageList" parameterType="com.one.whospet.util.ShopPaging" resultMap="Shop">
 		SELECT * FROM (
 			SELECT ROWNUM rnum, S.* FROM (
-				SELECT *
-				FROM w_shop
+				<include refid="selectShop" />
+				<include refid="whereTitleSearch" />
 				ORDER BY s_no desc
 			) S
 		) R

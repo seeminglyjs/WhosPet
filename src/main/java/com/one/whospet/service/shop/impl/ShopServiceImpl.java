@@ -37,7 +37,7 @@ private static final Logger logger = LoggerFactory.getLogger(ShopServiceImpl.cla
 	public ShopPaging getPaging(ShopPaging inData) {
 		
 		//총 게시글 수 조회
-		int totalCount = shopDao.selectCntAll();
+		int totalCount = shopDao.selectCntAll(inData);
 		logger.info("totalCount: {}", totalCount);
 		//페이징 계산
 		ShopPaging paging = new ShopPaging( totalCount, inData.getCurPage() );

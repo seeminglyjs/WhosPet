@@ -14,8 +14,22 @@ ul {
 
 </style>
 
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#btnSearch").click(function(){
+		location.href="/shop/list?search=" + $("#search").val();
+	});	
+})
+</script>
 
 
+<!-- 검색 -->
+<div class="form-inline text-center">
+	<input class="form-control" type="text" id="search" value="${param.search }">
+	<button id="btnSearch" class="btn">검색</button>
+</div>
+
+<!-- 상품 목록 -->
 <ul class="baby-product-list">
 <c:forEach var="thumbnail" items="${userListThumbnail }" varStatus="status">
   

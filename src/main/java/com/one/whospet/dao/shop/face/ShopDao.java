@@ -17,7 +17,7 @@ public interface ShopDao {
 	 * 
 	 * @return 총 게시글 수
 	 */
-	public int selectCntAll();
+	public int selectCntAll(ShopPaging inData);
 
 	
 	

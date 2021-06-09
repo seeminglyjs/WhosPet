@@ -198,10 +198,11 @@ public class ShopController {
 	@RequestMapping(value="/shop/list", method=RequestMethod.GET)
 	public void shopList( ShopPaging inData, Model model ) {
 		logger.info("/shop/list [GET]");
+		logger.info("파라미터 : {}", inData);
 		
 		//페이징 계산
 		ShopPaging paging = shopService.getPaging(inData);
-		
+		paging.setSearch( inData.getSearch() );
 		//상품 목록
 		List<Shop> list = shopService.list(paging);
 		logger.info("사용자 list : {}", list);
