@@ -113,7 +113,7 @@ function imgCheck(e) {
 			</textarea>
 		</div>
 		<br>
-		<div style="color: red; font-size: 12px;">※신규 등록시 기존 파일 삭제</div>
+		<div style="color: red; font-size: 11px;">※선택 삭제 설정 안 할 시 기존 파일 삭제</div>
 		<input multiple="multiple" type="file" name="file"  accept="image/*"/>
 		
 
@@ -122,7 +122,7 @@ function imgCheck(e) {
 	<!--기존 파일 체크 영역  -->
 	<c:if test="${not empty fileList }">
 	<c:set value="0" var="iNo"></c:set> <!-- 파일 이미지아이디 변수 -->
-		<p style="font-weight: bolder;">${user.uNick }님의 기존 등록 이미지</p>
+		<p style="font-weight: bolder;">${user.uNick }님의 기존 등록 이미지 <span style="color: red; font-size: 10px;"> [파일 선택 삭제 가능]</span></p>
 		<div style="border: 1px solid #ccc; margin-bottom: 10px;">
 		<c:forEach items="${fileList}" var="img">
 			<div class="imgDiv" style="margin-bottom: 3px; font-size: 12px;">
