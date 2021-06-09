@@ -24,8 +24,8 @@ ul {
   	<div>
 		<a href="/shop/view?sNo=${thumbnail.sNo }"><img alt="섬네일" src="/resources/shopimgupload/${thumbnail.siStoredFilename }" style="width: 200px;"><br>
 		<c:forEach var="userList" items="${list }" begin="${status.index }" end="${status.index }" >
-		<span>${userList.sName }</span>
-		<span>${userList.sAmount }</span>
+		<span>${userList.sName }</span><br>
+		<span>${userList.sAmount }</span><br>
 		</c:forEach>  
 		</a>
   	</div>
@@ -33,21 +33,23 @@ ul {
   </c:if>
 
   <c:if test="${empty thumbnail.siStoredFilename }">
-  <li class="baby-product">
+  <li>
   	<div>
 		<label>	
 		<c:forEach var="userList" items="${list }" begin="${status.index }" end="${status.index }" >
 		<a href="/shop/view?sNo=${userList.sNo }"><img alt="섬네일" src="/resources/shopimgupload/default.png" style="width: 200px;"><br>
-		<span>${userList.sName }</span>
-		<span>${userList.sAmount }</span>
+		<span>${userList.sName }</span><br>
+		<span>${userList.sAmount }</span><br>
 		</a>
 		</c:forEach>  
 		</label>
   	</div>
   </li>
   </c:if>
-
-
+  
+  
+  <br>
+  <br>
 </c:forEach>
 </ul>
 

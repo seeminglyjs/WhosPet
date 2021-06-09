@@ -1,6 +1,6 @@
 package com.one.whospet.util;
 
-public class ShopPaging {
+public class ShopPaging2 {
 	private int curPage; //현재 페이지의 번호
 
 	private int totalCount; //총 게시글 수
@@ -17,17 +17,17 @@ public class ShopPaging {
 	
 	
 	//디폴트 생성자
-	public ShopPaging() {}
+	public ShopPaging2() {}
 	
 	//총 게시글 수를 입력하는 생성자
-	public ShopPaging(int totalCount) {
+	public ShopPaging2(int totalCount) {
 		setTotalCount(totalCount);
 		
 		makePaging();
 	}
 	
 	//총 게시글 수, 현재 페이지번호를 입력하는 생성자
-	public ShopPaging(int totalCount, int curPage) {
+	public ShopPaging2(int totalCount, int curPage) {
 		setTotalCount(totalCount);
 		setCurPage(curPage);
 		
@@ -35,7 +35,7 @@ public class ShopPaging {
 	}
 	
 	//총 게시글 수, 현재 페이지번호, 보여질 게시글 수를 입력하는 생성자
-	public ShopPaging(int totalCount, int curPage, int listCount) {
+	public ShopPaging2(int totalCount, int curPage, int listCount) {
 		setTotalCount(totalCount);
 		setCurPage(curPage);
 		setListCount(listCount);
@@ -44,7 +44,7 @@ public class ShopPaging {
 	}
 	
 	//총 게시글 수, 현재 페이지번호, 보여질 게시글 수, 보여질 페이지 수를 입력하는 생성자
-	public ShopPaging(int totalCount, int curPage, int listCount, int pageCount) {
+	public ShopPaging2(int totalCount, int curPage, int listCount, int pageCount) {
 		setTotalCount(totalCount);
 		setCurPage(curPage);
 		setListCount(listCount);
@@ -62,7 +62,7 @@ public class ShopPaging {
 		//기본값 설정
 		if(curPage == 0)	setCurPage(1);//첫 페이지를 기본 페이지로 설정
 		if(pageCount == 0)	setPageCount(10);//화면에 보여질 페이지 수 기본설정
-		if(listCount == 0)	setListCount(16);//화면에 보여질 게시글 수 기본설정
+		if(listCount == 0)	setListCount(10);//화면에 보여질 게시글 수 기본설정
 
 		//총 페이지 수 계산
 		totalPage = totalCount / listCount;

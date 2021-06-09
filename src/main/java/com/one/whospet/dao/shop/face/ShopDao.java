@@ -140,6 +140,44 @@ public interface ShopDao {
 	 * @param orderdata 추가할 주문정보
 	 */
 	public void insertOrder(Order orderdata);
+	
+	
+	/**
+	 * 유저번호로 결제테이블에서 결제정보 조회하기
+	 * 
+	 * @param uNo
+	 * @return 결제정보
+	 */
+	public Payment selectPyNo(int uNo);
+
+
+	/**
+	 * 유저번호로 주문테이블에서 주문정보 조회하기
+	 * 
+	 * @param uNo 유저번호
+	 * @return 
+	 */
+	public Order selectOrder(int pyNo);
+
+
+	/**
+	 * 결제번호로 결제테이블에서 결제정보 조회하기
+	 * 
+	 * @param pyNo 결제번호
+	 * @return 결제정보
+	 */
+	public Payment selectPayment(int pyNo);
+
+
+	/**
+	 * 상품번호로 상품정보 조회하기
+	 * 
+	 * @param sNo 상품번호
+	 * @return 상품정보
+	 */
+	public Shop selectShop(int sNo);
+
+
 
 
 	
