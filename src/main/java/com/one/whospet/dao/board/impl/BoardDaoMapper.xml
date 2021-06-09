@@ -167,4 +167,9 @@
 		select count(*) from w_comment where b_no = #{bNo}
 	</select>
 	
+	<delete id="deleteCheckFile" parameterType="String">
+		delete w_board_img where bi_stored_filename = #{fileInfo}
+	</delete>
+	
+	
 </mapper>

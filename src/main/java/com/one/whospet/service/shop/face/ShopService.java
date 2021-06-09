@@ -5,8 +5,11 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.one.whospet.dto.Order;
+import com.one.whospet.dto.Payment;
 import com.one.whospet.dto.Shop;
 import com.one.whospet.dto.ShopImg;
+import com.one.whospet.dto.User;
 import com.one.whospet.util.ShopPaging;
 
 public interface ShopService {
@@ -105,6 +108,31 @@ public interface ShopService {
 	 * @param basketInfo 장바구니 정보
 	 */
 	public int basketAdd(Shop basketInfo);
+
+	
+	/**
+	 * 로그인한 유저정보 얻기
+	 * 
+	 * @param uNo 세션에 있는 유저번호
+	 * @return 
+	 */
+	public User selectUserInfo(int uNo);
+
+	
+	/**
+	 * 결제테이블에 결제정보 추가하기
+	 * 
+	 * @param payment 추가할 결제정보
+	 */
+	public void addPayment(Payment payment);
+
+	
+	/**
+	 * 주문테이블에 주문정보 추가하기
+	 * 
+	 * @param orderdata 추가할 주문정보
+	 */
+	public void addOrder(Order orderdata);
 
 	
 

@@ -16,8 +16,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.one.whospet.dao.shop.face.ShopDao;
+import com.one.whospet.dto.Order;
+import com.one.whospet.dto.Payment;
 import com.one.whospet.dto.Shop;
 import com.one.whospet.dto.ShopImg;
+import com.one.whospet.dto.User;
 import com.one.whospet.service.shop.face.ShopService;
 import com.one.whospet.util.ShopPaging;
 
@@ -260,6 +263,30 @@ private static final Logger logger = LoggerFactory.getLogger(ShopServiceImpl.cla
 		logger.info("BasketAdd, basketInfo : {}", basketInfo);
 		
 		return shopDao.insertBasket(basketInfo);
+	}
+
+	//주문하는 사용자 정보 얻기
+	@Override
+	public User selectUserInfo(int uNo) {
+		logger.info("selectUserInfo : {}", uNo);
+		
+		return shopDao.selectUserInfo(uNo);
+	}
+
+	//결제한 정보 추가하기
+	@Override
+	public void addPayment(Payment payment) {
+		logger.info("addPayment",payment);
+		
+		shopDao.insertPayment(payment);
+	}
+
+	//주문한 정보 추가하기
+	@Override
+	public void addOrder(Order orderdata) {
+		logger.info("addOrder : {}", orderdata);
+		
+		shopDao.insertOrder(orderdata);
 	}
 
 	
