@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 마이바티스 3 Mapper DOCTYPE -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.one.whospet.dao.disease.face.DiseaseDao">
+
+
+	<resultMap type="com.one.whospet.dto.Disease" id="Disease">
+		<result column="D_NO" property="dNo" />
+		<result column="D_CATEGORY" property="dCategory" />
+		<result column="D_Q_NO" property="dQNo" />
+		<result column="D_QUESTION" property="dQuestion" />
+		<result column="D_Q_SYMPTOM" property="dQSymptom" />
+		<result column="D_RESULT" property="dResult" />
+		<result column="D_R_EXPLAIN" property="dRExplain" />
+		<result column="D_E_MAIN" property="dEMain" />
+		<result column="D_TREATMENT" property="dTreatment" />
+	</resultMap>
+
+	<select id="selectEyeList" resultMap="Disease">
+		SELECT d_category, d_q_no,
+		d_question FROM w_disease WHERE d_category = 'eye'
+		GROUP BY d_category, d_q_no, d_question
+	</select>
+
+	<select id="selectBehaviorList" resultMap="Disease">
+		SELECT d_category, d_q_no,
+		d_question FROM w_disease WHERE d_category = 'behavior'
+		GROUP BY d_category, d_q_no, d_question
+	</select>
+	
+	<select id="selectByQno" resultMap="Disease" parameterType="int">
+	SELECT * FROM w_disease WHERE d_q_no = #{dQNo}
+	</select>
+	
+	<select id="selectByDNo" resultMap="Disease" parameterType="int">
+	SELECT * FROM w_disease WHERE d_no = #{dNo}
+	</select>
+
+
+</mapper>
