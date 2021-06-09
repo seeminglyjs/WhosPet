@@ -161,4 +161,11 @@ public interface BoardDao {
 	 */
 	public int selectCommentTotalCount(int bNo);
 
+	/**
+	 * 파일이름을 받아 해당 파일의 정보를 db에서 지운다.
+	 * 
+	 * @param fileInfo
+	 */
+	public void deleteCheckFile(String fileInfo);
+
 }

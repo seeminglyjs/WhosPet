@@ -298,6 +298,7 @@ public class BoardServiceImpl implements BoardService {
 		board.setbNo(bNo);
 
 		
+		
 		// 만약에 내용을 등록하지 않았으면 제목과 동일하게 지정
 		if(board.getbContent() == null || board.getbContent().equals("<p><br></p>") ) {
 			board.setbContent(board.getbTitle());
@@ -311,34 +312,52 @@ public class BoardServiceImpl implements BoardService {
 		
 		logger.info("{}",fileList.isEmpty());
 		
+		//유저가 삭제선택한 이미지 정보가 있는지 체크
+		int count = 1;
+		int files = fileRequest.getParameterValues("fileInfos").length; //선택된 파일들 갯수
+		while(count <= files) {
+			String fileInfo = fileRequest.getParameter("fileInfo" + count);
+			if(fileInfo != null && !fileInfo.equals("")) {
+				boardDao.deleteCheckFile(fileInfo); // db에서 선택된파일지움			
+				String path = context.getRealPath("upload");	
+				//현재 게시판에 존재하는 파일객체를 만듬
+				File file = new File(path + "\\" + fileInfo);		
+				if(file.exists()) { // 파일이 존재하면
+					file.delete(); // 파일 삭제	
+				}	
+			}
+			count++; //다음체크파일 확인하기 위해 카운트 변수 더해줌
+		}
+		
+			
 		//첨부파일이 null이거나 없으면 게시글 파일이 없으면 작성 끝
 		if(fileList == null || fileList.isEmpty() || fileList.get(0).getSize() == 0) {
 			logger.info("파일 없음");
 			return;
 		}else {
-			logger.info("파일 있음");
-			//파일이 있는 경우
-			//삭제할 파일 정보를 가져온다.
-			List<BoardImg> list = boardDao.deleteFileInfo(bNo);
-			
-			//저장된 파일정보가 null이 아니고 리스트가 비어있지 않으면 실행
-			if(list != null && !list.isEmpty()) {
-				for(int i = 0; i < list.size(); i++) {
-					//파일 경로 지정
-					String path = context.getRealPath("upload");
-					
-					//현재 게시판에 존재하는 파일객체를 만듬
-					File file = new File(path + "\\" + list.get(i).getBiStoredFilename());
-					
-					if(file.exists()) { // 파일이 존재하면
-						file.delete(); // 파일 삭제	
-					}
-				}
+				logger.info("파일 있음");
+				//파일이 있는 경우
+				//삭제할 파일 정보를 가져온다.
+				List<BoardImg> list = boardDao.deleteFileInfo(bNo);
 				
-				//저장된 파일을 모두 제거한 후 DB 에서도 지운다.
-				boardDao.deleteBoardFile(bNo);
-			}	
-			
+				//저장된 파일정보가 null이 아니고 리스트가 비어있지 않으면 실행
+				if(list != null && !list.isEmpty()) {
+					for(int i = 0; i < list.size(); i++) {
+						//파일 경로 지정
+						String path = context.getRealPath("upload");
+						
+						//현재 게시판에 존재하는 파일객체를 만듬
+						File file = new File(path + "\\" + list.get(i).getBiStoredFilename());
+						
+						if(file.exists()) { // 파일이 존재하면
+							file.delete(); // 파일 삭제	
+						}
+					}
+					
+					//저장된 파일을 모두 제거한 후 DB 에서도 지운다.
+					boardDao.deleteBoardFile(bNo);
+				}
+					
 			//-------------- 새로운 파일을 등록 하는 코드
 			
 			//첨부 파일 숫자 만큼 반복한다.

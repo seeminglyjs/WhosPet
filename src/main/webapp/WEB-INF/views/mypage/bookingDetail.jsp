@@ -22,9 +22,9 @@ $(document).ready(function(){
 <style type="text/css">
 #boardtitle{
 position: relative;
-top: -120px;
-left: 220px;
-font-family: 'InfinitySans-RegularA1';
+top: -80px;
+left: 260px;
+font-family: 'NEXON Lv1 Gothic OTF';
 }
 #cont2 {
 float: right;
@@ -43,8 +43,8 @@ td {
 </head>
 <body>
 <div id="boardtitle">
-<h1>예약 상세 정보</h1><h4 style="display:inline; color: gray;">MyBooking</h4>
-<hr align="left" width="630">
+<h1 style="display:inline">예약 상세 정보 </h1><h4 style="display:inline; color: gray;">MyBooking</h4>
+<hr align="left" width="830">
 </div>
 
 <div id="cont2" class="container-fluid col-md-9">
