@@ -113,7 +113,7 @@ function imgCheck(e) {
 			</textarea>
 		</div>
 		<br>
-		<div style="color: red; font-size: 11px;">※선택 삭제 설정 안 할 시 기존 파일 삭제</div>
+		<div style="color: red; font-size: 12px;">※신규 등록시 기존 파일 삭제</div>
 		<input multiple="multiple" type="file" name="file"  accept="image/*"/>
 		
 
@@ -129,6 +129,7 @@ function imgCheck(e) {
 			<div id="img${iNo = iNo+1 }" onclick="imgCheck(this)">
 				<img  src="/upload/${img }" alt="이미지 찾을 수 없음" style="width: 10%; height: 10%; border: 1px solid #ccc;" class="pull-left"/>
 				<input type="hidden" id= "fileInfo${iNo }" name="fileInfo${iNo }" value="${img }" disabled="disabled">
+				<input type="hidden" name="fileInfos" value="${img }">
 			</div>
 			</div>
 		</c:forEach>
