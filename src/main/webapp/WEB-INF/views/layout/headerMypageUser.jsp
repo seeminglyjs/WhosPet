@@ -9,6 +9,7 @@
 <!-- 부트스트랩 3.2.2 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="/resources/css/common.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 <!--JSTL라이브러리 영역  -->
@@ -51,7 +52,7 @@ $(document).ready(function(){
 <!-- 메인 검색기능 자바스크립트  -->
 $(document).ready(function(){
 	$("#searchBtn").click(function(){
-		$(location).attr("href", "/searchList?" + $("#searchContent").val())
+		$(location).attr("href", "/mainSerch" + "?data=" + $("#searchContent").val())
 	})
 	
 	$('nav li').hover(
@@ -67,190 +68,7 @@ $(document).ready(function(){
 
 
 </script>
-
 <style type="text/css">
-@font-face {
-    font-family: 'NEXON Lv1 Gothic OTF';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-/*컨테이너 전체 넓이 지정  */
-.container{
-	width:1100px;
-	min-width:1100px;
-	max-width:none!important;
-}
-/*전체를 감싸는 div  */
-#all{
-	/* footer의 하단 고정을 위한 조건식  */
-	min-height: 600px;
-	position: relative;
-	padding-bottom: 330px;
-}
-
-/*--------------header 영역 css ------------------  */
-
-/* 헤더 전체 div */
-#headerDiv{
-	display:flex;
-	margin-bottom: 20px; 
-	justify-content: center;
-}
-
-/* 로고 */
-#headerLogo{
-	width:190px;
-	height: 45px;
-}
-
-/* 헤더 각 div 영역 */
-.inlineHeader{
-	width:280px;
-	margin-top: 20px;
-}
-
-.dropdown a{
-	font-weight: bolder;
-}
-
-/* 검색버튼 css  */
-#headerSearchDivParent{
-	padding-bottom: 15px;
-}
-
-#headerSearchDiv{
-    border: solid 1px #E4E4E4;
-    border-radius: 6px;
-    background-color: #fff;
-}
-
-#headerSearchDiv input{
-    border: 0;
-    box-shadow: none;
-}
-
-#headerSearchDiv button{
-    width:50px;
-    margin: 2px 0 0 0;
-    background: none;
-    box-shadow: none;
-    border: 0;
-    color: #666666;
-    padding: 0 6px 0 10px;
-    border-left: solid 1px #ccc;
-}
-
-#headerSearchDiv button:hover{
-    border: 0;
-    box-shadow: none;
-    border-left: solid 1px #ccc;
-}
-
-#headerSearchDiv .glyphicon-search{
-    font-size: 23px;
-}
-
-
-
-/* 로그인 영역 */
-.loginHeader{
-	margin-top: 10px;
-	padding-left: 150px;
-}
-
-
-.loginHeader ul li a i{
-	font-size: 30px;
-}
-
-
-/*--------------header 영역 css 끝 ------------------  */
-
-
-@grid-float-breakpoint : 0;
-@screen-xs-max  : 0;
-
-/* Navigation Styles */
-
-#navDiv{
-	min-width: 1120px;
-	padding-bottom: 20px;	
-}
-
-#hNav {
-	background-color: #f8f8f8;
-    border-color: #e7e7e7;
-	border-bottom: 1px solid #ccc;
-	border-top: 1px solid #ccc;
-	box-shadow: inset 0 1px 0 rgb(255 255 255 / 15%), 0 1px 5px rgb(0 0 0 / 8%);
-}
-
-#hNav ul {
-	font-size: 0;
-	margin: 0;
-	padding: 0;
-}
-
-#hNav ul li {
-	display: inline-block;
-	position: relative;
-}
-
-#hNav ul li a {
-	font-weight:bold;
-	color: #777;
-	display: block;
-	font-size: 14px;
-	padding: 15px 15px;
-	transition: 0.3s linear;
-}
-
-a{
- 	text-decoration:none !important;
-}
-
-#hNav a:visited {
-	color:#777;
-}
-
-#hNav ul li:hover a {
-	color:#333;	
-}
-
-#hNav ul li ul {
-	display: none;
-	position: absolute;
-	width: 150px;
-	border: 0.5px solid #aaaaaa;
-	background: #fff;
-	border-radius:0px 0px 10px 10px;
-	padding: 6px 3px;
-}
-
-#hNav ul li ul li {
-	border-collapse: collapse !important;
-	display: block;
-}
-
-#hNav ul li ul li:first-child {
-	border-top: none;
-}
-
-#hNav ul li ul li a {
-	color: #777 !important;
-	display: block;
-	padding: 0px 14px;
-	line-height: 1.6em;
-}
-
-#hNav ul li ul li a:hover {
-	text-decoration:underline !important;
-}
-
-#hNav .fa.fa-angle-down {
-	margin-left: 6px;
-}
 
 
 #menubar {
@@ -316,9 +134,9 @@ font-family: 'NEXON Lv1 Gothic OTF';
 
 	<!-- 검색창 영역  -->	
 	<div id="headerSearchDivParent">
-     <div id="headerSearchDiv" class="inlineHeader" >
+     <div id="headerSearchDiv">
          <div class="input-group">
-             <input type="text" class="form-control input-lg" placeholder="검색..." name="searchContent" id="searchContent"/>
+             <input type="text" class="form-control input-lg" placeholder="진료항목검색" name="searchContent" id="searchContent"/>
              <span class="input-group-btn">
                  <button class="btn btn-info btn-lg" type="button" id="searchBtn">
                      <i class="glyphicon glyphicon-search"></i>
@@ -329,7 +147,7 @@ font-family: 'NEXON Lv1 Gothic OTF';
 	</div>
 
    	<!-- 로그인 -->
-	<div class="loginHeader text-center" id="loginDiv">
+	<div class="loginHeader text-center clearfix" id="loginDiv">
 	    <ul class="nav navbar-nav">
 	    <li class="dropdown">
 	      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="color:#666666"><i class="glyphicon glyphicon-user"></i></a>      
@@ -432,6 +250,8 @@ font-family: 'NEXON Lv1 Gothic OTF';
 	</div>
 </nav>
 </div>
+
+
 <div id="containerAll" class="container"><!-- 콘텐츠 영역 시작  -->
 
 <div id="menubar">
