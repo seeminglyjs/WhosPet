@@ -314,7 +314,7 @@ public class BoardServiceImpl implements BoardService {
 		
 		//유저가 삭제선택한 이미지 정보가 있는지 체크
 		int count = 1;
-		Integer files = 0;
+		Integer files = 0; // null 값 체크르 위해 wrapper 클래스로 받는다.
 		try {
 			files = fileRequest.getParameterValues("fileInfos").length; //선택된 파일들 갯수
 		}catch (Exception e) {
