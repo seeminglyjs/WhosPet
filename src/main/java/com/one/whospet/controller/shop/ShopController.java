@@ -1,5 +1,7 @@
 package com.one.whospet.controller.shop;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -196,10 +198,11 @@ public class ShopController {
 	@RequestMapping(value="/shop/list", method=RequestMethod.GET)
 	public void shopList( ShopPaging inData, Model model ) {
 		logger.info("/shop/list [GET]");
+		logger.info("파라미터 : {}", inData);
 		
 		//페이징 계산
 		ShopPaging paging = shopService.getPaging(inData);
-		
+		paging.setSearch( inData.getSearch() );
 		//상품 목록
 		List<Shop> list = shopService.list(paging);
 		logger.info("사용자 list : {}", list);
@@ -288,8 +291,10 @@ public class ShopController {
 		logger.info("/shop/order, user : {}", user);
 		int uNo = user.getuNo();
 		
+		
 		//주문시 자동으로 주문자정보에 사용자정보 얻어오기
 		User userOrder = shopService.selectUserInfo(uNo); //주문자 정보
+//		userOrder.setuPost(postNo);
 		logger.info("userOrder : {}", userOrder);
 		
 		//주문자 정보 전달
@@ -320,7 +325,7 @@ public class ShopController {
 	
 	//결제 후 로직
 	@RequestMapping(value="/payments/complete", method=RequestMethod.POST)
-	public String payment( Payment payment, Order orderdata, HttpSession session ) {
+	public void payment( Writer out, Payment payment, Order orderdata, HttpSession session ) {
 		logger.info("/payments/complete [POST]");
 		logger.info("payment : {}", payment);
 		
@@ -329,6 +334,7 @@ public class ShopController {
 		logger.info("/shop/order, user : {}", user);
 		int uNo = user.getuNo();
 		
+	
 		//결제정보에 유저번호 저장
 		payment.setuNo(uNo);
 		
@@ -345,15 +351,42 @@ public class ShopController {
 		//주문정보 주문테이블에 추가
 		shopService.addOrder(orderdata);
 		
-		
-		return "redirect:/shop/paymentCompleted";
+		try {
+			out.write("{\"result\":true}");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@RequestMapping(value="/shop/paymentCompleted", method=RequestMethod.GET)
-	public String paymentCompleted() {
+	public void paymentCompleted( HttpSession session, Model model ) {
 		logger.info("/shop/paymentCompleted [GET]");
 		
-		return "shop/paymentCompleted2";
+		User user = (User) session.getAttribute("user");
+		int uNo = user.getuNo();
+		//결제 번호 찾기
+		int pyNo = (shopService.getPyNo(uNo)).getPyNo();
+		
+		//주문정보 찾기
+		Order order = shopService.getOrder(pyNo);
+		logger.info("paymentCompleted, order : {}", order);
+		//결제정보 찾기
+		Payment payment = shopService.getPayment(pyNo);
+		logger.info("paymentCompleted, payment : {}", payment);
+		//결제하는 상품 찾기
+		int sNo = order.getsNo();
+		Shop shop = shopService.getShop(sNo);
+		logger.info("paymentCompleted, shop : {}", shop);
+		//유저정보 찾기
+		User sender = shopService.getUser(uNo);
+		logger.info("paymentCompleted, sender : {}", sender);
+		
+		//방금 결제(주문)한 주문정보 결제완료 페이지로 전달
+		model.addAttribute("order", order);
+		model.addAttribute("payment", payment);
+		model.addAttribute("shop", shop);
+		model.addAttribute("sender", sender);
+		
 	}
 
 	

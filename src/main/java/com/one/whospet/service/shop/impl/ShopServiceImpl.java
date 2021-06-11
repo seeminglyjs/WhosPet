@@ -37,7 +37,7 @@ private static final Logger logger = LoggerFactory.getLogger(ShopServiceImpl.cla
 	public ShopPaging getPaging(ShopPaging inData) {
 		
 		//총 게시글 수 조회
-		int totalCount = shopDao.selectCntAll();
+		int totalCount = shopDao.selectCntAll(inData);
 		logger.info("totalCount: {}", totalCount);
 		//페이징 계산
 		ShopPaging paging = new ShopPaging( totalCount, inData.getCurPage() );
@@ -268,15 +268,15 @@ private static final Logger logger = LoggerFactory.getLogger(ShopServiceImpl.cla
 	//주문하는 사용자 정보 얻기
 	@Override
 	public User selectUserInfo(int uNo) {
-		logger.info("selectUserInfo : {}", uNo);
+		logger.info("selectUserInfo, uNo : {}", uNo);
 		
 		return shopDao.selectUserInfo(uNo);
 	}
-
+	
 	//결제한 정보 추가하기
 	@Override
 	public void addPayment(Payment payment) {
-		logger.info("addPayment",payment);
+		logger.info("addPayment, payment : {}",payment);
 		
 		shopDao.insertPayment(payment);
 	}
@@ -284,10 +284,51 @@ private static final Logger logger = LoggerFactory.getLogger(ShopServiceImpl.cla
 	//주문한 정보 추가하기
 	@Override
 	public void addOrder(Order orderdata) {
-		logger.info("addOrder : {}", orderdata);
+		logger.info("addOrder, orderdata : {}", orderdata);
 		
 		shopDao.insertOrder(orderdata);
 	}
+	
+	//결제번호 찾기
+	@Override
+	public Payment getPyNo(int uNo) {
+		logger.info("selectPyNo, uNo : {}", uNo);
+		
+		return shopDao.selectPyNo(uNo);
+	}
+
+	//주문정보 찾기
+	@Override
+	public Order getOrder(int pyNo) {
+		logger.info("selectOrder, pyNo : {}", pyNo);
+		
+		return shopDao.selectOrder(pyNo);
+	}
+
+	//결제정보 찾기
+	@Override
+	public Payment getPayment(int pyNo) {
+		logger.info("selectPayment, pyNo : {}", pyNo);
+		
+		return shopDao.selectPayment(pyNo);
+	}
+
+	//상품정보 찾기
+	@Override
+	public Shop getShop(int sNo) {
+		logger.info("getShop, sNo : {}", sNo);
+		
+		return shopDao.selectShop(sNo);
+	}
+
+	//유저정보 찾기
+	@Override
+	public User getUser(int uNo) {
+		logger.info("getUser, uNo : {}", uNo);
+		
+		return shopDao.selectUserInfo(uNo);
+	}
+
 
 	
 

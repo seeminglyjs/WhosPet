@@ -64,7 +64,7 @@
 	
 	
 	<!-- 결제 DTO 재정의 -->
-		<resultMap type="com.one.whospet.dto.Payment" id="Payment">
+	<resultMap type="com.one.whospet.dto.Payment" id="Payment">
 		<id column="py_no" property="pyNo"/>
 		
 		<result column="u_no" property="uNo"/>
@@ -77,22 +77,52 @@
 		<result column="imp_uid" property="impUid"/>
 		<result column="merchant_uid" property="merchantUid"/>
 		<collection property="shop" resultMap="Shop"/>
-		</resultMap>
+	</resultMap>
+		
+	
+	<resultMap type="com.one.whospet.dto.Order" id="Order">
+		<id column="o_no" property="oNo"/>
+		
+		<result column="o_no" property="oNo" />
+		<result column="u_no" property="uNo" />
+		<result column="s_no" property="sNo" />
+		<result column="py_no" property="pyNo" />
+		<result column="o_name" property="oName" />
+		<result column="o_quantity" property="oQuantity" />
+		<result column="o_amount" property="oAmount" />
+		<result column="o_totalAmount" property="oTotalAmount" />
+		<result column="o_sender" property="oSender" />
+		<result column="o_recipient" property="oRecipient" />
+		<result column="o_postNo" property="oPostNo" />
+		<result column="o_address" property="oAddress" />
+		<result column="o_detailAddress" property="oDetailAddress" />
+		<result column="o_date" property="oDate" />
+		<result column="o_status" property="oStatus" />
+	</resultMap>
 
+	<sql id="selectShop">
+		SELECT
+			s_no, u_no, s_name, s_productType, s_amount, s_quantity, s_date, s_content
+		FROM w_shop
+	</sql>
 
+	<sql id="whereTitleSearch">
+		WHERE s_name LIKE '%' || #{search} || '%'
+	</sql>
 
-
-
-	<select id="selectCntAll" resultType="int">
-		SELECT count(*) FROM w_shop
+	<select id="selectCntAll" parameterType="com.one.whospet.util.ShopPaging" resultType="int">
+		SELECT count(*) FROM (
+			<include refid="selectShop" />
+			<include refid="whereTitleSearch" />
+		)
 	</select>
 
 	<!-- 상품리스트 -->
 	<select id="selectPageList" parameterType="com.one.whospet.util.ShopPaging" resultMap="Shop">
 		SELECT * FROM (
 			SELECT ROWNUM rnum, S.* FROM (
-				SELECT *
-				FROM w_shop
+				<include refid="selectShop" />
+				<include refid="whereTitleSearch" />
 				ORDER BY s_no desc
 			) S
 		) R
@@ -188,6 +218,28 @@
 		INSERT INTO w_order (o_no, u_no, s_no, py_no, o_name, o_quantity, o_amount, o_totalAmount, o_sender, o_recipient, o_postNo, o_address, o_detailAddress)
 		VALUES ( w_order_seq.nextval, #{uNo}, #{sNo}, #{pyNo}, #{oName}, #{oQuantity}, #{oAmount}, #{oTotalAmount}, #{oSender}, #{oRecipient}, #{oPostNo}, #{oAddress}, #{oDetailAddress})
 	</insert>
+	
+	
+	<select id="selectPyNo" parameterType="int" resultMap="Payment">
+		SELECT * FROM w_payment
+		WHERE u_no = #{uNo} and
+			  py_no = (SELECT max(py_no) FROM w_payment)
+	</select>
+	
+	<select id="selectOrder" parameterType="int" resultMap="Order">
+		SELECT * FROM w_order
+		WHERE py_no = #{pyNo}
+	</select>
+	
+	<select id="selectPayment" parameterType="int" resultMap="Payment">
+		SELECT * FROM w_payment
+		WHERE py_no = #{pyNo}
+	</select>
+	
+	<select id="selectShop" parameterType="int" resultMap="Shop">
+		SELECT * FROM w_shop
+		WHERE s_no = #{sNo}
+	</select>
 </mapper>
 
 

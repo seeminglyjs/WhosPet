@@ -1,6 +1,6 @@
 package com.one.whospet.util;
 
-public class ShopPaging {
+public class ShopPaging2 {
 	private int curPage; //현재 페이지의 번호
 
 	private int totalCount; //총 게시글 수
@@ -14,21 +14,20 @@ public class ShopPaging {
 	private int startNo; //화면에 보이는 게시글의 시작 번호	
 	private int endNo; //화면에 보이는 게시글의 끝 번호
 	
-	private String search; //검색어
 	
 	
 	//디폴트 생성자
-	public ShopPaging() {}
+	public ShopPaging2() {}
 	
 	//총 게시글 수를 입력하는 생성자
-	public ShopPaging(int totalCount) {
+	public ShopPaging2(int totalCount) {
 		setTotalCount(totalCount);
 		
 		makePaging();
 	}
 	
 	//총 게시글 수, 현재 페이지번호를 입력하는 생성자
-	public ShopPaging(int totalCount, int curPage) {
+	public ShopPaging2(int totalCount, int curPage) {
 		setTotalCount(totalCount);
 		setCurPage(curPage);
 		
@@ -36,7 +35,7 @@ public class ShopPaging {
 	}
 	
 	//총 게시글 수, 현재 페이지번호, 보여질 게시글 수를 입력하는 생성자
-	public ShopPaging(int totalCount, int curPage, int listCount) {
+	public ShopPaging2(int totalCount, int curPage, int listCount) {
 		setTotalCount(totalCount);
 		setCurPage(curPage);
 		setListCount(listCount);
@@ -45,7 +44,7 @@ public class ShopPaging {
 	}
 	
 	//총 게시글 수, 현재 페이지번호, 보여질 게시글 수, 보여질 페이지 수를 입력하는 생성자
-	public ShopPaging(int totalCount, int curPage, int listCount, int pageCount) {
+	public ShopPaging2(int totalCount, int curPage, int listCount, int pageCount) {
 		setTotalCount(totalCount);
 		setCurPage(curPage);
 		setListCount(listCount);
@@ -63,7 +62,7 @@ public class ShopPaging {
 		//기본값 설정
 		if(curPage == 0)	setCurPage(1);//첫 페이지를 기본 페이지로 설정
 		if(pageCount == 0)	setPageCount(10);//화면에 보여질 페이지 수 기본설정
-		if(listCount == 0)	setListCount(16);//화면에 보여질 게시글 수 기본설정
+		if(listCount == 0)	setListCount(10);//화면에 보여질 게시글 수 기본설정
 
 		//총 페이지 수 계산
 		totalPage = totalCount / listCount;
@@ -85,95 +84,68 @@ public class ShopPaging {
 		startNo = (curPage-1) * listCount + 1;
 		endNo = curPage * listCount;
 	}
-
+	
+	
+	
 	@Override
 	public String toString() {
-		return "ShopPaging [curPage=" + curPage + ", totalCount=" + totalCount + ", listCount=" + listCount
-				+ ", totalPage=" + totalPage + ", pageCount=" + pageCount + ", startPage=" + startPage + ", endPage="
-				+ endPage + ", startNo=" + startNo + ", endNo=" + endNo + ", search=" + search + "]";
+		return "Paging [curPage=" + curPage + ", totalCount=" + totalCount + ", listCount=" + listCount + ", totalPage="
+				+ totalPage + ", pageCount=" + pageCount + ", startPage=" + startPage + ", endPage=" + endPage
+				+ ", startNo=" + startNo + ", endNo=" + endNo + "]";
 	}
-
 	public int getCurPage() {
 		return curPage;
 	}
-
 	public void setCurPage(int curPage) {
 		this.curPage = curPage;
 	}
-
 	public int getTotalCount() {
 		return totalCount;
 	}
-
 	public void setTotalCount(int totalCount) {
 		this.totalCount = totalCount;
 	}
-
 	public int getListCount() {
 		return listCount;
 	}
-
 	public void setListCount(int listCount) {
 		this.listCount = listCount;
 	}
-
 	public int getTotalPage() {
 		return totalPage;
 	}
-
 	public void setTotalPage(int totalPage) {
 		this.totalPage = totalPage;
 	}
-
 	public int getPageCount() {
 		return pageCount;
 	}
-
 	public void setPageCount(int pageCount) {
 		this.pageCount = pageCount;
 	}
-
 	public int getStartPage() {
 		return startPage;
 	}
-
 	public void setStartPage(int startPage) {
 		this.startPage = startPage;
 	}
-
 	public int getEndPage() {
 		return endPage;
 	}
-
 	public void setEndPage(int endPage) {
 		this.endPage = endPage;
 	}
-
 	public int getStartNo() {
 		return startNo;
 	}
-
 	public void setStartNo(int startNo) {
 		this.startNo = startNo;
 	}
-
 	public int getEndNo() {
 		return endNo;
 	}
-
 	public void setEndNo(int endNo) {
 		this.endNo = endNo;
 	}
-
-	public String getSearch() {
-		return search;
-	}
-
-	public void setSearch(String search) {
-		this.search = search;
-	}
-	
-	
-	
 
 }

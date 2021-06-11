@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+
+
+
+.baby-product-list {
+    overflow: hidden;
+    border-bottom: 1px solid #fff;
+    margin: 0;
+}
+
+.baby-product-list .baby-product {
+    padding: 20px 14px 0 15px;
+    margin: 1px 0 -1px;
+    border-bottom: 0;
+    display: block;
+    overflow: hidden;
+    width: 212px;
+    height: 350px;
+    padding: 10px;
+    font-size: 12px;
+    color: #111;
+    transition: box-shadow .2s ease;
+    position: relative;
+    float: left;
+}
+
+.baby-product-list .baby-product .hello {
+	margin: 0 auto;
+}

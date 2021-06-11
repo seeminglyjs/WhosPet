@@ -133,6 +133,52 @@ public interface ShopService {
 	 * @param orderdata 추가할 주문정보
 	 */
 	public void addOrder(Order orderdata);
+	
+	/**
+	
+	 * 유저번호에 해당하는 결제번호 찾기
+	 * 
+	 * @param uNo 유저번호
+	 * @return 결제번호
+	 */
+	public Payment getPyNo(int uNo);
+
+	
+	/**
+	 * 주문정보 조회하기
+	 * 
+	 * @param uNo 유저번호
+	 * @return 주문정보
+	 */
+	public Order getOrder(int pyNo);
+
+	
+	/**
+	 * 결제정보 조회하기
+	 * 
+	 * @param pyNo 결제번호
+	 * @return 결제정보
+	 */
+	public Payment getPayment(int pyNo);
+
+	
+	/**
+	 * 상품번호에 해당하는 상품정보 찾기
+	 * 
+	 * @param sNo 상품번호
+	 * @return 상품정보
+	 */
+	public Shop getShop(int sNo);
+
+	
+	/**
+	 * 유저번호에 해당하는 유저정보 찾기
+	 * 
+	 * @param uNo 유저번호
+	 * @return 유저번호
+	 */
+	public User getUser(int uNo);
+
 
 	
 

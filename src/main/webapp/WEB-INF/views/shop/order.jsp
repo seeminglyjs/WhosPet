@@ -63,6 +63,7 @@ $(document).ready(function(){
 					type: 'POST',
 					dataType: 'json',
 					data: {
+						// /payments/compelete 매개변수 payment 에서 받을 데이터
 						impUid : rsp.imp_uid,
 						merchantUid : rsp.merchant_uid,
 						pyAmount : rsp.paid_amount,
@@ -75,8 +76,10 @@ $(document).ready(function(){
 						oQuantity : '${basketInfo.quantity}',	//주문한 수량
 						oAmount : '${basketInfo.sAmount}',	//상품 가격
 						oTotalAmount : '${basketInfo.totalAmount}', //결제할 총 가격
-						oSender : '${userOrder.uName}',	//주문한 사람
-						oRecipient : oRecipient,		//받는 사람
+						oSender : '${userOrder.uName}',	//주문한 사람 이름
+						oSenderPhone : '${userOrder.uPhone}', //주문한 사람 번호
+						oEamil : '${userOrder.uEmail}',	//주문한 사람 이메일
+						oRecipient : oRecipient,		//받는 사람 이름
 						oPostNo : oPostNo,				//우편 번호
 						oAddress : oAddress,			//주소
 						oDetailAddress : oDetailAddress //상세 주소
@@ -84,16 +87,18 @@ $(document).ready(function(){
 						//기타 필요한 데이터가 있으면 추가 전달
 						}
 				}).done(function(data) {
+					
+					console.log(data)
 					//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
-					if ( everythings_fine ) {
-						var msg = '결제가 완료되었습니다.';
+					if ( data.result ) {
+						var msg = '결제가 완료되었습니다.!!!!!';
 						msg += '\n고유ID : ' + rsp.imp_uid;
 						msg += '\n상점 거래ID : ' + rsp.merchant_uid;
 						msg += '\결제 금액 : ' + rsp.paid_amount;
 						msg += '카드 승인번호 : ' + rsp.apply_num;
 						alert(msg);
 												
-						
+						location.href="/shop/paymentCompleted";
 						
 		    		} else {
 		    			//[3] 아직 제대로 결제가 되지 않았습니다.
@@ -165,7 +170,7 @@ $(document).ready(function(){
 		<tr>
 			<th>배송주소</th>
 			<td>
-			<input type="text" id="sample3_postcode" name="oPostNo"  placeholder="우편번호"><br><br>
+			<input type="text" id="sample3_postcode" name="oPostNo"  value="${userOrder.uPost }" placeholder="우편번호"><br><br>
 			<input type="text" id="sample3_address" name="oAddress" value="${userOrder.uAddress }" placeholder="주소" style="width: 250px;">
 			<input type="text" id="sample3_detailAddress" name="oDetailAddress" value="${userOrder.uDetailAddress }" placeholder="상세주소" style="width: 250px;">
  			<input type="text" id="sample3_extraAddress" placeholder="참고항목">

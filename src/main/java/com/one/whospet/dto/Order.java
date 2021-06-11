@@ -14,16 +14,20 @@ public class Order {
 	private int oTotalAmount;
 	private String oSender;
 	private String oRecipient;
+	private String oSenderPhone;
+	private String oEmail;
 	private int oPostNo;
 	private String oAddress;
 	private String oDetailAddress;
 	private Date oDate;
+	private String oStatus;
 	@Override
 	public String toString() {
 		return "Order [oNo=" + oNo + ", uNo=" + uNo + ", sNo=" + sNo + ", pyNo=" + pyNo + ", oName=" + oName
 				+ ", oQuantity=" + oQuantity + ", oAmount=" + oAmount + ", oTotalAmount=" + oTotalAmount + ", oSender="
-				+ oSender + ", oRecipient=" + oRecipient + ", oPostNo=" + oPostNo + ", oAddress=" + oAddress
-				+ ", oDetailAddress=" + oDetailAddress + ", oDate=" + oDate + "]";
+				+ oSender + ", oRecipient=" + oRecipient + ", oSenderPhone=" + oSenderPhone + ", oEmail=" + oEmail
+				+ ", oPostNo=" + oPostNo + ", oAddress=" + oAddress + ", oDetailAddress=" + oDetailAddress + ", oDate="
+				+ oDate + ", oStatus=" + oStatus + "]";
 	}
 	public int getoNo() {
 		return oNo;
@@ -85,6 +89,18 @@ public class Order {
 	public void setoRecipient(String oRecipient) {
 		this.oRecipient = oRecipient;
 	}
+	public String getoSenderPhone() {
+		return oSenderPhone;
+	}
+	public void setoSenderPhone(String oSenderPhone) {
+		this.oSenderPhone = oSenderPhone;
+	}
+	public String getoEmail() {
+		return oEmail;
+	}
+	public void setoEmail(String oEmail) {
+		this.oEmail = oEmail;
+	}
 	public int getoPostNo() {
 		return oPostNo;
 	}
@@ -109,8 +125,12 @@ public class Order {
 	public void setoDate(Date oDate) {
 		this.oDate = oDate;
 	}
-	
-	
+	public String getoStatus() {
+		return oStatus;
+	}
+	public void setoStatus(String oStatus) {
+		this.oStatus = oStatus;
+	}
 	
 	
 }
