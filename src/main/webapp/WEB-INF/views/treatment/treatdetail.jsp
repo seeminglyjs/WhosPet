@@ -708,6 +708,7 @@
 				    bullet.interactionsEnabled = false
 				    bullet.dy = -10;
 				    bullet.label.text = '{valueY}' + '원'
+				    bullet.label.fontSize = 12;
 				    bullet.label.fill = am4core.color('#000')
 				
 				    return series;
