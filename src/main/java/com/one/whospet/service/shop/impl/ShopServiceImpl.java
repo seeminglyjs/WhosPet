@@ -48,6 +48,7 @@ private static final Logger logger = LoggerFactory.getLogger(ShopServiceImpl.cla
 	//목록조회
 	@Override
 	public List<Shop> list(ShopPaging paging) {
+		logger.info("list, paging : {}", paging);
 		logger.info("list 객체 호출: {}", shopDao.selectPageList(paging));
 		
 		

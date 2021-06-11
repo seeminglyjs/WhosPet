@@ -24,10 +24,12 @@ $(document).ready(function(){
 
 
 <!-- 검색 -->
-<div class="form-inline text-center">
+<div class="form-inline text-right">
 	<input class="form-control" type="text" id="search" value="${param.search }">
 	<button id="btnSearch" class="btn">검색</button>
 </div>
+
+<br><br>
 
 <!-- 상품 목록 -->
 <ul class="baby-product-list">
@@ -36,10 +38,10 @@ $(document).ready(function(){
   <c:if test="${!empty thumbnail.siStoredFilename }">
   <li class="baby-product">
   	<div>
-		<a href="/shop/view?sNo=${thumbnail.sNo }"><img alt="섬네일" src="/resources/shopimgupload/${thumbnail.siStoredFilename }" style="width: 200px;"><br>
+		<a href="/shop/view?sNo=${thumbnail.sNo }"><img alt="섬네일" src="/resources/shopimgupload/${thumbnail.siStoredFilename }" style="width: 200px; height:200px "><br>
 		<c:forEach var="userList" items="${list }" begin="${status.index }" end="${status.index }" >
-		<span>${userList.sName }</span>
-		<span>${userList.sAmount }</span>
+		<div class="listname">${userList.sName }</div>
+		<div class="listamount">${userList.sAmount }</div>
 		</c:forEach>  
 		</a>
   	</div>
@@ -49,14 +51,12 @@ $(document).ready(function(){
   <c:if test="${empty thumbnail.siStoredFilename }">
   <li class="baby-product">
   	<div>
-		<label>	
+		<a href="/shop/view?sNo=${userList.sNo }"><img alt="섬네일" src="/resources/img/default.png" style="width: 200px; height:200px"><br>
 		<c:forEach var="userList" items="${list }" begin="${status.index }" end="${status.index }" >
-		<a href="/shop/view?sNo=${userList.sNo }"><img alt="섬네일" src="/resources/shopimgupload/default.png" style="width: 200px;"><br>
-		<span>${userList.sName }</span>
-		<span>${userList.sAmount }</span>
-		</a>
+		<div class="listname">${userList.sName }</div>
+		<div class="listamount">${userList.sAmount }</div>
 		</c:forEach>  
-		</label>
+		</a>
   	</div>
   </li>
   </c:if>

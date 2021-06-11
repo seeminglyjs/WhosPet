@@ -34,7 +34,7 @@ $(document).ready(function(){
 		var oPostNo = $("[name='oPostNo']").val();
 		var oAddress = $("[name='oAddress']").val();
 		var oDetailAddress = $("[name='oDetailAddress']").val();
-	
+		console.log('${userOrder.uEmail}');
 		IMP.request_pay({
 		    pg : 'html5_inicis', //PG사 - 'kakao':카카오페이, 'html5_inicis':이니시스(웹표준결제), 'nice':나이스페이, 'jtnet':제이티넷, 'uplus':LG유플러스, 'danal':다날, 'payco':페이코, 'syrup':시럽페이, 'paypal':페이팔
 		    pay_method : 'card', //결제방식 - 'samsung':삼성페이, 'card':신용카드, 'trans':실시간계좌이체, 'vbank':가상계좌, 'phone':휴대폰소액결제
@@ -78,7 +78,7 @@ $(document).ready(function(){
 						oTotalAmount : '${basketInfo.totalAmount}', //결제할 총 가격
 						oSender : '${userOrder.uName}',	//주문한 사람 이름
 						oSenderPhone : '${userOrder.uPhone}', //주문한 사람 번호
-						oEamil : '${userOrder.uEmail}',	//주문한 사람 이메일
+						oEmail : '${userOrder.uEmail}',	//주문한 사람 이메일
 						oRecipient : oRecipient,		//받는 사람 이름
 						oPostNo : oPostNo,				//우편 번호
 						oAddress : oAddress,			//주소
@@ -278,7 +278,7 @@ $(document).ready(function(){
 
 
 
-<br><br><br><br><br><br><br><br><br>
+<br><br><br><br>
 <button id="payment">결제</button>
 <a href="#" onclick="goBack();"><button>취소</button></a><!-- 장바구니로 가기 -->
 

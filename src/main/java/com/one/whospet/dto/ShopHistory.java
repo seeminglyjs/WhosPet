@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class ShopHistory {
 	 private int shNo;
-	 private int sNo;			
+	 private int oNo;			
 	 private int uNo; 			
 	 private int pyNo;
 	 private int shAmount; 			
@@ -14,7 +14,7 @@ public class ShopHistory {
 	 private Payment payment;
 	@Override
 	public String toString() {
-		return "ShopHistory [shNo=" + shNo + ", sNo=" + sNo + ", uNo=" + uNo + ", pyNo=" + pyNo + ", shAmount="
+		return "ShopHistory [shNo=" + shNo + ", oNo=" + oNo + ", uNo=" + uNo + ", pyNo=" + pyNo + ", shAmount="
 				+ shAmount + ", shDate=" + shDate + ", shStatus=" + shStatus + ", shop=" + shop + ", payment=" + payment
 				+ "]";
 	}
@@ -24,11 +24,11 @@ public class ShopHistory {
 	public void setShNo(int shNo) {
 		this.shNo = shNo;
 	}
-	public int getsNo() {
-		return sNo;
+	public int getoNo() {
+		return oNo;
 	}
-	public void setsNo(int sNo) {
-		this.sNo = sNo;
+	public void setoNo(int oNo) {
+		this.oNo = oNo;
 	}
 	public int getuNo() {
 		return uNo;
@@ -72,6 +72,7 @@ public class ShopHistory {
 	public void setPayment(Payment payment) {
 		this.payment = payment;
 	}
+	 
 	 
 	 
 	 

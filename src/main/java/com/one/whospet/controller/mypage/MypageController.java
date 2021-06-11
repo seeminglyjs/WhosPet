@@ -22,11 +22,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.one.whospet.dto.Board;
 import com.one.whospet.dto.Booking;
 import com.one.whospet.dto.Hospital;
-import com.one.whospet.dto.Payment;
+import com.one.whospet.dto.Order;
 import com.one.whospet.dto.Point;
-import com.one.whospet.dto.Shop;
 import com.one.whospet.dto.ShopBasket;
-import com.one.whospet.dto.ShopImg;
 import com.one.whospet.dto.User;
 import com.one.whospet.dto.Userpic;
 import com.one.whospet.service.mypage.face.MypageService;
@@ -284,39 +282,7 @@ public class MypageController {
 	
 		
 	}
-	
-	//구매이력 페이지
-	@RequestMapping(value = "/mypage/pay")
-	public void payinfo(@RequestParam(defaultValue = "0") int curPage, HttpSession session, Model model) {
-		//해쉬맵 생성
-		HashMap<String, Object> data = new HashMap<String, Object>();
-		
-		//유저 번호 가져오기
-		User user = (User) session.getAttribute("user");
-		int uNo = user.getuNo();
-		
-		//해쉬맵에 집어넣기
-		data.put("uNo", uNo);
-		data.put("curPage", curPage);
-		
-		//페이징 계산
-		MypageBoardPaging paging = mypageService.getPayPaging(data);
-		//페이징 객체 집어넣기
-		data.put("paging", paging);
-		
-		//구매이력 조회
-		List<Payment> list = mypageService.paymentList(data);
-			for( int i=0; i<list.size(); i++) {
-				logger.debug(list.get(i).toString());
-				}
-				
-		//모델값 전달
-		model.addAttribute("paylist",list);
-		model.addAttribute("paging", paging);
 
-		
-		
-	}
 	
 	//장바구니 페이지
 	@RequestMapping(value = "/mypage/basket")
@@ -497,5 +463,34 @@ public class MypageController {
 	@RequestMapping(value="/pay/complete", method=RequestMethod.POST)
 	public String paytest() {
 		return "redirect:/";
+	}
+	
+	
+		
+	
+	
+	//구매이력 페이지
+	@RequestMapping(value = "/mypage/pay", method=RequestMethod.GET)
+	public void payinfo( MypageBoardPaging inData , HttpSession session, Model model) {
+		logger.info("/mypage/pay [GET]");
+		logger.info("indata : {}", inData);
+
+		User user = (User) session.getAttribute("user");
+		int uNo = user.getuNo();
+		logger.info("uNo : {}", uNo);
+		
+		//페이징 계산
+		MypageBoardPaging paging = mypageService.getPayPaging(inData);
+		paging.setuNo(uNo);
+		logger.info("paging : {}", paging);
+		//페이징 객체 집어넣기
+		
+		List<Order> order = (List<Order>) mypageService.selectOrder(paging);
+		logger.info("order : {}", order);
+		
+		model.addAttribute("order", order);
+		model.addAttribute("paging", paging);
+		
+		
 	}
 }

@@ -109,11 +109,20 @@
 	<sql id="whereTitleSearch">
 		WHERE s_name LIKE '%' || #{search} || '%'
 	</sql>
+	
+	<sql id="whereProductType">
+		WHERE s_productType = #{sProductType} <!-- 카테고리 선택시 검색이 '' 인 경우도 출력되서 모든값이 다 출력됨 -->
+	</sql>
 
 	<select id="selectCntAll" parameterType="com.one.whospet.util.ShopPaging" resultType="int">
 		SELECT count(*) FROM (
-			<include refid="selectShop" />
-			<include refid="whereTitleSearch" />
+			<include refid="selectShop" />	
+				<if test="sProductType == null and search != null">
+					<include refid="whereTitleSearch" />
+				</if>
+				<if test="sProductType != null and search == null">
+					<include refid="whereProductType" />
+				</if>
 		)
 	</select>
 
@@ -122,7 +131,12 @@
 		SELECT * FROM (
 			SELECT ROWNUM rnum, S.* FROM (
 				<include refid="selectShop" />
-				<include refid="whereTitleSearch" />
+					<if test="sProductType == null and search != null">
+						<include refid="whereTitleSearch" />	
+					</if>
+					<if test="sProductType != null and search == null">
+						<include refid="whereProductType" />
+					</if>
 				ORDER BY s_no desc
 			) S
 		) R
@@ -215,8 +229,8 @@
   	</insert>
 	
 	<insert id="insertOrder" parameterType="com.one.whospet.dto.Order">
-		INSERT INTO w_order (o_no, u_no, s_no, py_no, o_name, o_quantity, o_amount, o_totalAmount, o_sender, o_recipient, o_postNo, o_address, o_detailAddress)
-		VALUES ( w_order_seq.nextval, #{uNo}, #{sNo}, #{pyNo}, #{oName}, #{oQuantity}, #{oAmount}, #{oTotalAmount}, #{oSender}, #{oRecipient}, #{oPostNo}, #{oAddress}, #{oDetailAddress})
+		INSERT INTO w_order (o_no, u_no, s_no, py_no, o_name, o_quantity, o_amount, o_totalAmount, o_sender, o_recipient, o_senderPhone, o_email, o_postNo, o_address, o_detailAddress)
+		VALUES ( w_order_seq.nextval, #{uNo}, #{sNo}, #{pyNo}, #{oName}, #{oQuantity}, #{oAmount}, #{oTotalAmount}, #{oSender}, #{oRecipient}, #{oSenderPhone}, #{oEmail}, #{oPostNo}, #{oAddress}, #{oDetailAddress})
 	</insert>
 	
 	

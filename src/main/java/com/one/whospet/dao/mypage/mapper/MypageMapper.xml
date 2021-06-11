@@ -139,12 +139,34 @@
 		<collection property="shop" resultMap="Shop"/>
 		</resultMap>
 		
+		
+		<!-- 주문DTO 재정의 -->
+		<resultMap type="com.one.whospet.dto.Order" id="Order">
+		<id column="o_no" property="oNo"/>
+		
+		<result column="u_no" property="uNo"/>
+		<result column="s_no" property="sNo"/>
+		<result column="py_no" property="pyNo"/>
+		<result column="o_name" property="oName"/>
+		<result column="o_quantity" property="oQuantity"/>
+		<result column="o_amount" property="oAmount"/>
+		<result column="o_totalAmount" property="oTotalAmount"/>
+		<result column="o_sender" property="oSender"/>
+		<result column="o_recipient" property="oRecipient"/>
+		<result column="o_eamil" property="oEmail"/>
+		<result column="o_postNo" property="oPostNo"/>
+		<result column="o_address" property="oAddress"/>
+		<result column="o_detailAddress" property="oDetailAddress"/>
+		<result column="o_date" property="oDate"/>
+		<result column="o_status" property="oStatus"/>
+		</resultMap>
+		
 
 		<!-- 구매이력DTO 재정의 -->
 		<resultMap type="com.one.whospet.dto.ShopHistory" id="ShopHistory">
 		<id column="sh_no" property="shNo"/>
 		
-		<result column="s_no" property="sNo"/>
+		<result column="o_no" property="oNo"/>
 		<result column="u_no" property="uNo"/>
 		<result column="py_no" property="pyNo"/>
 		<result column="sh_amount" property="shAmount"/>
@@ -330,24 +352,6 @@
 		WHERE sb_No = #{sbNo }
 	</delete>
 	
-	<select id="selectPayCntAll" parameterType="hashmap" resultType="int">
-		SELECT COUNT(*) FROM w_payment WHERE u_no = #{uNo }
-	</select>
-	
-	<select id="selectAllPay" parameterType="hashmap" resultMap="ShopHistory">
-			
-		SELECT * FROM (
-			SELECT rownum rnum, B.* FROM (
-					SELECT *FROM w_shop_history 
-				    FULL OUTER JOIN w_shop ON (w_shop.s_no = w_shop_history.s_no)
-				    FULL OUTER JOIN w_payment ON (w_payment.py_no = w_shop_history.py_no)
-					WHERE w_shop_history.u_no = #{uNo }
-					ORDER BY sh_no DESC
-						) B
-					) BOARD
-				WHERE rnum BETWEEN #{paging.startNo } AND #{paging.endNo }
-
-	</select>
 	
 	<update id="updatePlusBasket" parameterType="int">
 		UPDATE w_shop_basket SET sb_quantity = sb_quantity + 1
@@ -359,5 +363,13 @@
 		WHERE sb_No = #{sbNo }
 	</update>
 
+	<select id="selectCntAll" parameterType="com.one.whospet.util.MypageBoardPaging" resultType="int">
+		SELECT COUNT(*) FROM w_payment WHERE u_no = #{uNo }
+	</select>
+	
+	<select id="selectOrderByUNo" parameterType="com.one.whospet.util.MypageBoardPaging" resultMap="Order">
+		SELECT * FROM w_order
+		WHERE u_no = #{uNo}
+	</select>
 	
   </mapper>

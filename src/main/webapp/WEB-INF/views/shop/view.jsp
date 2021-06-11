@@ -1,3 +1,4 @@
+<%@page import="com.one.whospet.dto.ShopImg"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -265,6 +266,7 @@ ${shop.sAmount }
 
 <c:forEach var="contentImg" items="${shopImg }">
 <div align="center">
+<%-- <img alt="이미지" src="/resources/shopimgupload/${contentImg.siStoredFilename }" style="width: 900px;"> --%>
 <img alt="이미지" src="/resources/shopimgupload/${contentImg.siStoredFilename }" style="width: 900px;">
 </div>
 </c:forEach>

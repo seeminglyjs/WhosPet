@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.one.whospet.dto.Board;
 import com.one.whospet.dto.Booking;
 import com.one.whospet.dto.Hospital;
+import com.one.whospet.dto.Order;
 import com.one.whospet.dto.Payment;
 import com.one.whospet.dto.Point;
 import com.one.whospet.dto.ShopBasket;
@@ -233,6 +234,24 @@ public interface MypageService {
 	 * @return
 	 */
 	public int minusItemBasket(int sbNo);
+
+	/**
+	 * 구매내역 목록을 위한 페이징 객체를 생성한다
+	 * 
+	 * @param inData - 현재페이지를 저장하고 있느 Paging객체
+	 * @return 페이징 계산이 완료된 Paging 객체 
+	 */
+	public MypageBoardPaging getPayPaging(MypageBoardPaging inData);
+
+	/**
+	 * 유저번호에 맞는 
+	 * 
+	 * @param uNo 유저번호
+	 * @return
+	 */
+	public List<Order> selectOrder(MypageBoardPaging paging);
+
+
 
 
 
