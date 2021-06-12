@@ -15,6 +15,7 @@ public class ShopPaging {
 	private int endNo; //화면에 보이는 게시글의 끝 번호
 	
 	private String search; //검색어
+	private String sProductType; //상품타입
 	
 	
 	//디폴트 생성자
@@ -90,7 +91,8 @@ public class ShopPaging {
 	public String toString() {
 		return "ShopPaging [curPage=" + curPage + ", totalCount=" + totalCount + ", listCount=" + listCount
 				+ ", totalPage=" + totalPage + ", pageCount=" + pageCount + ", startPage=" + startPage + ", endPage="
-				+ endPage + ", startNo=" + startNo + ", endNo=" + endNo + ", search=" + search + "]";
+				+ endPage + ", startNo=" + startNo + ", endNo=" + endNo + ", search=" + search + ", sProductType="
+				+ sProductType + "]";
 	}
 
 	public int getCurPage() {
@@ -172,6 +174,15 @@ public class ShopPaging {
 	public void setSearch(String search) {
 		this.search = search;
 	}
+
+	public String getsProductType() {
+		return sProductType;
+	}
+
+	public void setsProductType(String sProductType) {
+		this.sProductType = sProductType;
+	}
+
 	
 	
 	
