@@ -367,6 +367,7 @@
 		    bullet.interactionsEnabled = false
 		    bullet.dy = 20;
 		    bullet.label.text = '{valueY}' + '원'
+		    bullet.label.fontSize = 12;
 		    bullet.label.fill = am4core.color('#ffffff')
 		
 		    return series;
@@ -452,6 +453,7 @@
 			    data: {"city": region, "district": district},
 			    success : function(data){
 			  	  console.log("성공")
+			  	  
 			  	am4core.ready(function() {
 		
 				var chart = am4core.create('chartdiv', am4charts.XYChart)
@@ -488,6 +490,7 @@
 				    bullet.interactionsEnabled = false
 				    bullet.dy = -10;
 				    bullet.label.text = '{valueY}' + '원'
+				    bullet.label.fontSize = 12;
 				    bullet.label.fill = am4core.color('#000')
 				
 				    return series;
