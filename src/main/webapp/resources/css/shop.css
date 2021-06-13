@@ -1,7 +1,9 @@
 @charset "UTF-8";
 
 
-
+.baby-product-list .baby-product .listname {
+	margin: 0 auto;
+}
 
 .baby-product-list {
     overflow: hidden;

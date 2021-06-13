@@ -2,6 +2,7 @@ package com.one.whospet.service.mypage.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -19,6 +20,7 @@ import com.one.whospet.dao.mypage.face.MypageDao;
 import com.one.whospet.dto.Board;
 import com.one.whospet.dto.Booking;
 import com.one.whospet.dto.Hospital;
+import com.one.whospet.dto.Order;
 import com.one.whospet.dto.Payment;
 import com.one.whospet.dto.Point;
 import com.one.whospet.dto.ShopBasket;
@@ -244,7 +246,7 @@ public class MypageServiceImpl implements MypageService {
 	}
 	@Override
 	public List<Payment> paymentList(HashMap<String, Object> data) {
-		return mypageDao.selectAllPay(data);
+		return mypageDao.selectHistory(data);
 	}
 	
 	@Override
@@ -254,6 +256,23 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public int minusItemBasket(int sbNo) {
 		return mypageDao.updateMinusBasket(sbNo);
+	}
+
+	@Override
+	public MypageBoardPaging getPayPaging(MypageBoardPaging inData) {
+		int totalCount = mypageDao.selectCntAll(inData);
+		logger.info("totalCount : {}", totalCount);
+		
+		MypageBoardPaging paging = new MypageBoardPaging(totalCount, inData.getCurPage());
+		logger.info("페이징 : {}", paging);
+		
+		return paging;
+	}
+	
+	@Override
+	public List<Order> selectOrder(MypageBoardPaging paging) {
+		
+		return mypageDao.selectOrderByUNo(paging);
 	}
 
 

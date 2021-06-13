@@ -5,7 +5,22 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:import url="/WEB-INF/views/layout/headerAdmin.jsp" /> 
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#btnSearch").click(function(){
+		location.href="/admin/shopList?search=" + $("#search").val();
+	});	
+})
+</script>
+
 <h1>상품관리목록</h1>
+
+<!-- 검색 -->
+<div class="form-inline text-right">
+	<input class="form-control" type="text" id="search" value="${param.search }">
+	<button id="btnSearch" class="btn">검색</button>
+</div>
+<br>
 
 <table class="table table-striper table-hover">
 <thead>

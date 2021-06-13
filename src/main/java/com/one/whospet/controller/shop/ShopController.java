@@ -40,9 +40,11 @@ public class ShopController {
 		logger.info("/admin/shopList [GET]");
 		logger.info("indata cccc {}", inData.getCurPage());
 		
+		
 		//페이징 계산
 		ShopPaging paging = shopService.getPaging( inData );
-		logger.info("pagingbdhdhdghgdhgd: {}",paging);
+		paging.setSearch( inData.getSearch() );
+		logger.info("paging : {}",paging);
 		
 		List<Shop> list = shopService.list( paging );
 		logger.info(list.toString());
@@ -202,6 +204,7 @@ public class ShopController {
 		
 		//페이징 계산
 		ShopPaging paging = shopService.getPaging(inData);
+		paging.setsProductType( inData.getsProductType() );
 		paging.setSearch( inData.getSearch() );
 		//상품 목록
 		List<Shop> list = shopService.list(paging);

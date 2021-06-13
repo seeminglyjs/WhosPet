@@ -6,6 +6,7 @@ import java.util.List;
 import com.one.whospet.dto.Board;
 import com.one.whospet.dto.Booking;
 import com.one.whospet.dto.Hospital;
+import com.one.whospet.dto.Order;
 import com.one.whospet.dto.Payment;
 import com.one.whospet.dto.Point;
 import com.one.whospet.dto.ShopBasket;
@@ -208,7 +209,7 @@ public interface MypageDao {
 	 * @param data
 	 * @return
 	 */
-	public List<Payment> selectAllPay(HashMap<String, Object> data);
+	public List<Payment> selectHistory(HashMap<String, Object> data);
 
 	/**
 	 * 장바구니 수량 업데이트
@@ -223,6 +224,23 @@ public interface MypageDao {
 	 * @return
 	 */
 	public int updateMinusBasket(int sbNo);
+
+	/**
+	 * 전체 게시글 수를 조회한다
+	 * 
+	 * @param inData 
+	 * @return 게시글 수
+	 */
+	public int selectCntAll(MypageBoardPaging inData);
+
+	
+	/**
+	 * 유저의 주문내역 조회하기
+	 * 
+	 * @param uNo 유저번호
+	 * @return 주문내역 리스트
+	 */
+	public List<Order> selectOrderByUNo(MypageBoardPaging paging);
 
 
 

@@ -74,20 +74,33 @@ left: 620px;
 	<tr>
 		<th style="width: 35%">사진</th>
 		<th style="width: 20%">상품명</th>
-		<th style="width: 15%">상태</th>
-		<th style="width: 20%">주문 날짜</th>
-		<th style="width: 15%">금액</th>
+		<th style="width: 5%">상태</th>
+		<th style="width: 10%">주문 날짜</th>
+		<th style="width: 10%">금액</th>
+		<th style="width: 5%">수량</th>
+		<th style="width: 15%">총 금액</th>
 	</tr>
 </thead>
 <tbody>
-<c:forEach items="${paylist }" var="paylist">
-	<tr><td>거래번호 : ${paylist.impUid }<td/><td><td/><td><td/><td></td></tr>
+<c:forEach items="${order }" var="paylist">
+	<%-- <tr><td>거래번호 : ${paylist.impUid }<td/><td><td/><td><td/><td></td></tr> --%>
 	<tr>
-		<td><img src="../resources/img/itemtest2.jpg" style="width:100px; height: 100px;"/></td>
-		<td>${paylist.shop.sName}</td>
-		<td>${paylist.pyStatus }</td>
-		<td><fmt:formatDate value="${paylist.pyDate }" pattern="yy-MM-dd HH:mm" /></td>
-		<td>${paylist.pyAmount }원</td>
+	<!-- <td><img src="../resources/shopimgupload/itemtest2.jpg" style="width:100px; height: 100px;"/></td> -->
+		<td>
+		<a href="/shop/view?sNo=${paylist.sNo }">
+		<img src="../resources/img/itemtest2.jpg" style="width:70px; height: 70px;"/>
+		</a>
+		</td>
+		<td>
+		<a href="/shop/view?sNo=${paylist.sNo }">
+		${paylist.oName}
+		</a>
+		</td>
+		<td>${paylist.oStatus }</td>
+		<td><fmt:formatDate value="${paylist.oDate }" pattern="yy-MM-dd" /></td>
+		<td>${paylist.oAmount }원</td>
+		<td>${paylist.oQuantity }</td>
+		<td>${paylist.oTotalAmount }원</td>
 	</tr>
 </c:forEach>
 </tbody>
