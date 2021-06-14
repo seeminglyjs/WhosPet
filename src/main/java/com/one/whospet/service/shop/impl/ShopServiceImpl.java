@@ -330,6 +330,31 @@ private static final Logger logger = LoggerFactory.getLogger(ShopServiceImpl.cla
 		return shopDao.selectUserInfo(uNo);
 	}
 
+	//장바구니에 sNo에 해당하는 상품이 있는지 체크
+	@Override
+	public int checkSNo(Shop basketInfo) {
+		return shopDao.selectCntSNoInBasket(basketInfo);
+	}
+
+	//장바구니 정보 수정하기
+	@Override
+	public int basketUpdate(Shop basketInfo) {
+		return shopDao.updateBasket(basketInfo);
+	}
+
+	//장바구니 정보 삭제하기
+	@Override
+	public void deleteBasket(int sNo) {
+		shopDao.deleteBasket(sNo);
+	}
+
+	@Override
+	public void updatePayment(String imp_uid) {
+		shopDao.updatePayment(imp_uid);
+	}
+
+	
+
 
 	
 

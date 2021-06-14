@@ -240,7 +240,8 @@ public interface MypageDao {
 	 * @param uNo 유저번호
 	 * @return 주문내역 리스트
 	 */
-	public List<Order> selectOrderByUNo(MypageBoardPaging paging);
+//	public List<Order> selectOrderByUNo(MypageBoardPaging paging);
+	public List<HashMap<String, Object>> selectOrderByUNo(MypageBoardPaging paging);
 
 
 

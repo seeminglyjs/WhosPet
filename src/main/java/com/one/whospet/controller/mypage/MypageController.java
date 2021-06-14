@@ -485,7 +485,8 @@ public class MypageController {
 		logger.info("paging : {}", paging);
 		//페이징 객체 집어넣기
 		
-		List<Order> order = (List<Order>) mypageService.selectOrder(paging);
+//		List<Order> order = (List<Order>) mypageService.selectOrder(paging);
+		List<HashMap<String, Object>> order = (List<HashMap<String, Object>>) mypageService.selectOrder(paging);
 		logger.info("order : {}", order);
 		
 		model.addAttribute("order", order);

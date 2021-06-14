@@ -209,10 +209,25 @@
 		WHERE s_no = #{sNo}
 	</delete>
 	
+	<select id="selectCntSNoInBasket" parameterType="com.one.whospet.dto.Shop" resultType="int">
+		SELECT count(*) FROM w_shop_basket
+		WHERE s_no = #{sNo} AND u_no = #{uNo}
+	</select>
+	
 	<insert id="insertBasket" parameterType="com.one.whospet.dto.Shop">
 		INSERT INTO w_shop_basket (sb_no, u_no, s_no, sb_amount, sb_quantity)
 		VALUES ( w_shop_basket_seq.nextval, #{uNo}, #{sNo}, #{sAmount}, #{quantity} )
 	</insert>
+	
+	<update id="updateBasket" parameterType="com.one.whospet.dto.Shop">
+		UPDATE w_shop_basket SET sb_quantity = #{quantity}
+		WHERE s_no = #{sNo} AND u_no = #{uNo}
+	</update>	
+	
+	<delete id="deleteBasket" parameterType="int">
+		DELETE FROM w_shop_basket
+		WHERE s_no = #{sNo}
+	</delete>
 	
 	<select id="selectUserInfo" parameterType="com.one.whospet.dto.User" resultMap="User">
 		SELECT * FROM w_user
@@ -254,6 +269,11 @@
 		SELECT * FROM w_shop
 		WHERE s_no = #{sNo}
 	</select>
+	
+	<update id="updatePayment" parameterType="String">
+		UPDATE w_payment SET py_status = 'C'
+		WHERE imp_uid = #{imp_uid}
+	</update>
 </mapper>
 
 

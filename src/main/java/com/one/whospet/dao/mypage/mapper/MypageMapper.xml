@@ -367,9 +367,14 @@
 		SELECT COUNT(*) FROM w_payment WHERE u_no = #{uNo }
 	</select>
 	
-	<select id="selectOrderByUNo" parameterType="com.one.whospet.util.MypageBoardPaging" resultMap="Order">
-		SELECT * FROM w_order
-		WHERE u_no = #{uNo}
+	<select id="selectOrderByUNo" parameterType="com.one.whospet.util.MypageBoardPaging" resultType="HashMap">
+		<!-- SELECT * FROM W_ORDER
+	    WHERE u_no = #{uNo}
+	    ORDER BY o_no desc -->
+	    
+	    SELECT p.py_status,o.* FROM W_ORDER o, W_PAYMENT p
+	    WHERE o.u_no = #{uNo} AND o.py_no = p.py_no
+	    ORDER BY o.o_no desc
 	</select>
 	
   </mapper>

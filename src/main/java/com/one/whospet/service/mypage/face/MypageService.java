@@ -249,7 +249,8 @@ public interface MypageService {
 	 * @param uNo 유저번호
 	 * @return
 	 */
-	public List<Order> selectOrder(MypageBoardPaging paging);
+//	public List<Order> selectOrder(MypageBoardPaging paging);
+	public List<HashMap<String, Object>> selectOrder(MypageBoardPaging paging);
 
 
 

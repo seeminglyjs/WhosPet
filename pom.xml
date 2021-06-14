@@ -22,12 +22,24 @@
 			<id>oracle</id>
 			<url>http://maven.jahia.org/maven2</url>
 		</repository>
+		
+		<!-- import -->
+		<repository>
+	   		<id>jitpack.io</id>
+	   		<url>https://jitpack.io</url>
+		</repository>
 	</repositories>
 	
 	
 	
 	<dependencies>
-	
+		<!-- import -->
+		<dependency>
+		    <groupId>com.github.iamport</groupId>
+		    <artifactId>iamport-rest-client-java</artifactId>
+		    <version>0.2.15</version>
+		</dependency>
+		
 		<dependency>
 		    <groupId>com.googlecode.json-simple</groupId>
 		    <artifactId>json-simple</artifactId>
