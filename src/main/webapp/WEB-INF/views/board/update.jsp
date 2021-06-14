@@ -54,6 +54,18 @@ function check(){
 		}
 }
 
+
+/* 이미지 정보를 보낼지 말지를 선택하는 메소드*/
+function imgCheck(e) {
+	if(!$(e).children("input").attr("disabled")){	
+		$(e).children("input").attr("disabled", true)
+		$(e).children("img").css({opacity : "1.0"})
+	}else{		
+		$(e).children("input").attr("disabled", false)
+		$(e).children("img").css({opacity : "0.4"})
+	}
+}
+
 </script>
 
 
@@ -104,22 +116,27 @@ function check(){
 		<div style="color: red; font-size: 12px;">※신규 등록시 기존 파일 삭제</div>
 		<input multiple="multiple" type="file" name="file"  accept="image/*"/>
 		
-	</form>
+
 	<br>
 	
 	<!--기존 파일 체크 영역  -->
 	<c:if test="${not empty fileList }">
-		<p style="font-weight: bolder;">${user.uNick }님의 기존 등록 이미지</p>
+	<c:set value="0" var="iNo"></c:set> <!-- 파일 이미지아이디 변수 -->
+		<p style="font-weight: bolder;">${user.uNick }님의 기존 등록 이미지 <span style="color: red; font-size: 10px;"> [파일 선택 삭제 가능]</span></p>
 		<div style="border: 1px solid #ccc; margin-bottom: 10px;">
 		<c:forEach items="${fileList}" var="img">
 			<div class="imgDiv" style="margin-bottom: 3px; font-size: 12px;">
-			<img src="/upload/${img }" alt="이미지 찾을 수 없음" style="width: 10%; height: 10%; border: 1px solid #ccc;" class="pull-left"/>
+			<div id="img${iNo = iNo+1 }" onclick="imgCheck(this)">
+				<img  src="/upload/${img }" alt="이미지 찾을 수 없음" style="width: 10%; height: 10%; border: 1px solid #ccc;" class="pull-left"/>
+				<input type="hidden" id= "fileInfo${iNo }" name="fileInfo${iNo }" value="${img }" disabled="disabled">
+				<input type="hidden" name="fileInfos" value="${img }">
+			</div>
 			</div>
 		</c:forEach>
 		<div class="clearfix"></div>
 		</div>
 	</c:if>
-	
+	</form>	
 	<br>
 	<div style="text-align: center">
 		<button class="btn btn-sm btn-primary" id="btnSave">수정</button>

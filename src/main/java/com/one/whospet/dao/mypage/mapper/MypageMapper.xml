@@ -123,19 +123,16 @@
 		<collection property="shopImg" resultMap="ShopImg"/>
 	</resultMap>
 	
-	<!-- 구매이력DTO 재정의 -->
+	<!-- 결제DTO 재정의 -->
 		<resultMap type="com.one.whospet.dto.Payment" id="Payment">
 		<id column="py_no" property="pyNo"/>
 		
 		<result column="u_no" property="uNo"/>
-		<result column="s_no" property="sNo"/>
-		<result column="si_no" property="siNo"/>
 		<result column="po_no" property="poNo"/>
 		<result column="py_date" property="pyDate"/>
-		<result column="py_address" property="pyAddress"/>
 		<result column="py_status" property="pyStatus"/>
 		<result column="py_amount" property="pyAmount"/>
-		<result column="py_card" property="pyCard"/>
+		<result column="py_method" property="pyMethod"/>
 		<result column="py_apply_num" property="pyApplyNum"/>
 		<result column="imp_uid" property="impUid"/>
 		<result column="merchant_uid" property="merchantUid"/>
@@ -143,6 +140,19 @@
 		</resultMap>
 		
 
+		<!-- 구매이력DTO 재정의 -->
+		<resultMap type="com.one.whospet.dto.ShopHistory" id="ShopHistory">
+		<id column="sh_no" property="shNo"/>
+		
+		<result column="s_no" property="sNo"/>
+		<result column="u_no" property="uNo"/>
+		<result column="py_no" property="pyNo"/>
+		<result column="sh_amount" property="shAmount"/>
+		<result column="sh_date" property="shDate"/>
+		<result column="sh_status" property="shStatus"/>
+		<collection property="shop" resultMap="Shop"/>
+		<collection property="payment" resultMap="Payment"/>
+		</resultMap>
 	
   
   	<select id="selectUserinfo" parameterType="com.one.whospet.dto.User" resultMap="User">
@@ -324,14 +334,15 @@
 		SELECT COUNT(*) FROM w_payment WHERE u_no = #{uNo }
 	</select>
 	
-	<select id="selectAllPay" parameterType="hashmap" resultMap="Payment">
+	<select id="selectAllPay" parameterType="hashmap" resultMap="ShopHistory">
 			
 		SELECT * FROM (
 			SELECT rownum rnum, B.* FROM (
-					SELECT *FROM w_payment 
-				    FULL OUTER JOIN w_shop ON (w_shop.s_no = w_payment.s_no)
-					WHERE w_payment.u_no = #{uNo }
-					ORDER BY py_no DESC
+					SELECT *FROM w_shop_history 
+				    FULL OUTER JOIN w_shop ON (w_shop.s_no = w_shop_history.s_no)
+				    FULL OUTER JOIN w_payment ON (w_payment.py_no = w_shop_history.py_no)
+					WHERE w_shop_history.u_no = #{uNo }
+					ORDER BY sh_no DESC
 						) B
 					) BOARD
 				WHERE rnum BETWEEN #{paging.startNo } AND #{paging.endNo }

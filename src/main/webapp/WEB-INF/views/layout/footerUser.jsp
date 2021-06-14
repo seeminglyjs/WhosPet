@@ -3,7 +3,6 @@
 </div><!-- 본문컨테이너 끝  -->
 <div id="footerDiv">
   <div class="footerInfo">
-        
       <div class="container">
           <div class="f_row">
               <div class="col">
