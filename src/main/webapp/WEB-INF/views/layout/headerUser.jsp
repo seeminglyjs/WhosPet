@@ -138,11 +138,8 @@ $(document).ready(function(){
 		<ul>
 			<li><a href="#">증상/질병검색 <span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="#">메뉴1</a></li>
-					<li class="divider"></li>
-					<li><a href="#">메뉴2</a></li>
-					<li class="divider"></li>
-					<li><a href="#">메뉴3</a></li>
+					<li><a href="/disease/diseasemain">질병/증상</a></li>
+					
 				</ul>
 			</li>
 			

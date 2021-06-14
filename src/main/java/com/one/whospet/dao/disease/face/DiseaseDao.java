@@ -11,6 +11,14 @@ public interface DiseaseDao {
 	 
 	public List<Disease> selectBehaviorList();	
 	
+	public List<Disease> selectNoseList();
+	
+	public List<Disease> selectFoodList();
+	
+	public List<Disease> selectAirList();
+	
+	public List<Disease> selectUrineList();
+	
 
 	public List<Disease> selectByQno(int dQNo);
 	
