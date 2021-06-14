@@ -179,6 +179,38 @@ public interface ShopDao {
 
 
 
+	/**
+	 * sNo으로 장바구니에 상품이 있는지 체크
+	 * 
+	 * @param basketInfo sNo이 담긴 장바구니정보
+	 * @return 있으면 1 없으면 0
+	 */
+	public int selectCntSNoInBasket(Shop basketInfo);
+
+
+	/**
+	 * 장바구니 정보 수정하기
+	 * 
+	 * @param basketInfo 장바구니 정보
+	 */
+	public int updateBasket(Shop basketInfo);
+
+
+	/**
+	 * 장바구니 정보 삭제하기
+	 * 
+	 * @param sNo 상품번호
+	 */
+	public void deleteBasket(int sNo);
+
+
+
+	public void updatePayment(String imp_uid);
+
+	
+	
+
+
 
 	
 

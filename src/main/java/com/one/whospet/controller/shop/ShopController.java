@@ -5,6 +5,7 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -24,8 +25,10 @@ import com.one.whospet.dto.Payment;
 import com.one.whospet.dto.Shop;
 import com.one.whospet.dto.ShopImg;
 import com.one.whospet.dto.User;
+import com.one.whospet.service.shop.face.IamportService;
 import com.one.whospet.service.shop.face.ShopService;
 import com.one.whospet.util.ShopPaging;
+import com.siot.IamportRestClient.request.CancelData;
 
 @Controller
 public class ShopController {
@@ -33,6 +36,7 @@ public class ShopController {
 	private static final Logger logger = LoggerFactory.getLogger(ShopController.class);
 	
 	@Autowired ShopService shopService;
+	@Autowired IamportService iamportService;
 	
 	//상품목록 [GET]
 	@RequestMapping(value="/admin/shopList", method=RequestMethod.GET)
@@ -271,9 +275,16 @@ public class ShopController {
 		//장바구니에 담고자하는 수량을 장바구니 정보에 입력하기
 		basketInfo.setQuantity(shop.getQuantity());
 		logger.info("/shop/basket, basketInfo : {} ", basketInfo);
-		
-		int res = shopService.basketAdd(basketInfo);
-		logger.info("res : {}",res);
+		int res = 0;
+		//장바구니의 sNo 체크
+		if( shopService.checkSNo(basketInfo) > 0 ) {
+			logger.info("check 성공 !!");
+			res = shopService.basketUpdate(basketInfo);
+			logger.info("res update : {}",res);
+		} else {
+			res = shopService.basketAdd(basketInfo);
+			logger.info("res insert : {}",res);
+		}
 
 		if( res > 0) {
 			return "success";
@@ -318,8 +329,13 @@ public class ShopController {
 		basketInfo.setTotalAmount(Integer.toString(totalAmount));
 		logger.info("/shop/basket, basketInfo : {} ", basketInfo);
 		
-		shopService.basketAdd(basketInfo);
-		
+		//장바구니의 sNo 체크
+		if( shopService.checkSNo(basketInfo) > 0 ) {
+			logger.info("check 성공 !!");
+			shopService.basketUpdate(basketInfo);
+		} else {
+			shopService.basketAdd(basketInfo);
+		}
 		//주문정보 전달
 		model.addAttribute("basketInfo", basketInfo);
 		
@@ -361,6 +377,7 @@ public class ShopController {
 		}
 	}
 	
+	//결제 ajax 로직
 	@RequestMapping(value="/shop/paymentCompleted", method=RequestMethod.GET)
 	public void paymentCompleted( HttpSession session, Model model ) {
 		logger.info("/shop/paymentCompleted [GET]");
@@ -384,6 +401,9 @@ public class ShopController {
 		User sender = shopService.getUser(uNo);
 		logger.info("paymentCompleted, sender : {}", sender);
 		
+		//결제된 주문내용 삭제
+		shopService.deleteBasket(sNo);
+		
 		//방금 결제(주문)한 주문정보 결제완료 페이지로 전달
 		model.addAttribute("order", order);
 		model.addAttribute("payment", payment);
@@ -392,8 +412,41 @@ public class ShopController {
 		
 	}
 
+	//환불
+	@RequestMapping(value="/shop/refund")
+	public void refund(Order order, Model model) {
+		logger.info("/shop/refund [GET]" + order);
+		logger.info("order.pyNo : {}",order.getPyNo());
+		int pyNo = order.getPyNo();
+		
+		Payment payment = shopService.getPayment(pyNo);
+		logger.info("refund, payment : {}", payment);
+		
+		model.addAttribute("payment", payment);
+		model.addAttribute("order", order);
+		
+	}
 	
-	
+	//환불 ajax
+	@RequestMapping(value="/payments/cancel", method=RequestMethod.POST)
+	public void cancel(@RequestParam("merchant_uid") String merchant_uid,
+			@RequestParam("imp_uid") String imp_uid,
+			@RequestParam("reason") String reason) {
+		logger.info("merchant_uid 전 : {}", merchant_uid );
+		logger.info("imp_uid 전 : {}",imp_uid);
+		CancelData canceldata = new CancelData(merchant_uid,false);
+		logger.info("cancelData : {}", canceldata);
+		String result = iamportService.cancel(canceldata);
+		logger.info("status : {}", result);
+		
+		logger.info("merchant_uid 후 : {}", merchant_uid );
+		logger.info("imp_uid 후 : {}",imp_uid);
+		//주문테이블 상태 변경 결제테이블 삭제 또는 상태 변경 
+		shopService.updatePayment(imp_uid);
+		
+		
+		
+	}
 	
 	
 	
