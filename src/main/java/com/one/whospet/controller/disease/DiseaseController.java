@@ -29,14 +29,34 @@ public class DiseaseController {
 		
 	List<Disease> eyeList = new ArrayList<Disease>();
 	List<Disease> behaviorList = new ArrayList<Disease>();
+	List<Disease> noseList = new ArrayList<Disease>();
+	List<Disease> foodList = new ArrayList<Disease>();
+	List<Disease> airList = new ArrayList<Disease>();
+	List<Disease> urineList = new ArrayList<Disease>();
 	
 	eyeList = diseaseService.getEyeList();
 	
 	behaviorList = diseaseService.getBehaviorList();
 	
+	noseList = diseaseService.getNoseList();
+	
+	foodList = diseaseService.getFoodList();
+	
+	airList = diseaseService.getAirList();
+	
+	urineList = diseaseService.getUrineList();
+	
 	model.addAttribute("eyeList", eyeList);
 	
 	model.addAttribute("behaviorList", behaviorList);
+	
+	model.addAttribute("noseList", noseList);
+	
+	model.addAttribute("foodList", foodList);
+	
+	model.addAttribute("airList", airList);
+	
+	model.addAttribute("urineList", urineList);
 	
 	return "disease/diseasemain";
 	

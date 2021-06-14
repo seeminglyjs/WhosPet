@@ -32,6 +32,38 @@ public class DiseaseServiceImpl implements DiseaseService {
 		behaviorList = diseasedao.selectBehaviorList();
 		return behaviorList;
 	}
+	
+	@Override
+	public List<Disease> getNoseList() {
+		List<Disease> noseList = new ArrayList<Disease>();
+		
+		noseList = diseasedao.selectNoseList();
+		return noseList;
+	}
+	
+	@Override
+	public List<Disease> getFoodList() {
+		List<Disease> foodList = new ArrayList<Disease>();
+		
+		foodList = diseasedao.selectFoodList();
+		return foodList;
+	}
+	
+	@Override
+	public List<Disease> getAirList() {
+		List<Disease> airList = new ArrayList<Disease>();
+		
+		airList = diseasedao.selectAirList();
+		return airList;
+	}
+	
+	@Override
+	public List<Disease> getUrineList() {
+		List<Disease> urineList = new ArrayList<Disease>();
+		
+		urineList = diseasedao.selectBehaviorList();
+		return urineList;
+	}
 
 	@Override
 	public List<Disease> getViewList(int dQNo){

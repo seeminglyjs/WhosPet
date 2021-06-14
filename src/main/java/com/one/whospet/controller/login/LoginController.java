@@ -215,7 +215,7 @@ public class LoginController {
 				final MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				
 				
-				helper.setFrom("WhosPet <>"); // 보내는 사람 <> 이메일 주소
+				helper.setFrom("WhosPet <sexyhogoo@gmail.com>"); // 보내는 사람 <> 이메일 주소
 				helper.setTo(email);  // 받는 사람	
 				helper.setSubject("비밀번호 확인용 인증번호"); // 제목 
 				helper.setText(
