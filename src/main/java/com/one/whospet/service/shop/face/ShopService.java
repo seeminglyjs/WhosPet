@@ -179,6 +179,42 @@ public interface ShopService {
 	 */
 	public User getUser(int uNo);
 
+	
+	/**
+	 * 장바구니에 정보가 담겨져있는지 체크
+	 * 
+	 * @param basketInfo sNo이 담겨져있는 장바구니정보
+	 * @return 있으면 1 없으면 0
+	 */
+	public int checkSNo(Shop basketInfo);
+
+	
+	/**
+	 * 장바구니 정보 업데이트
+	 * 
+	 * @param basketInfo 장바구니정보
+	 */
+	public int basketUpdate(Shop basketInfo);
+
+	
+	/**
+	 * 상품번호 해당하는 상품 장바구니에서 삭제하기
+	 * 
+	 * @param sNo 상품번호
+	 */
+	public void deleteBasket(int sNo);
+
+	
+	/**
+	 * 
+	 * 
+	 * @param imp_uid
+	 */
+	public void updatePayment(String imp_uid);
+
+	
+
+
 
 	
 

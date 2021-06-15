@@ -270,7 +270,8 @@ public class MypageServiceImpl implements MypageService {
 	}
 	
 	@Override
-	public List<Order> selectOrder(MypageBoardPaging paging) {
+//	public List<Order> selectOrder(MypageBoardPaging paging) {
+	public List<HashMap<String, Object>> selectOrder(MypageBoardPaging paging) {
 		
 		return mypageDao.selectOrderByUNo(paging);
 	}

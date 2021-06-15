@@ -114,7 +114,7 @@ function check(){
 /*  이메일 수평 유지위한 css */
 #email{
 	display: inline !important;
-	width: 300px !important;
+	width: 320px !important;
 }
 
 

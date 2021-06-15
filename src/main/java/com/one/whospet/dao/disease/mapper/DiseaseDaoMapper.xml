@@ -33,6 +33,33 @@
 		GROUP BY d_category, d_q_no, d_question
 	</select>
 	
+	<select id="selectNoseList" resultMap="Disease">
+		SELECT d_category, d_q_no,
+		d_question FROM w_disease WHERE d_category = 'nose'
+		GROUP BY d_category, d_q_no, d_question
+	</select>
+	
+	<select id="selectFoodList" resultMap="Disease">
+		SELECT d_category, d_q_no,
+		d_question FROM w_disease WHERE d_category = 'food'
+		GROUP BY d_category, d_q_no, d_question
+	</select>
+	
+	<select id="selectAirList" resultMap="Disease">
+		SELECT d_category, d_q_no,
+		d_question FROM w_disease WHERE d_category = 'air'
+		GROUP BY d_category, d_q_no, d_question
+	</select>
+	
+	<select id="selectUrineList" resultMap="Disease">
+		SELECT d_category, d_q_no,
+		d_question FROM w_disease WHERE d_category = 'urine'
+		GROUP BY d_category, d_q_no, d_question
+	</select>
+	
+	
+	
+	
 	<select id="selectByQno" resultMap="Disease" parameterType="int">
 	SELECT * FROM w_disease WHERE d_q_no = #{dQNo}
 	</select>
