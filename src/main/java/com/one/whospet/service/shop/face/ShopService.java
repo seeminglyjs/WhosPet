@@ -206,9 +206,9 @@ public interface ShopService {
 
 	
 	/**
+	 * 결제정보의 결제상태를 'F' -> 'C' 
 	 * 
-	 * 
-	 * @param imp_uid
+	 * @param imp_uid 
 	 */
 	public void updatePayment(String imp_uid);
 

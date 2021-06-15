@@ -348,6 +348,7 @@ private static final Logger logger = LoggerFactory.getLogger(ShopServiceImpl.cla
 		shopDao.deleteBasket(sNo);
 	}
 
+	//결제정보 컬럼 중 결제 상태 수정
 	@Override
 	public void updatePayment(String imp_uid) {
 		shopDao.updatePayment(imp_uid);

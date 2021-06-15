@@ -22,12 +22,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.one.whospet.dto.Board;
 import com.one.whospet.dto.Booking;
 import com.one.whospet.dto.Hospital;
-import com.one.whospet.dto.Order;
 import com.one.whospet.dto.Point;
 import com.one.whospet.dto.ShopBasket;
 import com.one.whospet.dto.User;
 import com.one.whospet.dto.Userpic;
 import com.one.whospet.service.mypage.face.MypageService;
+import com.one.whospet.service.shop.face.ShopService;
 import com.one.whospet.util.MypageBoardPaging;
 
 
@@ -41,6 +41,9 @@ public class MypageController {
 	//로그인 서비스 객체
 	@Autowired
 	private MypageService mypageService;
+	
+	@Autowired
+	private ShopService shopService;
 	//메일 보내는 객체
 	@Autowired 
 	private JavaMailSenderImpl mailSender;
@@ -309,13 +312,17 @@ public class MypageController {
 		logger.debug(list.get(i).toString());
 		}
 		
+		//주문시 자동으로 주문자정보에 사용자정보 얻어오기
+		User userOrder = shopService.selectUserInfo(uNo); //주문자 정보
 
 		Integer sumbasket = mypageService.basketSum(data);
 		model.addAttribute("sum", sumbasket);
 		
-		
+		logger.info("basketlist : {}", list);
+		logger.info("userOrder : {}", userOrder);
 		//모델값 전달
 		model.addAttribute("basketlist",list);
+		model.addAttribute("userOrder",userOrder);
 		model.addAttribute("paging", paging);
 	}
 	

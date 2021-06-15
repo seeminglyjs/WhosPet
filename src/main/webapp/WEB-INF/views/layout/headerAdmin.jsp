@@ -151,13 +151,9 @@ $(document).ready(function(){
 			
 			<li><a href="#">상품관리 <span class="caret"></span></a>
 		      <ul class="dropdown-menu" role="menu">
-		        <li><a href="/shop/list">상품 목록</a></li>
+		        <li><a href="/admin/shopList">상품관리 목록</a></li>
 		        <li class="divider"></li>
-		        <li><a href="/admin/shopList">상품 목록 관리</a></li>
-		        <li class="divider"></li>
-		        <li><a href="#">메뉴3</a></li>
-		        <li class="divider"></li>
-		        <li><a href="#">메뉴4</a></li>
+		        <li><a href="/admin/shopRegister">상품 등록</a></li>
 		      </ul>
 			</li>
 			

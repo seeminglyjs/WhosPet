@@ -431,7 +431,8 @@ public class ShopController {
 	@RequestMapping(value="/payments/cancel", method=RequestMethod.POST)
 	public void cancel(@RequestParam("merchant_uid") String merchant_uid,
 			@RequestParam("imp_uid") String imp_uid,
-			@RequestParam("reason") String reason) {
+			@RequestParam("reason") String reason
+			, Writer out) {
 		logger.info("merchant_uid 전 : {}", merchant_uid );
 		logger.info("imp_uid 전 : {}",imp_uid);
 		CancelData canceldata = new CancelData(merchant_uid,false);
@@ -441,10 +442,15 @@ public class ShopController {
 		
 		logger.info("merchant_uid 후 : {}", merchant_uid );
 		logger.info("imp_uid 후 : {}",imp_uid);
+		
 		//주문테이블 상태 변경 결제테이블 삭제 또는 상태 변경 
 		shopService.updatePayment(imp_uid);
 		
-		
+		try {
+			out.write("{\"result\":true}");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
