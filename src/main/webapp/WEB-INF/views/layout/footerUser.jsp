@@ -12,7 +12,7 @@
                   <h3>Services</h3>
                   <ul class="footerlist">
                       <li><a href="/">메인 화면</a></li>
-                      <li><a href="#">증상 / 질병 확인</a></li>
+                      <li><a href="/disease/diseasemain">증상 / 질병 확인</a></li>
                       <li><a href="/board/list">WhosPet 게시판</a></li>
                   </ul>
               </div>
