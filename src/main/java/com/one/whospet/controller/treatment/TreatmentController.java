@@ -59,6 +59,8 @@ public class TreatmentController {
       
       boolean isIn = false;
       
+      // db의 병원 테이블에 TR_TYPE을 V, S, C로 나눠 검사 진료 수술로 1페이지에 띄우
+      // 같은 진료항목이 반복되어 add되지 않게 중복검사 또한 실행 
       for(int i=0; i<treatmentList.size(); ++i) {
          HashMap<String, Object> treatment = treatmentList.get(i);
          if(treatment.get("TR_TYPE").equals("V"))
@@ -98,6 +100,7 @@ public class TreatmentController {
             isIn = false;
          }
       }
+      //모델에 담아서 jsp에 전달 
       model.addAttribute("treatmentList", newList);
       model.addAttribute("VList", VList);
       model.addAttribute("SList", SList);
@@ -138,7 +141,10 @@ public class TreatmentController {
       int districtPrice = 0;
       int districtNum = 0;
       
-      
+      // 1페이지에서 클릭 또는 검색을 통해 2페이지로 넘어올때 그 검사 항목의 이름
+      //bigdecimal 사용 -> 돈과,소수점, 큰숫자 사용시 bigdecimal이 정밀도가 높음 
+      //intValue() String이아닌 integer객체에서 int형 값으로파싱할때 사용  
+
       for(int i = 0; i < treatmentList.size(); i++) {
          HashMap<String, Object> treatment = treatmentList.get(i);
          if(((BigDecimal)treatment.get("TR_NO")).intValue() == tr_no)
@@ -150,6 +156,7 @@ public class TreatmentController {
       List<HashMap<String, Object>> curTreatmentList = treatmentService.selectAllByName(tr_name);
       totalMin = Integer.parseInt((curTreatmentList.get(0).get("TR_PRICE").toString()));
       totalMax = Integer.parseInt((curTreatmentList.get(0).get("TR_PRICE").toString()));
+      // 전국 최저 평균 최대값 
       for(int i = 0; i < curTreatmentList.size(); i++) {
          HashMap<String, Object> curTreatment = curTreatmentList.get(i);
          if(Integer.parseInt(curTreatment.get("TR_PRICE").toString()) < totalMin)
@@ -165,6 +172,7 @@ public class TreatmentController {
       List<HashMap<String, Object>> orderedList = new ArrayList<HashMap<String, Object>>();
       String[] temp = map.get("district").toString().split(" ");
       
+      //jsp에서 받은 주소를 시와 군으로 나눈다. (용인시/ 수지구 등)
       if(temp.length == 1) {
          for(int i = 0; i < hospitalList.size(); i++) {
             HashMap<String, Object> hospital = hospitalList.get(i);
@@ -193,6 +201,7 @@ public class TreatmentController {
             }
          }
       }
+      // hit 높은순으로 정렬 
       if(districtList.size() != 0) {
          Collections.sort(districtList, new Comparator<HashMap<String, Object>>() {
             @Override
@@ -208,7 +217,7 @@ public class TreatmentController {
       if(len > 5) {
          len = 5;
       }
-      
+      // 정렬후 5개만 나오게 orderlist에 저장 -> 5개보다 적으면 그 갯수나오게 
       for(int i = 0; i < len; i++) {
          HashMap<String, Object> district = districtList.get(i);
          orderedList.add(district);
@@ -217,6 +226,7 @@ public class TreatmentController {
       cityMin = Integer.parseInt((curTreatmentList.get(0).get("TR_PRICE").toString()));
       cityMax = Integer.parseInt((curTreatmentList.get(0).get("TR_PRICE").toString()));
       
+      // XX시 최정 평균 최대값 구하기 
       for(int i = 0; i < cityList.size(); i++) {
          HashMap<String, Object> city = cityList.get(i);
          for(int j = 0; j < curTreatmentList.size(); j++) {
@@ -237,6 +247,7 @@ public class TreatmentController {
       districtMin = Integer.parseInt((curTreatmentList.get(0).get("TR_PRICE").toString()));
       districtMax = Integer.parseInt((curTreatmentList.get(0).get("TR_PRICE").toString()));
       
+      //위와 코드는 같음, xx구 최저 , 평균 , 최대값 구하기 
       for(int i = 0; i < districtList.size(); i++) {
          HashMap<String, Object> district = districtList.get(i);
          for(int j = 0; j < curTreatmentList.size(); j++) {
@@ -254,9 +265,10 @@ public class TreatmentController {
          }
       }
 
+      //위에서 구한 최저 , 평균 , 최대값 orderList에 모두 담고 jsp로 전달 
       
       cityPrice = (int)(cityPrice / cityNum);
-      districtPrice = (int)(districtPrice / districtNum); // 금정구없어서 0임
+      districtPrice = (int)(districtPrice / districtNum); // 금정구없어서 0임  0을 나눌시 arithmatic exception뜸데이터 정보넣어주면사라짐 DB에서 
       session.setAttribute("cityPrice", cityPrice);
       session.setAttribute("districtPrice", districtPrice);
       session.setAttribute("totalPrice", totalPrice);
@@ -282,6 +294,10 @@ public class TreatmentController {
       
       return orderedList;
    }
+   
+   
+   //여기서부턴 위와 같은 코드임 , 하지만 url이 다름 접근방식이 다를수 있어  url다르게 만들어놓음 
+
    
    @RequestMapping(value = "/treatment/treatdetailSelect", method = RequestMethod.GET)
    public String treatdetailSelectView(Model model, @RequestParam("no") int no, HttpSession session) {
