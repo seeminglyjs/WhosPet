@@ -28,8 +28,12 @@
           imp_uid: '${payment.impUid}'
         },
         dataType: "json",
-        success: function() {
-        	alert("성공");
+        success: function(data) {
+        	if( data.result ){
+    	    	alert("성공");
+    	    	
+    	    	location.href="/mypage/pay"
+        	}
         },error : function() {
         	alert("실패");
         }

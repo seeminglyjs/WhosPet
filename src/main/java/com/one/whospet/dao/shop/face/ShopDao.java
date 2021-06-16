@@ -204,7 +204,11 @@ public interface ShopDao {
 	public void deleteBasket(int sNo);
 
 
-
+	/**
+	 * 걸제정보 결제상태 'F' ->'C'
+	 * 
+	 * @param imp_uid
+	 */
 	public void updatePayment(String imp_uid);
 
 	

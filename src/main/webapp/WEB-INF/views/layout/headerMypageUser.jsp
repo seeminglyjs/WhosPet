@@ -218,13 +218,23 @@ font-family: 'NEXON Lv1 Gothic OTF';
 			<li>
 				<a href="#">상품구매 <span class="caret"></span></a>
 			    <ul class="dropdown-menu" role="menu">
-			      <li><a href="/shop/list">메뉴1</a></li>
+			      <li><a href="/shop/list">전체보기</a></li>
 			      <li class="divider"></li>
-			      <li><a href="#">메뉴2</a></li>
+			      <li><a href="/shop/list?sProductType=사료">사료</a></li>
 			      <li class="divider"></li>
-			      <li><a href="#">메뉴3</a></li>
+			      <li><a href="/shop/list?sProductType=간식">간식</a></li>
 			      <li class="divider"></li>
-			      <li><a href="#">메뉴4</a></li>
+			      <li><a href="/shop/list?sProductType=건강관리">건강관리</a></li>
+			      <li class="divider"></li>
+			      <li><a href="/shop/list?sProductType=위생/배변">위생/배변</a></li>
+			      <li class="divider"></li>
+			      <li><a href="/shop/list?sProductType=미용/목욕">미용/목욕</a></li>
+			      <li class="divider"></li>
+			      <li><a href="/shop/list?sProductType=급식/급수기">급식/급수기</a></li>
+			      <li class="divider"></li>
+			      <li><a href="/shop/list?sProductType=장난감">장난감</a></li>
+			      <li class="divider"></li>
+			      <li><a href="/shop/list?sProductType=패션/의류">패션/의류</a></li>
 			    </ul>
 			</li>
 			
