@@ -515,11 +515,13 @@ public class TreatmentController {
          if((treatment.get("TR_NAME")).equals(content)) {
             model.addAttribute("treatment", treatment);
             session.setAttribute("TR_NO", treatment.get("TR_NO"));
+            return "treatment/treatdetail";
          }
       }
+
+      return "redirect: treatmain";
       
 
-      return "treatment/treatdetail";
       
    }
    
