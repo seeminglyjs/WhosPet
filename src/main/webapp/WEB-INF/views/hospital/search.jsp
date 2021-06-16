@@ -43,8 +43,13 @@
 		<div class="text-center">
 			<ul class="pagination pagination-sm">
 				
-				<c:if test="${info.paging.curPage != info.paging.startPage}">
-				<li><a href="/hospital/search?category=${info.category }&keyword=${info.keyword }&curPage=${info.paging.curPage-1 }"">&lt;</a></li>
+				<c:if test="${info.paging.curPage != 1}">
+				<li><a href="/hospital/search?category=${info.category }&keyword=${info.keyword }&curPage=1">&larr;</a></li>
+				</c:if>
+				
+				
+				<c:if test="${info.paging.curPage != 1}">
+				<li><a href="/hospital/search?category=${info.category }&keyword=${info.keyword }&curPage=${info.paging.curPage-1 }">&laquo;</a></li>
 				</c:if>
 				
 				<c:forEach begin="${info.paging.startPage }" end="${info.paging.endPage }" var="i">
@@ -58,9 +63,15 @@
 					</c:choose>
 				</c:forEach>
 				
-				<c:if test="${info.paging.curPage != info.paging.endPage }">
-				<li><a href="/hospital/search?category=${info.category }&keyword=${info.keyword }&curPage=${info.paging.curPage+1 }"">&gt;</a></li>
+				<c:if test="${info.paging.curPage != info.paging.totalPage }">
+				<li><a href="/hospital/search?category=${info.category }&keyword=${info.keyword }&curPage=${info.paging.curPage+1 }">&raquo;</a></li>
 				</c:if>
+				
+				
+				<c:if test="${info.paging.curPage != info.paging.totalPage }">
+				<li><a href="/hospital/search?category=${info.category }&keyword=${info.keyword }&curPage=${info.paging.totalPage }">&rarr;</a></li>
+				</c:if>
+				
 				
 			</ul>
 		</div>

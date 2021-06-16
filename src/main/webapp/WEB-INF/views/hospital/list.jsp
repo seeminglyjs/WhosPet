@@ -36,8 +36,12 @@
 	<div class="text-center">
 		<ul class="pagination pagination-sm">
 			
-			<c:if test="${paging.curPage != paging.startPage}">
-			<li><a href="/hospital/list?curPage=${paging.curPage-1 }">&lt;</a></li>
+			<c:if test="${paging.curPage != 1}">
+			<li><a href="/hospital/list?curPage=1">&larr;</a></li>
+			</c:if>
+			
+			<c:if test="${paging.curPage != 1}">
+			<li><a href="/hospital/list?curPage=${paging.curPage-1 }">&laquo;</a></li>
 			</c:if>
 			
 			<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="i">
@@ -52,8 +56,12 @@
 			</c:forEach>
 		
 			
-			<c:if test="${paging.curPage != paging.endPage }">
-			<li><a href="/hospital/list?curPage=${paging.curPage+1 }">&gt;</a></li>
+			<c:if test="${paging.curPage != paging.totalPage }">
+			<li><a href="/hospital/list?curPage=${paging.curPage+1 }"><span aria-hidden="true">&raquo;</span></a></li>
+			</c:if>
+			
+			<c:if test="${paging.curPage != paging.totalPage }">
+			<li><a href="/hospital/list?curPage=${paging.totalPage }"><span aria-hidden="true">&rarr;</span></a></li>
 			</c:if>
 			
 		</ul>
