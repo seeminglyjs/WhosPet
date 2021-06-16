@@ -1,5 +1,6 @@
 package com.one.whospet.controller.mypage;
 
+import java.io.Writer;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,6 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.one.whospet.dto.Board;
 import com.one.whospet.dto.Booking;
 import com.one.whospet.dto.Hospital;
+import com.one.whospet.dto.Order;
+import com.one.whospet.dto.Payment;
 import com.one.whospet.dto.Point;
 import com.one.whospet.dto.ShopBasket;
 import com.one.whospet.dto.User;
@@ -467,10 +470,10 @@ public class MypageController {
 	}
 	
 	//결제
-	@RequestMapping(value="/pay/complete", method=RequestMethod.POST)
-	public String paytest() {
-		return "redirect:/";
-	}
+//	@RequestMapping(value="/pay/complete", method=RequestMethod.POST)
+//	public String paytest(Writer out, Payment payment,  Order orderdata, HttpSession session) {
+//		return "redirect:/";
+//	}
 	
 	
 		
