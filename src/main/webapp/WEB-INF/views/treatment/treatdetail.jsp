@@ -176,7 +176,7 @@
      }
      
      .content-list li a:hover {
-       color: #000;
+       color: #e1701a;
      }
      
 	.btn,
@@ -196,7 +196,7 @@
 	}
 	
 	.btn:hover{
-	    background-color: #333;
+	    background-color: #e1701a;
 	    color:#fff;
 	}
 	
