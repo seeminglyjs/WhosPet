@@ -57,11 +57,11 @@ function check(){
 
 /* 이미지 정보를 보낼지 말지를 선택하는 메소드*/
 function imgCheck(e) {
-	if(!$(e).children("input").attr("disabled")){	
-		$(e).children("input").attr("disabled", true)
+	if(!$(e).children().first().attr("disabled")){	
+		$(e).children().first().attr("disabled", true)
 		$(e).children("img").css({opacity : "1.0"})
 	}else{		
-		$(e).children("input").attr("disabled", false)
+		$(e).children().first().attr("disabled", false)
 		$(e).children("img").css({opacity : "0.4"})
 	}
 }
@@ -127,8 +127,8 @@ function imgCheck(e) {
 		<c:forEach items="${fileList}" var="img">
 			<div class="imgDiv" style="margin-bottom: 3px; font-size: 12px;">
 			<div id="img${iNo = iNo+1 }" onclick="imgCheck(this)">
-				<img  src="/upload/${img }" alt="이미지 찾을 수 없음" style="width: 10%; height: 10%; border: 1px solid #ccc;" class="pull-left"/>
 				<input type="hidden" id= "fileInfo${iNo }" name="fileInfo${iNo }" value="${img }" disabled="disabled">
+				<img  src="/upload/${img }" alt="이미지 찾을 수 없음" style="width: 10%; height: 10%; border: 1px solid #ccc;" class="pull-left"/>
 				<input type="hidden" name="fileInfos" value="${img }">
 			</div>
 			</div>
