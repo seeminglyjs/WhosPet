@@ -335,27 +335,32 @@
 		// Themes begin
 		// Themes end
 		
-		var chart = am4core.create('chartdiv', am4charts.XYChart)
+		var chart = am4core.create('chartdiv', am4charts.XYChart) // 차트 생성 
 		chart.colors.step = 2;
-		var login = ${login}
+		var login = ${login} // 로그인정보 from 세션 
 		console.log(login);
+		// 그래프의  legend 부분 ( 상단 xx시 , xx구 , 전국 평균가 )
 		chart.legend = new am4charts.Legend()
 		chart.legend.position = 'top'
 		chart.legend.paddingBottom = 20
 		chart.legend.labels.template.maxWidth = 95
 		chart.legend.itemContainers.template.togglable = false;
 		
+		// 차트 x축 
 		var xAxis = chart.xAxes.push(new am4charts.CategoryAxis())
 		xAxis.dataFields.category = 'category'
 		xAxis.renderer.cellStartLocation = 0.1
 		xAxis.renderer.cellEndLocation = 0.9
 		xAxis.renderer.grid.template.location = 0;
 		
+		
+		// 차트 y축 
 		var yAxis = chart.yAxes.push(new am4charts.ValueAxis());
 		yAxis.min = 0;
 		console.log(login);
 		
 		
+		// 막대그래프 생성 with value 
 		function createSeries(value, name) {
 		    var series = chart.series.push(new am4charts.ColumnSeries())
 		    series.dataFields.valueY = value
@@ -367,11 +372,13 @@
 		    bullet.interactionsEnabled = false
 		    bullet.dy = 20;
 		    bullet.label.text = '{valueY}' + '원'
-		    bullet.label.fontSize = 12;
+		    bullet.label.fontSize = 12; // 폰트사이즈 변경 , 미변경시 defalut가 커서 숫자 자동으로 ellipsis됨 
 		    bullet.label.fill = am4core.color('#ffffff')
 		
 		    return series;
 		}
+		
+		//그래프에 들어갈 데이터 
 		chart.data = [
 		    {
 		        category: '최저가ㅤㅤㅤ평균가ㅤㅤㅤ최고가',
@@ -418,13 +425,13 @@
 	    	timeout : 5000,
 	    	maximumAge : 0
 	    };
-	
+		// 위치와 경도 받는 함수 (현 위치)
 	    function success(pos) {
 	    	var crd = pos.coords;
 	    	lat = crd.latitude;
 	    	lon = crd.longitude;
 	    };
-	    
+		// sleep함수 넣어준 시간만큼 기다리는 promise를 사용 with 콜백 , 미사용함 
 	    function sleep(ms) {
 	    	  return new Promise(resolve => setTimeout(resolve, ms));
 	    }
@@ -433,10 +440,12 @@
 	    	console.warn('ERROR(' + err.code + '): ' + err.message);
 	    };
 	    
-
+		// 현위치의 위도, 경도 받아오기 
 	    navigator.geolocation.getCurrentPosition(success, error, options);
         
+		//현위치 버튼 클릭 이벤트  
 	    $("#btnTest").click(function() {
+			// 카카오맵 API를 이용해 현위치 위도, 경도 정보를 바탕으로 도로명 주소를 받아옴
 		    let geocoder = new kakao.maps.services.Geocoder();
 		    let coord = new kakao.maps.LatLng(lat, lon);
 			let callback = function(result, status) {
@@ -447,19 +456,25 @@
 			    }
 			};
 			geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+			
+			//ajax 비동기 방식 (json 사용) , url 부분 controller에 @responsebody사용 
 			$.ajax({
 			    type: "post", 
 			    url: "/treatment/treatdetail",
 			    data: {"city": region, "district": district},
 			    success : function(data){
 			  	  console.log("성공")
+			  	
 			  	  
 			  	am4core.ready(function() {
 		
+			  	//위의 차트 코드 그대로  사용 
 				var chart = am4core.create('chartdiv', am4charts.XYChart)
 				chart.colors.step = 2;
 				var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 				valueAxis.min = 500;
+				
+				//y축 범위를 늘림 이유는 최대값이 낮아 가격이 낮은 데이터들이 짤림 
 				valueAxis.max = data[data.length - 1]['totalMax'] + 50000;
 				valueAxis.strictMinMax = true; 
 				var login = ${login}
@@ -496,6 +511,7 @@
 				    return series;
 				}
 				console.log(login);
+				// 비로그인시,지역, 구  최저,평균,최고가 0 , 전국 평균가만 표시 
 				<% if(session.getAttribute("login") == null) { %>
 					chart.data = [
 					    {
@@ -518,6 +534,7 @@
 					    }
 					]
 					
+					//로그인시 모든 정보 표시 
 				<% } else {%>
 					chart.data = [
 					    {
@@ -541,19 +558,24 @@
 					]
 					
 				<% } %>
+				//위의 legend에 현위치 나오게 
 				createSeries('first', data[0]['H_ROAD_ADDRESS'].split(' ')[0] + ' 평균가ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ');
 				createSeries('second', data[0]['H_ROAD_ADDRESS'].split(' ')[1] + ' 평균가ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ');
 				createSeries('third', '전국 평균가');
 
 				}); // end am4core.ready()
 			    
+					//버튼 옆에 xx시 xx구 글자및 x버튼 표
 			  	  document.getElementById('region').innerHTML = data[0]['H_ROAD_ADDRESS'].split(' ')[0] + ' ' + data[0]['H_ROAD_ADDRESS'].split(' ')[1];
 			  	  const deleteBtn = document.getElementById('deleteBtn');
 			  	  deleteBtn.innerHTML = 'clear';
+			  	  //x 버튼 클릭시 페이지 리셋 , 
 			  	  deleteBtn.setAttribute('href', '/treatment/treatdetail?no=' + ${TR_NO});
 			  	  const parent = document.getElementById('parentul');
 			  	  console.log(parent);
 
+			  	  
+			  	  //현위치 버튼 클릭시 기존태 모두 삭제 , 쿼리셀렉터 사용 
 			  	document.querySelectorAll('.h--info').forEach(function(a){
 			  		a.remove()
 		  		})
@@ -573,6 +595,7 @@
 			  		a.remove()
 		  		})
 
+		  		//그래프 아래에 현위치 병원, -> 5개 이상여도 5개만 , 5개 이하저장된 수만큼 
 			      for(var i = 0; i < data.length - 1; i++) {
 				  	  var newli = document.createElement('li');
 				  	  var infoDiv = document.createElement('div');
@@ -612,7 +635,8 @@
 			    }
 			});
 	    })
-	    
+	   
+	    // 전국 시/도, 구./군 저장 from google
 	    $('document').ready(function() {
 			   var area0 = ["시/도 선택","서울","인천광역시","대전광역시","광주광역시","대구광역시","울산광역시","부산광역시","경기","강원도","충청북도","충청남도","전라북도","전라남도","경상북도","경상남도","제주도"];
 			   var area1 = ["강남구","강동구","강북구","강서구","관악구","광진구","구로구","금천구","노원구","도봉구","동대문구","동작구","마포구","서대문구","서초구","성동구","성북구","송파구","양천구","영등포구","용산구","은평구","종로구","중구","중랑구"];
@@ -659,7 +683,7 @@
 			  }
 			 });
 		});
-	    
+	    //지연 선택 버튼 누를때 이벤트 발생 , 기본동작은 현위치버튼과 비슷 
 	    $("#btnSelect").click(function() {
 	    	console.log("sido1: " + sido);
 			console.log("gugun: " + gugun);
@@ -673,10 +697,12 @@
 			    success : function(data){
 			  	console.log("성공")
 			  	console.log(data);
+			  	//해당위치 등록병원 없을시 alert
 			  	if(data.length == 0)
 				  window.alert("해당 위치에 등록된 병원이 없습니다.");
 			  	am4core.ready(function() {
 		
+			  		//위에차트생성과  똑같 
 				var chart = am4core.create('chartdiv', am4charts.XYChart)
 				var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 				valueAxis.min = 500;
