@@ -297,7 +297,7 @@ public class BoardServiceImpl implements BoardService {
 		
 		board.setbNo(bNo);
 
-		
+
 		
 		// 만약에 내용을 등록하지 않았으면 제목과 동일하게 지정
 		if(board.getbContent() == null || board.getbContent().equals("<p><br></p>") ) {
@@ -314,16 +314,16 @@ public class BoardServiceImpl implements BoardService {
 		
 		//유저가 삭제선택한 이미지 정보가 있는지 체크
 		int count = 1;
-		Integer files = 0; // null 값 체크르 위해 wrapper 클래스로 받는다.
+		Integer files = 0; // null 값 체크를 위해 wrapper 클래스로 받는다.
 		try {
-			files = fileRequest.getParameterValues("fileInfos").length; //선택된 파일들 갯수
+			files = fileRequest.getParameterValues("fileInfos").length; //전체 파일들 갯수
 		}catch (Exception e) {
-			files = 0;
+			files = 0; // null일 경우 이외의 다른 예외일 경우 0으로 셋팅
 		}
 		if(files != null && files != 0) {
 			while(count <= files) {
-				String fileInfo = fileRequest.getParameter("fileInfo" + count);
-				if(fileInfo != null && !fileInfo.equals("")) {
+				String fileInfo = fileRequest.getParameter("fileInfo" + count); // 선택된 파일 체크를 위한 형변환
+				if(fileInfo != null && !fileInfo.equals("")) {//선택된지 여부 체크
 					boardDao.deleteCheckFile(fileInfo); // db에서 선택된파일지움			
 					String path = context.getRealPath("upload");	
 					//현재 게시판에 존재하는 파일객체를 만듬
@@ -447,7 +447,7 @@ public class BoardServiceImpl implements BoardService {
 		content = request.getParameter("content");
 		
 		if(content == null || content.equals("")) {
-			content = "Default";
+			content = "안녕하세요~!";
 		}
 		
 		// mapper 전달으 위해 hashmap에 담아준다.

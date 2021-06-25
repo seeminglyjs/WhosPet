@@ -92,7 +92,7 @@ function check(){
 			<select  id= "category" name="category" >
 				<option value="F" >자유게시판</option>
 				<option value="T" >치료게시판</option>
-				<option value="R" >리뷰게시파</option>						
+				<option value="R" >리뷰게시판</option>						
 			</select>
 			</div>
 			<div class=”clearfix“></div>
